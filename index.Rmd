@@ -12,7 +12,7 @@ github-repo: rstudio/bookdown-demo
 description: "A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination."
 ---
 
-# Introduction
+# Overview
 
 Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
 
