@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 8 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+<meta name="author" content="Colorado State University Coding Team">
+<meta name="description" content="8.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Chapter 8 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta property="og:type" content="book">
+<meta property="og:description" content="8.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 8 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="twitter:description" content="8.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
+<li><a class="" href="immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb.html"><span class="header-section-number">2</span> Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)</a></li>
+<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
+<li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse weights</a></li>
+<li><a class="" href="clean-data.html"><span class="header-section-number">5</span> Clean data</a></li>
+<li><a class="" href="summary-statistics.html"><span class="header-section-number">6</span> Summary statistics</a></li>
+<li><a class="" href="graph.html"><span class="header-section-number">7</span> Graph</a></li>
+<li><a class="active" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">8</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="" href="elisa-words.html"><span class="header-section-number">9</span> ELISA Words</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="colony-forming-units-to-determine-bacterial-counts" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Colony forming units to determine bacterial counts<a class="anchor" aria-label="anchor" href="#colony-forming-units-to-determine-bacterial-counts"><i class="fas fa-link"></i></a>
+</h1>
+<div id="data-description" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Data description<a class="anchor" aria-label="anchor" href="#data-description"><i class="fas fa-link"></i></a>
+</h2>
+<p>The data are collected in a spreadsheet with multiple sheets. The first sheet
+(named “[x]”) is used to record some metadata for the experiment, while the
+following sheets are used to record CFUs counts from the plates used for samples
+from each organ, with one sheet per organ. For example, if you plated data
+from both the lung and spleen, there would be three sheets in the file: one
+with the metadata, one with the plate counts for the lung, and one with the
+plate counts for the spleen.</p>
+<p>The metadata sheet is used to record information about the overall process of
+plating the data. Values from this sheet will be used in calculating the bacterial
+load in the original sample based on the CFU counts. This spreadsheet includes
+the following columns:</p>
+<ul>
+<li>
+<code>organ</code>: Include one row for each organ that was plated in the experiment.
+You should name the organ all in lowercase (e.g., “lung,” “spleen”). You
+should use the same name to also name the sheet that records data for that organ
+for example, if you have rows in the metadata sheet for “lung” and “spleen,”
+then you should have two other sheets in the file, one sheet named “lung” and
+one named “spleen,” which you’ll use to store the plate counts for each of those
+organs.</li>
+<li>
+<code>prop_resuspended</code>: In this column, give the proportion of that organ that
+was plated. For example, if you plated half the lung, then in the “lung” row
+of this spread sheet, you should put 0.5 in the <code>prop_resuspended</code> column.</li>
+<li>
+<code>total_resuspended_uL</code>: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads.</li>
+<li>
+<code>og_aliquot_uL</code>: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.</li>
+<li>
+<code>dilution_factor</code>: Amount of the original stock solution that is present in the total solution, after dilution(s)</li>
+<li>
+<code>plated_uL</code>: Amount of suspension + diluent plated on section of solid agar</li>
+</ul>
+</div>
+<div id="read-in-data-1" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
+
+<span class="co">#Replace w/ path to CFU sheet</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IMPAcTB/CODING-TEAM-BOOKDOWN-/example_spreadsheet/Copy of baa_cfu_sheet.xlsx"</span><span class="op">)</span>
+
+<span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
+<span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span><span class="op">[</span><span class="op">!</span><span class="va">sheet_names</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"metadata"</span><span class="op">)</span><span class="op">]</span>
+
+<span class="va">merged_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>organ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="co">#mutate(missing_col = NA) %&gt;% </span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.double</span>, <span class="va">as.numeric</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"dil_"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"dilution"</span>,
+                 values_to <span class="op">=</span> <span class="st">"CFUs"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,
+           dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
+    
+  
+  <span class="va">merged_data</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">data</span>
+  
+  
+<span class="op">}</span>
+  
+<span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">merged_data</span>, .id <span class="op">=</span> <span class="st">"column_label"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">column_label</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="exploratory-analysis-and-quality-checks" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> Exploratory analysis and quality checks<a class="anchor" aria-label="anchor" href="#exploratory-analysis-and-quality-checks"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exploratory-analysis" class="section level3" number="8.3.1">
+<h3>
+<span class="header-section-number">8.3.1</span> Exploratory analysis<a class="anchor" aria-label="anchor" href="#exploratory-analysis"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Dimensions of input data:</strong></p>
+<p>Based on the input data, data were collected for the following organ or
+organs:</p>
+<p>The following number of mice were included for each:</p>
+<p>The following number of replicates were recorded at each count date for
+each experimental group:</p>
+<p>The following number of dilutions and dilution level were recorded for
+each organ:</p>
+<p><strong>People who plated and collected the data. Date or dates of counting:</strong></p>
+<p>Based on the input data, the plates included in these data were counted by
+the following person or persons:
+Based on the input data, the plates included in these data were counted on
+the following date or dates:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">count_date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><strong>Distribution of CFUs at each dilution:</strong></p>
+<p>WE NEED TO ADD SAMPLE CFU PLOTS</p>
+<p>Here’s a plot that shows how many plates were too numerous to count at each
+dilution level:</p>
+<p>Here is a plot that shows how the CFU counts were distributed by dilution
+level in the data:</p>
+</div>
+</div>
+<div id="identify-a-good-dilution-for-each-sample" class="section level2" number="8.4">
+<h2>
+<span class="header-section-number">8.4</span> Identify a good dilution for each sample<a class="anchor" aria-label="anchor" href="#identify-a-good-dilution-for-each-sample"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Make all_data into tidy data and filter for CFUs between 10-75</span>
+  
+<span class="va">tidy_cfu_data</span> <span class="op">&lt;-</span> <span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,
+         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">CFUs</span> <span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">CFUs</span> <span class="op">&lt;=</span> <span class="fl">75</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">CFUs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution" class="section level2" number="8.5">
+<h2>
+<span class="header-section-number">8.5</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution<a class="anchor" aria-label="anchor" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().</span>
+<span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="st">"metadata"</span><span class="op">)</span>
+
+<span class="va">tidy_cfu_meta_joined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">tidy_cfu_data</span>, <span class="va">meta</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs_per_ml <span class="op">=</span> <span class="op">(</span><span class="va">CFUs</span> <span class="op">*</span> <span class="op">(</span><span class="va">dilution_factor</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">total_resuspension_mL</span><span class="op">/</span><span class="va">volume_plated_ul</span><span class="op">)</span> <span class="op">*</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">count_date</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">groups</span>,  <span class="va">mouse</span>, <span class="va">dilution</span>,  <span class="va">CFUs</span>, <span class="va">CFUs_per_ml</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">tidy_cfu_meta_joined</span></code></pre></div>
+</div>
+<div id="create-initial-report-information-for-these-data" class="section level2" number="8.6">
+<h2>
+<span class="header-section-number">8.6</span> Create initial report information for these data<a class="anchor" aria-label="anchor" href="#create-initial-report-information-for-these-data"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="sample-anova" class="section level2" number="8.7">
+<h2>
+<span class="header-section-number">8.7</span> Sample ANOVA<a class="anchor" aria-label="anchor" href="#sample-anova"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cfu_stats</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">organ</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>aov_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span> <span class="op">~</span> <span class="va">groups</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span>,
+         tukey_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">aov_result</span>, <span class="va">TukeyHSD</span><span class="op">)</span>,
+         tidy_tukey <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">tukey_result</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">tidy_tukey</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">contrast</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contrast1"</span>, <span class="st">"contrast2"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">data</span>, <span class="op">-</span><span class="va">aov_result</span>, <span class="op">-</span><span class="va">tukey_result</span>, <span class="op">-</span><span class="va">term</span>, <span class="op">-</span><span class="va">null.value</span><span class="op">)</span><span class="co"># %&gt;%</span>
+  <span class="co"># filter(adj.p.value &lt;= 0.05)</span>
+
+<span class="va">cfu_stats</span></code></pre></div>
+</div>
+<div id="save-processed-data-to-database" class="section level2" number="8.8">
+<h2>
+<span class="header-section-number">8.8</span> Save processed data to database<a class="anchor" aria-label="anchor" href="#save-processed-data-to-database"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="example-one" class="section level2" number="8.9">
+<h2>
+<span class="header-section-number">8.9</span> Example one<a class="anchor" aria-label="anchor" href="#example-one"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="example-two" class="section level2" number="8.10">
+<h2>
+<span class="header-section-number">8.10</span> Example two<a class="anchor" aria-label="anchor" href="#example-two"><i class="fas fa-link"></i></a>
+</h2>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="graph.html"><span class="header-section-number">7</span> Graph</a></div>
+<div class="next"><a href="elisa-words.html"><span class="header-section-number">9</span> ELISA Words</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#colony-forming-units-to-determine-bacterial-counts"><span class="header-section-number">8</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="nav-link" href="#data-description"><span class="header-section-number">8.1</span> Data description</a></li>
+<li><a class="nav-link" href="#read-in-data-1"><span class="header-section-number">8.2</span> Read in data</a></li>
+<li>
+<a class="nav-link" href="#exploratory-analysis-and-quality-checks"><span class="header-section-number">8.3</span> Exploratory analysis and quality checks</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exploratory-analysis"><span class="header-section-number">8.3.1</span> Exploratory analysis</a></li></ul>
+</li>
+<li><a class="nav-link" href="#identify-a-good-dilution-for-each-sample"><span class="header-section-number">8.4</span> Identify a good dilution for each sample</a></li>
+<li><a class="nav-link" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><span class="header-section-number">8.5</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
+<li><a class="nav-link" href="#create-initial-report-information-for-these-data"><span class="header-section-number">8.6</span> Create initial report information for these data</a></li>
+<li><a class="nav-link" href="#sample-anova"><span class="header-section-number">8.7</span> Sample ANOVA</a></li>
+<li><a class="nav-link" href="#save-processed-data-to-database"><span class="header-section-number">8.8</span> Save processed data to database</a></li>
+<li><a class="nav-link" href="#example-one"><span class="header-section-number">8.9</span> Example one</a></li>
+<li><a class="nav-link" href="#example-two"><span class="header-section-number">8.10</span> Example two</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-06-09.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

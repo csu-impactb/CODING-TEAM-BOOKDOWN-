@@ -14,12 +14,13 @@ library(tidyverse)
 
 ## Read in data
 ```{r}
-#weight_data <- read_xlsx()
+weight_data <- read_xlsx("DATA/body_weights.xlsx")
 ```
 
 # Clean data
 ```{r}
-
+weight_data %>%
+  select(sex, mouse_number, weight, cage_number, group)
 ```
 
 # Summary statistics
