@@ -4,14 +4,17 @@
 %
 \documentclass[
 ]{book}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-06-09}
+
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +85,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -117,15 +120,11 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-06-09}
 
 \begin{document}
 \maketitle
@@ -142,7 +141,21 @@ Here, we have built a comprehensive guide to wet lab data collection, sample pro
 \hypertarget{immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}{%
 \chapter{Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)}\label{immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}}
 
-The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with Mycobacterium tuberculosis (Mtb), formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against Mtb in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for Mtb infection protection.
+The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with \emph{Mycobacterium tuberculosis (Mtb)}, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against \emph{Mtb} in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for \emph{Mtb} infection protection.
+
+The seven centers that are part of the study are (in alphabetical order):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Colorado State University
+\item
+  Harvard T.H. Chan School of Public Health
+\item
+  Seattle Children Hospital
+\item
+\end{enumerate}
 
 \hypertarget{initial-mouse-characteristics}{%
 \chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
