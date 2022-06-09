@@ -74,7 +74,7 @@ all_data <- bind_rows(merged_data, .id = "column_label") %>%
 
 ## Exploratory analysis and quality checks
 
-### Exploratory analysis
+## Exploratory analysis
 
 **Dimensions of input data:**
 
