@@ -17,18 +17,18 @@ library(tidyverse)
 weight_data <- read_xlsx("DATA/body_weights.xlsx")
 ```
 
-# Clean data
+## Clean data
 ```{r}
 weight_data %>%
   select(sex, mouse_number, weight, cage_number, group)
 ```
 
-# Summary statistics
+## Summary statistics
 ```{r}
 
 ```
 
-# Graph
+## Graph
 ```{r}
 
 ```
