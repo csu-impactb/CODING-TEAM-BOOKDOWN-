@@ -14,7 +14,7 @@ library(tidyverse)
 
 ## Read in data
 ```{r}
-weight_data <- read_xlsx()
+#weight_data <- read_xlsx()
 ```
 
 # Clean data
