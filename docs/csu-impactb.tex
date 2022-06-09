@@ -1,0 +1,406 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={ImpactTB/BAA: Standard Operating Procedures for Data Analysis},
+  pdfauthor={Colorado State University Coding Team},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-06-09}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{overview}{%
+\chapter{Overview}\label{overview}}
+
+Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
+
+\hypertarget{immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}{%
+\chapter{Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)}\label{immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}}
+
+The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with Mycobacterium tuberculosis (Mtb), formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against Mtb in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for Mtb infection protection.
+
+\hypertarget{initial-mouse-characteristics}{%
+\chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
+
+Here is a review of existing methods.
+
+\hypertarget{mouse-weights}{%
+\chapter{Mouse weights}\label{mouse-weights}}
+
+Mice are weighed in grams weekly and recorded in an excel worksheet. Column titles are as follows: who\_collected date\_collected sex dob notch\_id mouse\_number weight unit cage\_number group notes
+
+Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
+
+The notes column contains information regarding clinical observations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.7
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   2.1.1     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\hypertarget{read-in-data}{%
+\section{Read in data}\label{read-in-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#weight\_data \textless{}{-} read\_xlsx()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{clean-data}{%
+\chapter{Clean data}\label{clean-data}}
+
+\hypertarget{summary-statistics}{%
+\chapter{Summary statistics}\label{summary-statistics}}
+
+\hypertarget{graph}{%
+\chapter{Graph}\label{graph}}
+
+\hypertarget{colony-forming-units-to-determine-bacterial-counts}{%
+\chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}}
+
+\hypertarget{data-description}{%
+\section{Data description}\label{data-description}}
+
+The data are collected in a spreadsheet with multiple sheets. The first sheet
+(named ``{[}x{]}'') is used to record some metadata for the experiment, while the
+following sheets are used to record CFUs counts from the plates used for samples
+from each organ, with one sheet per organ. For example, if you plated data
+from both the lung and spleen, there would be three sheets in the file: one
+with the metadata, one with the plate counts for the lung, and one with the
+plate counts for the spleen.
+
+The metadata sheet is used to record information about the overall process of
+plating the data. Values from this sheet will be used in calculating the bacterial
+load in the original sample based on the CFU counts. This spreadsheet includes
+the following columns:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{organ}: Include one row for each organ that was plated in the experiment.
+  You should name the organ all in lowercase (e.g., ``lung'', ``spleen''). You
+  should use the same name to also name the sheet that records data for that organ
+  for example, if you have rows in the metadata sheet for ``lung'' and ``spleen'',
+  then you should have two other sheets in the file, one sheet named ``lung'' and
+  one named ``spleen'', which you'll use to store the plate counts for each of those
+  organs.
+\item
+  \texttt{prop\_resuspended}: In this column, give the proportion of that organ that
+  was plated. For example, if you plated half the lung, then in the ``lung'' row
+  of this spread sheet, you should put 0.5 in the \texttt{prop\_resuspended} column.
+\item
+  \texttt{total\_resuspended\_uL}: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads.
+\item
+  \texttt{og\_aliquot\_uL}: 100 uL of th total\_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
+\item
+  \texttt{dilution\_factor}: Amount of the original stock solution that is present in the total solution, after dilution(s)
+\item
+  \texttt{plated\_uL}: Amount of suspension + diluent plated on section of solid agar
+\end{itemize}
+
+\hypertarget{read-in-data-1}{%
+\section{Read in data}\label{read-in-data-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(purrr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(stringr)}
+
+\CommentTok{\#Replace w/ path to CFU sheet}
+\NormalTok{path }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"IMPAcTB/CODING{-}TEAM{-}BOOKDOWN{-}/example\_spreadsheet/Copy of baa\_cfu\_sheet.xlsx"}\NormalTok{)}
+
+\NormalTok{sheet\_names }\OtherTok{\textless{}{-}} \FunctionTok{excel\_sheets}\NormalTok{(path)}
+\NormalTok{sheet\_names }\OtherTok{\textless{}{-}}\NormalTok{ sheet\_names[}\SpecialCharTok{!}\NormalTok{sheet\_names }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"metadata"}\NormalTok{)]}
+
+\NormalTok{merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(sheet\_names))\{}
+  
+\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(path, }\AttributeTok{sheet =}\NormalTok{ sheet\_names[i]) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{organ =} \FunctionTok{paste0}\NormalTok{(sheet\_names[i]))}
+  
+\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} 
+    \CommentTok{\#mutate(missing\_col = NA) \%\textgreater{}\% }
+    \FunctionTok{mutate\_if}\NormalTok{(is.double, as.numeric) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate\_if}\NormalTok{(is.numeric, as.character) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"dil\_"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"dilution"}\NormalTok{,}
+                 \AttributeTok{values\_to =} \StringTok{"CFUs"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
+           \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution))}
+    
+  
+\NormalTok{  merged\_data[[i]] }\OtherTok{\textless{}{-}}\NormalTok{ data}
+  
+  
+\NormalTok{\}}
+  
+\NormalTok{all\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(merged\_data, }\AttributeTok{.id =} \StringTok{"column\_label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{column\_label)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exploratory-analysis-and-quality-checks}{%
+\section{Exploratory analysis and quality checks}\label{exploratory-analysis-and-quality-checks}}
+
+\hypertarget{exploratory-analysis}{%
+\subsection{Exploratory analysis}\label{exploratory-analysis}}
+
+\textbf{Dimensions of input data:}
+
+Based on the input data, data were collected for the following organ or
+organs:
+
+The following number of mice were included for each:
+
+The following number of replicates were recorded at each count date for
+each experimental group:
+
+The following number of dilutions and dilution level were recorded for
+each organ:
+
+\textbf{People who plated and collected the data. Date or dates of counting:}
+
+Based on the input data, the plates included in these data were counted by
+the following person or persons:
+Based on the input data, the plates included in these data were counted on
+the following date or dates:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(organ, who\_plated, who\_counted, count\_date) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Distribution of CFUs at each dilution:}
+
+WE NEED TO ADD SAMPLE CFU PLOTS
+
+Here's a plot that shows how many plates were too numerous to count at each
+dilution level:
+
+Here is a plot that shows how the CFU counts were distributed by dilution
+level in the data:
+
+\hypertarget{identify-a-good-dilution-for-each-sample}{%
+\section{Identify a good dilution for each sample}\label{identify-a-good-dilution-for-each-sample}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make all\_data into tidy data and filter for CFUs between 10{-}75}
+  
+\NormalTok{tidy\_cfu\_data }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
+         \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(CFUs }\SpecialCharTok{\textgreater{}=} \DecValTok{10} \SpecialCharTok{\&}\NormalTok{ CFUs }\SpecialCharTok{\textless{}=} \DecValTok{75}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs =} \FunctionTok{as.numeric}\NormalTok{(CFUs))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}{%
+\section{Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution}\label{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculating CFU/ml for every qualifying replicate between 10{-}75 CFUs. Column binding by organ name to the metadata sheet via inner\_join().}
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(path, }\AttributeTok{sheet =} \StringTok{"metadata"}\NormalTok{)}
+
+\NormalTok{tidy\_cfu\_meta\_joined }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(tidy\_cfu\_data, meta) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(groups) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (total\_resuspension\_mL}\SpecialCharTok{/}\NormalTok{volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{10}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(organ, count\_date, who\_plated, who\_counted, groups,  mouse, dilution,  CFUs, CFUs\_per\_ml) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\NormalTok{tidy\_cfu\_meta\_joined}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-initial-report-information-for-these-data}{%
+\section{Create initial report information for these data}\label{create-initial-report-information-for-these-data}}
+
+\hypertarget{sample-anova}{%
+\section{Sample ANOVA}\label{sample-anova}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cfu\_stats }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(organ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{aov\_result =} \FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{aov}\NormalTok{(CFUs\_per\_ml }\SpecialCharTok{\textasciitilde{}}\NormalTok{ groups, }\AttributeTok{data =}\NormalTok{ .x)),}
+         \AttributeTok{tukey\_result =} \FunctionTok{map}\NormalTok{(aov\_result, TukeyHSD),}
+         \AttributeTok{tidy\_tukey =} \FunctionTok{map}\NormalTok{(tukey\_result, broom}\SpecialCharTok{::}\NormalTok{tidy)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(tidy\_tukey, }\AttributeTok{.drop =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(contrast, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"contrast1"}\NormalTok{, }\StringTok{"contrast2"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{data, }\SpecialCharTok{{-}}\NormalTok{aov\_result, }\SpecialCharTok{{-}}\NormalTok{tukey\_result, }\SpecialCharTok{{-}}\NormalTok{term, }\SpecialCharTok{{-}}\NormalTok{null.value)}\CommentTok{\# \%\textgreater{}\%}
+  \CommentTok{\# filter(adj.p.value \textless{}= 0.05)}
+
+\NormalTok{cfu\_stats}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{save-processed-data-to-database}{%
+\section{Save processed data to database}\label{save-processed-data-to-database}}
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\section{Example two}\label{example-two}}
+
+\hypertarget{elisa-words}{%
+\chapter{ELISA Words}\label{elisa-words}}
+
+We have finished a nice book.
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}
