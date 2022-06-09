@@ -1,4 +1,6 @@
-# Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)
+# Introduction
+
+## About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)
 
 The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with *Mycobacterium tuberculosis (Mtb)*, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against *Mtb* in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for *Mtb* infection protection. 
 
