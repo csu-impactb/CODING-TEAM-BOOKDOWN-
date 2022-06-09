@@ -1,6 +1,4 @@
-# CFUs
-
-Some _significant_ applications are demonstrated in this chapter.
+# Colony forming units to determine bacterial counts 
 
 ## Example one
 
