@@ -1,5 +1,165 @@
 # Colony forming units to determine bacterial counts 
 
+## Data description
+
+The data are collected in a spreadsheet with multiple sheets. The first sheet
+(named "[x]") is used to record some metadata for the experiment, while the 
+following sheets are used to record CFUs counts from the plates used for samples
+from each organ, with one sheet per organ. For example, if you plated data
+from both the lung and spleen, there would be three sheets in the file: one 
+with the metadata, one with the plate counts for the lung, and one with the
+plate counts for the spleen. 
+
+The metadata sheet is used to record information about the overall process of
+plating the data. Values from this sheet will be used in calculating the bacterial
+load in the original sample based on the CFU counts. This spreadsheet includes
+the following columns: 
+
+- `organ`: Include one row for each organ that was plated in the experiment. 
+You should name the organ all in lowercase (e.g., "lung", "spleen"). You 
+should use the same name to also name the sheet that records data for that organ
+for example, if you have rows in the metadata sheet for "lung" and "spleen", 
+then you should have two other sheets in the file, one sheet named "lung" and 
+one named "spleen", which you'll use to store the plate counts for each of those
+organs.
+- `prop_resuspended`: In this column, give the proportion of that organ that 
+was plated. For example, if you plated half the lung, then in the "lung" row
+of this spread sheet, you should put 0.5 in the `prop_resuspended` column. 
+- `total_resuspended_uL`: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads. 
+- `og_aliquot_uL`: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
+- `dilution_factor`: Amount of the original stock solution that is present in the total solution, after dilution(s)
+- `plated_uL`: Amount of suspension + diluent plated on section of solid agar 
+
+## Read in data
+
+```{r message = FALSE, warning = FALSE}
+library(readxl)
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(stringr)
+
+#Replace w/ path to CFU sheet
+path <- c("~/cfu_prototype/example_spreadsheet/Copy of baa_cfu_sheet.xlsx")
+
+sheet_names <- excel_sheets(path)
+sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
+
+merged_data <- list()
+
+for(i in 1:length(sheet_names)){
+  
+  data <- read_excel(path, sheet = sheet_names[i]) %>% 
+    mutate(organ = paste0(sheet_names[i]))
+  
+  data <- data %>% 
+    #mutate(missing_col = NA) %>% 
+    mutate_if(is.double, as.numeric) %>% 
+    mutate_if(is.numeric, as.character) %>% 
+    pivot_longer(starts_with("dil_"), names_to = "dilution",
+                 values_to = "CFUs") %>% 
+    mutate(dilution = str_extract(dilution, "[0-9]+"),
+           dilution = as.numeric(dilution))
+    
+  
+  merged_data[[i]] <- data
+  
+  
+}
+  
+all_data <- bind_rows(merged_data, .id = "column_label") %>% 
+    select(-column_label)
+  
+```
+
+## Exploratory analysis and quality checks
+
+### Exploratory analysis
+
+**Dimensions of input data:**
+
+Based on the input data, data were collected for the following organ or 
+organs: 
+
+The following number of mice were included for each: 
+
+The following number of replicates were recorded at each count date for 
+each experimental group: 
+
+The following number of dilutions and dilution level were recorded for 
+each organ: 
+
+**People who plated and collected the data. Date or dates of counting:**
+
+Based on the input data, the plates included in these data were counted by 
+the following person or persons: 
+Based on the input data, the plates included in these data were counted on 
+the following date or dates: 
+
+```{r}
+all_data %>%
+  select(organ, who_plated, who_counted, count_date) %>%
+  distinct()
+```
+
+**Distribution of CFUs at each dilution:**
+
+WE NEED TO ADD SAMPLE CFU PLOTS
+
+Here's a plot that shows how many plates were too numerous to count at each 
+dilution level: 
+
+Here is a plot that shows how the CFU counts were distributed by dilution
+level in the data: 
+
+## Identify a good dilution for each sample
+```{r}
+# Make all_data into tidy data and filter for CFUs between 10-75
+  
+tidy_cfu_data <- all_data %>%
+  mutate(dilution = str_extract(dilution, "[0-9]+"),
+         dilution = as.numeric(dilution)) %>%
+  filter(CFUs >= 10 & CFUs <= 75) %>%
+  mutate(CFUs = as.numeric(CFUs))
+```
+
+## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
+```{r}
+# Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().
+meta <- read_excel(path, sheet = "metadata")
+
+tidy_cfu_meta_joined <- inner_join(tidy_cfu_data, meta) %>%
+  group_by(groups) %>% 
+  mutate(CFUs_per_ml = (CFUs * (dilution_factor^2) * (total_resuspension_mL/volume_plated_ul) * 10)) %>%
+  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  CFUs, CFUs_per_ml) %>%
+  ungroup()
+
+tidy_cfu_meta_joined
+```
+
+## Create initial report information for these data
+```{r}
+
+```
+
+
+## Sample ANOVA
+```{r}
+cfu_stats <- tidy_cfu_meta_joined %>% 
+  group_by(organ) %>%
+  nest() %>%
+  mutate(aov_result = map(data, ~aov(CFUs_per_ml ~ groups, data = .x)),
+         tukey_result = map(aov_result, TukeyHSD),
+         tidy_tukey = map(tukey_result, broom::tidy)) %>%
+  unnest(tidy_tukey, .drop = TRUE) %>%
+  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+  select(-data, -aov_result, -tukey_result, -term, -null.value)# %>%
+  # filter(adj.p.value <= 0.05)
+
+cfu_stats
+```
+
+## Save processed data to database
 ## Example one
 
 ## Example two
