@@ -32,7 +32,7 @@ of this spread sheet, you should put 0.5 in the `prop_resuspended` column.
 
 ## Read in data
 
-```{r message = FALSE, warning = FALSE}
+```{r message = FALSE, warning = FALSE, eval=FALSE}
 library(readxl)
 library(dplyr)
 library(purrr)
@@ -40,7 +40,7 @@ library(tidyr)
 library(stringr)
 
 #Replace w/ path to CFU sheet
-path <- c("~/cfu_prototype/example_spreadsheet/Copy of baa_cfu_sheet.xlsx")
+path <- c("~CODING-TEAM-BOOKDOWN-/example_spreadsheet/Copy of baa_cfu_sheet.xlsx")
 
 sheet_names <- excel_sheets(path)
 sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
@@ -96,7 +96,7 @@ the following person or persons:
 Based on the input data, the plates included in these data were counted on 
 the following date or dates: 
 
-```{r}
+```{r, eval=FALSE}
 all_data %>%
   select(organ, who_plated, who_counted, count_date) %>%
   distinct()
@@ -113,7 +113,7 @@ Here is a plot that shows how the CFU counts were distributed by dilution
 level in the data: 
 
 ## Identify a good dilution for each sample
-```{r}
+```{r, eval=FALSE}
 # Make all_data into tidy data and filter for CFUs between 10-75
   
 tidy_cfu_data <- all_data %>%
@@ -124,7 +124,7 @@ tidy_cfu_data <- all_data %>%
 ```
 
 ## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
-```{r}
+```{r, eval=FALSE}
 # Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().
 meta <- read_excel(path, sheet = "metadata")
 
@@ -138,13 +138,13 @@ tidy_cfu_meta_joined
 ```
 
 ## Create initial report information for these data
-```{r}
+```{r, eval=FALSE}
 
 ```
 
 
 ## Sample ANOVA
-```{r}
+```{r, eval=FALSE}
 cfu_stats <- tidy_cfu_meta_joined %>% 
   group_by(organ) %>%
   nest() %>%
