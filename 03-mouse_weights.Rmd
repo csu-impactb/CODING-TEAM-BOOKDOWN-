@@ -1,4 +1,4 @@
-# Methods
+# Mouse weights
 
 We describe our methods in this chapter.
 
