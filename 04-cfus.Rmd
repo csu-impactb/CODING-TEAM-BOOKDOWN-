@@ -40,7 +40,7 @@ library(tidyr)
 library(stringr)
 
 #Replace w/ path to CFU sheet
-path <- c("~CODING-TEAM-BOOKDOWN-/example_spreadsheet/Copy of baa_cfu_sheet.xlsx")
+path <- c("IMPAcTB/CODING-TEAM-BOOKDOWN-/example_spreadsheet/Copy of baa_cfu_sheet.xlsx")
 
 sheet_names <- excel_sheets(path)
 sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
