@@ -3,7 +3,9 @@
 
 Mice are weighed in grams weekly and recorded in an excel worksheet. Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
 
+Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 
+The notes column contains information regarding clinical observations. 
 
 ```{r}
 library(readxl)
@@ -12,6 +14,21 @@ library(tidyverse)
 
 ## Read in data
 ```{r}
-weight_data <- read_xlsx()
+#weight_data <- read_xlsx()
+```
+
+# Clean data
+```{r}
+
+```
+
+# Summary statistics
+```{r}
+
+```
+
+# Graph
+```{r}
+
 ```
 
