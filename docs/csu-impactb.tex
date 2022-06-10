@@ -4,17 +4,22 @@
 %
 \documentclass[
 ]{book}
+<<<<<<< HEAD
 \title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
 \author{Colorado State University Coding Team}
 \date{2022-06-10}
 
 \usepackage{amsmath,amssymb}
+=======
+>>>>>>> 5397f63180927c0dc88558eb4437e03608b4249e
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -85,7 +90,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -120,11 +125,15 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-06-09}
 
 \begin{document}
 \maketitle
@@ -160,11 +169,15 @@ The seven centers that are part of the study are (in alphabetical order):
 \item
 \end{enumerate}
 
+<<<<<<< HEAD
 Colorado State University Team and role of each member:
 Dr.~Marcela Henao-Tamayo: Principal Investigator
 Dr.~Brendan Podell: Principal Investigator
 Dr.~Andres Obregon-Henao: Research Scientist-III
 Dr.~Taru S. Dutt: Research Scientist-I
+=======
+Colorado State University Team:
+>>>>>>> 5397f63180927c0dc88558eb4437e03608b4249e
 
 \hypertarget{initial-mouse-characteristics}{%
 \chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
