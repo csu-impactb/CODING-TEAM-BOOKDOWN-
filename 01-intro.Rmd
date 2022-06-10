@@ -9,10 +9,15 @@ The seven centers that are part of the study are (in alphabetical order):
 1. Colorado State University
 2. Harvard T.H. Chan School of Public Health
 3. Seattle Children Hospital
-4. Arizona
+4. 
 
 
-Colorado State University Team:
+Colorado State University Team and role of each member:
+Dr. Marcela Henao-Tamayo: Principal Investigator
+Dr. Brendan Podell: Principal Investigator
+Dr. Andres Obregon-Henao: Research Scientist-III
+Dr. Taru S. Dutt: Research Scientist-I
+
 
 
 
