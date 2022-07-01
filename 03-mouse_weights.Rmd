@@ -1,11 +1,17 @@
-# Mouse weights
+# Mouse Weights
 
 
-Mice are weighed in grams weekly and recorded in an excel worksheet. Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
+Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+
+Weights are recorded in an excel worksheet. 
+
+Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
 
 Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 
 The notes column contains information regarding clinical observations. 
+
+good reference: https://elifesciences.org/articles/74419#s4
 
 ```{r}
 library(readxl)
@@ -13,6 +19,8 @@ library(tidyverse)
 ```
 
 ## Read in data
+
+# Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
 ```{r}
 weight_data <- read_xlsx("DATA/body_weights.xlsx")
 ```
@@ -28,7 +36,28 @@ weight_data %>%
 
 ```
 
-## Graph
+
+# Body weight over time graph and statistics
+```{r}
+
+```
+
+# Weight loss over time graph and statistics 
+```{r}
+
+```
+
+# Weight vs CFU
+```{r}
+
+```
+
+# Weight vs ELISA results 
+```{r}
+
+```
+
+# Weight vs lesion burden
 ```{r}
 
 ```
