@@ -4,22 +4,17 @@
 %
 \documentclass[
 ]{book}
-<<<<<<< HEAD
 \title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
 \author{Colorado State University Coding Team}
-\date{2022-06-10}
+\date{2022-07-01}
 
 \usepackage{amsmath,amssymb}
-=======
->>>>>>> 5397f63180927c0dc88558eb4437e03608b4249e
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -90,7 +85,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -125,15 +120,11 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-06-09}
 
 \begin{document}
 \maketitle
@@ -166,18 +157,13 @@ The seven centers that are part of the study are (in alphabetical order):
   Harvard T.H. Chan School of Public Health
 \item
   Seattle Children Hospital
-\item
 \end{enumerate}
 
-<<<<<<< HEAD
 Colorado State University Team and role of each member:
 Dr.~Marcela Henao-Tamayo: Principal Investigator
 Dr.~Brendan Podell: Principal Investigator
 Dr.~Andres Obregon-Henao: Research Scientist-III
 Dr.~Taru S. Dutt: Research Scientist-I
-=======
-Colorado State University Team:
->>>>>>> 5397f63180927c0dc88558eb4437e03608b4249e
 
 \hypertarget{initial-mouse-characteristics}{%
 \chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
@@ -506,10 +492,288 @@ level in the data:
 \hypertarget{example-two}{%
 \section{Example two}\label{example-two}}
 
-\hypertarget{elisa-words}{%
-\chapter{ELISA Words}\label{elisa-words}}
+\hypertarget{enzyme-linked-immunosorbest-assay-elisa}{%
+\chapter{Enzyme-linked immunosorbest assay (ELISA)}\label{enzyme-linked-immunosorbest-assay-elisa}}
 
-We have finished a nice book.
+ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
+
+\hypertarget{importance-of-elisa}{%
+\subsubsection{Importance of ELISA}\label{importance-of-elisa}}
+
+An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.
+
+In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination.
+
+\hypertarget{principle-of-elisa}{%
+\subsubsection{Principle of ELISA}\label{principle-of-elisa}}
+
+ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme's activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Coating multiwell plate with antigen/antibody: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well.
+\item
+  Blocking: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent.
+\item
+  Probing: Probing is the step where we add sample containing antibodies that we want to detect. This will be the primary antibody. If the antibodies against the antigen (which we have coated) are present in the sample, it will bind to the antigen with high affinity.
+\item
+  Washing: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05\% tween-20 (a mild detergent). 0.05\% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent.
+\item
+  Detection: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed.
+\item
+  Signal Measurement: Finally to detect ``if'' and ``how much'' of the antibody is present, a chromogenic substrate (like 3,3',5,5'-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers.
+\end{enumerate}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{~/Downloads/elisa} \caption{A caption}\label{fig:pressure}
+\end{figure}
+
+\hypertarget{read-in-data-from-excel-file}{%
+\section{Read in data from excel file}\label{read-in-data-from-excel-file}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_raw\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }\AttributeTok{range =} \StringTok{"B2:M9"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## * `` -> ...1
+## * `` -> ...2
+## * `` -> ...3
+## * `` -> ...4
+## * `` -> ...5
+## * ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(elisa\_raw\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 12
+##   ...1     ...2  ...3 ...4     ...5  ...6 ...7     ...8  ...9 ...10  ...11 ...12
+##   <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>  <dbl> <dbl>
+## 1 5.1999~ 0.05  0.069 6.3E-2  0.061 0.122 0.1680~ 0.145 0.135 6.800~ 0.053 0.05 
+## 2 7.9000~ 0.098 0.069 6.8000~ 0.115 0.202 5.8999~ 0.134 0.069 0.106  0.05  0.075
+## 3 8.8999~ 0.133 0.119 OVRFLW  3.87  2.32  OVRFLW  3.85  2.12  OVRFLW 3.21  1.02 
+## 4 OVRFLW  3.46  1.16  OVRFLW  3.80  2.36  OVRFLW  3.70  1.49  OVRFLW 3.68  1.63 
+## 5 3.8159~ 1.82  0.446 3.8940~ 3.42  1.13  OVRFLW  2.33  0.608 OVRFLW 3.41  1.10 
+## 6 OVRFLW  3.69  1.43  OVRFLW  3.66  1.27  3.839   1.74  0.444 2.499~ 0.637 0.704
+\end{verbatim}
+
+\hypertarget{tidy-the-data}{%
+\section{Tidy the data}\label{tidy-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Convert all columns to numeric}
+
+\NormalTok{elisa\_raw\_data\_numeric }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# pivot longer the data}
+
+\NormalTok{elisa\_raw\_data\_tidy }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_raw\_data\_numeric, }\AttributeTok{cols =} \StringTok{"...1"}\SpecialCharTok{:}\StringTok{"...12"}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"well\_id"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"od\_450nm"}\NormalTok{)}
+
+\CommentTok{\# remove "..." from the first column}
+
+\NormalTok{elisa\_raw\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace}\NormalTok{(elisa\_raw\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id, }\StringTok{"..."}\NormalTok{, }\StringTok{""}\NormalTok{)}
+
+\CommentTok{\# Add new column to the data\_frame}
+
+\NormalTok{elisa\_raw\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data\_tidy }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{rep}\NormalTok{(LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\AttributeTok{each =} \DecValTok{12}\NormalTok{))}
+
+\NormalTok{elisa\_raw\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{well\_id =} \FunctionTok{paste0}\NormalTok{(name, well\_id)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{name)}
+
+\FunctionTok{head}\NormalTok{(elisa\_raw\_data\_tidy\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   well_id od_450nm
+##   <chr>      <dbl>
+## 1 A1         0.052
+## 2 A2         0.05 
+## 3 A3         0.069
+## 4 A4         0.063
+## 5 A5         0.061
+## 6 A6         0.122
+\end{verbatim}
+
+\hypertarget{read-in-second-data-set}{%
+\section{Read in second data set}\label{read-in-second-data-set}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_label\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }\AttributeTok{range =} \StringTok{"Q2:AB9"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## * `` -> ...1
+## * `` -> ...2
+## * `` -> ...3
+## * `` -> ...4
+## * `` -> ...5
+## * ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(elisa\_label\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 12
+##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
+##   <chr>       <chr>  <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
+## 1 blank       secon~ naïv~ 1A-1~ 1A-1~ 1A-1~ 1A-2~ 1A-2~ 1A-2~ 1A-3~ 1A-3~ 1A-3~
+## 2 1A-4 (1/250 1A-4 ~ 1A-4~ 1B-1~ 1B-1~ 1B-1~ 1B-2~ 1B-2~ 1B-2~ 1B-3~ 1B-3~ 1B-3~
+## 3 1B-4 (1/250 1B-4 ~ 1B-4~ 2A-1~ 2A-1~ 2A-1~ 2A-2~ 2A-2~ 2A-2~ 2A-3~ 2A-3~ 2A-3~
+## 4 2B-1 (1/250 2B-1 ~ 2B-1~ 2B-2~ 2B-2~ 2B-2~ 2B-3~ 2B-3~ 2B-3~ 2B-4~ 2B-4~ 2B-4~
+## 5 3A-1 (1/250 3A-1 ~ 3A-1~ 3A-2~ 3A-2~ 3A-2~ 3A-3~ 3A-3~ 3A-3~ 3A-4~ 3A-4~ 3A-4~
+## 6 3B-1 (1/250 3B-1 ~ 3B-1~ 3B-2~ 3B-2~ 3B-2~ 3B-3~ 3B-3~ 3B-3~ 3B-4~ 3B-4~ 3B-4~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# pivot longer the data}
+
+\NormalTok{elisa\_label\_data\_tidy }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_label\_data, }\AttributeTok{cols =} \StringTok{"...1"}\SpecialCharTok{:}\StringTok{"...12"}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"well\_id"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"information"}\NormalTok{)}
+
+\CommentTok{\# remove "..." from the first column}
+
+\NormalTok{elisa\_label\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace}\NormalTok{(elisa\_label\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id, }\StringTok{"..."}\NormalTok{, }\StringTok{""}\NormalTok{)}
+
+\CommentTok{\# Add new column to the data\_frame}
+
+\NormalTok{elisa\_label\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_label\_data\_tidy }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{rep}\NormalTok{(LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\AttributeTok{each =} \DecValTok{12}\NormalTok{))}
+
+\NormalTok{elisa\_label\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_label\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{well\_id =} \FunctionTok{paste0}\NormalTok{(name, well\_id)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{name)}
+
+\FunctionTok{head}\NormalTok{(elisa\_label\_data\_tidy\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   well_id information  
+##   <chr>   <chr>        
+## 1 A1      blank        
+## 2 A2      secondary    
+## 3 A3      naïve (1/250)
+## 4 A4      1A-1 (1/250  
+## 5 A5      1A-1 (1/1250 
+## 6 A6      1A-1 (1/6250
+\end{verbatim}
+
+\hypertarget{join-the-od-table-with-the-information-table}{%
+\section{Join the OD table with the information table}\label{join-the-od-table-with-the-information-table}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_data }\OtherTok{=}\NormalTok{ elisa\_raw\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{inner\_join}\NormalTok{(elisa\_label\_data\_tidy\_new, }\AttributeTok{by=}\StringTok{"well\_id"}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(elisa\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   well_id od_450nm information  
+##   <chr>      <dbl> <chr>        
+## 1 A1         0.052 blank        
+## 2 A2         0.05  secondary    
+## 3 A3         0.069 naïve (1/250)
+## 4 A4         0.063 1A-1 (1/250  
+## 5 A5         0.061 1A-1 (1/1250 
+## 6 A6         0.122 1A-1 (1/6250
+\end{verbatim}
+
+\hypertarget{separate-the-information-tabke-into-sample-id-and-dilution-columns}{%
+\section{Separate the information tabke into sample ID and dilution columns}\label{separate-the-information-tabke-into-sample-id-and-dilution-columns}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_data, }\AttributeTok{col =} \StringTok{"information"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"sample\_id"}\NormalTok{, }\StringTok{"dilution"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{("}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(tidy\_elisa\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   well_id od_450nm sample_id   dilution
+##   <chr>      <dbl> <chr>       <chr>   
+## 1 A1         0.052 "blank"     <NA>    
+## 2 A2         0.05  "secondary" <NA>    
+## 3 A3         0.069 "naïve "    1/250)  
+## 4 A4         0.063 "1A-1 "     1/250   
+## 5 A5         0.061 "1A-1 "     1/1250  
+## 6 A6         0.122 "1A-1 "     1/6250
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"(/)[0{-}9]+"}\NormalTok{),}
+         \AttributeTok{dilution =} \FunctionTok{str\_replace}\NormalTok{(dilution, }\StringTok{"/"}\NormalTok{, }\StringTok{""}\NormalTok{),}
+         \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution))}
+
+\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(well\_id, sample\_id, dilution, od\_450nm)}
+
+\FunctionTok{head}\NormalTok{(tidy\_elisa\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   well_id sample_id   dilution od_450nm
+##   <chr>   <chr>          <dbl>    <dbl>
+## 1 A1      "blank"           NA    0.052
+## 2 A2      "secondary"       NA    0.05 
+## 3 A3      "naïve "         250    0.069
+## 4 A4      "1A-1 "          250    0.063
+## 5 A5      "1A-1 "         1250    0.061
+## 6 A6      "1A-1 "         6250    0.122
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 
