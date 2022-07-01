@@ -21,14 +21,48 @@ library(tidyverse)
 ## Read in data
 
 # Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
-```{r}
-weight_data <- read_xlsx("DATA/body_weights.xlsx")
+```{r include=FALSE}
+#weight_data <- read_xlsx("DATA/body_weights.xlsx")
+weight_data <- read_xlsx("/Users/SarahCooper/Desktop/body_weights.xlsx")
+excel_sheets("/Users/SarahCooper/Desktop/body_weights.xlsx") #lists names of each sheet
+
+multiplesheets <- function(fname) {
+   
+  # getting info about all excel sheets
+  sheets <- readxl::excel_sheets(fname)
+  tibble <- lapply(sheets, function(x) readxl::read_excel(fname, sheet = x))
+  data_frame <- lapply(tibble, as.data.frame)
+    
+  # assigning names to data frames
+  names(data_frame) <- sheets
+    
+  # print data frame
+  print(data_frame)
+}
+  
+# specifying the path name
+path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+multiplesheets(path)
 ```
+
+# can also use rio to read in the data, more streamlined
+```{r include=FALSE}
+library(rio)
+# specifying the path name
+path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+  
+# reading data from all sheets
+data <- import_list(path)
+  
+# print data
+print (data)
+```
+
 
 ## Clean data
 ```{r}
-weight_data %>%
-  select(sex, mouse_number, weight, cage_number, group)
+data$before_vaccination %>%
+ select("sex", "notch_id",  "weight", "cage_number", "group") #"mouse_number" it couldn't find this for some reason 
 ```
 
 ## Summary statistics
