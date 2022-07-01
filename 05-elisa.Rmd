@@ -25,7 +25,7 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 **6. Signal Measurement**: Finally to detect "if" and "how much" of the antibody is present, a chromogenic substrate (like 3,3',5,5'-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers. 
 
 ```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("~/Downloads/elisa.png")
+knitr::include_graphics("DATA/elisa.png")
 ```
 
 ## Read in data from excel file
