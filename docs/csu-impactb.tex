@@ -550,6 +550,13 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{elisa\_raw\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }\AttributeTok{range =} \StringTok{"B2:M9"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
