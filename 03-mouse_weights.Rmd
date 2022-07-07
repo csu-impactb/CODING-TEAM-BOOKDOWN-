@@ -28,8 +28,8 @@ library(tidyverse)
 Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
 
 ```{r include=FALSE}
-weight_data <- read_xlsx("DATA/body_weights.xlsx")
-excel_sheets("DATA/body_weights.xlsx") #lists names of each sheet
+weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
+excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
 
 multiplesheets <- function(fname) {
    
@@ -46,7 +46,7 @@ multiplesheets <- function(fname) {
 }
   
 # specifying the path name
-path <- "DATA/body_weights.xlsx"
+path <- "DATA/body_weights_measurement.xlsx"
 multiplesheets(path)
 ```
 
@@ -54,7 +54,7 @@ multiplesheets(path)
 ```{r include=FALSE}
 library(rio)
 # specifying the path name
-path <- "DATA/body_weights.xlsx"
+path <- "DATA/body_weights_measurement.xlsx"
   
 # reading data from all sheets
 data <- import_list(path)
@@ -66,12 +66,19 @@ print (data)
 
 ### Clean data
 ```{r}
-data$before_vaccination %>%
- select("sex", "notch_id",  "weight", "cage_number", "group") #"mouse_number" it couldn't find this for some reason 
-```
+dataset <- data %>%
+ select("sex", "mouse_number", "weight", "cage_number", "group")
 
+<<<<<<< HEAD
 ### Summary statistics
 ```{r}
+=======
+head(dataset)
+
+# combining columns mouse_number and cage_number
+
+dataset$mouse_id <- paste(dataset$mouse_number, "-", dataset$cage_number)
+>>>>>>> 45fe04f84517159c5efc0bd31819dbdd069a9328
 
 ```
 
