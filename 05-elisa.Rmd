@@ -29,6 +29,10 @@ knitr::include_graphics("DATA/elisa.png")
 ```
 
 ## Read in data from excel file
+```{r}
+library(readxl)
+library(tidyverse)
+```
 
 ```{r}
 elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "B2:M9")

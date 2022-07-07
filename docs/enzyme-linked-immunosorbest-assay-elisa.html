@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+  <meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
+  
+  <meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  
+
+<meta name="author" content="Colorado State University Coding Team" />
+
+
+<meta name="date" content="2022-07-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="colony-forming-units-to-determine-bacterial-counts.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bookdown CSU Coding Team Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb"><i class="fa fa-check"></i><b>2.1</b> About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="initial-mouse-characteristics.html"><a href="initial-mouse-characteristics.html"><i class="fa fa-check"></i><b>3</b> Initial mouse characteristics</a></li>
+<li class="chapter" data-level="4" data-path="mouse-weights.html"><a href="mouse-weights.html"><i class="fa fa-check"></i><b>4</b> Mouse Weights</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="mouse-weights.html"><a href="mouse-weights.html#read-in-data"><i class="fa fa-check"></i><b>4.1</b> Read in data</a></li>
+<li class="chapter" data-level="4.2" data-path="mouse-weights.html"><a href="mouse-weights.html#clean-data"><i class="fa fa-check"></i><b>4.2</b> Clean data</a></li>
+<li class="chapter" data-level="4.3" data-path="mouse-weights.html"><a href="mouse-weights.html#summary-statistics"><i class="fa fa-check"></i><b>4.3</b> Summary statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html"><i class="fa fa-check"></i><b>5</b> Colony forming units to determine bacterial counts</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#data-description"><i class="fa fa-check"></i><b>5.1</b> Data description</a></li>
+<li class="chapter" data-level="5.2" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#read-in-data-1"><i class="fa fa-check"></i><b>5.2</b> Read in data</a></li>
+<li class="chapter" data-level="5.3" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis-and-quality-checks"><i class="fa fa-check"></i><b>5.3</b> Exploratory analysis and quality checks</a></li>
+<li class="chapter" data-level="5.4" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis"><i class="fa fa-check"></i><b>5.4</b> Exploratory analysis</a></li>
+<li class="chapter" data-level="5.5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#identify-a-good-dilution-for-each-sample"><i class="fa fa-check"></i><b>5.5</b> Identify a good dilution for each sample</a></li>
+<li class="chapter" data-level="5.6" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fa fa-check"></i><b>5.6</b> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
+<li class="chapter" data-level="5.7" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#create-initial-report-information-for-these-data"><i class="fa fa-check"></i><b>5.7</b> Create initial report information for these data</a></li>
+<li class="chapter" data-level="5.8" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#sample-anova"><i class="fa fa-check"></i><b>5.8</b> Sample ANOVA</a></li>
+<li class="chapter" data-level="5.9" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#save-processed-data-to-database"><i class="fa fa-check"></i><b>5.9</b> Save processed data to database</a></li>
+<li class="chapter" data-level="5.10" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-one"><i class="fa fa-check"></i><b>5.10</b> Example one</a></li>
+<li class="chapter" data-level="5.11" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-two"><i class="fa fa-check"></i><b>5.11</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html"><i class="fa fa-check"></i><b>6</b> Enzyme-linked immunosorbest assay (ELISA)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-data-from-excel-file"><i class="fa fa-check"></i><b>6.1</b> Read in data from excel file</a></li>
+<li class="chapter" data-level="6.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#tidy-the-data"><i class="fa fa-check"></i><b>6.2</b> Tidy the data</a></li>
+<li class="chapter" data-level="6.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-second-data-set"><i class="fa fa-check"></i><b>6.3</b> Read in second data set</a></li>
+<li class="chapter" data-level="6.4" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#join-the-od-table-with-the-information-table"><i class="fa fa-check"></i><b>6.4</b> Join the OD table with the information table</a></li>
+<li class="chapter" data-level="6.5" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#separate-the-information-tabke-into-sample-id-and-dilution-columns"><i class="fa fa-check"></i><b>6.5</b> Separate the information tabke into sample ID and dilution columns</a></li>
+<li class="chapter" data-level="6.6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis-optimization"><i class="fa fa-check"></i><b>6.6</b> ELISA data analysis optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="enzyme-linked-immunosorbest-assay-elisa" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Enzyme-linked immunosorbest assay (ELISA)<a href="enzyme-linked-immunosorbest-assay-elisa.html#enzyme-linked-immunosorbest-assay-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).</p>
+<div id="importance-of-elisa" class="section level4 hasAnchor" number="6.0.0.1">
+<h4><span class="header-section-number">6.0.0.1</span> <strong>Importance of ELISA</strong><a href="enzyme-linked-immunosorbest-assay-elisa.html#importance-of-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.</p>
+<p>In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination.</p>
+</div>
+<div id="principle-of-elisa" class="section level4 hasAnchor" number="6.0.0.2">
+<h4><span class="header-section-number">6.0.0.2</span> <strong>Principle of ELISA</strong><a href="enzyme-linked-immunosorbest-assay-elisa.html#principle-of-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme’s activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:</p>
+<p><strong>1. Coating multiwell plate with antigen/antibody</strong>: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well.</p>
+<p><strong>2. Blocking</strong>: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent.</p>
+<p><strong>3. Probing</strong>: Probing is the step where we add sample containing antibodies that we want to detect. This will be the primary antibody. If the antibodies against the antigen (which we have coated) are present in the sample, it will bind to the antigen with high affinity.</p>
+<p><strong>4. Washing</strong>: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05% tween-20 (a mild detergent). 0.05% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent.</p>
+<p><strong>5. Detection</strong>: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed.</p>
+<p><strong>6. Signal Measurement</strong>: Finally to detect “if” and “how much” of the antibody is present, a chromogenic substrate (like 3,3’,5,5’-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers.</p>
+<div class="figure"><span style="display:block;" id="fig:pressure"></span>
+<img src="DATA/elisa.png" alt="A caption" width="100%" />
+<p class="caption">
+Figure 6.1: A caption
+</p>
+</div>
+</div>
+<div id="read-in-data-from-excel-file" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Read in data from excel file<a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-data-from-excel-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
+<pre><code>## Warning: package &#39;readxl&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb8-1" aria-hidden="true" tabindex="-1"></a>elisa_raw_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/elisa_s1_07-25-20.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;S1&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>,  <span class="at">range =</span> <span class="st">&quot;B2:M9&quot;</span>)</span></code></pre></div>
+<pre><code>## New names:
+## • `` -&gt; `...1`
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`
+## • `` -&gt; `...11`
+## • `` -&gt; `...12`</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_raw_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 5.199999999… 0.05  0.069 6.3E… 0.061 0.122 0.16… 0.145 0.135 6.80… 0.053 0.05 
+## 2 7.900000000… 0.098 0.069 6.80… 0.115 0.202 5.89… 0.134 0.069 0.106 0.05  0.075
+## 3 8.899999999… 0.133 0.119 OVRF… 3.87  2.32  OVRF… 3.85  2.12  OVRF… 3.21  1.02 
+## 4 OVRFLW       3.46  1.16  OVRF… 3.80  2.36  OVRF… 3.70  1.49  OVRF… 3.68  1.63 
+## 5 3.815999999… 1.82  0.446 3.89… 3.42  1.13  OVRF… 2.33  0.608 OVRF… 3.41  1.10 
+## 6 OVRFLW       3.69  1.43  OVRF… 3.66  1.27  3.839 1.74  0.444 2.49… 0.637 0.704</code></pre>
+</div>
+<div id="tidy-the-data" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Tidy the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#tidy-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert all columns to numeric</span></span>
+<span id="cb12-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-3" aria-hidden="true" tabindex="-1"></a>elisa_raw_data_numeric <span class="ot">&lt;-</span> elisa_raw_data <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric)</span></code></pre></div>
+<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot longer the data</span></span>
+<span id="cb14-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-3" aria-hidden="true" tabindex="-1"></a>elisa_raw_data_tidy <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data =</span> elisa_raw_data_numeric, <span class="at">cols =</span> <span class="st">&quot;...1&quot;</span><span class="sc">:</span><span class="st">&quot;...12&quot;</span>, <span class="at">names_to =</span> <span class="st">&quot;well_id&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;od_450nm&quot;</span>)</span>
+<span id="cb14-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove &quot;...&quot; from the first column</span></span>
+<span id="cb14-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-7" aria-hidden="true" tabindex="-1"></a>elisa_raw_data_tidy<span class="sc">$</span>well_id <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(elisa_raw_data_tidy<span class="sc">$</span>well_id, <span class="st">&quot;...&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb14-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new column to the data_frame</span></span>
+<span id="cb14-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-11" aria-hidden="true" tabindex="-1"></a>elisa_raw_data_tidy_new <span class="ot">&lt;-</span> elisa_raw_data_tidy <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="at">each =</span> <span class="dv">12</span>))</span>
+<span id="cb14-13"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-14" aria-hidden="true" tabindex="-1"></a>elisa_raw_data_tidy_new <span class="ot">&lt;-</span> elisa_raw_data_tidy_new <span class="sc">%&gt;%</span></span>
+<span id="cb14-15"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">well_id =</span> <span class="fu">paste0</span>(name, well_id)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-16"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>name)</span>
+<span id="cb14-17"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_raw_data_tidy_new)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   well_id od_450nm
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 A1         0.052
+## 2 A2         0.05 
+## 3 A3         0.069
+## 4 A4         0.063
+## 5 A5         0.061
+## 6 A6         0.122</code></pre>
+</div>
+<div id="read-in-second-data-set" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Read in second data set<a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-second-data-set" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb16-1" aria-hidden="true" tabindex="-1"></a>elisa_label_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/elisa_s1_07-25-20.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;S1&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>,  <span class="at">range =</span> <span class="st">&quot;Q2:AB9&quot;</span>)</span></code></pre></div>
+<pre><code>## New names:
+## • `` -&gt; `...1`
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`
+## • `` -&gt; `...11`
+## • `` -&gt; `...12`</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_label_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 blank       secon… naïv… 1A-1… 1A-1… 1A-1… 1A-2… 1A-2… 1A-2… 1A-3… 1A-3… 1A-3…
+## 2 1A-4 (1/250 1A-4 … 1A-4… 1B-1… 1B-1… 1B-1… 1B-2… 1B-2… 1B-2… 1B-3… 1B-3… 1B-3…
+## 3 1B-4 (1/250 1B-4 … 1B-4… 2A-1… 2A-1… 2A-1… 2A-2… 2A-2… 2A-2… 2A-3… 2A-3… 2A-3…
+## 4 2B-1 (1/250 2B-1 … 2B-1… 2B-2… 2B-2… 2B-2… 2B-3… 2B-3… 2B-3… 2B-4… 2B-4… 2B-4…
+## 5 3A-1 (1/250 3A-1 … 3A-1… 3A-2… 3A-2… 3A-2… 3A-3… 3A-3… 3A-3… 3A-4… 3A-4… 3A-4…
+## 6 3B-1 (1/250 3B-1 … 3B-1… 3B-2… 3B-2… 3B-2… 3B-3… 3B-3… 3B-3… 3B-4… 3B-4… 3B-4…</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot longer the data</span></span>
+<span id="cb20-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-3" aria-hidden="true" tabindex="-1"></a>elisa_label_data_tidy <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data =</span> elisa_label_data, <span class="at">cols =</span> <span class="st">&quot;...1&quot;</span><span class="sc">:</span><span class="st">&quot;...12&quot;</span>, <span class="at">names_to =</span> <span class="st">&quot;well_id&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;information&quot;</span>)</span>
+<span id="cb20-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove &quot;...&quot; from the first column</span></span>
+<span id="cb20-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-7" aria-hidden="true" tabindex="-1"></a>elisa_label_data_tidy<span class="sc">$</span>well_id <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(elisa_label_data_tidy<span class="sc">$</span>well_id, <span class="st">&quot;...&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb20-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new column to the data_frame</span></span>
+<span id="cb20-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-11" aria-hidden="true" tabindex="-1"></a>elisa_label_data_tidy_new <span class="ot">&lt;-</span> elisa_label_data_tidy <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="at">each =</span> <span class="dv">12</span>))</span>
+<span id="cb20-13"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-14" aria-hidden="true" tabindex="-1"></a>elisa_label_data_tidy_new <span class="ot">&lt;-</span> elisa_label_data_tidy_new <span class="sc">%&gt;%</span></span>
+<span id="cb20-15"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">well_id =</span> <span class="fu">paste0</span>(name, well_id)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-16"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>name)</span>
+<span id="cb20-17"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_label_data_tidy_new)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   well_id information  
+##   &lt;chr&gt;   &lt;chr&gt;        
+## 1 A1      blank        
+## 2 A2      secondary    
+## 3 A3      naïve (1/250)
+## 4 A4      1A-1 (1/250  
+## 5 A5      1A-1 (1/1250 
+## 6 A6      1A-1 (1/6250</code></pre>
+</div>
+<div id="join-the-od-table-with-the-information-table" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Join the OD table with the information table<a href="enzyme-linked-immunosorbest-assay-elisa.html#join-the-od-table-with-the-information-table" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-1" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">=</span> elisa_raw_data_tidy_new <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(elisa_label_data_tidy_new, <span class="at">by=</span><span class="st">&quot;well_id&quot;</span>)</span>
+<span id="cb22-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   well_id od_450nm information  
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;        
+## 1 A1         0.052 blank        
+## 2 A2         0.05  secondary    
+## 3 A3         0.069 naïve (1/250)
+## 4 A4         0.063 1A-1 (1/250  
+## 5 A5         0.061 1A-1 (1/1250 
+## 6 A6         0.122 1A-1 (1/6250</code></pre>
+</div>
+<div id="separate-the-information-tabke-into-sample-id-and-dilution-columns" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Separate the information tabke into sample ID and dilution columns<a href="enzyme-linked-immunosorbest-assay-elisa.html#separate-the-information-tabke-into-sample-id-and-dilution-columns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb24-1" aria-hidden="true" tabindex="-1"></a>tidy_elisa_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(elisa_data, <span class="at">col =</span> <span class="st">&quot;information&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;sample_id&quot;</span>, <span class="st">&quot;dilution&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_elisa_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   well_id od_450nm sample_id   dilution
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   
+## 1 A1         0.052 &quot;blank&quot;     &lt;NA&gt;    
+## 2 A2         0.05  &quot;secondary&quot; &lt;NA&gt;    
+## 3 A3         0.069 &quot;naïve &quot;    1/250)  
+## 4 A4         0.063 &quot;1A-1 &quot;     1/250   
+## 5 A5         0.061 &quot;1A-1 &quot;     1/1250  
+## 6 A6         0.122 &quot;1A-1 &quot;     1/6250</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-1" aria-hidden="true" tabindex="-1"></a>tidy_elisa_data <span class="ot">&lt;-</span> tidy_elisa_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dilution =</span> <span class="fu">str_extract</span>(dilution, <span class="st">&quot;(/)[0-9]+&quot;</span>),</span>
+<span id="cb28-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">dilution =</span> <span class="fu">str_replace</span>(dilution, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
+<span id="cb28-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">dilution =</span> <span class="fu">as.numeric</span>(dilution))</span>
+<span id="cb28-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-6" aria-hidden="true" tabindex="-1"></a>tidy_elisa_data <span class="ot">&lt;-</span> tidy_elisa_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(well_id, sample_id, dilution, od_450nm)</span>
+<span id="cb28-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_elisa_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   well_id sample_id   dilution od_450nm
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+## 1 A1      &quot;blank&quot;           NA    0.052
+## 2 A2      &quot;secondary&quot;       NA    0.05 
+## 3 A3      &quot;naïve &quot;         250    0.069
+## 4 A4      &quot;1A-1 &quot;          250    0.063
+## 5 A5      &quot;1A-1 &quot;         1250    0.061
+## 6 A6      &quot;1A-1 &quot;         6250    0.122</code></pre>
+</div>
+<div id="elisa-data-analysis-optimization" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> ELISA data analysis optimization<a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="colony-forming-units-to-determine-bacterial-counts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["csu-impactb.pdf", "csu-impactb.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
