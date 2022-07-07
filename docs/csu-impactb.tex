@@ -4,14 +4,10 @@
 %
 \documentclass[
 ]{book}
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-07-07}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -120,11 +116,15 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-07-07}
 
 \begin{document}
 \maketitle
@@ -188,6 +188,15 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'readxl' was built under R version 4.1.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
@@ -200,7 +209,11 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 ## v ggplot2 3.3.5     v purrr   0.3.4
 ## v tibble  3.1.6     v dplyr   1.0.7
 ## v tidyr   1.1.4     v stringr 1.4.0
-## v readr   2.1.1     v forcats 0.5.1
+## v readr   2.1.2     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'readr' was built under R version 4.1.2
 \end{verbatim}
 
 \begin{verbatim}
@@ -547,18 +560,31 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{elisa\_raw\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }\AttributeTok{range =} \StringTok{"B2:M9"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}
@@ -569,14 +595,14 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## # A tibble: 6 x 12
-##   ...1     ...2  ...3 ...4     ...5  ...6 ...7     ...8  ...9 ...10  ...11 ...12
-##   <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>  <dbl> <dbl>
-## 1 5.1999~ 0.05  0.069 6.3E-2  0.061 0.122 0.1680~ 0.145 0.135 6.800~ 0.053 0.05 
-## 2 7.9000~ 0.098 0.069 6.8000~ 0.115 0.202 5.8999~ 0.134 0.069 0.106  0.05  0.075
-## 3 8.8999~ 0.133 0.119 OVRFLW  3.87  2.32  OVRFLW  3.85  2.12  OVRFLW 3.21  1.02 
-## 4 OVRFLW  3.46  1.16  OVRFLW  3.80  2.36  OVRFLW  3.70  1.49  OVRFLW 3.68  1.63 
-## 5 3.8159~ 1.82  0.446 3.8940~ 3.42  1.13  OVRFLW  2.33  0.608 OVRFLW 3.41  1.10 
-## 6 OVRFLW  3.69  1.43  OVRFLW  3.66  1.27  3.839   1.74  0.444 2.499~ 0.637 0.704
+##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
+##   <chr>        <dbl> <dbl> <chr> <dbl> <dbl> <chr> <dbl> <dbl> <chr> <dbl> <dbl>
+## 1 5.199999999~ 0.05  0.069 6.3E~ 0.061 0.122 0.16~ 0.145 0.135 6.80~ 0.053 0.05 
+## 2 7.900000000~ 0.098 0.069 6.80~ 0.115 0.202 5.89~ 0.134 0.069 0.106 0.05  0.075
+## 3 8.899999999~ 0.133 0.119 OVRF~ 3.87  2.32  OVRF~ 3.85  2.12  OVRF~ 3.21  1.02 
+## 4 OVRFLW       3.46  1.16  OVRF~ 3.80  2.36  OVRF~ 3.70  1.49  OVRF~ 3.68  1.63 
+## 5 3.815999999~ 1.82  0.446 3.89~ 3.42  1.13  OVRF~ 2.33  0.608 OVRF~ 3.41  1.10 
+## 6 OVRFLW       3.69  1.43  OVRF~ 3.66  1.27  3.839 1.74  0.444 2.49~ 0.637 0.704
 \end{verbatim}
 
 \hypertarget{tidy-the-data}{%
@@ -647,12 +673,18 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}

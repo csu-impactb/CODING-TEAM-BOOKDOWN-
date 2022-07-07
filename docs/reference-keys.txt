@@ -5,8 +5,15 @@ about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tubercul
 initial-mouse-characteristics
 mouse-weights
 read-in-data
+data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name
+can-also-use-rio-to-read-in-the-data-more-streamlined
 clean-data
 summary-statistics
+body-weight-over-time-graph-and-statistics
+weight-loss-over-time-graph-and-statistics
+weight-vs-cfu
+weight-vs-elisa-results
+weight-vs-lesion-burden
 colony-forming-units-to-determine-bacterial-counts
 data-description
 read-in-data-1
