@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Introduction | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+<title>Chapter 6 can also use rio to read in the data, more streamlined | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="2.1 About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) The objective of the IMPAc-TB program is to get a thorough understanding of the immune...">
+<meta name="description" content="6.1 Clean data data$before_vaccination %&gt;% select(&quot;sex&quot;, &quot;notch_id&quot;, &quot;weight&quot;, &quot;cage_number&quot;, &quot;group&quot;) #&quot;mouse_number&quot; it couldn't find this for some reason ## [1] sex     notch_id  weight  ...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 2 Introduction | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta property="og:title" content="Chapter 6 can also use rio to read in the data, more streamlined | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="2.1 About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) The objective of the IMPAc-TB program is to get a thorough understanding of the immune...">
+<meta property="og:description" content="6.1 Clean data data$before_vaccination %&gt;% select(&quot;sex&quot;, &quot;notch_id&quot;, &quot;weight&quot;, &quot;cage_number&quot;, &quot;group&quot;) #&quot;mouse_number&quot; it couldn't find this for some reason ## [1] sex     notch_id  weight  ...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 Introduction | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="2.1 About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) The objective of the IMPAc-TB program is to get a thorough understanding of the immune...">
+<meta name="twitter:title" content="Chapter 6 can also use rio to read in the data, more streamlined | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="twitter:description" content="6.1 Clean data data$before_vaccination %&gt;% select(&quot;sex&quot;, &quot;notch_id&quot;, &quot;weight&quot;, &quot;cage_number&quot;, &quot;group&quot;) #&quot;mouse_number&quot; it couldn't find this for some reason ## [1] sex     notch_id  weight  ...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -40,11 +40,11 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
-<li><a class="active" href="introduction.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">2</span> Introduction</a></li>
 <li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
 <li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
 <li><a class="" href="data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name.html"><span class="header-section-number">5</span> Data is stored in one excel sheet, each week is one sheet named as the date -&gt; return vector for each sheet name</a></li>
-<li><a class="" href="can-also-use-rio-to-read-in-the-data-more-streamlined.html"><span class="header-section-number">6</span> can also use rio to read in the data, more streamlined</a></li>
+<li><a class="active" href="can-also-use-rio-to-read-in-the-data-more-streamlined.html"><span class="header-section-number">6</span> can also use rio to read in the data, more streamlined</a></li>
 <li><a class="" href="body-weight-over-time-graph-and-statistics.html"><span class="header-section-number">7</span> Body weight over time graph and statistics</a></li>
 <li><a class="" href="weight-loss-over-time-graph-and-statistics.html"><span class="header-section-number">8</span> Weight loss over time graph and statistics</a></li>
 <li><a class="" href="weight-vs-cfu.html"><span class="header-section-number">9</span> Weight vs CFU</a></li>
@@ -60,37 +60,35 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="introduction" class="section level1" number="2">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="can-also-use-rio-to-read-in-the-data-more-streamlined" class="section level1" number="6">
 <h1>
-<span class="header-section-number">2</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6</span> can also use rio to read in the data, more streamlined<a class="anchor" aria-label="anchor" href="#can-also-use-rio-to-read-in-the-data-more-streamlined"><i class="fas fa-link"></i></a>
 </h1>
-<div id="about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb" class="section level2" number="2.1">
+<div id="clean-data" class="section level2" number="6.1">
 <h2>
-<span class="header-section-number">2.1</span> About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)<a class="anchor" aria-label="anchor" href="#about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Clean data<a class="anchor" aria-label="anchor" href="#clean-data"><i class="fas fa-link"></i></a>
 </h2>
-<p>The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with <em>Mycobacterium tuberculosis (Mtb)</em>, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against <em>Mtb</em> in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for <em>Mtb</em> infection protection.</p>
-<p>The seven centers that are part of the study are (in alphabetical order):</p>
-<ol style="list-style-type: decimal">
-<li>Colorado State University</li>
-<li>Harvard T.H. Chan School of Public Health</li>
-<li>Seattle Children Hospital</li>
-</ol>
-<p>Colorado State University Team and role of each member:
-Dr. Marcela Henao-Tamayo: Principal Investigator
-Dr. Brendan Podell: Principal Investigator
-Dr. Andres Obregon-Henao: Research Scientist-III
-Dr. Taru S. Dutt: Research Scientist-I</p>
-
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span><span class="op">$</span><span class="va">before_vaccination</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"notch_id"</span>,  <span class="st">"weight"</span>, <span class="st">"cage_number"</span>, <span class="st">"group"</span><span class="op">)</span> <span class="co">#"mouse_number" it couldn't find this for some reason </span></code></pre></div>
+<pre><code>## [1] sex         notch_id    weight      cage_number group      
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+</div>
+<div id="summary-statistics" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"><i class="fas fa-link"></i></a>
+</h2>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Overview</a></div>
-<div class="next"><a href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></div>
+<div class="prev"><a href="data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name.html"><span class="header-section-number">5</span> Data is stored in one excel sheet, each week is one sheet named as the date -&gt; return vector for each sheet name</a></div>
+<div class="next"><a href="body-weight-over-time-graph-and-statistics.html"><span class="header-section-number">7</span> Body weight over time graph and statistics</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#introduction"><span class="header-section-number">2</span> Introduction</a></li>
-<li><a class="nav-link" href="#about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb"><span class="header-section-number">2.1</span> About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)</a></li>
+<li><a class="nav-link" href="#can-also-use-rio-to-read-in-the-data-more-streamlined"><span class="header-section-number">6</span> can also use rio to read in the data, more streamlined</a></li>
+<li><a class="nav-link" href="#clean-data"><span class="header-section-number">6.1</span> Clean data</a></li>
+<li><a class="nav-link" href="#summary-statistics"><span class="header-section-number">6.2</span> Summary statistics</a></li>
 </ul>
 
       <div class="book-extra">

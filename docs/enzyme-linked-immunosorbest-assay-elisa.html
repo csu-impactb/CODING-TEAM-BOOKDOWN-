@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 13 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+<meta name="author" content="Colorado State University Coding Team">
+<meta name="description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 13 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta property="og:type" content="book">
+<meta property="og:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 13 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="twitter:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
+<li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
+<li><a class="" href="data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name.html"><span class="header-section-number">5</span> Data is stored in one excel sheet, each week is one sheet named as the date -&gt; return vector for each sheet name</a></li>
+<li><a class="" href="can-also-use-rio-to-read-in-the-data-more-streamlined.html"><span class="header-section-number">6</span> can also use rio to read in the data, more streamlined</a></li>
+<li><a class="" href="body-weight-over-time-graph-and-statistics.html"><span class="header-section-number">7</span> Body weight over time graph and statistics</a></li>
+<li><a class="" href="weight-loss-over-time-graph-and-statistics.html"><span class="header-section-number">8</span> Weight loss over time graph and statistics</a></li>
+<li><a class="" href="weight-vs-cfu.html"><span class="header-section-number">9</span> Weight vs CFU</a></li>
+<li><a class="" href="weight-vs-elisa-results.html"><span class="header-section-number">10</span> Weight vs ELISA results</a></li>
+<li><a class="" href="weight-vs-lesion-burden.html"><span class="header-section-number">11</span> Weight vs lesion burden</a></li>
+<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">12</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="active" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">13</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="enzyme-linked-immunosorbest-assay-elisa" class="section level1" number="13">
+<h1>
+<span class="header-section-number">13</span> Enzyme-linked immunosorbest assay (ELISA)<a class="anchor" aria-label="anchor" href="#enzyme-linked-immunosorbest-assay-elisa"><i class="fas fa-link"></i></a>
+</h1>
+<p>ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).</p>
+<div id="importance-of-elisa" class="section level4" number="13.0.0.1">
+<h4>
+<span class="header-section-number">13.0.0.1</span> <strong>Importance of ELISA</strong><a class="anchor" aria-label="anchor" href="#importance-of-elisa"><i class="fas fa-link"></i></a>
+</h4>
+<p>An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.</p>
+<p>In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination.</p>
+</div>
+<div id="principle-of-elisa" class="section level4" number="13.0.0.2">
+<h4>
+<span class="header-section-number">13.0.0.2</span> <strong>Principle of ELISA</strong><a class="anchor" aria-label="anchor" href="#principle-of-elisa"><i class="fas fa-link"></i></a>
+</h4>
+<p>ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme’s activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:</p>
+<p><strong>1. Coating multiwell plate with antigen/antibody</strong>: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well.</p>
+<p><strong>2. Blocking</strong>: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent.</p>
+<p><strong>3. Probing</strong>: Probing is the step where we add sample containing antibodies that we want to detect. This will be the primary antibody. If the antibodies against the antigen (which we have coated) are present in the sample, it will bind to the antigen with high affinity.</p>
+<p><strong>4. Washing</strong>: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05% tween-20 (a mild detergent). 0.05% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent.</p>
+<p><strong>5. Detection</strong>: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed.</p>
+<p><strong>6. Signal Measurement</strong>: Finally to detect “if” and “how much” of the antibody is present, a chromogenic substrate (like 3,3’,5,5’-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers.</p>
+<div class="figure">
+<span style="display:block;" id="fig:pressure"></span>
+<img src="DATA/elisa.png" alt="A caption" width="100%"><p class="caption">
+Figure 13.1: A caption
+</p>
+</div>
+</div>
+<div id="read-in-data-from-excel-file" class="section level2" number="13.1">
+<h2>
+<span class="header-section-number">13.1</span> Read in data from excel file<a class="anchor" aria-label="anchor" href="#read-in-data-from-excel-file"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"B2:M9"</span><span class="op">)</span></code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ...</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 5.199999999… 0.05  0.069 6.3E… 0.061 0.122 0.16… 0.145 0.135 6.80… 0.053 0.05 
+## 2 7.900000000… 0.098 0.069 6.80… 0.115 0.202 5.89… 0.134 0.069 0.106 0.05  0.075
+## 3 8.899999999… 0.133 0.119 OVRF… 3.87  2.32  OVRF… 3.85  2.12  OVRF… 3.21  1.02 
+## 4 OVRFLW       3.46  1.16  OVRF… 3.80  2.36  OVRF… 3.70  1.49  OVRF… 3.68  1.63 
+## 5 3.815999999… 1.82  0.446 3.89… 3.42  1.13  OVRF… 2.33  0.608 OVRF… 3.41  1.10 
+## 6 OVRFLW       3.69  1.43  OVRF… 3.66  1.27  3.839 1.74  0.444 2.49… 0.637 0.704</code></pre>
+</div>
+<div id="tidy-the-data" class="section level2" number="13.2">
+<h2>
+<span class="header-section-number">13.2</span> Tidy the data<a class="anchor" aria-label="anchor" href="#tidy-the-data"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Convert all columns to numeric</span>
+
+<span class="va">elisa_raw_data_numeric</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># pivot longer the data</span>
+
+<span class="va">elisa_raw_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_raw_data_numeric</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"od_450nm"</span><span class="op">)</span>
+
+<span class="co"># remove "..." from the first column</span>
+
+<span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span>
+
+<span class="co"># Add new column to the data_frame</span>
+
+<span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy_new</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   well_id od_450nm
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 A1         0.052
+## 2 A2         0.05 
+## 3 A3         0.069
+## 4 A4         0.063
+## 5 A5         0.061
+## 6 A6         0.122</code></pre>
+</div>
+<div id="read-in-second-data-set" class="section level2" number="13.3">
+<h2>
+<span class="header-section-number">13.3</span> Read in second data set<a class="anchor" aria-label="anchor" href="#read-in-second-data-set"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_label_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"Q2:AB9"</span><span class="op">)</span></code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...1
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * ...</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 blank       secon… naïv… 1A-1… 1A-1… 1A-1… 1A-2… 1A-2… 1A-2… 1A-3… 1A-3… 1A-3…
+## 2 1A-4 (1/250 1A-4 … 1A-4… 1B-1… 1B-1… 1B-1… 1B-2… 1B-2… 1B-2… 1B-3… 1B-3… 1B-3…
+## 3 1B-4 (1/250 1B-4 … 1B-4… 2A-1… 2A-1… 2A-1… 2A-2… 2A-2… 2A-2… 2A-3… 2A-3… 2A-3…
+## 4 2B-1 (1/250 2B-1 … 2B-1… 2B-2… 2B-2… 2B-2… 2B-3… 2B-3… 2B-3… 2B-4… 2B-4… 2B-4…
+## 5 3A-1 (1/250 3A-1 … 3A-1… 3A-2… 3A-2… 3A-2… 3A-3… 3A-3… 3A-3… 3A-4… 3A-4… 3A-4…
+## 6 3B-1 (1/250 3B-1 … 3B-1… 3B-2… 3B-2… 3B-2… 3B-3… 3B-3… 3B-3… 3B-4… 3B-4… 3B-4…</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># pivot longer the data</span>
+
+<span class="va">elisa_label_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_label_data</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span>
+
+<span class="co"># remove "..." from the first column</span>
+
+<span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span>
+
+<span class="co"># Add new column to the data_frame</span>
+
+<span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   well_id information  
+##   &lt;chr&gt;   &lt;chr&gt;        
+## 1 A1      blank        
+## 2 A2      secondary    
+## 3 A3      naïve (1/250)
+## 4 A4      1A-1 (1/250  
+## 5 A5      1A-1 (1/1250 
+## 6 A6      1A-1 (1/6250</code></pre>
+</div>
+<div id="join-the-od-table-with-the-information-table" class="section level2" number="13.4">
+<h2>
+<span class="header-section-number">13.4</span> Join the OD table with the information table<a class="anchor" aria-label="anchor" href="#join-the-od-table-with-the-information-table"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">=</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span>, by<span class="op">=</span><span class="st">"well_id"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   well_id od_450nm information  
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;        
+## 1 A1         0.052 blank        
+## 2 A2         0.05  secondary    
+## 3 A3         0.069 naïve (1/250)
+## 4 A4         0.063 1A-1 (1/250  
+## 5 A5         0.061 1A-1 (1/1250 
+## 6 A6         0.122 1A-1 (1/6250</code></pre>
+</div>
+<div id="separate-the-information-tabke-into-sample-id-and-dilution-columns" class="section level2" number="13.5">
+<h2>
+<span class="header-section-number">13.5</span> Separate the information tabke into sample ID and dilution columns<a class="anchor" aria-label="anchor" href="#separate-the-information-tabke-into-sample-id-and-dilution-columns"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"information"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dilution"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].</code></pre>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   well_id od_450nm sample_id   dilution
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   
+## 1 A1         0.052 "blank"     &lt;NA&gt;    
+## 2 A2         0.05  "secondary" &lt;NA&gt;    
+## 3 A3         0.069 "naïve "    1/250)  
+## 4 A4         0.063 "1A-1 "     1/250   
+## 5 A5         0.061 "1A-1 "     1/1250  
+## 6 A6         0.122 "1A-1 "     1/6250</code></pre>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"(/)[0-9]+"</span><span class="op">)</span>,
+         dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"/"</span>, <span class="st">""</span><span class="op">)</span>,
+         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">well_id</span>, <span class="va">sample_id</span>, <span class="va">dilution</span>, <span class="va">od_450nm</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   well_id sample_id   dilution od_450nm
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+## 1 A1      "blank"           NA    0.052
+## 2 A2      "secondary"       NA    0.05 
+## 3 A3      "naïve "         250    0.069
+## 4 A4      "1A-1 "          250    0.063
+## 5 A5      "1A-1 "         1250    0.061
+## 6 A6      "1A-1 "         6250    0.122</code></pre>
+</div>
+<div id="elisa-data-analysis-optimization" class="section level2" number="13.6">
+<h2>
+<span class="header-section-number">13.6</span> ELISA data analysis optimization<a class="anchor" aria-label="anchor" href="#elisa-data-analysis-optimization"><i class="fas fa-link"></i></a>
+</h2>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">12</span> Colony forming units to determine bacterial counts</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#enzyme-linked-immunosorbest-assay-elisa"><span class="header-section-number">13</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="nav-link" href="#read-in-data-from-excel-file"><span class="header-section-number">13.1</span> Read in data from excel file</a></li>
+<li><a class="nav-link" href="#tidy-the-data"><span class="header-section-number">13.2</span> Tidy the data</a></li>
+<li><a class="nav-link" href="#read-in-second-data-set"><span class="header-section-number">13.3</span> Read in second data set</a></li>
+<li><a class="nav-link" href="#join-the-od-table-with-the-information-table"><span class="header-section-number">13.4</span> Join the OD table with the information table</a></li>
+<li><a class="nav-link" href="#separate-the-information-tabke-into-sample-id-and-dilution-columns"><span class="header-section-number">13.5</span> Separate the information tabke into sample ID and dilution columns</a></li>
+<li><a class="nav-link" href="#elisa-data-analysis-optimization"><span class="header-section-number">13.6</span> ELISA data analysis optimization</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-07-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

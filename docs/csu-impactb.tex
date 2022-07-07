@@ -4,20 +4,14 @@
 %
 \documentclass[
 ]{book}
-<<<<<<< HEAD
-=======
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-07-01}
-
->>>>>>> a4943ffeed9733ab8ccbcbda93c2f7a3bdc24773
-\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -88,7 +82,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -131,7 +125,7 @@
 
 \title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
 \author{Colorado State University Coding Team}
-\date{2022-06-09}
+\date{2022-07-07}
 
 \begin{document}
 \maketitle
@@ -164,11 +158,6 @@ The seven centers that are part of the study are (in alphabetical order):
   Harvard T.H. Chan School of Public Health
 \item
   Seattle Children Hospital
-<<<<<<< HEAD
-\item
-  Arizona?
-=======
->>>>>>> a4943ffeed9733ab8ccbcbda93c2f7a3bdc24773
 \end{enumerate}
 
 Colorado State University Team and role of each member:
@@ -183,26 +172,23 @@ Dr.~Taru S. Dutt: Research Scientist-I
 Here is a review of existing methods.
 
 \hypertarget{mouse-weights}{%
-\chapter{Mouse weights}\label{mouse-weights}}
+\chapter{Mouse Weights}\label{mouse-weights}}
 
-Mice are weighed in grams weekly and recorded in an excel worksheet. Column titles are as follows: who\_collected date\_collected sex dob notch\_id mouse\_number weight unit cage\_number group notes
+Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+
+Weights are recorded in an excel worksheet.
+
+Column titles are as follows: who\_collected date\_collected sex dob notch\_id mouse\_number weight unit cage\_number group notes
 
 Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 
 The notes column contains information regarding clinical observations.
 
+good reference: \url{https://elifesciences.org/articles/74419\#s4}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: package 'readxl' was built under R version 4.1.2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
@@ -215,11 +201,7 @@ The notes column contains information regarding clinical observations.
 ## v ggplot2 3.3.5     v purrr   0.3.4
 ## v tibble  3.1.6     v dplyr   1.0.7
 ## v tidyr   1.1.4     v stringr 1.4.0
-## v readr   2.1.2     v forcats 0.5.1
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: package 'readr' was built under R version 4.1.2
+## v readr   2.1.1     v forcats 0.5.1
 \end{verbatim}
 
 \begin{verbatim}
@@ -231,33 +213,44 @@ The notes column contains information regarding clinical observations.
 \hypertarget{read-in-data}{%
 \section{Read in data}\label{read-in-data}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{weight\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\StringTok{"DATA/body\_weights.xlsx"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name}{%
+\chapter{Data is stored in one excel sheet, each week is one sheet named as the date -\textgreater{} return vector for each sheet name}\label{data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name}}
+
+\hypertarget{can-also-use-rio-to-read-in-the-data-more-streamlined}{%
+\chapter{can also use rio to read in the data, more streamlined}\label{can-also-use-rio-to-read-in-the-data-more-streamlined}}
 
 \hypertarget{clean-data}{%
 \section{Clean data}\label{clean-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{weight\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(sex, mouse\_number, weight, cage\_number, group)}
+\NormalTok{data}\SpecialCharTok{$}\NormalTok{before\_vaccination }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{select}\NormalTok{(}\StringTok{"sex"}\NormalTok{, }\StringTok{"notch\_id"}\NormalTok{,  }\StringTok{"weight"}\NormalTok{, }\StringTok{"cage\_number"}\NormalTok{, }\StringTok{"group"}\NormalTok{) }\CommentTok{\#"mouse\_number" it couldn\textquotesingle{}t find this for some reason }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 0 x 5
-## # ... with 5 variables: sex <lgl>, mouse_number <lgl>, weight <lgl>,
-## #   cage_number <lgl>, group <lgl>
+## [1] sex         notch_id    weight      cage_number group      
+## <0 rows> (or 0-length row.names)
 \end{verbatim}
 
 \hypertarget{summary-statistics}{%
 \section{Summary statistics}\label{summary-statistics}}
 
-\hypertarget{graph}{%
-\section{Graph}\label{graph}}
+\hypertarget{body-weight-over-time-graph-and-statistics}{%
+\chapter{Body weight over time graph and statistics}\label{body-weight-over-time-graph-and-statistics}}
+
+\hypertarget{weight-loss-over-time-graph-and-statistics}{%
+\chapter{Weight loss over time graph and statistics}\label{weight-loss-over-time-graph-and-statistics}}
+
+\hypertarget{weight-vs-cfu}{%
+\chapter{Weight vs CFU}\label{weight-vs-cfu}}
+
+\hypertarget{weight-vs-elisa-results}{%
+\chapter{Weight vs ELISA results}\label{weight-vs-elisa-results}}
+
+\hypertarget{weight-vs-lesion-burden}{%
+\chapter{Weight vs lesion burden}\label{weight-vs-lesion-burden}}
 
 \hypertarget{colony-forming-units-to-determine-bacterial-counts}{%
 \chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}}
@@ -523,14 +516,14 @@ level in the data:
 ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
 
 \hypertarget{importance-of-elisa}{%
-\subsubsection{Importance of ELISA}\label{importance-of-elisa}}
+\subsubsection{\texorpdfstring{\textbf{Importance of ELISA}}{Importance of ELISA}}\label{importance-of-elisa}}
 
 An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.
 
 In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination.
 
 \hypertarget{principle-of-elisa}{%
-\subsubsection{Principle of ELISA}\label{principle-of-elisa}}
+\subsubsection{\texorpdfstring{\textbf{Principle of ELISA}}{Principle of ELISA}}\label{principle-of-elisa}}
 
 ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme's activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:
 
@@ -547,7 +540,7 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \textbf{6. Signal Measurement}: Finally to detect ``if'' and ``how much'' of the antibody is present, a chromogenic substrate (like 3,3',5,5'-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{~/Downloads/elisa} \caption{A caption}\label{fig:pressure}
+\includegraphics[width=1\linewidth]{DATA/elisa} \caption{A caption}\label{fig:pressure}
 \end{figure}
 
 \hypertarget{read-in-data-from-excel-file}{%
@@ -577,14 +570,14 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## # A tibble: 6 x 12
-##   ...1     ...2  ...3 ...4     ...5  ...6 ...7     ...8  ...9 ...10  ...11 ...12
-##   <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>   <dbl> <dbl> <chr>  <dbl> <dbl>
-## 1 5.1999~ 0.05  0.069 6.3E-2  0.061 0.122 0.1680~ 0.145 0.135 6.800~ 0.053 0.05 
-## 2 7.9000~ 0.098 0.069 6.8000~ 0.115 0.202 5.8999~ 0.134 0.069 0.106  0.05  0.075
-## 3 8.8999~ 0.133 0.119 OVRFLW  3.87  2.32  OVRFLW  3.85  2.12  OVRFLW 3.21  1.02 
-## 4 OVRFLW  3.46  1.16  OVRFLW  3.80  2.36  OVRFLW  3.70  1.49  OVRFLW 3.68  1.63 
-## 5 3.8159~ 1.82  0.446 3.8940~ 3.42  1.13  OVRFLW  2.33  0.608 OVRFLW 3.41  1.10 
-## 6 OVRFLW  3.69  1.43  OVRFLW  3.66  1.27  3.839   1.74  0.444 2.499~ 0.637 0.704
+##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
+##   <chr>        <dbl> <dbl> <chr> <dbl> <dbl> <chr> <dbl> <dbl> <chr> <dbl> <dbl>
+## 1 5.199999999~ 0.05  0.069 6.3E~ 0.061 0.122 0.16~ 0.145 0.135 6.80~ 0.053 0.05 
+## 2 7.900000000~ 0.098 0.069 6.80~ 0.115 0.202 5.89~ 0.134 0.069 0.106 0.05  0.075
+## 3 8.899999999~ 0.133 0.119 OVRF~ 3.87  2.32  OVRF~ 3.85  2.12  OVRF~ 3.21  1.02 
+## 4 OVRFLW       3.46  1.16  OVRF~ 3.80  2.36  OVRF~ 3.70  1.49  OVRF~ 3.68  1.63 
+## 5 3.815999999~ 1.82  0.446 3.89~ 3.42  1.13  OVRF~ 2.33  0.608 OVRF~ 3.41  1.10 
+## 6 OVRFLW       3.69  1.43  OVRF~ 3.66  1.27  3.839 1.74  0.444 2.49~ 0.637 0.704
 \end{verbatim}
 
 \hypertarget{tidy-the-data}{%
