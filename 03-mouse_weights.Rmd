@@ -1,8 +1,6 @@
 # Mouse Weights
 
-For example, @baazim2022interplay said ... 
-
-Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.As mentioned in @@smith2022host  , Colony forming units in the lungs during TB disease are strongly correlated to patient wieght loss.
 
 Weights are recorded in an excel worksheet. 
 
