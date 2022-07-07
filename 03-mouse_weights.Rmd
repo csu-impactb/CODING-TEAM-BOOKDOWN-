@@ -1,7 +1,13 @@
 # Mouse Weights
 
-Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.As mentioned in @@smith2022host  , Colony forming units in the lungs during TB disease are strongly correlated to patient wieght loss.
+### Overview
+Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease @ [baazim2022interplay]. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans @ [baazim2022interplay]. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration  @[baazim2019cd8],  and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
 
+In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies @ [smith2022host], @ [segueni2016controlled]. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers @ [smith2022host]. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression. 
+
+The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
+
+### Parameters
 Weights are recorded in an excel worksheet. 
 
 Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
@@ -17,9 +23,9 @@ library(readxl)
 library(tidyverse)
 ```
 
-## Read in data
+### Read in data
 
-# Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
+Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
 
 ```{r include=FALSE}
 weight_data <- read_xlsx("DATA/body_weights.xlsx")
@@ -44,7 +50,7 @@ path <- "DATA/body_weights.xlsx"
 multiplesheets(path)
 ```
 
-# can also use rio to read in the data, more streamlined
+### Can also use rio to read in the data, more streamlined
 ```{r include=FALSE}
 library(rio)
 # specifying the path name
@@ -58,39 +64,39 @@ print (data)
 ```
 
 
-## Clean data
+### Clean data
 ```{r}
 data$before_vaccination %>%
  select("sex", "notch_id",  "weight", "cage_number", "group") #"mouse_number" it couldn't find this for some reason 
 ```
 
-## Summary statistics
+### Summary statistics
 ```{r}
 
 ```
 
 
-# Body weight over time graph and statistics
+### Body weight over time graph and statistics
 ```{r}
 
 ```
 
-# Weight loss over time graph and statistics 
+### Weight loss over time graph and statistics 
 ```{r}
 
 ```
 
-# Weight vs CFU
+### Weight vs CFU
 ```{r}
 
 ```
 
-# Weight vs ELISA results 
+### Weight vs ELISA results 
 ```{r}
 
 ```
 
-# Weight vs lesion burden
+### Weight vs lesion burden
 ```{r}
 
 ```

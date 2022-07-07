@@ -4,8 +4,9 @@ introduction
 about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb
 initial-mouse-characteristics
 mouse-weights
+overview-1
+parameters
 read-in-data
-data-is-stored-in-one-excel-sheet-each-week-is-one-sheet-named-as-the-date---return-vector-for-each-sheet-name
 can-also-use-rio-to-read-in-the-data-more-streamlined
 clean-data
 summary-statistics
