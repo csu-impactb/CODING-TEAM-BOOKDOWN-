@@ -62,14 +62,20 @@ Here is a review of existing methods.
 
 <!--chapter:end:02-initial_mouse_characteristics.Rmd-->
 
-# Mouse weights
+# Mouse Weights
 
 
-Mice are weighed in grams weekly and recorded in an excel worksheet. Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
+Mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+
+Weights are recorded in an excel worksheet. 
+
+Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
 
 Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 
 The notes column contains information regarding clinical observations. 
+
+good reference: https://elifesciences.org/articles/74419#s4
 
 ```{r}
 library(readxl)
@@ -77,14 +83,50 @@ library(tidyverse)
 ```
 
 ## Read in data
-```{r}
-weight_data <- read_xlsx("DATA/body_weights.xlsx")
+
+# Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
+```{r include=FALSE}
+#weight_data <- read_xlsx("DATA/body_weights.xlsx")
+weight_data <- read_xlsx("/Users/SarahCooper/Desktop/body_weights.xlsx")
+excel_sheets("/Users/SarahCooper/Desktop/body_weights.xlsx") #lists names of each sheet
+
+multiplesheets <- function(fname) {
+   
+  # getting info about all excel sheets
+  sheets <- readxl::excel_sheets(fname)
+  tibble <- lapply(sheets, function(x) readxl::read_excel(fname, sheet = x))
+  data_frame <- lapply(tibble, as.data.frame)
+    
+  # assigning names to data frames
+  names(data_frame) <- sheets
+    
+  # print data frame
+  print(data_frame)
+}
+  
+# specifying the path name
+path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+multiplesheets(path)
 ```
+
+# can also use rio to read in the data, more streamlined
+```{r include=FALSE}
+library(rio)
+# specifying the path name
+path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+  
+# reading data from all sheets
+data <- import_list(path)
+  
+# print data
+print (data)
+```
+
 
 ## Clean data
 ```{r}
-weight_data %>%
-  select(sex, mouse_number, weight, cage_number, group)
+data$before_vaccination %>%
+ select("sex", "notch_id",  "weight", "cage_number", "group") #"mouse_number" it couldn't find this for some reason 
 ```
 
 ## Summary statistics
@@ -92,7 +134,28 @@ weight_data %>%
 
 ```
 
-## Graph
+
+# Body weight over time graph and statistics
+```{r}
+
+```
+
+# Weight loss over time graph and statistics 
+```{r}
+
+```
+
+# Weight vs CFU
+```{r}
+
+```
+
+# Weight vs ELISA results 
+```{r}
+
+```
+
+# Weight vs lesion burden
 ```{r}
 
 ```
@@ -276,30 +339,30 @@ cfu_stats
 
 ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
 
-#### Importance of ELISA
+#### **Importance of ELISA**
 
 An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.
 
 In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination. 
 
-#### Principle of ELISA
+#### **Principle of ELISA**
 
 ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme's activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:
 
-1. Coating multiwell plate with antigen/antibody: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well. 
+**1. Coating multiwell plate with antigen/antibody**: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well. 
 
-2. Blocking: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent. 
+**2. Blocking**: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent. 
 
-3. Probing: Probing is the step where we add sample containing antibodies that we want to detect. This will be the primary antibody. If the antibodies against the antigen (which we have coated) are present in the sample, it will bind to the antigen with high affinity. 
+**3. Probing**: Probing is the step where we add sample containing antibodies that we want to detect. This will be the primary antibody. If the antibodies against the antigen (which we have coated) are present in the sample, it will bind to the antigen with high affinity. 
 
-4. Washing: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05% tween-20 (a mild detergent). 0.05% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent. 
+**4. Washing**: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05% tween-20 (a mild detergent). 0.05% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent. 
 
-5. Detection: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed. 
+**5. Detection**: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed. 
 
-6. Signal Measurement: Finally to detect "if" and "how much" of the antibody is present, a chromogenic substrate (like 3,3',5,5'-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers. 
+**6. Signal Measurement**: Finally to detect "if" and "how much" of the antibody is present, a chromogenic substrate (like 3,3',5,5'-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers. 
 
 ```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("~/Downloads/elisa.png")
+knitr::include_graphics("DATA/elisa.png")
 ```
 
 ## Read in data from excel file
@@ -396,6 +459,9 @@ tidy_elisa_data <- tidy_elisa_data %>%
 
 head(tidy_elisa_data)
 ```
+
+## ELISA data analysis optimization
+
 
 
 <!--chapter:end:05-elisa.Rmd-->
