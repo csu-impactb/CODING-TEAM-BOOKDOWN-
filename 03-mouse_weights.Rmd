@@ -21,10 +21,10 @@ library(tidyverse)
 ## Read in data
 
 # Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
+
 ```{r include=FALSE}
-#weight_data <- read_xlsx("DATA/body_weights.xlsx")
-weight_data <- read_xlsx("/Users/SarahCooper/Desktop/body_weights.xlsx")
-excel_sheets("/Users/SarahCooper/Desktop/body_weights.xlsx") #lists names of each sheet
+weight_data <- read_xlsx("DATA/body_weights.xlsx")
+excel_sheets("DATA/body_weights.xlsx") #lists names of each sheet
 
 multiplesheets <- function(fname) {
    
@@ -41,7 +41,7 @@ multiplesheets <- function(fname) {
 }
   
 # specifying the path name
-path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+path <- "DATA/body_weights.xlsx"
 multiplesheets(path)
 ```
 
@@ -49,7 +49,7 @@ multiplesheets(path)
 ```{r include=FALSE}
 library(rio)
 # specifying the path name
-path <- "/Users/SarahCooper/Desktop/body_weights.xlsx"
+path <- "DATA/body_weights.xlsx"
   
 # reading data from all sheets
 data <- import_list(path)
