@@ -129,4 +129,18 @@ head(tidy_elisa_data)
 
 ## ELISA data analysis optimization
 
+ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data:
+
+**1. With standard curve:** ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
+different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.
+
+**2. Without standard curve:** Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens. 
+Therefore, plotting a standard curve is not feasible as there is no previous information available for antibody concentration or type of antibody. Also, because antibody response to a vaccine will differ depending on the individual, 
+it is not practical to generate a calibration curve from which absolute concentrations can be extrapolated.
+For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples where the titer is reported as the highest sample dilutions that produces a signal reliably above the background. 
+
+For example: 
+
+
+
 
