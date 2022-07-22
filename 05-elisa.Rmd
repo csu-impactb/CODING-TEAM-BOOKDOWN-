@@ -32,6 +32,7 @@ knitr::include_graphics("DATA/elisa.png")
 ```{r}
 library(readxl)
 library(tidyverse)
+library(minpack.lm)
 ```
 
 ```{r}
@@ -148,13 +149,28 @@ Let's have a look at these methods, how we can apply these methods in our data, 
 **1. Fitting sigmoid model:** In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
 
 ```{r}
-elisa_serial_dilution_data <- read_excel("DATA/elisa_data_serial_dilution.xlsx"
-                               )
-# pivot longer the data
+elisa_example_data <- read_excel("DATA/example_elisa_data.xlsx")
 
-elisa_serial_dilution_data_tidy <- pivot_longer(data = elisa_label_data, cols = "...1":"...12", names_to = "well_id", values_to = "information")
+# separate 1/
 
-head(elisa_serial_dilution_data)
+elisa_example_data <- separate(elisa_example_data, col = "dilution", into = c("numerator", "denomenator"), sep = "\\/")
+
+elisa_example_data <- elisa_example_data %>% 
+  mutate_if(is.character, as.numeric)
+
+elisa_example_data$dilution <- elisa_example_data$numerator / elisa_example_data$denomenator  
+
+elisa_example_data <- elisa_example_data %>%
+  mutate(log_dilution = log(dilution, base = 3))
+
+head(elisa_example_data)
+
+mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+data = elisa_example_data, 
+start = list (a = 4, d= 0, c = -5, b = 1))
+
+mod_1
+  
 ```
 
 
