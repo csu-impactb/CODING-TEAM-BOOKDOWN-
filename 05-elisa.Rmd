@@ -137,9 +137,18 @@ different concentrations of the known analyte and the concentration in the sampl
 **2. Without standard curve:** Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens. 
 Therefore, plotting a standard curve is not feasible as there is no previous information available for antibody concentration or type of antibody. Also, because antibody response to a vaccine will differ depending on the individual, 
 it is not practical to generate a calibration curve from which absolute concentrations can be extrapolated.
-For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples where the titer is reported as the highest sample dilutions that produces a signal reliably above the background. 
+For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the  following three methods:
 
-For example: 
+1. Fitting sigmoid model
+2. Endpoint titer method
+3: Absorbance summation method
+
+Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
+
+1, Fitting sigmoid model: 
+
+
+
 
 
 
