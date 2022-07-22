@@ -69,16 +69,14 @@ print (data)
 dataset <- data %>%
  select("sex", "mouse_number", "weight", "cage_number", "group")
 
-<<<<<<< HEAD
-### Summary statistics
+```
+
+
 ```{r}
-=======
-head(dataset)
 
 # combining columns mouse_number and cage_number
 
 dataset$mouse_id <- paste(dataset$mouse_number, "-", dataset$cage_number)
->>>>>>> 45fe04f84517159c5efc0bd31819dbdd069a9328
 
 ```
 
