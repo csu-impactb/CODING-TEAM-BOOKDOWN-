@@ -145,9 +145,11 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
 
-1. Fitting sigmoid model: In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. For example: 
+1. Fitting sigmoid model: In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
 
-Figure here:
+```{r}
+
+```
 
 
 
