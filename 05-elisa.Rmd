@@ -173,6 +173,12 @@ mod_1
   
 ```
 
+```{r}
+elisa_example_data %>%
+  ggplot(aes(x = log_dilution, y = absorbance)) +
+  geom_point() +
+  geom_line()
+```
 
 
 
