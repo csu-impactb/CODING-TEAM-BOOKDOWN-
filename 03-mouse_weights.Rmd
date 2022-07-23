@@ -66,7 +66,7 @@ print (data)
 
 ### Clean data
 ```{r}
-dataset <- data %>%
+dataset <- data$before_vaccination %>%
  select("sex", "mouse_number", "weight", "cage_number", "group")
 
 ```

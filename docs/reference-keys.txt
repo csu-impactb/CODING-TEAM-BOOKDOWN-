@@ -9,7 +9,6 @@ parameters
 read-in-data
 can-also-use-rio-to-read-in-the-data-more-streamlined
 clean-data
-summary-statistics
 body-weight-over-time-graph-and-statistics
 weight-loss-over-time-graph-and-statistics
 weight-vs-cfu

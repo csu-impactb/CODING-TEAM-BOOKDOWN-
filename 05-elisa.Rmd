@@ -33,6 +33,7 @@ knitr::include_graphics("DATA/elisa.png")
 library(readxl)
 library(tidyverse)
 library(minpack.lm)
+library(broom)
 ```
 
 ```{r}
@@ -174,13 +175,19 @@ mod_1
 ```
 
 ```{r}
+elisa_example_data <- elisa_example_data %>%
+  mutate(fitted = predict(mod_1))
+
 elisa_example_data %>%
   ggplot(aes(x = log_dilution, y = absorbance)) +
   geom_point() +
-  geom_line()
+  geom_line(aes(y=fitted), color = "blue")
 ```
 
 
+```{r}
+
+```
 
 
 

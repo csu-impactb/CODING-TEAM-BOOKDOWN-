@@ -4,10 +4,14 @@
 %
 \documentclass[
 ]{book}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-07-22}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -116,15 +120,11 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-07-07}
 
 \begin{document}
 \maketitle
@@ -198,35 +198,16 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: package 'readxl' was built under R version 4.1.2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.5     v purrr   0.3.4
-## v tibble  3.1.6     v dplyr   1.0.7
-## v tidyr   1.1.4     v stringr 1.4.0
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.7     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.0
 ## v readr   2.1.2     v forcats 0.5.1
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: package 'readr' was built under R version 4.1.2
-\end{verbatim}
-
-\begin{verbatim}
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -245,18 +226,18 @@ Data is stored in one excel sheet, each week is one sheet named as the date -\te
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{data}\SpecialCharTok{$}\NormalTok{before\_vaccination }\SpecialCharTok{\%\textgreater{}\%}
- \FunctionTok{select}\NormalTok{(}\StringTok{"sex"}\NormalTok{, }\StringTok{"notch\_id"}\NormalTok{,  }\StringTok{"weight"}\NormalTok{, }\StringTok{"cage\_number"}\NormalTok{, }\StringTok{"group"}\NormalTok{) }\CommentTok{\#"mouse\_number" it couldn\textquotesingle{}t find this for some reason }
+\NormalTok{dataset }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{before\_vaccination }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{select}\NormalTok{(}\StringTok{"sex"}\NormalTok{, }\StringTok{"mouse\_number"}\NormalTok{, }\StringTok{"weight"}\NormalTok{, }\StringTok{"cage\_number"}\NormalTok{, }\StringTok{"group"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] sex         notch_id    weight      cage_number group      
-## <0 rows> (or 0-length row.names)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# combining columns mouse\_number and cage\_number}
 
-\hypertarget{summary-statistics}{%
-\subsection{Summary statistics}\label{summary-statistics}}
+\NormalTok{dataset}\SpecialCharTok{$}\NormalTok{mouse\_id }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(dataset}\SpecialCharTok{$}\NormalTok{mouse\_number, }\StringTok{"{-}"}\NormalTok{, dataset}\SpecialCharTok{$}\NormalTok{cage\_number)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{body-weight-over-time-graph-and-statistics}{%
 \subsection{Body weight over time graph and statistics}\label{body-weight-over-time-graph-and-statistics}}
@@ -456,19 +437,21 @@ level in the data:
 
 \begin{verbatim}
 ## # A tibble: 146 x 9
-##    organ count_date           who_plated who_counted groups mouse dilution  CFUs
-##    <chr> <chr>                <chr>      <chr>       <chr>  <chr>    <dbl> <dbl>
-##  1 lung  "\"February 21 2022~ BK         BK          group~ A            3    53
-##  2 lung  "\"February 21 2022~ BK         BK          group~ A            5     4
-##  3 lung  "\"February 21 2022~ BK         BK          group~ A            6     2
-##  4 lung  "\"February 21 2022~ BK         BK          group~ B            3   119
-##  5 lung  "\"February 21 2022~ BK         BK          group~ B            4    48
-##  6 lung  "\"February 21 2022~ BK         BK          group~ B            5    18
-##  7 lung  "\"February 21 2022~ BK         BK          group~ C            3   120
-##  8 lung  "\"February 21 2022~ BK         BK          group~ C            4    32
-##  9 lung  "\"February 21 2022~ BK         BK          group~ D            3    53
-## 10 lung  "\"February 21 2022~ BK         BK          group~ D            4    31
-## # ... with 136 more rows, and 1 more variable: CFUs_per_ml <dbl>
+##    organ count_date           who_p~1 who_c~2 groups mouse dilut~3  CFUs CFUs_~4
+##    <chr> <chr>                <chr>   <chr>   <chr>  <chr>   <dbl> <dbl>   <dbl>
+##  1 lung  "\"February 21 2022~ BK      BK      group~ A           3    53    66.2
+##  2 lung  "\"February 21 2022~ BK      BK      group~ A           5     4     5  
+##  3 lung  "\"February 21 2022~ BK      BK      group~ A           6     2     2.5
+##  4 lung  "\"February 21 2022~ BK      BK      group~ B           3   119   149. 
+##  5 lung  "\"February 21 2022~ BK      BK      group~ B           4    48    60  
+##  6 lung  "\"February 21 2022~ BK      BK      group~ B           5    18    22.5
+##  7 lung  "\"February 21 2022~ BK      BK      group~ C           3   120   150  
+##  8 lung  "\"February 21 2022~ BK      BK      group~ C           4    32    40  
+##  9 lung  "\"February 21 2022~ BK      BK      group~ D           3    53    66.2
+## 10 lung  "\"February 21 2022~ BK      BK      group~ D           4    31    38.8
+## # ... with 136 more rows, and abbreviated variable names 1: who_plated,
+## #   2: who_counted, 3: dilution, 4: CFUs_per_ml
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{create-initial-report-information-for-these-data}{%
@@ -571,6 +554,7 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(minpack.lm)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -831,6 +815,95 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \hypertarget{elisa-data-analysis-optimization}{%
 \section{ELISA data analysis optimization}\label{elisa-data-analysis-optimization}}
+
+ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data:
+
+\textbf{1. With standard curve:} ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
+different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.
+
+\textbf{2. Without standard curve:} Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens.
+Therefore, plotting a standard curve is not feasible as there is no previous information available for antibody concentration or type of antibody. Also, because antibody response to a vaccine will differ depending on the individual,
+it is not practical to generate a calibration curve from which absolute concentrations can be extrapolated.
+For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the following three methods:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Fitting sigmoid model
+\item
+  Endpoint titer method
+  3: Absorbance summation method
+\end{enumerate}
+
+Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
+
+\textbf{1. Fitting sigmoid model:} In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/example\_elisa\_data.xlsx"}\NormalTok{)}
+
+\CommentTok{\# separate 1/}
+
+\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_example\_data, }\AttributeTok{col =} \StringTok{"dilution"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denomenator"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
+
+\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
+
+\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{dilution }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data}\SpecialCharTok{$}\NormalTok{numerator }\SpecialCharTok{/}\NormalTok{ elisa\_example\_data}\SpecialCharTok{$}\NormalTok{denomenator  }
+
+\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_dilution =} \FunctionTok{log}\NormalTok{(dilution, }\AttributeTok{base =} \DecValTok{3}\NormalTok{))}
+
+\FunctionTok{head}\NormalTok{(elisa\_example\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   numerator denomenator absorbance dilution log_dilution
+##       <dbl>       <dbl>      <dbl>    <dbl>        <dbl>
+## 1         1          30       4    0.0333          -3.10
+## 2         1          90       3.73 0.0111          -4.10
+## 3         1         270       2.34 0.00370         -5.10
+## 4         1         810       1.1  0.00123         -6.10
+## 5         1        2430       0.51 0.000412        -7.10
+## 6         1        7290       0.22 0.000137        -8.10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
+\AttributeTok{data =}\NormalTok{ elisa\_example\_data, }
+\AttributeTok{start =} \FunctionTok{list}\NormalTok{ (}\AttributeTok{a =} \DecValTok{4}\NormalTok{, }\AttributeTok{d=} \DecValTok{0}\NormalTok{, }\AttributeTok{c =} \SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\AttributeTok{b =} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{mod\_1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Nonlinear regression model
+##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
+##    data: elisa_example_data
+##        a        d        c        b 
+##  4.12406  0.04532 -5.31056  7.62972 
+##  residual sum-of-squares: 0.02221
+## 
+## Number of iterations to convergence: 9 
+## Achieved convergence tolerance: 1.49e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-27-1.pdf}
 
   \bibliography{book.bib,packages.bib}
 
