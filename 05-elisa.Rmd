@@ -147,7 +147,9 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
 
-**1. Fitting sigmoid model:** In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
+## **1. Fitting sigmoid model:** 
+
+In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
 
 ```{r}
 elisa_example_data <- read_excel("DATA/example_elisa_data.xlsx")
@@ -170,10 +172,18 @@ mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = elisa_example_data, 
 start = list (a = 4, d= 0, c = -5, b = 1))
 
+# a = maximum absorbance
+# d = minimum absobance
+# c = point of maximum growith (dilition where the curve is straight line)
+# b = slope at c
+
 mod_1
 
 summary(mod_1)
 
+```
+### Fitted model curve
+```{r}
 tidy_params <- mod_1 %>% tidy()
 
 a <- tidy_params$estimate[tidy_params$term == "a"]
@@ -181,10 +191,9 @@ b <- tidy_params$estimate[tidy_params$term == "b"]
 c <- tidy_params$estimate[tidy_params$term == "c"]
 d <- tidy_params$estimate[tidy_params$term == "d"]
 
-  
-```
+elisa_example_data <- elisa_example_data %>%
+  mutate(fitted = predict(mod_1))
 
-```{r}
 elisa_example_data <- elisa_example_data %>%
   mutate(fitted = predict(mod_1))
 
@@ -194,12 +203,20 @@ elisa_example_data %>%
   geom_line(aes(y=fitted), color = "blue")
 ```
 
+## Endpoint titer method
 
-## End point titer
+The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). **The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.** This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.
 
 ```{r}
 endpoint_titer <- c * (((a - d) / (0.2 - d)) - 1) ^ (1 / b)
+
+summary(endpoint_titer)
+
+endpoint_titer
+
 ```
+
+
 
 
 
