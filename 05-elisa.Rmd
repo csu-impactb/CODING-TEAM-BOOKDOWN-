@@ -310,22 +310,15 @@ mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = elisa_example_data, 
 start = list (a = 4, d= 0, c = -8, b = 1))
 
-tidy_params <- mod_1 %>% tidy()
 
-a <- tidy_params$estimate[tidy_params$term == "a"]
-b <- tidy_params$estimate[tidy_params$term == "b"]
-c <- tidy_params$estimate[tidy_params$term == "c"]
-d <- tidy_params$estimate[tidy_params$term == "d"]
+fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
+  mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+data = df_elisa,
+start = list(a = start_a, d = start_d, c = start_c, b = start_b))
+  return(mod_1)
+}
 
-elisa_data_calculated <- elisa_data_nested %>%
-  mutate(fitted = predict(mod_1))
+fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1)
 
-elisa_example_data <- elisa_example_data %>%
-  mutate(fitted = predict(mod_1))
-
-elisa_example_data %>%
-  ggplot(aes(x = log_dilution, y = absorbance)) +
-  geom_point() +
-  geom_line(aes(y=fitted), color = "blue")
 ```
 
