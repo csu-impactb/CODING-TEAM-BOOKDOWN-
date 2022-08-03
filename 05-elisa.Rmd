@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Enzyme-linked immunosorbest assay (ELISA)
 
 ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
@@ -43,7 +48,7 @@ elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_na
 head(elisa_raw_data)
 ```
 
-## Tidy the data
+### Tidy the data
 
 ```{r}
 
@@ -72,7 +77,7 @@ elisa_raw_data_tidy_new <- elisa_raw_data_tidy_new %>%
 head(elisa_raw_data_tidy_new)
 
 ```
-## Read in second data set
+### Read in second data set
 
 ```{r}
 elisa_label_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "Q2:AB9")
@@ -101,7 +106,7 @@ elisa_label_data_tidy_new <- elisa_label_data_tidy_new %>%
 head(elisa_label_data_tidy_new)
 ```
 
-## Join the OD table with the information table
+## #Join the OD table with the information table
 
 ```{r}
 
@@ -110,7 +115,7 @@ elisa_data = elisa_raw_data_tidy_new %>% inner_join(elisa_label_data_tidy_new, b
 head(elisa_data)
 ```
 
-## Separate the information tabke into sample ID and dilution columns
+### Separate the information table into sample ID and dilution columns
 
 ```{r}
 tidy_elisa_data <- separate(elisa_data, col = "information", into = c("sample_id", "dilution"), sep = "\\(")
@@ -147,7 +152,7 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
 
-## **1. Fitting sigmoid model:** 
+### **1. Fitting sigmoid model:** 
 
 In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
 
@@ -182,7 +187,7 @@ mod_1
 summary(mod_1)
 
 ```
-### Fitted model curve
+#### Fitted model curve
 ```{r}
 tidy_params <- mod_1 %>% tidy()
 
@@ -203,7 +208,7 @@ elisa_example_data %>%
   geom_line(aes(y=fitted), color = "blue")
 ```
 
-## Endpoint titer method
+### 2. Endpoint titer method
 
 The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). **The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.** This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.
 
@@ -216,8 +221,111 @@ endpoint_titer
 
 ```
 
+### Absorbance summation method
+
+In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:
+
+```{r}
+AS = 0.04 + 0.04 + 0.05 + 0.05 + 0.06 + 0.1 + 0.22 + 0.51 + 1.1 + 2.34 + 3.73 + 4.0
+
+AS
+
+```
+
+## Use the the data analysis models in our data 
+
+The presented data is from a mouse study. In this data, presence of IgG antibody has been evaluated against receptor binding domain (RBD) of SARS-CoV-2 virus in two different groups of mice. We need to elucidate which group has higher concentration of the antibodies. 
+
+### read in the data
+
+```{r}
+elisa_data <- read_excel("DATA/elisa_data_serial_dilution.xlsx")
+```
+
+### make the tidy data
+
+```{r}
+
+elisa_data <- pivot_longer(data = elisa_data, cols = "Mouse_1":"Mouse_5", names_to = "mouse_id", values_to = "absorbance")
+
+elisa_data
+
+# separate dilution column and convert it to log2
+
+elisa_data <- separate(elisa_data, col = "Dilution", into = c("numerator", "denomenator"), sep = "\\/")
+
+elisa_data <- elisa_data %>% 
+  transform(numerator = as.numeric(numerator),
+            denomenator = as.numeric(denomenator))
+
+elisa_data <- elisa_data %>%
+  mutate(dilution = elisa_data$numerator / elisa_data$denomenator) 
+
+elisa_data <- elisa_data %>%
+  mutate(log_dilution = log2(dilution))
+
+elisa_data
+
+```
 
 
+```{r}
+# converting data inti dataframe
+
+elisa_data_df <- elisa_data %>% 
+  group_by(Groups, mouse_id) %>% 
+  summarize(log_dilution = log_dilution, absorbance = absorbance)
+
+elisa_data_df
+
+elisa_data_nested <- elisa_data %>%
+  group_by(Groups, mouse_id) %>%
+  nest()
+
+elisa_data_nested
+
+```
 
 
+```{r}
+# plot the curves to evaluate the a, d, c, and b
+
+elisa_data %>%
+  ggplot(aes(x = log_dilution, y = absorbance)) +
+  geom_point() +
+  geom_line() + 
+  facet_wrap(Groups ~ mouse_id)
+```
+
+Based on the curve, the values are: 
+
+a = 4, 
+d = 0
+c = 2
+b = 1
+
+### Fitting the model into the data
+```{r}
+mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+data = elisa_example_data, 
+start = list (a = 4, d= 0, c = -8, b = 1))
+
+tidy_params <- mod_1 %>% tidy()
+
+a <- tidy_params$estimate[tidy_params$term == "a"]
+b <- tidy_params$estimate[tidy_params$term == "b"]
+c <- tidy_params$estimate[tidy_params$term == "c"]
+d <- tidy_params$estimate[tidy_params$term == "d"]
+
+elisa_data_calculated <- elisa_data_nested %>%
+  mutate(fitted = predict(mod_1))
+
+elisa_example_data <- elisa_example_data %>%
+  mutate(fitted = predict(mod_1))
+
+elisa_example_data %>%
+  ggplot(aes(x = log_dilution, y = absorbance)) +
+  geom_point() +
+  geom_line(aes(y=fitted), color = "blue")
+```
 
