@@ -195,37 +195,6 @@ elisa_example_data %>%
 ```
 
 
-```{r}
-elisa_example_data %>%
-  ggplot(aes(x = log_dilution, y = absorbance)) +
-  geom_point()
-
-
-mod_1 <- nlsLM(absorbance ~ ((a - d) / (1 + (log_dilution / c) ^ b)) + d,
-               data = elisa_example_data,
-               start = list(a = 4, b = 1, c = -5, d = 0))
-mod_1
-
-summary(mod_1)
-
-tidy_params <- mod_1 %>% tidy()
-
-a <- tidy_params$estimate[tidy_params$term == "a"]
-b <- tidy_params$estimate[tidy_params$term == "b"]
-c <- tidy_params$estimate[tidy_params$term == "c"]
-d <- tidy_params$estimate[tidy_params$term == "d"]
-
-elisa_example_data <- elisa_example_data %>%
-  mutate(fitted = predict(mod_1))
-
-elisa_example_data %>%
-  ggplot(aes(x = log_dilution, y = absorbance)) +
-  geom_point() +
-  geom_line(aes(y = fitted), color = "red")
-
-
-```
-
 ## End point titer
 
 ```{r}
