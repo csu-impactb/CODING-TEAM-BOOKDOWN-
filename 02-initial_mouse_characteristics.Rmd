@@ -1,3 +1,59 @@
 # Initial mouse characteristics
 
-Here is a review of existing methods.
+At the start of each experiment with a mouse model, we record several measurements
+or characteristics of each mouse. We record these measurements along with an identifier
+for each mouse (for example, based on tags or ear notches), so that we can later 
+link the initial characteristics of each mouse with later measurements on the same 
+mouse. 
+
+The values that we initially record for each mouse include: 
+
+- `group`: An identifier for the experimental group to which the mouse
+is assigned (e.g., "Control", "Group 1")
+- `group_detail`: A longer description of the mouse's treatment group 
+(e.g., "Vaccinated with vaccine candidate A at 4 and 8 weeks")
+- `notch_id`: The number that corresponds with the ear notch pattern of the
+mouse, which together with the mouse's experimental group provides a unique
+identifier for each mouse in the experiment
+- `mouse_number`: The mouse's group number and notch ID combined; this provides
+a unique identifier for each mouse in the experiment
+- `cage_number`: The number of the cage to which the mouse is first assigned. 
+This may change over the course of the experiment, as mice might be removed from 
+a cage due to fighting, etc. Any of these later changes of cage will be 
+recorded [where]
+- `sex`: Whether the mouse is male ("m") or female ("f")
+- `age`: 
+- `strain`
+
+We have created a spreadsheet template that can be used to record these data,
+which you can download by clicking here. Here is an example of how the first
+rows of this template might look once it's filled out:
+
+```{r}
+
+```
+
+This template should be used at the
+initial time when mice are brought into the experiment. The file format is an
+Excel file, so you can use it by saving it to your computer and then opening and
+recording data with Excel. Later code in this chapter will read in a file in
+this template format to provide basic summaries of the data. Later code will
+read in these files to record the data in a project-wide database, which will
+allow us to integrate it with other data collected over the course of the
+experiment.
+
+[Rules for naming the file. Include experiment name / study ID?]
+
+
+
+
+-----------------------------------------------------------------------------
+
+Metadata for an experiment: 
+
+- `species`
+- `start_date`
+- `end_date`
+- `experimental_groups`
+
+
