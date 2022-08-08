@@ -39,6 +39,7 @@ library(readxl)
 library(tidyverse)
 library(minpack.lm)
 library(broom)
+library(purrr)
 ```
 
 ```{r}
@@ -304,12 +305,9 @@ d = 0
 c = 2
 b = 1
 
-### Creating a function for fitting model and fitting the model into the data
+## Creating a function for fitting model 
 ```{r}
-mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
-data = elisa_example_data, 
-start = list (a = 4, d= 0, c = -8, b = 1))
-
+# Creating a function for fitted model
 
 fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
   mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
@@ -317,18 +315,55 @@ data = df_elisa,
 start = list(a = start_a, d = start_d, c = start_c, b = start_b))
   return(mod_1)
 }
+```
 
+### Fitting the model into the data
+
+```{r}
 fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1)
+```
+
+### Apply the fitted model function to the whole dataframe
+
+```{r}
+
+elisa_fitted_data <- elisa_data_nested %>%
+  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, start_d = 0, start_c = -8, start_b = 1)))
+
+elisa_fitted_data
+```
+
+### Take out the summary of the data
+
+```{r}
+elisa_fitted_data_summary <- elisa_fitted_data %>%
+  mutate(fitted_data_summary = purrr::map(fitted_data, broom::glance))
+
+unnested <- elisa_fitted_data_summary %>%
+  unnest(elisa_fitted_data_summary) %>%
+  ungroup() %>%
+  dplyr::select(Groups, mouse_id, fitted_data)
+
+unnested$fitted_data[[1]]
+
+# Another way
+
+elisa_fitted_data_summary %>% 
+  unnest(fitted_data_summary)
 
 ```
+
+
+
+
+
+
 
 ### Creating a function for endpoint titer model and fitting the model into the data
 
 ```{r}
 endpoint_titer_elisa <- function(df_elisa, start_a, start_d, start_c, start_b, back_value) {
   endpoint_titer <- c * (((a - d) / (back_value - d)) - 1) ^ (1 / b)
-  data = df_elisa
-start = list(a = start_a, d = start_d, c = start_c, b = start_b)
   return(endpoint_titer)
 }
 
