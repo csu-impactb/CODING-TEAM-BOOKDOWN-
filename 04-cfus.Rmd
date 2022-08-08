@@ -70,7 +70,11 @@ for(i in 1:length(sheet_names)){
 all_data <- bind_rows(merged_data, .id = "column_label") %>% 
     select(-column_label)
   
+head(merged_data)
+head(all_data)
+  
 ```
+## Example one
 
 ## Exploratory analysis and quality checks
 
@@ -100,11 +104,11 @@ the following date or dates:
 all_data %>%
   select(organ, who_plated, who_counted, count_date) %>%
   distinct()
+
+head(all_data)
 ```
 
 **Distribution of CFUs at each dilution:**
-
-WE NEED TO ADD SAMPLE CFU PLOTS
 
 Here's a plot that shows how many plates were too numerous to count at each 
 dilution level: 
@@ -119,8 +123,11 @@ level in the data:
 tidy_cfu_data <- all_data %>%
   mutate(dilution = str_extract(dilution, "[0-9]+"),
          dilution = as.numeric(dilution)) %>%
-  filter(CFUs >= 10 & CFUs <= 75) %>%
-  mutate(CFUs = as.numeric(CFUs))
+  filter((CFUs >= 5 & CFUs <= 95) | group == "Control") %>%
+  mutate(CFUs = as.numeric(CFUs)) 
+
+
+head(tidy_cfu_data)
 ```
 
 ## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
@@ -128,18 +135,37 @@ tidy_cfu_data <- all_data %>%
 # Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().
 meta <- read_excel(path, sheet = "metadata")
 
-tidy_cfu_meta_joined <- inner_join(tidy_cfu_data, meta) %>%
-  group_by(groups) %>% 
-  mutate(CFUs_per_ml = (CFUs * (dilution_factor^2) * (total_resuspension_mL/volume_plated_ul) * 10)) %>%
-  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  CFUs, CFUs_per_ml) %>%
+tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
+  group_by(group) %>% 
+  mutate(CFUs_per_ml = (CFUs * (dilution_factor^dilution) * 
+                          (total_resuspension_mL/volume_plated_ul) * 1000)) %>%
+  select(organ, count_date, who_plated, who_counted, group,  mouse, dilution,  
+         CFUs, CFUs_per_ml) %>% 
   ungroup()
 
-tidy_cfu_meta_joined
+head(tidy_cfu_meta_joined)
 ```
 
 ## Create initial report information for these data
 ```{r}
+tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
+  filter(organ == "lung") %>%
+  mutate(group = fct_relevel(group, "Inoculum",
+            "Control", "Day_3", "Day_7",
+            "Day_14", "Day_28", "Day_39", "Day_63")) %>%
+  ggplot(aes(x = group, y = log10(CFUs_per_ml), fill = group))+
+  stat_boxplot( aes(x = group, y = log10(CFUs_per_ml)), 
+    geom='errorbar', linetype=1, width=0.5)+ 
+  geom_boxplot(aes(group = group), fill = NA, show.legend = FALSE, color = "lightgrey")+
+  geom_point(show.legend = FALSE)+
+  labs(title = paste0("CFUs in early infected mouse lung"), x = "Group", y = "log10(CFU/mL)",
+       color = "Group")+
+  guides(shape = "none")+
+  theme_minimal()+
+  stat_compare_means(label = "p.signif", method = "t.test", ref.group = "Control") + 
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 8))
 
+tidy_lung_cfu_plot
 ```
 
 
@@ -160,7 +186,7 @@ cfu_stats
 ```
 
 ## Save processed data to database
-## Example one
+
 
 ## Example two
 
