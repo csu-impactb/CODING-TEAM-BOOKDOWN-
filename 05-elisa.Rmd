@@ -337,20 +337,49 @@ elisa_fitted_data
 
 ```{r}
 elisa_fitted_data_summary <- elisa_fitted_data %>%
-  mutate(fitted_data_summary = purrr::map(fitted_data, broom::glance))
+  mutate(elisa_fitted_data_summary = purrr::map(fitted_data, broom::glance))
 
-#unnested_elisa_fitted_data <- elisa_fitted_data_summary %>%
-#  unnest(elisa_fitted_data_summary) %>%
-#  ungroup() %>%
-#  dplyr::select(Groups, mouse_id, fitted_data)
+unnested <- elisa_fitted_data_summary %>%
+unnest(elisa_fitted_data_summary) %>%
+ungroup() %>%
+dplyr::select(Groups, mouse_id, fitted_data)
 
-# unnested_elisa_fitted_data$fitted_data[[1]]
+unnested$fitted_data[[1]]
 
-# Another way
-
-elisa_fitted_data_summary %>% 
-  unnest(fitted_data_summary)
 ```
 
-### Creating a function for endpoint titer model and fitting the model into the data
+## Create a merge function of Fitted model and endpoint titer
+
+```{r}
+
+# Fitted model function
+fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
+  mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+data = df_elisa,
+start = list(a = start_a, d = start_d, c = start_c, b = start_b))
+  return(mod_1)
+}
+
+# Run fitted model on the data
+
+elisa_fitted_data <- fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1) 
+
+# Taking output of the fitted model function and input it into endpoint titer function
+
+endpoint_titer_elisa <- function(fitted_data, back_value) {
+  tidy_fitted <- broom::tidy(fitted_data)
+  est_a <- tidy_fitted$estimate[tidy_fitted$term == "a"]
+  est_b <- tidy_fitted$estimate[tidy_fitted$term == "b"]
+  est_c <- tidy_fitted$estimate[tidy_fitted$term == "c"]
+  est_d <- tidy_fitted$estimate[tidy_fitted$term == "d"]
+  endpoint_titer <- est_c * (((est_a - est_d) / (back_value - est_d)) - 1) ^ (1 / est_b)
+  return(endpoint_titer)
+}
+
+# Run the endpoint titer function
+endpoint_titer_elisa(elisa_fitted_data, back_value = 0.2)
+```
+
+
+
 
