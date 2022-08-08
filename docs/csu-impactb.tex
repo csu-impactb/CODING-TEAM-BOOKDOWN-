@@ -269,9 +269,9 @@ experiment.
 \hypertarget{overview-1}{%
 \subsection{Overview}\label{overview-1}}
 
-Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease @ {[}baazim2022interplay{]}. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans @ {[}baazim2022interplay{]}. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration @{[}baazim2019cd8{]}, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
+Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease {[}@ baazim2022interplay{]}. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans {[}@ baazim2022interplay{]}. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration \citep{baazim2019cd8}, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
 
-In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies @ {[}smith2022host{]}, @ {[}segueni2016controlled{]}. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers @ {[}smith2022host{]}. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies \citep{smith2022host, segueni2016controlled}. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers \citep{smith2022host}. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
 
 The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
 
@@ -1521,46 +1521,365 @@ b = 1
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{elisa\_fitted\_data\_summary }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_fitted\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data\_summary =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, broom}\SpecialCharTok{::}\NormalTok{glance))}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{elisa\_fitted\_data\_summary =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, broom}\SpecialCharTok{::}\NormalTok{glance))}
 
-\CommentTok{\#unnested\_elisa\_fitted\_data \textless{}{-} elisa\_fitted\_data\_summary \%\textgreater{}\%}
-\CommentTok{\#  unnest(elisa\_fitted\_data\_summary) \%\textgreater{}\%}
-\CommentTok{\#  ungroup() \%\textgreater{}\%}
-\CommentTok{\#  dplyr::select(Groups, mouse\_id, fitted\_data)}
+\NormalTok{unnested }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_fitted\_data\_summary }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{unnest}\NormalTok{(elisa\_fitted\_data\_summary) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Groups, mouse\_id, fitted\_data)}
 
-\CommentTok{\# unnested\_elisa\_fitted\_data$fitted\_data[[1]]}
-
-\CommentTok{\# Another way}
-
-\NormalTok{elisa\_fitted\_data\_summary }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unnest}\NormalTok{(fitted\_data\_summary)}
+\NormalTok{unnested}\SpecialCharTok{$}\NormalTok{fitted\_data[[}\DecValTok{1}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 10 x 13
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data     fitted_data  sigma isConv     finTol logLik     AIC
-##    <chr>   <chr>    <list>   <list>       <dbl> <lgl>       <dbl>  <dbl>   <dbl>
-##  1 Group 1 Mouse_1  <tibble> <nls>       0.141  TRUE      1.49e-8   7.93  -5.86 
-##  2 Group 1 Mouse_2  <tibble> <nls>       0.188  TRUE      1.49e-8   5.10  -0.208
-##  3 Group 1 Mouse_3  <tibble> <nls>       0.204  TRUE      1.49e-8   4.25   1.49 
-##  4 Group 1 Mouse_4  <tibble> <nls>       0.132  TRUE      1.49e-8   8.65  -7.30 
-##  5 Group 1 Mouse_5  <tibble> <nls>       0.134  TRUE      1.49e-8   8.50  -6.99 
-##  6 Group 2 Mouse_1  <tibble> <nls>       0.0838 TRUE      1.49e-8  13.2  -16.3  
-##  7 Group 2 Mouse_2  <tibble> <nls>       0.118  TRUE      1.49e-8   9.71  -9.41 
-##  8 Group 2 Mouse_3  <tibble> <nls>       0.154  TRUE      1.49e-8   7.07  -4.14 
-##  9 Group 2 Mouse_4  <tibble> <nls>       0.0430 TRUE      1.49e-8  19.8  -29.7  
-## 10 Group 2 Mouse_5  <tibble> <nls>       0.126  TRUE      1.49e-8   9.11  -8.23 
-## # ... with 4 more variables: BIC <dbl>, deviance <dbl>, df.residual <int>,
-## #   nobs <int>
+## Nonlinear regression model
+##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
+##    data: df_elisa
+##        a        d        c        b 
+##   4.3070  -0.6009 -10.2577   5.2893 
+##  residual sum-of-squares: 0.1199
+## 
+## Number of iterations to convergence: 7 
+## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data}{%
-\subsection{Creating a function for endpoint titer model and fitting the model into the data}\label{creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data}}
+\hypertarget{create-a-merge-function-of-fitted-model-and-endpoint-titer}{%
+\section{Create a merge function of Fitted model and endpoint titer}\label{create-a-merge-function-of-fitted-model-and-endpoint-titer}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Fitted model function}
+\NormalTok{fitted\_model\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df\_elisa, start\_a, start\_d, start\_c, start\_b) \{}
+\NormalTok{  mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
+\AttributeTok{data =}\NormalTok{ df\_elisa,}
+\AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{a =}\NormalTok{ start\_a, }\AttributeTok{d =}\NormalTok{ start\_d, }\AttributeTok{c =}\NormalTok{ start\_c, }\AttributeTok{b =}\NormalTok{ start\_b))}
+  \FunctionTok{return}\NormalTok{(mod\_1)}
+\NormalTok{\}}
+
+\CommentTok{\# Run fitted model on the data}
+
+\NormalTok{elisa\_fitted\_data }\OtherTok{\textless{}{-}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(elisa\_data\_nested}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]], }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{) }
+
+\CommentTok{\# Taking output of the fitted model function and input it into endpoint titer function}
+
+\NormalTok{endpoint\_titer\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fitted\_data, back\_value) \{}
+\NormalTok{  tidy\_fitted }\OtherTok{\textless{}{-}}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(fitted\_data)}
+\NormalTok{  est\_a }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"a"}\NormalTok{]}
+\NormalTok{  est\_b }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"b"}\NormalTok{]}
+\NormalTok{  est\_c }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"c"}\NormalTok{]}
+\NormalTok{  est\_d }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"d"}\NormalTok{]}
+\NormalTok{  endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ est\_c }\SpecialCharTok{*}\NormalTok{ (((est\_a }\SpecialCharTok{{-}}\NormalTok{ est\_d) }\SpecialCharTok{/}\NormalTok{ (back\_value }\SpecialCharTok{{-}}\NormalTok{ est\_d)) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\^{}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ est\_b)}
+  \FunctionTok{return}\NormalTok{(endpoint\_titer)}
+\NormalTok{\}}
+
+\CommentTok{\# Run the endpoint titer function}
+\FunctionTok{endpoint\_titer\_elisa}\NormalTok{(elisa\_fitted\_data, }\AttributeTok{back\_value =} \FloatTok{0.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -13.9726
+\end{verbatim}
 
 \hypertarget{flow-cytometry}{%
 \chapter{Flow cytometry}\label{flow-cytometry}}
+
+This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study.
+Flow cytometry was done on lung and spleen
+
+\hypertarget{loading-packages}{%
+\section{Loading packages}\label{loading-packages}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(scales)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'scales'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     discard
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:readr':
+## 
+##     col_factor
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(forcats)}
+\FunctionTok{library}\NormalTok{(broom)}
+\FunctionTok{library}\NormalTok{(ggfortify)}
+\FunctionTok{library}\NormalTok{(stats)}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(grDevices)}
+\FunctionTok{library}\NormalTok{(rstatix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'rstatix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(writexl)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{panel-information}{%
+\section{panel information}\label{panel-information}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# antibody\_panel \textless{}{-} read\_excel}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{loading-data}{%
+\section{Loading data}\label{loading-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Df }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/innate\_normalizedto45.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"CD3CD11b No Day 14"}\NormalTok{)}
+
+\NormalTok{marker\_legend }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/marker legend.xlsx"}\NormalTok{)}
+
+\CommentTok{\# Remove Freq of Parent columns}
+\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{matches}\NormalTok{(}\StringTok{"Parent"}\NormalTok{))}
+\CommentTok{\# Remove "Leukocytes/LIVE/Single Cells/" from col names}
+\FunctionTok{names}\NormalTok{(Df1) }\OtherTok{\textless{}{-}} \FunctionTok{str\_remove}\NormalTok{(}\FunctionTok{names}\NormalTok{(Df1), }\StringTok{"Leukocytes/LIVE/Single Cells/"}\NormalTok{)}
+
+\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{|.+"}\NormalTok{, }\StringTok{""}\NormalTok{)))}\CommentTok{\# Remove "|Freq of..." from col names}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: `funs()` was deprecated in dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace\_all}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/Q[:digit:]+}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{:"}\NormalTok{, }\StringTok{""}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{, }\StringTok{" "}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{" "}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ }\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{" "}\NormalTok{)))}
+
+\CommentTok{\# str\_extract\_all(names(Df1), "[:alpha:]+[:digit:]+[\textbackslash{}\textbackslash{}+\textbackslash{}\textbackslash{}{-}]")}
+\CommentTok{\# }
+\CommentTok{\# }
+\CommentTok{\# }
+\CommentTok{\# }
+\CommentTok{\# }
+\CommentTok{\# }
+\CommentTok{\# marker\_select \textless{}{-} function(col\_title) \{}
+\CommentTok{\#   marker\_df \textless{}{-} str\_detect(names(DATA1), "[\textbackslash{}\textbackslash{}+\textbackslash{}\textbackslash{}{-}]") }
+\CommentTok{\#   return(marker\_df)}
+\CommentTok{\# \}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{making-the-data-tidy-for-plotting}{%
+\section{Making the data tidy for plotting}\label{making-the-data-tidy-for-plotting}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Df1, }\AttributeTok{cols =}  \FunctionTok{starts\_with}\NormalTok{(}\StringTok{"CD45+"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"cell\_types"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"percentage\_of\_CD45"}\NormalTok{) }
+
+\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(}\AttributeTok{col =} \StringTok{"SAMPLE"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"day"}\NormalTok{, }\StringTok{"replicate"}\NormalTok{))}
+
+
+\NormalTok{tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(cell\_types) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unique}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 128 x 1
+##    cell_types                          
+##    <chr>                               
+##  1 "CD45+ "                            
+##  2 "CD45+ CD3-   CD11b+ "              
+##  3 "CD45+ CD3-   CD11b+ CD25+ "        
+##  4 "CD45+ CD3-   CD11b+ CD103+ "       
+##  5 "CD45+ CD3-   CD11b+ gamma_delta "  
+##  6 "CD45+ CD3-   CD11b+ NKp46+ "       
+##  7 "CD45+ CD3-   CD11b+ CD11c+  CD64- "
+##  8 "CD45+ CD3-   CD11b+ CD11c-  CD64- "
+##  9 "CD45+ CD3-   CD11b+ CD86-  CD64+ " 
+## 10 "CD45+ CD3-   CD11b+ CD86+  CD64+ " 
+## # ... with 118 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(percentage\_of\_CD45 }\SpecialCharTok{\textgreater{}} \FloatTok{0.005}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(tidy\_Df1, }\AttributeTok{n=}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 4
+##    day   replicate cell_types                           percentage_of_CD45
+##    <chr> <chr>     <chr>                                             <dbl>
+##  1 CNT   1         "CD45+ "                                          82.9 
+##  2 CNT   1         "CD45+ CD3-   CD11b+ "                            29.3 
+##  3 CNT   1         "CD45+ CD3-   CD11b+ CD25+ "                       0.88
+##  4 CNT   1         "CD45+ CD3-   CD11b+ CD103+ "                      0.75
+##  5 CNT   1         "CD45+ CD3-   CD11b+ gamma_delta "                 4.77
+##  6 CNT   1         "CD45+ CD3-   CD11b+ NKp46+ "                      7.3 
+##  7 CNT   1         "CD45+ CD3-   CD11b+ CD11c+  CD64- "               3.65
+##  8 CNT   1         "CD45+ CD3-   CD11b+ CD11c-  CD64- "              24.3 
+##  9 CNT   1         "CD45+ CD3-   CD11b+ CD86-  CD64+ "                0.43
+## 10 CNT   1         "CD45+ CD3-   CD11b+ CD86+  CD64+ "                0.85
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select CD3 \& CD11b populations and create new data frames }
+ 
+\NormalTok{CD3pos\_CD11bneg }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+ + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}"}\NormalTok{)) }
+
+\NormalTok{CD3neg\_CD11bpos }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-} + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+"}\NormalTok{)) }
+
+\NormalTok{CD3neg\_CD11bneg }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-} + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{boxplot}{%
+\section{boxplot}\label{boxplot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CD3pos\_CD11bneg\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3pos\_CD11bneg }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day,}
+            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{,}
+            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
+    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{10}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3+ CD11b{-}"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
+                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+
+
+
+\NormalTok{CD3neg\_CD11bpos\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3neg\_CD11bpos }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day, }
+            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{, }
+            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
+    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
+  \FunctionTok{geom\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{6}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3{-} CD11b+"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
+                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+
+
+
+\NormalTok{CD3neg\_CD11bneg\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3neg\_CD11bneg }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day, }
+            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{, }
+            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
+    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
+  \FunctionTok{geom\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{6}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3{-} CD11b{-}"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
+                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+
+\NormalTok{CD3pos\_CD11bneg\_bar\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# CD3neg\_CD11bpos\_bar\_plot}
+\CommentTok{\# CD3neg\_CD11bneg\_bar\_plot}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 
