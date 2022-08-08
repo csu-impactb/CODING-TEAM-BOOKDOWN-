@@ -332,6 +332,6 @@ start = list(a = start_a, d = start_d, c = start_c, b = start_b)
   return(endpoint_titer)
 }
 
-endpoint_titer_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1, back_value = 0.2)zza
+endpoint_titer_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1, back_value = 0.2)
 ```
 
