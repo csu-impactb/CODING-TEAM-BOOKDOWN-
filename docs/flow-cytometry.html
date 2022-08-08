@@ -1,94 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
-<meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta property="og:type" content="book">
-<meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+  <meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
+  
+  <meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
+  
+
+<meta name="author" content="Colorado State University Coding Team" />
+
+
+<meta name="date" content="2022-08-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="enzyme-linked-immunosorbest-assay-elisa.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
-<li><a class="" href="experimental-metadata.html"><span class="header-section-number">2</span> Experimental metadata</a></li>
-<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
-<li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
-<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></li>
-<li><a class="" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
-<li><a class="active" href="flow-cytometry.html"><span class="header-section-number">7</span> Flow cytometry</a></li>
-<li><a class="" href="references.html">References</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bookdown CSU Coding Team Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-the-project"><i class="fa fa-check"></i><b>1.1</b> About the project</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.2</b> About this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="experimental-metadata.html"><a href="experimental-metadata.html"><i class="fa fa-check"></i><b>2</b> Experimental metadata</a></li>
+<li class="chapter" data-level="3" data-path="initial-mouse-characteristics.html"><a href="initial-mouse-characteristics.html"><i class="fa fa-check"></i><b>3</b> Initial mouse characteristics</a></li>
+<li class="chapter" data-level="4" data-path="mouse-weights.html"><a href="mouse-weights.html"><i class="fa fa-check"></i><b>4</b> Mouse Weights</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="mouse-weights.html"><a href="mouse-weights.html#overview-1"><i class="fa fa-check"></i><b>4.0.1</b> Overview</a></li>
+<li class="chapter" data-level="4.0.2" data-path="mouse-weights.html"><a href="mouse-weights.html#parameters"><i class="fa fa-check"></i><b>4.0.2</b> Parameters</a></li>
+<li class="chapter" data-level="4.0.3" data-path="mouse-weights.html"><a href="mouse-weights.html#read-in-data"><i class="fa fa-check"></i><b>4.0.3</b> Read in data</a></li>
+<li class="chapter" data-level="4.0.4" data-path="mouse-weights.html"><a href="mouse-weights.html#can-also-use-rio-to-read-in-the-data-more-streamlined"><i class="fa fa-check"></i><b>4.0.4</b> Can also use rio to read in the data, more streamlined</a></li>
+<li class="chapter" data-level="4.0.5" data-path="mouse-weights.html"><a href="mouse-weights.html#clean-data"><i class="fa fa-check"></i><b>4.0.5</b> Clean data</a></li>
+<li class="chapter" data-level="4.0.6" data-path="mouse-weights.html"><a href="mouse-weights.html#body-weight-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.6</b> Body weight over time graph and statistics</a></li>
+<li class="chapter" data-level="4.0.7" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-loss-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.7</b> Weight loss over time graph and statistics</a></li>
+<li class="chapter" data-level="4.0.8" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-cfu"><i class="fa fa-check"></i><b>4.0.8</b> Weight vs CFU</a></li>
+<li class="chapter" data-level="4.0.9" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-elisa-results"><i class="fa fa-check"></i><b>4.0.9</b> Weight vs ELISA results</a></li>
+<li class="chapter" data-level="4.0.10" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-lesion-burden"><i class="fa fa-check"></i><b>4.0.10</b> Weight vs lesion burden</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html"><i class="fa fa-check"></i><b>5</b> Colony forming units to determine bacterial counts</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#data-description"><i class="fa fa-check"></i><b>5.1</b> Data description</a></li>
+<li class="chapter" data-level="5.2" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#read-in-data-1"><i class="fa fa-check"></i><b>5.2</b> Read in data</a></li>
+<li class="chapter" data-level="5.3" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-one"><i class="fa fa-check"></i><b>5.3</b> Example one</a></li>
+<li class="chapter" data-level="5.4" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis-and-quality-checks"><i class="fa fa-check"></i><b>5.4</b> Exploratory analysis and quality checks</a></li>
+<li class="chapter" data-level="5.5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis"><i class="fa fa-check"></i><b>5.5</b> Exploratory analysis</a></li>
+<li class="chapter" data-level="5.6" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#identify-a-good-dilution-for-each-sample"><i class="fa fa-check"></i><b>5.6</b> Identify a good dilution for each sample</a></li>
+<li class="chapter" data-level="5.7" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fa fa-check"></i><b>5.7</b> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
+<li class="chapter" data-level="5.8" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#create-initial-report-information-for-these-data"><i class="fa fa-check"></i><b>5.8</b> Create initial report information for these data</a></li>
+<li class="chapter" data-level="5.9" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#sample-anova"><i class="fa fa-check"></i><b>5.9</b> Sample ANOVA</a></li>
+<li class="chapter" data-level="5.10" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#save-processed-data-to-database"><i class="fa fa-check"></i><b>5.10</b> Save processed data to database</a></li>
+<li class="chapter" data-level="5.11" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-two"><i class="fa fa-check"></i><b>5.11</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html"><i class="fa fa-check"></i><b>6</b> Enzyme-linked immunosorbest assay (ELISA)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-data-from-excel-file"><i class="fa fa-check"></i><b>6.1</b> Read in data from excel file</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#tidy-the-data"><i class="fa fa-check"></i><b>6.1.1</b> Tidy the data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-second-data-set"><i class="fa fa-check"></i><b>6.1.2</b> Read in second data set</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#join-the-od-table-with-the-information-table"><i class="fa fa-check"></i><b>6.2</b> #Join the OD table with the information table</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#separate-the-information-table-into-sample-id-and-dilution-columns"><i class="fa fa-check"></i><b>6.2.1</b> Separate the information table into sample ID and dilution columns</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis-optimization"><i class="fa fa-check"></i><b>6.3</b> ELISA data analysis optimization</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-sigmoid-model"><i class="fa fa-check"></i><b>6.3.1</b> <strong>1. Fitting sigmoid model:</strong></a></li>
+<li class="chapter" data-level="6.3.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#endpoint-titer-method"><i class="fa fa-check"></i><b>6.3.2</b> 2. Endpoint titer method</a></li>
+<li class="chapter" data-level="6.3.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#absorbance-summation-method"><i class="fa fa-check"></i><b>6.3.3</b> Absorbance summation method</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#use-the-the-data-analysis-models-in-our-data"><i class="fa fa-check"></i><b>6.4</b> Use the the data analysis models in our data</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-the-data"><i class="fa fa-check"></i><b>6.4.1</b> read in the data</a></li>
+<li class="chapter" data-level="6.4.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#make-the-tidy-data"><i class="fa fa-check"></i><b>6.4.2</b> make the tidy data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#creating-a-function-for-fitting-model"><i class="fa fa-check"></i><b>6.5</b> Creating a function for fitting model</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-the-model-into-the-data"><i class="fa fa-check"></i><b>6.5.1</b> Fitting the model into the data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitted-model-function-to-the-whole-dataframe"><i class="fa fa-check"></i><b>6.5.2</b> Apply the fitted model function to the whole dataframe</a></li>
+<li class="chapter" data-level="6.5.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#take-out-the-summary-of-the-data"><i class="fa fa-check"></i><b>6.5.3</b> Take out the summary of the data</a></li>
+<li class="chapter" data-level="6.5.4" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data"><i class="fa fa-check"></i><b>6.5.4</b> Creating a function for endpoint titer model and fitting the model into the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="flow-cytometry.html"><a href="flow-cytometry.html"><i class="fa fa-check"></i><b>7</b> Flow cytometry</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-packages"><i class="fa fa-check"></i><b>7.1</b> Loading packages</a></li>
+<li class="chapter" data-level="7.2" data-path="flow-cytometry.html"><a href="flow-cytometry.html#panel-information"><i class="fa fa-check"></i><b>7.2</b> panel information</a></li>
+<li class="chapter" data-level="7.3" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-data"><i class="fa fa-check"></i><b>7.3</b> Loading data</a></li>
+<li class="chapter" data-level="7.4" data-path="flow-cytometry.html"><a href="flow-cytometry.html#making-the-data-tidy-for-plotting"><i class="fa fa-check"></i><b>7.4</b> Making the data tidy for plotting</a></li>
+<li class="chapter" data-level="7.5" data-path="flow-cytometry.html"><a href="flow-cytometry.html#boxplot"><i class="fa fa-check"></i><b>7.5</b> boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
-        <div class="book-extra">
-          
-        </div>
       </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="flow-cytometry" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Flow cytometry<a href="flow-cytometry.html#flow-cytometry" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study.
+Flow cytometry was done on lung and spleen</p>
+<div id="loading-packages" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Loading packages<a href="flow-cytometry.html#loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="flow-cytometry.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb88-2"><a href="flow-cytometry.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb88-3"><a href="flow-cytometry.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code></pre></div>
+<pre><code>## Warning: package &#39;RColorBrewer&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="flow-cytometry.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb90-2"><a href="flow-cytometry.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb90-3"><a href="flow-cytometry.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="flow-cytometry.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb94-2"><a href="flow-cytometry.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb94-3"><a href="flow-cytometry.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div>
+<pre><code>## Warning: package &#39;knitr&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="flow-cytometry.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb96-2"><a href="flow-cytometry.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb96-3"><a href="flow-cytometry.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span></code></pre></div>
+<pre><code>## Warning: package &#39;ggfortify&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="flow-cytometry.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb98-2"><a href="flow-cytometry.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb98-3"><a href="flow-cytometry.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grDevices)</span>
+<span id="cb98-4"><a href="flow-cytometry.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;rstatix&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="flow-cytometry.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span></code></pre></div>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="flow-cytometry" class="section level1" number="7">
-<h1>
-<span class="header-section-number">7</span> Flow cytometry<a class="anchor" aria-label="anchor" href="#flow-cytometry"><i class="fas fa-link"></i></a>
-</h1>
+<div id="panel-information" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> panel information<a href="flow-cytometry.html#panel-information" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="flow-cytometry.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># antibody_panel &lt;- read_excel</span></span></code></pre></div>
+</div>
+<div id="loading-data" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Loading data<a href="flow-cytometry.html#loading-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="flow-cytometry.html#cb103-1" aria-hidden="true" tabindex="-1"></a>Df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/innate_normalizedto45.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;CD3CD11b No Day 14&quot;</span>)</span>
+<span id="cb103-2"><a href="flow-cytometry.html#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="flow-cytometry.html#cb103-3" aria-hidden="true" tabindex="-1"></a>marker_legend <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/marker legend.xlsx&quot;</span>)</span>
+<span id="cb103-4"><a href="flow-cytometry.html#cb103-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-5"><a href="flow-cytometry.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Freq of Parent columns</span></span>
+<span id="cb103-6"><a href="flow-cytometry.html#cb103-6" aria-hidden="true" tabindex="-1"></a>Df1 <span class="ot">&lt;-</span> Df <span class="sc">%&gt;%</span> </span>
+<span id="cb103-7"><a href="flow-cytometry.html#cb103-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">matches</span>(<span class="st">&quot;Parent&quot;</span>))</span>
+<span id="cb103-8"><a href="flow-cytometry.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove &quot;Leukocytes/LIVE/Single Cells/&quot; from col names</span></span>
+<span id="cb103-9"><a href="flow-cytometry.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Df1) <span class="ot">&lt;-</span> <span class="fu">str_remove</span>(<span class="fu">names</span>(Df1), <span class="st">&quot;Leukocytes/LIVE/Single Cells/&quot;</span>)</span>
+<span id="cb103-10"><a href="flow-cytometry.html#cb103-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-11"><a href="flow-cytometry.html#cb103-11" aria-hidden="true" tabindex="-1"></a>Df1 <span class="ot">&lt;-</span> Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb103-12"><a href="flow-cytometry.html#cb103-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="fu">funs</span>(<span class="fu">str_replace</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">|.+&quot;</span>, <span class="st">&quot;&quot;</span>)))<span class="co"># Remove &quot;|Freq of...&quot; from col names</span></span></code></pre></div>
+<pre><code>## Warning: `funs()` was deprecated in dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="flow-cytometry.html#cb105-1" aria-hidden="true" tabindex="-1"></a>Df1 <span class="ot">&lt;-</span> Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb105-2"><a href="flow-cytometry.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="fu">funs</span>(<span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">/Q[:digit:]+</span><span class="sc">\\</span><span class="st">:&quot;</span>, <span class="st">&quot;&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb105-3"><a href="flow-cytometry.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="fu">funs</span>(<span class="fu">str_replace</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">/&quot;</span>, <span class="st">&quot; &quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb105-4"><a href="flow-cytometry.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="fu">funs</span>(<span class="fu">str_replace</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">,&quot;</span>, <span class="st">&quot; &quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb105-5"><a href="flow-cytometry.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="fu">funs</span>(<span class="fu">str_replace</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st"> </span><span class="sc">\\</span><span class="st">,&quot;</span>, <span class="st">&quot; &quot;</span>)))</span>
+<span id="cb105-6"><a href="flow-cytometry.html#cb105-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-7"><a href="flow-cytometry.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="co"># str_extract_all(names(Df1), &quot;[:alpha:]+[:digit:]+[\\+\\-]&quot;)</span></span>
+<span id="cb105-8"><a href="flow-cytometry.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-9"><a href="flow-cytometry.html#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-10"><a href="flow-cytometry.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-11"><a href="flow-cytometry.html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-12"><a href="flow-cytometry.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-13"><a href="flow-cytometry.html#cb105-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb105-14"><a href="flow-cytometry.html#cb105-14" aria-hidden="true" tabindex="-1"></a><span class="co"># marker_select &lt;- function(col_title) {</span></span>
+<span id="cb105-15"><a href="flow-cytometry.html#cb105-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   marker_df &lt;- str_detect(names(DATA1), &quot;[\\+\\-]&quot;) </span></span>
+<span id="cb105-16"><a href="flow-cytometry.html#cb105-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   return(marker_df)</span></span>
+<span id="cb105-17"><a href="flow-cytometry.html#cb105-17" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
+</div>
+<div id="making-the-data-tidy-for-plotting" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Making the data tidy for plotting<a href="flow-cytometry.html#making-the-data-tidy-for-plotting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="flow-cytometry.html#cb106-1" aria-hidden="true" tabindex="-1"></a>tidy_Df1 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data =</span> Df1, <span class="at">cols =</span>  <span class="fu">starts_with</span>(<span class="st">&quot;CD45+&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;cell_types&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;percentage_of_CD45&quot;</span>) </span>
+<span id="cb106-2"><a href="flow-cytometry.html#cb106-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-3"><a href="flow-cytometry.html#cb106-3" aria-hidden="true" tabindex="-1"></a>tidy_Df1 <span class="ot">&lt;-</span> tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb106-4"><a href="flow-cytometry.html#cb106-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> <span class="st">&quot;SAMPLE&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;day&quot;</span>, <span class="st">&quot;replicate&quot;</span>))</span>
+<span id="cb106-5"><a href="flow-cytometry.html#cb106-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-6"><a href="flow-cytometry.html#cb106-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-7"><a href="flow-cytometry.html#cb106-7" aria-hidden="true" tabindex="-1"></a>tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb106-8"><a href="flow-cytometry.html#cb106-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cell_types) <span class="sc">%&gt;%</span></span>
+<span id="cb106-9"><a href="flow-cytometry.html#cb106-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 128 × 1
+##    cell_types                          
+##    &lt;chr&gt;                               
+##  1 &quot;CD45+ &quot;                            
+##  2 &quot;CD45+ CD3-   CD11b+ &quot;              
+##  3 &quot;CD45+ CD3-   CD11b+ CD25+ &quot;        
+##  4 &quot;CD45+ CD3-   CD11b+ CD103+ &quot;       
+##  5 &quot;CD45+ CD3-   CD11b+ gamma_delta &quot;  
+##  6 &quot;CD45+ CD3-   CD11b+ NKp46+ &quot;       
+##  7 &quot;CD45+ CD3-   CD11b+ CD11c+  CD64- &quot;
+##  8 &quot;CD45+ CD3-   CD11b+ CD11c-  CD64- &quot;
+##  9 &quot;CD45+ CD3-   CD11b+ CD86-  CD64+ &quot; 
+## 10 &quot;CD45+ CD3-   CD11b+ CD86+  CD64+ &quot; 
+## # … with 118 more rows</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="flow-cytometry.html#cb108-1" aria-hidden="true" tabindex="-1"></a>tidy_Df1 <span class="ot">&lt;-</span> tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb108-2"><a href="flow-cytometry.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(percentage_of_CD45 <span class="sc">&gt;</span> <span class="fl">0.005</span>)</span>
+<span id="cb108-3"><a href="flow-cytometry.html#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-4"><a href="flow-cytometry.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_Df1, <span class="at">n=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 4
+##    day   replicate cell_types                           percentage_of_CD45
+##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;                                             &lt;dbl&gt;
+##  1 CNT   1         &quot;CD45+ &quot;                                          82.9 
+##  2 CNT   1         &quot;CD45+ CD3-   CD11b+ &quot;                            29.3 
+##  3 CNT   1         &quot;CD45+ CD3-   CD11b+ CD25+ &quot;                       0.88
+##  4 CNT   1         &quot;CD45+ CD3-   CD11b+ CD103+ &quot;                      0.75
+##  5 CNT   1         &quot;CD45+ CD3-   CD11b+ gamma_delta &quot;                 4.77
+##  6 CNT   1         &quot;CD45+ CD3-   CD11b+ NKp46+ &quot;                      7.3 
+##  7 CNT   1         &quot;CD45+ CD3-   CD11b+ CD11c+  CD64- &quot;               3.65
+##  8 CNT   1         &quot;CD45+ CD3-   CD11b+ CD11c-  CD64- &quot;              24.3 
+##  9 CNT   1         &quot;CD45+ CD3-   CD11b+ CD86-  CD64+ &quot;                0.43
+## 10 CNT   1         &quot;CD45+ CD3-   CD11b+ CD86+  CD64+ &quot;                0.85</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="flow-cytometry.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select CD3 &amp; CD11b populations and create new data frames </span></span>
+<span id="cb110-2"><a href="flow-cytometry.html#cb110-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb110-3"><a href="flow-cytometry.html#cb110-3" aria-hidden="true" tabindex="-1"></a>CD3pos_CD11bneg <span class="ot">&lt;-</span> tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb110-4"><a href="flow-cytometry.html#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(cell_types, <span class="st">&quot;CD3</span><span class="sc">\\</span><span class="st">+ + CD11b</span><span class="sc">\\</span><span class="st">-&quot;</span>)) </span>
+<span id="cb110-5"><a href="flow-cytometry.html#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-6"><a href="flow-cytometry.html#cb110-6" aria-hidden="true" tabindex="-1"></a>CD3neg_CD11bpos <span class="ot">&lt;-</span> tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb110-7"><a href="flow-cytometry.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(cell_types, <span class="st">&quot;CD3</span><span class="sc">\\</span><span class="st">- + CD11b</span><span class="sc">\\</span><span class="st">+&quot;</span>)) </span>
+<span id="cb110-8"><a href="flow-cytometry.html#cb110-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-9"><a href="flow-cytometry.html#cb110-9" aria-hidden="true" tabindex="-1"></a>CD3neg_CD11bneg <span class="ot">&lt;-</span> tidy_Df1 <span class="sc">%&gt;%</span></span>
+<span id="cb110-10"><a href="flow-cytometry.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(cell_types, <span class="st">&quot;CD3</span><span class="sc">\\</span><span class="st">- + CD11b</span><span class="sc">\\</span><span class="st">-&quot;</span>))</span></code></pre></div>
+</div>
+<div id="boxplot" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> boxplot<a href="flow-cytometry.html#boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="flow-cytometry.html#cb111-1" aria-hidden="true" tabindex="-1"></a>CD3pos_CD11bneg_bar_plot <span class="ot">&lt;-</span> CD3pos_CD11bneg <span class="sc">%&gt;%</span></span>
+<span id="cb111-2"><a href="flow-cytometry.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">fct_relevel</span>(day,</span>
+<span id="cb111-3"><a href="flow-cytometry.html#cb111-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CNT&quot;</span>, <span class="st">&quot;D3&quot;</span>, <span class="st">&quot;D7&quot;</span>,</span>
+<span id="cb111-4"><a href="flow-cytometry.html#cb111-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;D28&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb111-5"><a href="flow-cytometry.html#cb111-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> percentage_of_CD45, <span class="at">fill=</span> day)) <span class="sc">+</span></span>
+<span id="cb111-6"><a href="flow-cytometry.html#cb111-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>( <span class="fu">aes</span>(day, percentage_of_CD45), </span>
+<span id="cb111-7"><a href="flow-cytometry.html#cb111-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom=</span><span class="st">&#39;errorbar&#39;</span>, <span class="at">linetype=</span><span class="dv">1</span>, <span class="at">width=</span><span class="fl">0.5</span>)<span class="sc">+</span>  </span>
+<span id="cb111-8"><a href="flow-cytometry.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(day, percentage_of_CD45)) <span class="sc">+</span> </span>
+<span id="cb111-9"><a href="flow-cytometry.html#cb111-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cell_types, <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">labeller =</span> <span class="fu">label_wrap_gen</span>(<span class="at">width=</span><span class="dv">15</span>), <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">nrow =</span> <span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb111-10"><a href="flow-cytometry.html#cb111-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb111-11"><a href="flow-cytometry.html#cb111-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-12"><a href="flow-cytometry.html#cb111-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-13"><a href="flow-cytometry.html#cb111-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-14"><a href="flow-cytometry.html#cb111-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-15"><a href="flow-cytometry.html#cb111-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-16"><a href="flow-cytometry.html#cb111-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">30</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb111-17"><a href="flow-cytometry.html#cb111-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">y=</span><span class="st">&quot;Percentage of CD45&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Day&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb111-18"><a href="flow-cytometry.html#cb111-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-19"><a href="flow-cytometry.html#cb111-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Changes in immune cell populations (lung) CD3+ CD11b-&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-20"><a href="flow-cytometry.html#cb111-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="at">method =</span> <span class="st">&quot;t.test&quot;</span>,</span>
+<span id="cb111-21"><a href="flow-cytometry.html#cb111-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ref.group =</span> <span class="st">&quot;CNT&quot;</span>)</span>
+<span id="cb111-22"><a href="flow-cytometry.html#cb111-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-23"><a href="flow-cytometry.html#cb111-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-24"><a href="flow-cytometry.html#cb111-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-25"><a href="flow-cytometry.html#cb111-25" aria-hidden="true" tabindex="-1"></a>CD3neg_CD11bpos_bar_plot <span class="ot">&lt;-</span> CD3neg_CD11bpos <span class="sc">%&gt;%</span></span>
+<span id="cb111-26"><a href="flow-cytometry.html#cb111-26" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">fct_relevel</span>(day, </span>
+<span id="cb111-27"><a href="flow-cytometry.html#cb111-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CNT&quot;</span>, <span class="st">&quot;D3&quot;</span>, <span class="st">&quot;D7&quot;</span>, </span>
+<span id="cb111-28"><a href="flow-cytometry.html#cb111-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;D28&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb111-29"><a href="flow-cytometry.html#cb111-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> percentage_of_CD45, <span class="at">fill=</span> day)) <span class="sc">+</span></span>
+<span id="cb111-30"><a href="flow-cytometry.html#cb111-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>( <span class="fu">aes</span>(day, percentage_of_CD45), </span>
+<span id="cb111-31"><a href="flow-cytometry.html#cb111-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom=</span><span class="st">&#39;errorbar&#39;</span>, <span class="at">linetype=</span><span class="dv">1</span>, <span class="at">width=</span><span class="fl">0.5</span>)<span class="sc">+</span>  </span>
+<span id="cb111-32"><a href="flow-cytometry.html#cb111-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>( <span class="fu">aes</span>(day, percentage_of_CD45)) <span class="sc">+</span> </span>
+<span id="cb111-33"><a href="flow-cytometry.html#cb111-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cell_types, <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">labeller =</span> <span class="fu">label_wrap_gen</span>(<span class="at">width=</span><span class="dv">15</span>), <span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb111-34"><a href="flow-cytometry.html#cb111-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb111-35"><a href="flow-cytometry.html#cb111-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-36"><a href="flow-cytometry.html#cb111-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-37"><a href="flow-cytometry.html#cb111-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-38"><a href="flow-cytometry.html#cb111-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-39"><a href="flow-cytometry.html#cb111-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-40"><a href="flow-cytometry.html#cb111-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">30</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb111-41"><a href="flow-cytometry.html#cb111-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">y=</span><span class="st">&quot;Percentage of CD45&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Day&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb111-42"><a href="flow-cytometry.html#cb111-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-43"><a href="flow-cytometry.html#cb111-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Changes in immune cell populations (lung) CD3- CD11b+&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-44"><a href="flow-cytometry.html#cb111-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="at">method =</span> <span class="st">&quot;t.test&quot;</span>,</span>
+<span id="cb111-45"><a href="flow-cytometry.html#cb111-45" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ref.group =</span> <span class="st">&quot;CNT&quot;</span>)</span>
+<span id="cb111-46"><a href="flow-cytometry.html#cb111-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-47"><a href="flow-cytometry.html#cb111-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-48"><a href="flow-cytometry.html#cb111-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-49"><a href="flow-cytometry.html#cb111-49" aria-hidden="true" tabindex="-1"></a>CD3neg_CD11bneg_bar_plot <span class="ot">&lt;-</span> CD3neg_CD11bneg <span class="sc">%&gt;%</span></span>
+<span id="cb111-50"><a href="flow-cytometry.html#cb111-50" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">fct_relevel</span>(day, </span>
+<span id="cb111-51"><a href="flow-cytometry.html#cb111-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CNT&quot;</span>, <span class="st">&quot;D3&quot;</span>, <span class="st">&quot;D7&quot;</span>, </span>
+<span id="cb111-52"><a href="flow-cytometry.html#cb111-52" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;D28&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb111-53"><a href="flow-cytometry.html#cb111-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> percentage_of_CD45, <span class="at">fill=</span> day)) <span class="sc">+</span></span>
+<span id="cb111-54"><a href="flow-cytometry.html#cb111-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>( <span class="fu">aes</span>(day, percentage_of_CD45), </span>
+<span id="cb111-55"><a href="flow-cytometry.html#cb111-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom=</span><span class="st">&#39;errorbar&#39;</span>, <span class="at">linetype=</span><span class="dv">1</span>, <span class="at">width=</span><span class="fl">0.5</span>)<span class="sc">+</span>  </span>
+<span id="cb111-56"><a href="flow-cytometry.html#cb111-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>( <span class="fu">aes</span>(day, percentage_of_CD45)) <span class="sc">+</span> </span>
+<span id="cb111-57"><a href="flow-cytometry.html#cb111-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cell_types, <span class="at">scale =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">labeller =</span> <span class="fu">label_wrap_gen</span>(<span class="at">width=</span><span class="dv">15</span>), <span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb111-58"><a href="flow-cytometry.html#cb111-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb111-59"><a href="flow-cytometry.html#cb111-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-60"><a href="flow-cytometry.html#cb111-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-61"><a href="flow-cytometry.html#cb111-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb111-62"><a href="flow-cytometry.html#cb111-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-63"><a href="flow-cytometry.html#cb111-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb111-64"><a href="flow-cytometry.html#cb111-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">30</span>, <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb111-65"><a href="flow-cytometry.html#cb111-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">y=</span><span class="st">&quot;Percentage of CD45&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Day&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb111-66"><a href="flow-cytometry.html#cb111-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-67"><a href="flow-cytometry.html#cb111-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Changes in immune cell populations (lung) CD3- CD11b-&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-68"><a href="flow-cytometry.html#cb111-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="at">method =</span> <span class="st">&quot;t.test&quot;</span>,</span>
+<span id="cb111-69"><a href="flow-cytometry.html#cb111-69" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ref.group =</span> <span class="st">&quot;CNT&quot;</span>)</span>
+<span id="cb111-70"><a href="flow-cytometry.html#cb111-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-71"><a href="flow-cytometry.html#cb111-71" aria-hidden="true" tabindex="-1"></a>CD3pos_CD11bneg_bar_plot</span></code></pre></div>
+<p><img src="csu-impactb_files/figure-html/unnamed-chunk-44-1.png" width="960" /></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="flow-cytometry.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CD3neg_CD11bpos_bar_plot</span></span>
+<span id="cb112-2"><a href="flow-cytometry.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="co"># CD3neg_CD11bneg_bar_plot</span></span></code></pre></div>
 
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></div>
-<div class="next"><a href="references.html">References</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#flow-cytometry"><span class="header-section-number">7</span> Flow cytometry</a></li></ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-          
-        </ul>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-08-08.</p>
+          </div>
+        </div>
+      </div>
+<a href="enzyme-linked-immunosorbest-assay-elisa.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["csu-impactb.pdf", "csu-impactb.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
+
 </html>
