@@ -47,13 +47,4 @@ experiment.
 
 
 
------------------------------------------------------------------------------
-
-Metadata for an experiment: 
-
-- `species`
-- `start_date`
-- `end_date`
-- `experimental_groups`
-
 
