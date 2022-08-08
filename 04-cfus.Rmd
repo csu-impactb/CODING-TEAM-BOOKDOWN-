@@ -1,3 +1,9 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
 # Colony forming units to determine bacterial counts 
 
 ## Data description
