@@ -14,6 +14,35 @@ description: "A comprehensive guide to wet lab data collection, sample processin
 
 # Overview
 
+## About the project
+
+The objective of the Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) program is to get a thorough understanding of the immune responses necessary to avoid initial infection with *Mycobacterium tuberculosis (Mtb)*, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against *Mtb* in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for *Mtb* infection protection. 
+
+The seven centers that are part of the study are (in alphabetical order):
+
+1. Colorado State University
+2. Harvard T.H. Chan School of Public Health
+3. Seattle Children Hospital
+4. [more]
+
+
+
+Colorado State University Team and role of each member:
+
+- Dr. Marcela Henao-Tamayo: Principal Investigator
+- Dr. Brendan Podell: Principal Investigator
+- Dr. Andres Obregon-Henao: Research Scientist-III
+- Dr. Taru S. Dutt: Research Scientist-I
+- [more]
+
+## About this book
+
+The aim of this book is to provide data protocols and data collection templates
+for key types of data that are collected over the course of this project. By using
+standard templates to record data, as well as starting from defined pipelines to 
+process and analyze the data, we aim to standardize the collection and processing
+of data across this project. 
+
 Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
 
 ```{r include=FALSE}
@@ -25,40 +54,70 @@ knitr::write_bib(c(
 
 <!--chapter:end:index.Rmd-->
 
-# Introduction
+# Experimental metadata
 
-## About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)
+Metadata for an experiment: 
 
-The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with *Mycobacterium tuberculosis (Mtb)*, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against *Mtb* in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for *Mtb* infection protection. 
-
-The seven centers that are part of the study are (in alphabetical order):
-
-1. Colorado State University
-2. Harvard T.H. Chan School of Public Health
-3. Seattle Children Hospital
-
-
-
-Colorado State University Team and role of each member:
-Dr. Marcela Henao-Tamayo: Principal Investigator
-Dr. Brendan Podell: Principal Investigator
-Dr. Andres Obregon-Henao: Research Scientist-III
-Dr. Taru S. Dutt: Research Scientist-I
+- `species`
+- `start_date`
+- `end_date`
+- `experimental_groups`
 
 
 
 
-
-
-
-
-
-
-<!--chapter:end:01-intro.Rmd-->
+<!--chapter:end:01-metadata.Rmd-->
 
 # Initial mouse characteristics
 
-Here is a review of existing methods.
+At the start of each experiment with a mouse model, we record several measurements
+or characteristics of each mouse. We record these measurements along with an identifier
+for each mouse (for example, based on tags or ear notches), so that we can later 
+link the initial characteristics of each mouse with later measurements on the same 
+mouse. 
+
+The values that we initially record for each mouse include: 
+
+- `group`: An identifier for the experimental group to which the mouse
+is assigned (e.g., "Control", "Group 1")
+- `group_detail`: A longer description of the mouse's treatment group 
+(e.g., "Vaccinated with vaccine candidate A at 4 and 8 weeks")
+- `notch_id`: The number that corresponds with the ear notch pattern of the
+mouse, which together with the mouse's experimental group provides a unique
+identifier for each mouse in the experiment
+- `mouse_number`: The mouse's group number and notch ID combined; this provides
+a unique identifier for each mouse in the experiment
+- `cage_number`: The number of the cage to which the mouse is first assigned. 
+This may change over the course of the experiment, as mice might be removed from 
+a cage due to fighting, etc. Any of these later changes of cage will be 
+recorded [where]
+- `sex`: Whether the mouse is male ("m") or female ("f")
+- `age`: 
+- `strain`
+
+We have created a spreadsheet template that can be used to record these data,
+which you can download by clicking here. Here is an example of how the first
+rows of this template might look once it's filled out:
+
+```{r}
+
+```
+
+This template should be used at the
+initial time when mice are brought into the experiment. The file format is an
+Excel file, so you can use it by saving it to your computer and then opening and
+recording data with Excel. Later code in this chapter will read in a file in
+this template format to provide basic summaries of the data. Later code will
+read in these files to record the data in a project-wide database, which will
+allow us to integrate it with other data collected over the course of the
+experiment.
+
+[Rules for naming the file. Include experiment name / study ID?]
+
+
+
+
+
 
 <!--chapter:end:02-initial_mouse_characteristics.Rmd-->
 
@@ -738,6 +797,16 @@ elisa_fitted_data_summary %>%
 
 
 <!--chapter:end:05-elisa.Rmd-->
+
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Flow cytometry
+
+<!--chapter:end:06-flow.Rmd-->
 
 `r if (knitr:::is_html_output()) '
 # References {-}
