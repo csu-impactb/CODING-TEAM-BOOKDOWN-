@@ -339,12 +339,12 @@ elisa_fitted_data
 elisa_fitted_data_summary <- elisa_fitted_data %>%
   mutate(fitted_data_summary = purrr::map(fitted_data, broom::glance))
 
-unnested_elisa_fitted_data <- elisa_fitted_data_summary %>%
-  unnest(elisa_fitted_data_summary) %>%
-  ungroup() %>%
-  dplyr::select(Groups, mouse_id, fitted_data)
+#unnested_elisa_fitted_data <- elisa_fitted_data_summary %>%
+#  unnest(elisa_fitted_data_summary) %>%
+#  ungroup() %>%
+#  dplyr::select(Groups, mouse_id, fitted_data)
 
-unnested_elisa_fitted_data$fitted_data[[1]]
+# unnested_elisa_fitted_data$fitted_data[[1]]
 
 # Another way
 

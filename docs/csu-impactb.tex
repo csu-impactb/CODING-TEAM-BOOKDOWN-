@@ -4,14 +4,17 @@
 %
 \documentclass[
 ]{book}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-08-08}
+
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +85,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -117,15 +120,11 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-08-08}
 
 \begin{document}
 \maketitle
@@ -221,11 +220,11 @@ The values that we initially record for each mouse include:
   \texttt{group\_detail}: A longer description of the mouse's treatment group
   (e.g., ``Vaccinated with vaccine candidate A at 4 and 8 weeks'')
 \item
-  \texttt{notch\_id}: The number that corresponds with the ear notch pattern of the
-  mouse, which together with the mouse's experimental group provides a unique
-  identifier for each mouse in the experiment
+  \texttt{notch\_id}: The ear notch pattern of the mouse (e.g., ``0'' for no notch,
+  ``1R'' for one notch in the right ear)
 \item
-  \texttt{mouse\_number}: The mouse's group number and notch ID combined; this provides
+  \texttt{mouse\_number}: A number that corresponds with the mouse's ear notch patter;
+  together with the mouse's group number, this provides
   a unique identifier for each mouse in the experiment
 \item
   \texttt{cage\_number}: The number of the cage to which the mouse is first assigned.
@@ -235,14 +234,20 @@ The values that we initially record for each mouse include:
 \item
   \texttt{sex}: Whether the mouse is male (``m'') or female (``f'')
 \item
-  \texttt{age}:
+  \texttt{age}: Age
 \item
-  \texttt{strain}
+  \texttt{strain}: The strain of the mouse (e.g., ``C57BL/6J'' for Black 6, ``C3HeB/FeJ'' for
+  Kramnik)
 \end{itemize}
 
 We have created a spreadsheet template that can be used to record these data,
-which you can download by clicking here. Here is an example of how the first
-rows of this template might look once it's filled out:
+which you can download by clicking here. This template currently includes
+example data (colored in red to help you remember that it's only there as an
+example). To Use this template, take a look at the example data, then delete it
+and replace with the real data for your experiment.
+
+Here is an example of how the first rows of this template might look once it's
+filled out:
 
 This template should be used at the
 initial time when mice are brought into the experiment. The file format is an
@@ -283,6 +288,15 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'readxl' was built under R version 4.1.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
@@ -295,7 +309,11 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 ## v ggplot2 3.3.5     v purrr   0.3.4
 ## v tibble  3.1.6     v dplyr   1.0.7
 ## v tidyr   1.1.4     v stringr 1.4.0
-## v readr   2.1.1     v forcats 0.5.1
+## v readr   2.1.2     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'readr' was built under R version 4.1.2
 \end{verbatim}
 
 \begin{verbatim}
@@ -754,7 +772,25 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \FunctionTok{library}\NormalTok{(readxl)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(minpack.lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'minpack.lm' was built under R version 4.1.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(broom)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'broom' was built under R version 4.1.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(purrr)}
 \end{Highlighting}
 \end{Shaded}
@@ -767,12 +803,18 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}
@@ -861,12 +903,18 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}
