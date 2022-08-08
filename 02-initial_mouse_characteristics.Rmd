@@ -12,22 +12,28 @@ The values that we initially record for each mouse include:
 is assigned (e.g., "Control", "Group 1")
 - `group_detail`: A longer description of the mouse's treatment group 
 (e.g., "Vaccinated with vaccine candidate A at 4 and 8 weeks")
-- `notch_id`: The number that corresponds with the ear notch pattern of the
-mouse, which together with the mouse's experimental group provides a unique
-identifier for each mouse in the experiment
-- `mouse_number`: The mouse's group number and notch ID combined; this provides
+- `notch_id`: The ear notch pattern of the mouse (e.g., "0" for no notch, 
+"1R" for one notch in the right ear)
+- `mouse_number`: A number that corresponds with the mouse's ear notch patter; 
+together with the mouse's group number, this provides
 a unique identifier for each mouse in the experiment
 - `cage_number`: The number of the cage to which the mouse is first assigned. 
 This may change over the course of the experiment, as mice might be removed from 
 a cage due to fighting, etc. Any of these later changes of cage will be 
 recorded [where]
 - `sex`: Whether the mouse is male ("m") or female ("f")
-- `age`: 
-- `strain`
+- `age`: Age 
+- `strain`: The strain of the mouse (e.g., "C57BL/6J" for Black 6, "C3HeB/FeJ" for
+Kramnik)
 
 We have created a spreadsheet template that can be used to record these data,
-which you can download by clicking here. Here is an example of how the first
-rows of this template might look once it's filled out:
+which you can download by clicking here. This template currently includes
+example data (colored in red to help you remember that it's only there as an 
+example). To Use this template, take a look at the example data, then delete it
+and replace with the real data for your experiment.
+
+Here is an example of how the first rows of this template might look once it's
+filled out:
 
 ```{r}
 
