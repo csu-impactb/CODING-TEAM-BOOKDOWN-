@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study. Flow cytometry was done on lung and spleen  7.1 Loading packages library(readxl) library(ggplot2)...">
+<meta name="description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study. Flow cytometry was done on lung and spleen  7.1 Loading packages library(readxl) library(ggplot2)...">
+<meta property="og:description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study. Flow cytometry was done on lung and spleen  7.1 Loading packages library(readxl) library(ggplot2)...">
+<meta name="twitter:description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -83,8 +83,8 @@
 <h1>
 <span class="header-section-number">7</span> Flow cytometry<a class="anchor" aria-label="anchor" href="#flow-cytometry"><i class="fas fa-link"></i></a>
 </h1>
-<p>This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study.
-Flow cytometry was done on lung and spleen</p>
+<p>Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a <code>.csv</code> file. This <code>.csv</code> file is the primary input for this R pipeline which aims to output box plots for each gated cell population.</p>
+<p>This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.</p>
 <div id="loading-packages" class="section level2" number="7.1">
 <h2>
 <span class="header-section-number">7.1</span> Loading packages<a class="anchor" aria-label="anchor" href="#loading-packages"><i class="fas fa-link"></i></a>

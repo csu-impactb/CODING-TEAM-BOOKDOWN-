@@ -270,7 +270,7 @@ experiment.
 
 Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease {[}@ baazim2022interplay{]}. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans {[}@ baazim2022interplay{]}. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration \citep{baazim2019cd8}, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
 
-In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies \citep{smith2022host}, {[}@ segueni2016controlled{]}. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers \citep{smith2022host}. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
+In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies \citep{smith2022host, segueni2016controlled}. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers \citep{smith2022host}. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
 
 The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
 
@@ -1627,8 +1627,9 @@ b = 1
 \hypertarget{flow-cytometry}{%
 \chapter{Flow cytometry}\label{flow-cytometry}}
 
-This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study.
-Flow cytometry was done on lung and spleen
+Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a \texttt{.csv} file. This \texttt{.csv} file is the primary input for this R pipeline which aims to output box plots for each gated cell population.
+
+This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.
 
 \hypertarget{loading-packages}{%
 \section{Loading packages}\label{loading-packages}}
