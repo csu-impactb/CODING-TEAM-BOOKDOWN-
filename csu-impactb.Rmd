@@ -1,3 +1,350 @@
+--- 
+title: "ImpactTB/BAA: Standard Operating Procedures for Data Analysis"
+author: "Colorado State University Coding Team"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination."
+---
+
+# Overview
+
+Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction
+
+## About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)
+
+The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with *Mycobacterium tuberculosis (Mtb)*, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against *Mtb* in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for *Mtb* infection protection. 
+
+The seven centers that are part of the study are (in alphabetical order):
+
+1. Colorado State University
+2. Harvard T.H. Chan School of Public Health
+3. Seattle Children Hospital
+
+
+
+Colorado State University Team and role of each member:
+Dr. Marcela Henao-Tamayo: Principal Investigator
+Dr. Brendan Podell: Principal Investigator
+Dr. Andres Obregon-Henao: Research Scientist-III
+Dr. Taru S. Dutt: Research Scientist-I
+
+
+
+
+
+
+
+
+
+
+<!--chapter:end:01-intro.Rmd-->
+
+# Initial mouse characteristics
+
+Here is a review of existing methods.
+
+<!--chapter:end:02-initial_mouse_characteristics.Rmd-->
+
+# Mouse Weights
+
+### Overview
+Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease @ [baazim2022interplay]. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans @ [baazim2022interplay]. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration  @[baazim2019cd8],  and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
+
+In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies @ [smith2022host], @ [segueni2016controlled]. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers @ [smith2022host]. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression. 
+
+The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
+
+### Parameters
+Weights are recorded in an excel worksheet. 
+
+Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
+
+Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
+
+The notes column contains information regarding clinical observations. 
+
+good reference: https://elifesciences.org/articles/74419#s4
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+### Read in data
+
+Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
+
+```{r include=FALSE}
+weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
+excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
+
+multiplesheets <- function(fname) {
+   
+  # getting info about all excel sheets
+  sheets <- readxl::excel_sheets(fname)
+  tibble <- lapply(sheets, function(x) readxl::read_excel(fname, sheet = x))
+  data_frame <- lapply(tibble, as.data.frame)
+    
+  # assigning names to data frames
+  names(data_frame) <- sheets
+    
+  # print data frame
+  print(data_frame)
+}
+  
+# specifying the path name
+path <- "DATA/body_weights_measurement.xlsx"
+multiplesheets(path)
+```
+
+### Can also use rio to read in the data, more streamlined
+```{r include=FALSE}
+library(rio)
+# specifying the path name
+path <- "DATA/body_weights_measurement.xlsx"
+  
+# reading data from all sheets
+data <- import_list(path)
+  
+# print data
+print (data)
+```
+
+
+### Clean data
+```{r}
+dataset <- data$before_vaccination %>%
+ select("sex", "mouse_number", "weight", "cage_number", "group")
+
+```
+
+
+```{r}
+
+# combining columns mouse_number and cage_number
+
+dataset$mouse_id <- paste(dataset$mouse_number, "-", dataset$cage_number)
+
+```
+
+
+### Body weight over time graph and statistics
+```{r}
+
+```
+
+### Weight loss over time graph and statistics 
+```{r}
+
+```
+
+### Weight vs CFU
+```{r}
+
+```
+
+### Weight vs ELISA results 
+```{r}
+
+```
+
+### Weight vs lesion burden
+```{r}
+
+```
+
+
+<!--chapter:end:03-mouse_weights.Rmd-->
+
+# Colony forming units to determine bacterial counts 
+
+## Data description
+
+The data are collected in a spreadsheet with multiple sheets. The first sheet
+(named "[x]") is used to record some metadata for the experiment, while the 
+following sheets are used to record CFUs counts from the plates used for samples
+from each organ, with one sheet per organ. For example, if you plated data
+from both the lung and spleen, there would be three sheets in the file: one 
+with the metadata, one with the plate counts for the lung, and one with the
+plate counts for the spleen. 
+
+The metadata sheet is used to record information about the overall process of
+plating the data. Values from this sheet will be used in calculating the bacterial
+load in the original sample based on the CFU counts. This spreadsheet includes
+the following columns: 
+
+- `organ`: Include one row for each organ that was plated in the experiment. 
+You should name the organ all in lowercase (e.g., "lung", "spleen"). You 
+should use the same name to also name the sheet that records data for that organ
+for example, if you have rows in the metadata sheet for "lung" and "spleen", 
+then you should have two other sheets in the file, one sheet named "lung" and 
+one named "spleen", which you'll use to store the plate counts for each of those
+organs.
+- `prop_resuspended`: In this column, give the proportion of that organ that 
+was plated. For example, if you plated half the lung, then in the "lung" row
+of this spread sheet, you should put 0.5 in the `prop_resuspended` column. 
+- `total_resuspended_uL`: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads. 
+- `og_aliquot_uL`: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
+- `dilution_factor`: Amount of the original stock solution that is present in the total solution, after dilution(s)
+- `plated_uL`: Amount of suspension + diluent plated on section of solid agar 
+
+## Read in data
+
+```{r message = FALSE, warning = FALSE}
+library(readxl)
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(stringr)
+
+#Replace w/ path to CFU sheet
+path <- c("DATA/Copy of baa_cfu_sheet.xlsx")
+
+sheet_names <- excel_sheets(path)
+sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
+
+merged_data <- list()
+
+for(i in 1:length(sheet_names)){
+  
+  data <- read_excel(path, sheet = sheet_names[i]) %>% 
+    mutate(organ = paste0(sheet_names[i]))
+  
+  data <- data %>% 
+    #mutate(missing_col = NA) %>% 
+    mutate_if(is.double, as.numeric) %>% 
+    mutate_if(is.numeric, as.character) %>% 
+    pivot_longer(starts_with("dil_"), names_to = "dilution",
+                 values_to = "CFUs") %>% 
+    mutate(dilution = str_extract(dilution, "[0-9]+"),
+           dilution = as.numeric(dilution))
+    
+  
+  merged_data[[i]] <- data
+  
+  
+}
+  
+all_data <- bind_rows(merged_data, .id = "column_label") %>% 
+    select(-column_label)
+  
+```
+
+## Exploratory analysis and quality checks
+
+## Exploratory analysis
+
+**Dimensions of input data:**
+
+Based on the input data, data were collected for the following organ or 
+organs: 
+
+The following number of mice were included for each: 
+
+The following number of replicates were recorded at each count date for 
+each experimental group: 
+
+The following number of dilutions and dilution level were recorded for 
+each organ: 
+
+**People who plated and collected the data. Date or dates of counting:**
+
+Based on the input data, the plates included in these data were counted by 
+the following person or persons: 
+Based on the input data, the plates included in these data were counted on 
+the following date or dates: 
+
+```{r}
+all_data %>%
+  select(organ, who_plated, who_counted, count_date) %>%
+  distinct()
+```
+
+**Distribution of CFUs at each dilution:**
+
+WE NEED TO ADD SAMPLE CFU PLOTS
+
+Here's a plot that shows how many plates were too numerous to count at each 
+dilution level: 
+
+Here is a plot that shows how the CFU counts were distributed by dilution
+level in the data: 
+
+## Identify a good dilution for each sample
+```{r}
+# Make all_data into tidy data and filter for CFUs between 10-75
+  
+tidy_cfu_data <- all_data %>%
+  mutate(dilution = str_extract(dilution, "[0-9]+"),
+         dilution = as.numeric(dilution)) %>%
+  filter(CFUs >= 10 & CFUs <= 75) %>%
+  mutate(CFUs = as.numeric(CFUs))
+```
+
+## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
+```{r}
+# Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().
+meta <- read_excel(path, sheet = "metadata")
+
+tidy_cfu_meta_joined <- inner_join(tidy_cfu_data, meta) %>%
+  group_by(groups) %>% 
+  mutate(CFUs_per_ml = (CFUs * (dilution_factor^2) * (total_resuspension_mL/volume_plated_ul) * 10)) %>%
+  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  CFUs, CFUs_per_ml) %>%
+  ungroup()
+
+tidy_cfu_meta_joined
+```
+
+## Create initial report information for these data
+```{r}
+
+```
+
+
+## Sample ANOVA
+```{r}
+cfu_stats <- tidy_cfu_meta_joined %>% 
+  group_by(organ) %>%
+  nest() %>%
+  mutate(aov_result = map(data, ~aov(CFUs_per_ml ~ groups, data = .x)),
+         tukey_result = map(aov_result, TukeyHSD),
+         tidy_tukey = map(tukey_result, broom::tidy)) %>%
+  unnest(tidy_tukey, .drop = TRUE) %>%
+  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+  select(-data, -aov_result, -tukey_result, -term, -null.value)# %>%
+  # filter(adj.p.value <= 0.05)
+
+cfu_stats
+```
+
+## Save processed data to database
+## Example one
+
+## Example two
+
+
+
+
+
+<!--chapter:end:04-cfus.Rmd-->
+
 ---
 output: html_document
 editor_options: 
@@ -352,5 +699,20 @@ elisa_fitted_data_summary %>%
   unnest(fitted_data_summary)
 ```
 
+
+
+
+
+
+
 ### Creating a function for endpoint titer model and fitting the model into the data
+
+
+<!--chapter:end:05-elisa.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:06-references.Rmd-->
 
