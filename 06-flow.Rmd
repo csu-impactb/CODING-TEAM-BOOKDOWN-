@@ -110,7 +110,7 @@ CD3neg_CD11bneg <- tidy_Df1 %>%
 
 
 ## boxplot
-```{r, fig.width = 10, fig.height= 20}
+```{r, fig.width = 10, fig.height= 15}
 CD3pos_CD11bneg_bar_plot <- CD3pos_CD11bneg %>%
 mutate(day = fct_relevel(day,
             "CNT", "D3", "D7",
@@ -119,7 +119,7 @@ mutate(day = fct_relevel(day,
   stat_boxplot( aes(day, percentage_of_CD45), 
     geom='errorbar', linetype=1, width=0.5)+  
   geom_boxplot(aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 10, nrow = 20) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
   theme_bw() + 
   theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
         axis.title.x = element_text(size = 20, face = "bold"), 
@@ -143,7 +143,7 @@ mutate(day = fct_relevel(day,
   stat_boxplot( aes(day, percentage_of_CD45), 
     geom='errorbar', linetype=1, width=0.5)+  
   geom_boxplot( aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 6, nrow = 12) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
   theme_bw() + 
   theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
         axis.title.x = element_text(size = 20, face = "bold"), 
@@ -167,7 +167,7 @@ mutate(day = fct_relevel(day,
   stat_boxplot( aes(day, percentage_of_CD45), 
     geom='errorbar', linetype=1, width=0.5)+  
   geom_boxplot( aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 6, nrow = 12) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
   theme_bw() + 
   theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
         axis.title.x = element_text(size = 20, face = "bold"), 
