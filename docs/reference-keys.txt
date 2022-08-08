@@ -1,8 +1,8 @@
 fig:pressure
 overview
-introduction
 about-the-project
 about-this-book
+experimental-metadata
 initial-mouse-characteristics
 mouse-weights
 overview-1
@@ -48,3 +48,4 @@ fitting-the-model-into-the-data
 apply-the-fitted-model-function-to-the-whole-dataframe
 take-out-the-summary-of-the-data
 creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data
+flow-cytometry
