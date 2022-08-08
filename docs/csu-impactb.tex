@@ -4,14 +4,17 @@
 %
 \documentclass[
 ]{book}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-08-03}
+
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +85,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -117,15 +120,11 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-08-08}
 
 \begin{document}
 \maketitle
@@ -137,10 +136,15 @@
 \hypertarget{overview}{%
 \chapter{Overview}\label{overview}}
 
-\hypertarget{about-the-project}{%
-\section{About the project}\label{about-the-project}}
+Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
 
-The objective of the Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) program is to get a thorough understanding of the immune responses necessary to avoid initial infection with \emph{Mycobacterium tuberculosis (Mtb)}, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against \emph{Mtb} in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for \emph{Mtb} infection protection.
+\hypertarget{introduction}{%
+\chapter{Introduction}\label{introduction}}
+
+\hypertarget{about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}{%
+\section{About the project: Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB)}\label{about-the-project-immune-mechanisms-of-protection-against-mycobacterium-tuberculosis-impac-tb}}
+
+The objective of the IMPAc-TB program is to get a thorough understanding of the immune responses necessary to avoid initial infection with \emph{Mycobacterium tuberculosis (Mtb)}, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against \emph{Mtb} in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for \emph{Mtb} infection protection.
 
 The seven centers that are part of the study are (in alphabetical order):
 
@@ -153,107 +157,18 @@ The seven centers that are part of the study are (in alphabetical order):
   Harvard T.H. Chan School of Public Health
 \item
   Seattle Children Hospital
-\item
-  {[}more{]}
 \end{enumerate}
 
 Colorado State University Team and role of each member:
-
-\begin{itemize}
-\tightlist
-\item
-  Dr.~Marcela Henao-Tamayo: Principal Investigator
-\item
-  Dr.~Brendan Podell: Principal Investigator
-\item
-  Dr.~Andres Obregon-Henao: Research Scientist-III
-\item
-  Dr.~Taru S. Dutt: Research Scientist-I
-\item
-  {[}more{]}
-\end{itemize}
-
-\hypertarget{about-this-book}{%
-\section{About this book}\label{about-this-book}}
-
-The aim of this book is to provide data protocols and data collection templates
-for key types of data that are collected over the course of this project. By using
-standard templates to record data, as well as starting from defined pipelines to
-process and analyze the data, we aim to standardize the collection and processing
-of data across this project.
-
-Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
-
-\hypertarget{experimental-metadata}{%
-\chapter{Experimental metadata}\label{experimental-metadata}}
-
-Metadata for an experiment:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{species}
-\item
-  \texttt{start\_date}
-\item
-  \texttt{end\_date}
-\item
-  \texttt{experimental\_groups}
-\end{itemize}
+Dr.~Marcela Henao-Tamayo: Principal Investigator
+Dr.~Brendan Podell: Principal Investigator
+Dr.~Andres Obregon-Henao: Research Scientist-III
+Dr.~Taru S. Dutt: Research Scientist-I
 
 \hypertarget{initial-mouse-characteristics}{%
 \chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
 
-At the start of each experiment with a mouse model, we record several measurements
-or characteristics of each mouse. We record these measurements along with an identifier
-for each mouse (for example, based on tags or ear notches), so that we can later
-link the initial characteristics of each mouse with later measurements on the same
-mouse.
-
-The values that we initially record for each mouse include:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{group}: An identifier for the experimental group to which the mouse
-  is assigned (e.g., ``Control'', ``Group 1'')
-\item
-  \texttt{group\_detail}: A longer description of the mouse's treatment group
-  (e.g., ``Vaccinated with vaccine candidate A at 4 and 8 weeks'')
-\item
-  \texttt{notch\_id}: The number that corresponds with the ear notch pattern of the
-  mouse, which together with the mouse's experimental group provides a unique
-  identifier for each mouse in the experiment
-\item
-  \texttt{mouse\_number}: The mouse's group number and notch ID combined; this provides
-  a unique identifier for each mouse in the experiment
-\item
-  \texttt{cage\_number}: The number of the cage to which the mouse is first assigned.
-  This may change over the course of the experiment, as mice might be removed from
-  a cage due to fighting, etc. Any of these later changes of cage will be
-  recorded {[}where{]}
-\item
-  \texttt{sex}: Whether the mouse is male (``m'') or female (``f'')
-\item
-  \texttt{age}:
-\item
-  \texttt{strain}
-\end{itemize}
-
-We have created a spreadsheet template that can be used to record these data,
-which you can download by clicking here. Here is an example of how the first
-rows of this template might look once it's filled out:
-
-This template should be used at the
-initial time when mice are brought into the experiment. The file format is an
-Excel file, so you can use it by saving it to your computer and then opening and
-recording data with Excel. Later code in this chapter will read in a file in
-this template format to provide basic summaries of the data. Later code will
-read in these files to record the data in a project-wide database, which will
-allow us to integrate it with other data collected over the course of the
-experiment.
-
-{[}Rules for naming the file. Include experiment name / study ID?{]}
+Here is a review of existing methods.
 
 \hypertarget{mouse-weights}{%
 \chapter{Mouse Weights}\label{mouse-weights}}
@@ -288,17 +203,11 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.5     v purrr   0.3.4
-## v tibble  3.1.6     v dplyr   1.0.7
-## v tidyr   1.1.4     v stringr 1.4.0
-## v readr   2.1.1     v forcats 0.5.1
-\end{verbatim}
-
-\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.7     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.0
+## v readr   2.1.2     v forcats 0.5.1
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -398,10 +307,6 @@ the following columns:
 \FunctionTok{library}\NormalTok{(purrr)}
 \FunctionTok{library}\NormalTok{(tidyr)}
 \FunctionTok{library}\NormalTok{(stringr)}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(gridExtra)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{library}\NormalTok{(ggpubr)}
 
 \CommentTok{\#Replace w/ path to CFU sheet}
 \NormalTok{path }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"DATA/Copy of baa\_cfu\_sheet.xlsx"}\NormalTok{)}
@@ -433,65 +338,8 @@ the following columns:
   
 \NormalTok{all\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(merged\_data, }\AttributeTok{.id =} \StringTok{"column\_label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{column\_label)}
-  
-\FunctionTok{head}\NormalTok{(merged\_data)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [[1]]
-## # A tibble: 342 x 8
-##    count_date           who_plated who_counted groups mouse organ dilution CFUs 
-##    <chr>                <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-##  1 "\"February 21 2022~ BK         BK          group~ A     lung         0 TNTC 
-##  2 "\"February 21 2022~ BK         BK          group~ A     lung         1 TNTC 
-##  3 "\"February 21 2022~ BK         BK          group~ A     lung         2 TNTC 
-##  4 "\"February 21 2022~ BK         BK          group~ A     lung         3 53   
-##  5 "\"February 21 2022~ BK         BK          group~ A     lung         4 9    
-##  6 "\"February 21 2022~ BK         BK          group~ A     lung         5 4    
-##  7 "\"February 21 2022~ BK         BK          group~ A     lung         6 2    
-##  8 "\"February 21 2022~ BK         BK          group~ A     lung         7 1    
-##  9 "\"February 21 2022~ BK         BK          group~ A     lung         8 0    
-## 10 "\"February 21 2022~ BK         BK          group~ B     lung         0 TNTC 
-## # ... with 332 more rows
-## 
-## [[2]]
-## # A tibble: 112 x 8
-##    count_date          who_plated who_counted groups  mouse organ dilution CFUs 
-##    <chr>               <chr>      <chr>       <chr>   <chr> <chr>    <dbl> <chr>
-##  1 "\"April 25 2022\"" JR         JR          group_1 A     sple~        0 TNTC 
-##  2 "\"April 25 2022\"" JR         JR          group_1 A     sple~        1 TNTC 
-##  3 "\"April 25 2022\"" JR         JR          group_1 A     sple~        2 53   
-##  4 "\"April 25 2022\"" JR         JR          group_1 A     sple~        3 9    
-##  5 "\"April 25 2022\"" JR         JR          group_1 A     sple~        4 4    
-##  6 "\"April 25 2022\"" JR         JR          group_1 A     sple~        5 2    
-##  7 "\"April 25 2022\"" JR         JR          group_1 A     sple~        6 1    
-##  8 "\"April 25 2022\"" JR         JR          group_1 A     sple~        7 0    
-##  9 "\"April 25 2022\"" JR         JR          group_1 B     sple~        0 TNTC 
-## 10 "\"April 25 2022\"" JR         JR          group_1 B     sple~        1 TNTC 
-## # ... with 102 more rows
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(all\_data)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
-## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
-## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
-\end{verbatim}
-
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
 
 \hypertarget{exploratory-analysis-and-quality-checks}{%
 \section{Exploratory analysis and quality checks}\label{exploratory-analysis-and-quality-checks}}
@@ -536,25 +384,9 @@ the following date or dates:
 ## 3 spleen JR         JR          "\"April 25 2022\""
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(all\_data)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
-## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
-## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
-\end{verbatim}
-
 \textbf{Distribution of CFUs at each dilution:}
+
+WE NEED TO ADD SAMPLE CFU PLOTS
 
 Here's a plot that shows how many plates were too numerous to count at each
 dilution level:
@@ -572,25 +404,10 @@ level in the data:
 \NormalTok{tidy\_cfu\_data }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
          \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{((CFUs }\SpecialCharTok{\textgreater{}=} \DecValTok{5} \SpecialCharTok{\&}\NormalTok{ CFUs }\SpecialCharTok{\textless{}=} \DecValTok{95}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ groups }\SpecialCharTok{==} \StringTok{"control"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs =} \FunctionTok{as.numeric}\NormalTok{(CFUs)) }
-
-
-\FunctionTok{head}\NormalTok{(tidy\_cfu\_data)}
+  \FunctionTok{filter}\NormalTok{(CFUs }\SpecialCharTok{\textgreater{}=} \DecValTok{10} \SpecialCharTok{\&}\NormalTok{ CFUs }\SpecialCharTok{\textless{}=} \DecValTok{75}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs =} \FunctionTok{as.numeric}\NormalTok{(CFUs))}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution  CFUs
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <dbl>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         3    53
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         4     9
-## 3 "\"February 21 2022\~ BK         BK          group~ C     lung         5     8
-## 4 "\"February 21 2022\~ BK         BK          group~ D     lung         3    53
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         2    92
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         4     7
-\end{verbatim}
 
 \hypertarget{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}{%
 \section{Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution}\label{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}}
@@ -600,12 +417,10 @@ level in the data:
 \CommentTok{\# Calculating CFU/ml for every qualifying replicate between 10{-}75 CFUs. Column binding by organ name to the metadata sheet via inner\_join().}
 \NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(path, }\AttributeTok{sheet =} \StringTok{"metadata"}\NormalTok{)}
 
-\NormalTok{tidy\_cfu\_meta\_joined }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(meta, tidy\_cfu\_data) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{tidy\_cfu\_meta\_joined }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(tidy\_cfu\_data, meta) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(groups) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor}\SpecialCharTok{\^{}}\NormalTok{dilution) }\SpecialCharTok{*} 
-\NormalTok{                          (total\_resuspension\_mL}\SpecialCharTok{/}\NormalTok{volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(organ, count\_date, who\_plated, who\_counted, groups,  mouse, dilution,  }
-\NormalTok{         CFUs, CFUs\_per\_ml) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (total\_resuspension\_mL}\SpecialCharTok{/}\NormalTok{volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{10}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(organ, count\_date, who\_plated, who\_counted, groups,  mouse, dilution,  CFUs, CFUs\_per\_ml) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -616,48 +431,31 @@ level in the data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(tidy\_cfu\_meta\_joined)}
+\NormalTok{tidy\_cfu\_meta\_joined}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 6 x 9
-##   organ count_date            who_plated who_counted groups mouse dilution  CFUs
-##   <chr> <chr>                 <chr>      <chr>       <chr>  <chr>    <dbl> <dbl>
-## 1 lung  "\"February 21 2022\~ BK         BK          group~ A            3    53
-## 2 lung  "\"February 21 2022\~ BK         BK          group~ A            4     9
-## 3 lung  "\"February 21 2022\~ BK         BK          group~ C            5     8
-## 4 lung  "\"February 21 2022\~ BK         BK          group~ D            3    53
-## 5 lung  "\"February 21 2022\~ BK         BK          group~ A            2    92
-## 6 lung  "\"February 21 2022\~ BK         BK          group~ A            4     7
-## # ... with 1 more variable: CFUs_per_ml <dbl>
+## # A tibble: 146 x 9
+##    organ count_date           who_p~1 who_c~2 groups mouse dilut~3  CFUs CFUs_~4
+##    <chr> <chr>                <chr>   <chr>   <chr>  <chr>   <dbl> <dbl>   <dbl>
+##  1 lung  "\"February 21 2022~ BK      BK      group~ A           3    53    66.2
+##  2 lung  "\"February 21 2022~ BK      BK      group~ A           5     4     5  
+##  3 lung  "\"February 21 2022~ BK      BK      group~ A           6     2     2.5
+##  4 lung  "\"February 21 2022~ BK      BK      group~ B           3   119   149. 
+##  5 lung  "\"February 21 2022~ BK      BK      group~ B           4    48    60  
+##  6 lung  "\"February 21 2022~ BK      BK      group~ B           5    18    22.5
+##  7 lung  "\"February 21 2022~ BK      BK      group~ C           3   120   150  
+##  8 lung  "\"February 21 2022~ BK      BK      group~ C           4    32    40  
+##  9 lung  "\"February 21 2022~ BK      BK      group~ D           3    53    66.2
+## 10 lung  "\"February 21 2022~ BK      BK      group~ D           4    31    38.8
+## # ... with 136 more rows, and abbreviated variable names 1: who_plated,
+## #   2: who_counted, 3: dilution, 4: CFUs_per_ml
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{create-initial-report-information-for-these-data}{%
 \section{Create initial report information for these data}\label{create-initial-report-information-for-these-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_lung\_cfu\_plot }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(organ }\SpecialCharTok{==} \StringTok{"lung"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{group =} \FunctionTok{fct\_relevel}\NormalTok{(groups, }\StringTok{"group\_1"}\NormalTok{, }\StringTok{"group\_2"}\NormalTok{, }\StringTok{"group\_3"}\NormalTok{, }\StringTok{"group\_4"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml), }\AttributeTok{fill =}\NormalTok{ groups))}\SpecialCharTok{+}
-  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml)), }
-    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+} 
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ groups), }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"lightgrey"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"CFUs in early infected mouse lung"}\NormalTok{), }\AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"log10(CFU/mL)"}\NormalTok{,}
-       \AttributeTok{color =} \StringTok{"Group"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{guides}\NormalTok{(}\AttributeTok{shape =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
-  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{, }\AttributeTok{ref.group =} \StringTok{"group\_1"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{))}
-
-\NormalTok{tidy\_lung\_cfu\_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 \hypertarget{sample-anova}{%
 \section{Sample ANOVA}\label{sample-anova}}
@@ -696,19 +494,22 @@ level in the data:
 ## # Groups:   organ [2]
 ##   organ  contrast1 contrast2 estimate conf.low conf.high adj.p.value
 ##   <chr>  <chr>     <chr>        <dbl>    <dbl>     <dbl>       <dbl>
-## 1 lung   group_2   group_1    -60953. -138742.    16836.      0.171 
-## 2 lung   group_3   group_1    -63903. -135699.     7893.      0.0963
-## 3 lung   group_4   group_1    -26214. -102416.    49987.      0.793 
-## 4 lung   group_3   group_2     -2950.  -69900.    64000.      0.999 
-## 5 lung   group_4   group_2     34739.  -36915.   106393.      0.569 
-## 6 lung   group_4   group_3     37689.  -27410.   102787.      0.417 
-## 7 spleen group_2   group_1     -6565   -13529.      399.      0.0656
-## 8 spleen group_3   group_1     -7310   -13341.    -1279.      0.0178
-## 9 spleen group_3   group_2      -745.   -6776.     5286.      0.943
+## 1 lung   group_2   group_1     -15.0     -39.4      9.34       0.377
+## 2 lung   group_3   group_1     -13.1     -39.2     13.1        0.562
+## 3 lung   group_4   group_1      -2.57    -27.1     22.0        0.993
+## 4 lung   group_3   group_2       1.98    -22.7     26.7        0.997
+## 5 lung   group_4   group_2      12.5     -10.5     35.5        0.491
+## 6 lung   group_4   group_3      10.5     -14.4     35.4        0.689
+## 7 spleen group_2   group_1     -21.5     -48.8      5.80       0.146
+## 8 spleen group_3   group_1     -17.6     -45.9     10.7        0.294
+## 9 spleen group_3   group_2       3.90    -23.4     31.2        0.935
 \end{verbatim}
 
 \hypertarget{save-processed-data-to-database}{%
 \section{Save processed data to database}\label{save-processed-data-to-database}}
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
 
 \hypertarget{example-two}{%
 \section{Example two}\label{example-two}}
@@ -755,7 +556,6 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(minpack.lm)}
 \FunctionTok{library}\NormalTok{(broom)}
-\FunctionTok{library}\NormalTok{(purrr)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -767,12 +567,18 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}
@@ -861,12 +667,18 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \begin{verbatim}
 ## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
+## * `` -> `...1`
+## * `` -> `...2`
+## * `` -> `...3`
+## * `` -> `...4`
+## * `` -> `...5`
+## * `` -> `...6`
+## * `` -> `...7`
+## * `` -> `...8`
+## * `` -> `...9`
+## * `` -> `...10`
+## * `` -> `...11`
+## * `` -> `...12`
 \end{verbatim}
 
 \begin{Shaded}
@@ -1141,7 +953,7 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \subsection{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1170,389 +982,6 @@ The endpoint titer approach chooses an absorbance value just above the backgroun
 \begin{verbatim}
 ## [1] -8.113285
 \end{verbatim}
-
-\hypertarget{absorbance-summation-method}{%
-\subsection{Absorbance summation method}\label{absorbance-summation-method}}
-
-In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{AS }\OtherTok{=} \FloatTok{0.04} \SpecialCharTok{+} \FloatTok{0.04} \SpecialCharTok{+} \FloatTok{0.05} \SpecialCharTok{+} \FloatTok{0.05} \SpecialCharTok{+} \FloatTok{0.06} \SpecialCharTok{+} \FloatTok{0.1} \SpecialCharTok{+} \FloatTok{0.22} \SpecialCharTok{+} \FloatTok{0.51} \SpecialCharTok{+} \FloatTok{1.1} \SpecialCharTok{+} \FloatTok{2.34} \SpecialCharTok{+} \FloatTok{3.73} \SpecialCharTok{+} \FloatTok{4.0}
-
-\NormalTok{AS}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 12.24
-\end{verbatim}
-
-\hypertarget{use-the-the-data-analysis-models-in-our-data}{%
-\section{Use the the data analysis models in our data}\label{use-the-the-data-analysis-models-in-our-data}}
-
-The presented data is from a mouse study. In this data, presence of IgG antibody has been evaluated against receptor binding domain (RBD) of SARS-CoV-2 virus in two different groups of mice. We need to elucidate which group has higher concentration of the antibodies.
-
-\hypertarget{read-in-the-data}{%
-\subsection{read in the data}\label{read-in-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_data\_serial\_dilution.xlsx"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{make-the-tidy-data}{%
-\subsection{make the tidy data}\label{make-the-tidy-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_data, }\AttributeTok{cols =} \StringTok{"Mouse\_1"}\SpecialCharTok{:}\StringTok{"Mouse\_5"}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"mouse\_id"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"absorbance"}\NormalTok{)}
-
-\NormalTok{elisa\_data}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 100 x 4
-##    Groups  Dilution mouse_id absorbance
-##    <chr>   <chr>    <chr>         <dbl>
-##  1 Group 1 1/50     Mouse_1         4.1
-##  2 Group 1 1/50     Mouse_2         3.9
-##  3 Group 1 1/50     Mouse_3         4.3
-##  4 Group 1 1/50     Mouse_4         4.2
-##  5 Group 1 1/50     Mouse_5         4  
-##  6 Group 1 1/100    Mouse_1         3.9
-##  7 Group 1 1/100    Mouse_2         3.8
-##  8 Group 1 1/100    Mouse_3         3.6
-##  9 Group 1 1/100    Mouse_4         3.7
-## 10 Group 1 1/100    Mouse_5         3.8
-## # ... with 90 more rows
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# separate dilution column and convert it to log2}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_data, }\AttributeTok{col =} \StringTok{"Dilution"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denomenator"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{transform}\NormalTok{(}\AttributeTok{numerator =} \FunctionTok{as.numeric}\NormalTok{(numerator),}
-            \AttributeTok{denomenator =} \FunctionTok{as.numeric}\NormalTok{(denomenator))}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =}\NormalTok{ elisa\_data}\SpecialCharTok{$}\NormalTok{numerator }\SpecialCharTok{/}\NormalTok{ elisa\_data}\SpecialCharTok{$}\NormalTok{denomenator) }
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_dilution =} \FunctionTok{log2}\NormalTok{(dilution))}
-
-\NormalTok{elisa\_data}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##      Groups numerator denomenator mouse_id absorbance    dilution log_dilution
-## 1   Group 1         1          50  Mouse_1       4.10 2.00000e-02    -5.643856
-## 2   Group 1         1          50  Mouse_2       3.90 2.00000e-02    -5.643856
-## 3   Group 1         1          50  Mouse_3       4.30 2.00000e-02    -5.643856
-## 4   Group 1         1          50  Mouse_4       4.20 2.00000e-02    -5.643856
-## 5   Group 1         1          50  Mouse_5       4.00 2.00000e-02    -5.643856
-## 6   Group 1         1         100  Mouse_1       3.90 1.00000e-02    -6.643856
-## 7   Group 1         1         100  Mouse_2       3.80 1.00000e-02    -6.643856
-## 8   Group 1         1         100  Mouse_3       3.60 1.00000e-02    -6.643856
-## 9   Group 1         1         100  Mouse_4       3.70 1.00000e-02    -6.643856
-## 10  Group 1         1         100  Mouse_5       3.80 1.00000e-02    -6.643856
-## 11  Group 1         1         200  Mouse_1       3.42 5.00000e-03    -7.643856
-## 12  Group 1         1         200  Mouse_2       3.35 5.00000e-03    -7.643856
-## 13  Group 1         1         200  Mouse_3       3.56 5.00000e-03    -7.643856
-## 14  Group 1         1         200  Mouse_4       3.28 5.00000e-03    -7.643856
-## 15  Group 1         1         200  Mouse_5       3.29 5.00000e-03    -7.643856
-## 16  Group 1         1         400  Mouse_1       2.89 2.50000e-03    -8.643856
-## 17  Group 1         1         400  Mouse_2       2.98 2.50000e-03    -8.643856
-## 18  Group 1         1         400  Mouse_3       2.64 2.50000e-03    -8.643856
-## 19  Group 1         1         400  Mouse_4       2.78 2.50000e-03    -8.643856
-## 20  Group 1         1         400  Mouse_5       2.91 2.50000e-03    -8.643856
-## 21  Group 1         1         800  Mouse_1       2.12 1.25000e-03    -9.643856
-## 22  Group 1         1         800  Mouse_2       2.18 1.25000e-03    -9.643856
-## 23  Group 1         1         800  Mouse_3       2.17 1.25000e-03    -9.643856
-## 24  Group 1         1         800  Mouse_4       2.14 1.25000e-03    -9.643856
-## 25  Group 1         1         800  Mouse_5       2.21 1.25000e-03    -9.643856
-## 26  Group 1         1        1600  Mouse_1       1.89 6.25000e-04   -10.643856
-## 27  Group 1         1        1600  Mouse_2       1.98 6.25000e-04   -10.643856
-## 28  Group 1         1        1600  Mouse_3       1.76 6.25000e-04   -10.643856
-## 29  Group 1         1        1600  Mouse_4       1.69 6.25000e-04   -10.643856
-## 30  Group 1         1        1600  Mouse_5       1.82 6.25000e-04   -10.643856
-## 31  Group 1         1        3200  Mouse_1       0.97 3.12500e-04   -11.643856
-## 32  Group 1         1        3200  Mouse_2       0.85 3.12500e-04   -11.643856
-## 33  Group 1         1        3200  Mouse_3       0.88 3.12500e-04   -11.643856
-## 34  Group 1         1        3200  Mouse_4       0.84 3.12500e-04   -11.643856
-## 35  Group 1         1        3200  Mouse_5       0.91 3.12500e-04   -11.643856
-## 36  Group 1         1        6400  Mouse_1       0.52 1.56250e-04   -12.643856
-## 37  Group 1         1        6400  Mouse_2       0.48 1.56250e-04   -12.643856
-## 38  Group 1         1        6400  Mouse_3       0.42 1.56250e-04   -12.643856
-## 39  Group 1         1        6400  Mouse_4       0.48 1.56250e-04   -12.643856
-## 40  Group 1         1        6400  Mouse_5       0.47 1.56250e-04   -12.643856
-## 41  Group 1         1       12800  Mouse_1       0.26 7.81250e-05   -13.643856
-## 42  Group 1         1       12800  Mouse_2       0.21 7.81250e-05   -13.643856
-## 43  Group 1         1       12800  Mouse_3       0.27 7.81250e-05   -13.643856
-## 44  Group 1         1       12800  Mouse_4       0.26 7.81250e-05   -13.643856
-## 45  Group 1         1       12800  Mouse_5       0.28 7.81250e-05   -13.643856
-## 46  Group 1         1       25600  Mouse_1       0.12 3.90625e-05   -14.643856
-## 47  Group 1         1       25600  Mouse_2       0.16 3.90625e-05   -14.643856
-## 48  Group 1         1       25600  Mouse_3       0.17 3.90625e-05   -14.643856
-## 49  Group 1         1       25600  Mouse_4       0.16 3.90625e-05   -14.643856
-## 50  Group 1         1       25600  Mouse_5       0.14 3.90625e-05   -14.643856
-## 51  Group 2         1          50  Mouse_1       3.20 2.00000e-02    -5.643856
-## 52  Group 2         1          50  Mouse_2       3.40 2.00000e-02    -5.643856
-## 53  Group 2         1          50  Mouse_3       3.60 2.00000e-02    -5.643856
-## 54  Group 2         1          50  Mouse_4       3.20 2.00000e-02    -5.643856
-## 55  Group 2         1          50  Mouse_5       3.70 2.00000e-02    -5.643856
-## 56  Group 2         1         100  Mouse_1       2.90 1.00000e-02    -6.643856
-## 57  Group 2         1         100  Mouse_2       2.80 1.00000e-02    -6.643856
-## 58  Group 2         1         100  Mouse_3       2.70 1.00000e-02    -6.643856
-## 59  Group 2         1         100  Mouse_4       2.80 1.00000e-02    -6.643856
-## 60  Group 2         1         100  Mouse_5       2.80 1.00000e-02    -6.643856
-## 61  Group 2         1         200  Mouse_1       2.32 5.00000e-03    -7.643856
-## 62  Group 2         1         200  Mouse_2       2.35 5.00000e-03    -7.643856
-## 63  Group 2         1         200  Mouse_3       2.56 5.00000e-03    -7.643856
-## 64  Group 2         1         200  Mouse_4       2.28 5.00000e-03    -7.643856
-## 65  Group 2         1         200  Mouse_5       2.29 5.00000e-03    -7.643856
-## 66  Group 2         1         400  Mouse_1       1.89 2.50000e-03    -8.643856
-## 67  Group 2         1         400  Mouse_2       1.98 2.50000e-03    -8.643856
-## 68  Group 2         1         400  Mouse_3       1.64 2.50000e-03    -8.643856
-## 69  Group 2         1         400  Mouse_4       1.78 2.50000e-03    -8.643856
-## 70  Group 2         1         400  Mouse_5       1.91 2.50000e-03    -8.643856
-## 71  Group 2         1         800  Mouse_1       1.12 1.25000e-03    -9.643856
-## 72  Group 2         1         800  Mouse_2       1.18 1.25000e-03    -9.643856
-## 73  Group 2         1         800  Mouse_3       1.17 1.25000e-03    -9.643856
-## 74  Group 2         1         800  Mouse_4       1.14 1.25000e-03    -9.643856
-## 75  Group 2         1         800  Mouse_5       1.21 1.25000e-03    -9.643856
-## 76  Group 2         1        1600  Mouse_1       0.89 6.25000e-04   -10.643856
-## 77  Group 2         1        1600  Mouse_2       0.98 6.25000e-04   -10.643856
-## 78  Group 2         1        1600  Mouse_3       0.76 6.25000e-04   -10.643856
-## 79  Group 2         1        1600  Mouse_4       0.69 6.25000e-04   -10.643856
-## 80  Group 2         1        1600  Mouse_5       0.82 6.25000e-04   -10.643856
-## 81  Group 2         1        3200  Mouse_1       0.47 3.12500e-04   -11.643856
-## 82  Group 2         1        3200  Mouse_2       0.45 3.12500e-04   -11.643856
-## 83  Group 2         1        3200  Mouse_3       0.48 3.12500e-04   -11.643856
-## 84  Group 2         1        3200  Mouse_4       0.44 3.12500e-04   -11.643856
-## 85  Group 2         1        3200  Mouse_5       0.41 3.12500e-04   -11.643856
-## 86  Group 2         1        6400  Mouse_1       0.20 1.56250e-04   -12.643856
-## 87  Group 2         1        6400  Mouse_2       0.28 1.56250e-04   -12.643856
-## 88  Group 2         1        6400  Mouse_3       0.22 1.56250e-04   -12.643856
-## 89  Group 2         1        6400  Mouse_4       0.28 1.56250e-04   -12.643856
-## 90  Group 2         1        6400  Mouse_5       0.27 1.56250e-04   -12.643856
-## 91  Group 2         1       12800  Mouse_1       0.16 7.81250e-05   -13.643856
-## 92  Group 2         1       12800  Mouse_2       0.11 7.81250e-05   -13.643856
-## 93  Group 2         1       12800  Mouse_3       0.17 7.81250e-05   -13.643856
-## 94  Group 2         1       12800  Mouse_4       0.16 7.81250e-05   -13.643856
-## 95  Group 2         1       12800  Mouse_5       0.18 7.81250e-05   -13.643856
-## 96  Group 2         1       25600  Mouse_1       0.02 3.90625e-05   -14.643856
-## 97  Group 2         1       25600  Mouse_2       0.06 3.90625e-05   -14.643856
-## 98  Group 2         1       25600  Mouse_3       0.04 3.90625e-05   -14.643856
-## 99  Group 2         1       25600  Mouse_4       0.08 3.90625e-05   -14.643856
-## 100 Group 2         1       25600  Mouse_5       0.06 3.90625e-05   -14.643856
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# converting data into dataframe}
-
-\NormalTok{elisa\_data\_df }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(Groups, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{log\_dilution =}\NormalTok{ log\_dilution, }\AttributeTok{absorbance =}\NormalTok{ absorbance)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override using
-## the `.groups` argument.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_df}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 100 x 4
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id log_dilution absorbance
-##    <chr>   <chr>           <dbl>      <dbl>
-##  1 Group 1 Mouse_1         -5.64       4.1 
-##  2 Group 1 Mouse_1         -6.64       3.9 
-##  3 Group 1 Mouse_1         -7.64       3.42
-##  4 Group 1 Mouse_1         -8.64       2.89
-##  5 Group 1 Mouse_1         -9.64       2.12
-##  6 Group 1 Mouse_1        -10.6        1.89
-##  7 Group 1 Mouse_1        -11.6        0.97
-##  8 Group 1 Mouse_1        -12.6        0.52
-##  9 Group 1 Mouse_1        -13.6        0.26
-## 10 Group 1 Mouse_1        -14.6        0.12
-## # ... with 90 more rows
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_nested }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(Groups, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{nest}\NormalTok{()}
-
-\NormalTok{elisa\_data\_nested}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 10 x 3
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data             
-##    <chr>   <chr>    <list>           
-##  1 Group 1 Mouse_1  <tibble [10 x 5]>
-##  2 Group 1 Mouse_2  <tibble [10 x 5]>
-##  3 Group 1 Mouse_3  <tibble [10 x 5]>
-##  4 Group 1 Mouse_4  <tibble [10 x 5]>
-##  5 Group 1 Mouse_5  <tibble [10 x 5]>
-##  6 Group 2 Mouse_1  <tibble [10 x 5]>
-##  7 Group 2 Mouse_2  <tibble [10 x 5]>
-##  8 Group 2 Mouse_3  <tibble [10 x 5]>
-##  9 Group 2 Mouse_4  <tibble [10 x 5]>
-## 10 Group 2 Mouse_5  <tibble [10 x 5]>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# plot the curves to evaluate the a, d, c, and b}
-
-\NormalTok{elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(Groups }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mouse\_id)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-34-1.pdf}
-
-Based on the curve, the values are:
-
-a = 4,
-d = 0
-c = 2
-b = 1
-
-\hypertarget{creating-a-function-for-fitting-model}{%
-\section{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Creating a function for fitted model}
-
-\NormalTok{fitted\_model\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df\_elisa, start\_a, start\_d, start\_c, start\_b) \{}
-\NormalTok{  mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
-\AttributeTok{data =}\NormalTok{ df\_elisa,}
-\AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{a =}\NormalTok{ start\_a, }\AttributeTok{d =}\NormalTok{ start\_d, }\AttributeTok{c =}\NormalTok{ start\_c, }\AttributeTok{b =}\NormalTok{ start\_b))}
-  \FunctionTok{return}\NormalTok{(mod\_1)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{fitting-the-model-into-the-data}{%
-\subsection{Fitting the model into the data}\label{fitting-the-model-into-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{fitted\_model\_elisa}\NormalTok{(elisa\_data\_nested}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]], }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Nonlinear regression model
-##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
-##    data: df_elisa
-##        a        d        c        b 
-##   4.3070  -0.6009 -10.2577   5.2893 
-##  residual sum-of-squares: 0.1199
-## 
-## Number of iterations to convergence: 7 
-## Achieved convergence tolerance: 1.49e-08
-\end{verbatim}
-
-\hypertarget{apply-the-fitted-model-function-to-the-whole-dataframe}{%
-\subsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_fitted\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_nested }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(.x, }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)))}
-
-\NormalTok{elisa\_fitted\_data}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 10 x 4
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data              fitted_data
-##    <chr>   <chr>    <list>            <list>     
-##  1 Group 1 Mouse_1  <tibble [10 x 5]> <nls>      
-##  2 Group 1 Mouse_2  <tibble [10 x 5]> <nls>      
-##  3 Group 1 Mouse_3  <tibble [10 x 5]> <nls>      
-##  4 Group 1 Mouse_4  <tibble [10 x 5]> <nls>      
-##  5 Group 1 Mouse_5  <tibble [10 x 5]> <nls>      
-##  6 Group 2 Mouse_1  <tibble [10 x 5]> <nls>      
-##  7 Group 2 Mouse_2  <tibble [10 x 5]> <nls>      
-##  8 Group 2 Mouse_3  <tibble [10 x 5]> <nls>      
-##  9 Group 2 Mouse_4  <tibble [10 x 5]> <nls>      
-## 10 Group 2 Mouse_5  <tibble [10 x 5]> <nls>
-\end{verbatim}
-
-\hypertarget{take-out-the-summary-of-the-data}{%
-\subsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_fitted\_data\_summary }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_fitted\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data\_summary =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, broom}\SpecialCharTok{::}\NormalTok{glance))}
-
-\CommentTok{\#unnested\_elisa\_fitted\_data \textless{}{-} elisa\_fitted\_data\_summary \%\textgreater{}\%}
-\CommentTok{\#  unnest(elisa\_fitted\_data\_summary) \%\textgreater{}\%}
-\CommentTok{\#  ungroup() \%\textgreater{}\%}
-\CommentTok{\#  dplyr::select(Groups, mouse\_id, fitted\_data)}
-
-\CommentTok{\# unnested\_elisa\_fitted\_data$fitted\_data[[1]]}
-
-\CommentTok{\# Another way}
-
-\NormalTok{elisa\_fitted\_data\_summary }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unnest}\NormalTok{(fitted\_data\_summary)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 10 x 13
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data     fitted_data  sigma isConv     finTol logLik     AIC
-##    <chr>   <chr>    <list>   <list>       <dbl> <lgl>       <dbl>  <dbl>   <dbl>
-##  1 Group 1 Mouse_1  <tibble> <nls>       0.141  TRUE      1.49e-8   7.93  -5.86 
-##  2 Group 1 Mouse_2  <tibble> <nls>       0.188  TRUE      1.49e-8   5.10  -0.208
-##  3 Group 1 Mouse_3  <tibble> <nls>       0.204  TRUE      1.49e-8   4.25   1.49 
-##  4 Group 1 Mouse_4  <tibble> <nls>       0.132  TRUE      1.49e-8   8.65  -7.30 
-##  5 Group 1 Mouse_5  <tibble> <nls>       0.134  TRUE      1.49e-8   8.50  -6.99 
-##  6 Group 2 Mouse_1  <tibble> <nls>       0.0838 TRUE      1.49e-8  13.2  -16.3  
-##  7 Group 2 Mouse_2  <tibble> <nls>       0.118  TRUE      1.49e-8   9.71  -9.41 
-##  8 Group 2 Mouse_3  <tibble> <nls>       0.154  TRUE      1.49e-8   7.07  -4.14 
-##  9 Group 2 Mouse_4  <tibble> <nls>       0.0430 TRUE      1.49e-8  19.8  -29.7  
-## 10 Group 2 Mouse_5  <tibble> <nls>       0.126  TRUE      1.49e-8   9.11  -8.23 
-## # ... with 4 more variables: BIC <dbl>, deviance <dbl>, df.residual <int>,
-## #   nobs <int>
-\end{verbatim}
-
-\hypertarget{creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data}{%
-\subsection{Creating a function for endpoint titer model and fitting the model into the data}\label{creating-a-function-for-endpoint-titer-model-and-fitting-the-model-into-the-data}}
-
-\hypertarget{flow-cytometry}{%
-\chapter{Flow cytometry}\label{flow-cytometry}}
 
   \bibliography{book.bib,packages.bib}
 
