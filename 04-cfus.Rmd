@@ -1,3 +1,9 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
 # Colony forming units to determine bacterial counts 
 
 ## Data description
@@ -33,11 +39,16 @@ of this spread sheet, you should put 0.5 in the `prop_resuspended` column.
 ## Read in data
 
 ```{r message = FALSE, warning = FALSE}
+
 library(readxl)
 library(dplyr)
 library(purrr)
 library(tidyr)
 library(stringr)
+library(tidyverse)
+library(gridExtra)
+library(ggplot2)
+library(ggpubr)
 
 #Replace w/ path to CFU sheet
 path <- c("DATA/Copy of baa_cfu_sheet.xlsx")
@@ -123,7 +134,7 @@ level in the data:
 tidy_cfu_data <- all_data %>%
   mutate(dilution = str_extract(dilution, "[0-9]+"),
          dilution = as.numeric(dilution)) %>%
-  filter((CFUs >= 5 & CFUs <= 95) | group == "Control") %>%
+  filter((CFUs >= 5 & CFUs <= 95) | groups == "control") %>%
   mutate(CFUs = as.numeric(CFUs)) 
 
 
@@ -136,10 +147,10 @@ head(tidy_cfu_data)
 meta <- read_excel(path, sheet = "metadata")
 
 tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
-  group_by(group) %>% 
+  group_by(groups) %>% 
   mutate(CFUs_per_ml = (CFUs * (dilution_factor^dilution) * 
                           (total_resuspension_mL/volume_plated_ul) * 1000)) %>%
-  select(organ, count_date, who_plated, who_counted, group,  mouse, dilution,  
+  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  
          CFUs, CFUs_per_ml) %>% 
   ungroup()
 
@@ -150,19 +161,17 @@ head(tidy_cfu_meta_joined)
 ```{r}
 tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
   filter(organ == "lung") %>%
-  mutate(group = fct_relevel(group, "Inoculum",
-            "Control", "Day_3", "Day_7",
-            "Day_14", "Day_28", "Day_39", "Day_63")) %>%
-  ggplot(aes(x = group, y = log10(CFUs_per_ml), fill = group))+
-  stat_boxplot( aes(x = group, y = log10(CFUs_per_ml)), 
+  mutate(group = fct_relevel(groups, "group_1", "group_2", "group_3", "group_4")) %>%
+  ggplot(aes(x = groups, y = log10(CFUs_per_ml), fill = groups))+
+  stat_boxplot( aes(x = groups, y = log10(CFUs_per_ml)), 
     geom='errorbar', linetype=1, width=0.5)+ 
-  geom_boxplot(aes(group = group), fill = NA, show.legend = FALSE, color = "lightgrey")+
+  geom_boxplot(aes(group = groups), fill = NA, show.legend = FALSE, color = "lightgrey")+
   geom_point(show.legend = FALSE)+
   labs(title = paste0("CFUs in early infected mouse lung"), x = "Group", y = "log10(CFU/mL)",
        color = "Group")+
   guides(shape = "none")+
   theme_minimal()+
-  stat_compare_means(label = "p.signif", method = "t.test", ref.group = "Control") + 
+  stat_compare_means(label = "p.signif", method = "t.test", ref.group = "group_1") + 
   scale_y_continuous(expand = c(0, 0), limits = c(0, 8))
 
 tidy_lung_cfu_plot
