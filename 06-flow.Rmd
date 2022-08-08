@@ -5,3 +5,185 @@ editor_options:
 ---
 
 # Flow cytometry
+
+
+This is a flow cytometry data analysis of lungs on days 3, 7, and 14 of the innate pilot study.
+Flow cytometry was done on lung and spleen
+
+## Loading packages
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(RColorBrewer)
+library(dplyr)
+library(tidyverse)
+library(scales)
+library(stringr)
+library(tidyr)
+library(knitr)
+library(forcats)
+library(broom)
+library(ggfortify)
+library(stats)
+library(ggpubr)
+library(grDevices)
+library(rstatix)
+library(writexl)
+
+```
+
+## panel information
+
+```{r}
+# antibody_panel <- read_excel
+```
+
+## Loading data
+
+```{r}
+Df <- read_excel("DATA/innate_normalizedto45.xlsx", sheet = "CD3CD11b No Day 14")
+
+marker_legend <- read_excel("DATA/marker legend.xlsx")
+
+# Remove Freq of Parent columns
+Df1 <- Df %>% 
+  select(-matches("Parent"))
+# Remove "Leukocytes/LIVE/Single Cells/" from col names
+names(Df1) <- str_remove(names(Df1), "Leukocytes/LIVE/Single Cells/")
+
+Df1 <- Df1 %>%
+  rename_all(funs(str_replace(., "\\|.+", "")))# Remove "|Freq of..." from col names
+
+Df1 <- Df1 %>%
+  rename_all(funs(str_replace_all(., "\\/Q[:digit:]+\\:", ""))) %>%
+  rename_all(funs(str_replace(., "\\/", " "))) %>%
+  rename_all(funs(str_replace(., "\\,", " "))) %>%
+  rename_all(funs(str_replace(., "\\ \\,", " ")))
+
+# str_extract_all(names(Df1), "[:alpha:]+[:digit:]+[\\+\\-]")
+# 
+# 
+# 
+# 
+# 
+# 
+# marker_select <- function(col_title) {
+#   marker_df <- str_detect(names(DATA1), "[\\+\\-]") 
+#   return(marker_df)
+# }
+
+```
+
+## Making the data tidy for plotting
+
+```{r}
+tidy_Df1 <- pivot_longer(data = Df1, cols =  starts_with("CD45+"), names_to = "cell_types", values_to = "percentage_of_CD45") 
+
+tidy_Df1 <- tidy_Df1 %>%
+  separate(col = "SAMPLE", into = c("day", "replicate"))
+
+
+tidy_Df1 %>%
+  select(cell_types) %>%
+  unique()
+
+tidy_Df1 <- tidy_Df1 %>%
+  filter(percentage_of_CD45 > 0.005)
+
+head(tidy_Df1, n=10)
+```
+
+```{r}
+# Select CD3 & CD11b populations and create new data frames 
+ 
+CD3pos_CD11bneg <- tidy_Df1 %>%
+  filter(str_detect(cell_types, "CD3\\+ + CD11b\\-")) 
+
+CD3neg_CD11bpos <- tidy_Df1 %>%
+  filter(str_detect(cell_types, "CD3\\- + CD11b\\+")) 
+
+CD3neg_CD11bneg <- tidy_Df1 %>%
+  filter(str_detect(cell_types, "CD3\\- + CD11b\\-"))
+
+```
+
+
+## boxplot
+```{r, fig.width = 10, fig.height= 20}
+CD3pos_CD11bneg_bar_plot <- CD3pos_CD11bneg %>%
+mutate(day = fct_relevel(day,
+            "CNT", "D3", "D7",
+            "D28")) %>%
+  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
+  stat_boxplot( aes(day, percentage_of_CD45), 
+    geom='errorbar', linetype=1, width=0.5)+  
+  geom_boxplot(aes(day, percentage_of_CD45)) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 10, nrow = 20) + 
+  theme_bw() + 
+  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
+        axis.title.x = element_text(size = 20, face = "bold"), 
+        axis.title.y = element_text(size = 20, face = "bold"), 
+        legend.text = element_text(size = 20), 
+        legend.title = element_text(size = 20), 
+        plot.title = element_text(color="black", size=30, face="bold")) + 
+  labs (y="Percentage of CD45", x = "Day") + 
+  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
+  ggtitle("Changes in immune cell populations (lung) CD3+ CD11b-") +
+  stat_compare_means(label = "p.signif", method = "t.test",
+                     ref.group = "CNT")
+
+
+
+CD3neg_CD11bpos_bar_plot <- CD3neg_CD11bpos %>%
+mutate(day = fct_relevel(day, 
+            "CNT", "D3", "D7", 
+            "D28")) %>%
+  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
+  stat_boxplot( aes(day, percentage_of_CD45), 
+    geom='errorbar', linetype=1, width=0.5)+  
+  geom_boxplot( aes(day, percentage_of_CD45)) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 6, nrow = 12) + 
+  theme_bw() + 
+  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
+        axis.title.x = element_text(size = 20, face = "bold"), 
+        axis.title.y = element_text(size = 20, face = "bold"), 
+        legend.text = element_text(size = 20), 
+        legend.title = element_text(size = 20), 
+        plot.title = element_text(color="black", size=30, face="bold")) + 
+  labs (y="Percentage of CD45", x = "Day") + 
+  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
+  ggtitle("Changes in immune cell populations (lung) CD3- CD11b+") +
+  stat_compare_means(label = "p.signif", method = "t.test",
+                     ref.group = "CNT")
+
+
+
+CD3neg_CD11bneg_bar_plot <- CD3neg_CD11bneg %>%
+mutate(day = fct_relevel(day, 
+            "CNT", "D3", "D7", 
+            "D28")) %>%
+  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
+  stat_boxplot( aes(day, percentage_of_CD45), 
+    geom='errorbar', linetype=1, width=0.5)+  
+  geom_boxplot( aes(day, percentage_of_CD45)) + 
+  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 6, nrow = 12) + 
+  theme_bw() + 
+  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
+        axis.title.x = element_text(size = 20, face = "bold"), 
+        axis.title.y = element_text(size = 20, face = "bold"), 
+        legend.text = element_text(size = 20), 
+        legend.title = element_text(size = 20), 
+        plot.title = element_text(color="black", size=30, face="bold")) + 
+  labs (y="Percentage of CD45", x = "Day") + 
+  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
+  ggtitle("Changes in immune cell populations (lung) CD3- CD11b-") +
+  stat_compare_means(label = "p.signif", method = "t.test",
+                     ref.group = "CNT")
+
+CD3pos_CD11bneg_bar_plot
+# CD3neg_CD11bpos_bar_plot
+# CD3neg_CD11bneg_bar_plot
+
+```
+
