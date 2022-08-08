@@ -35,8 +35,8 @@ and replace with the real data for your experiment.
 Here is an example of how the first rows of this template might look once it's
 filled out:
 
-```{r}
-
+```{r echo = FALSE, out.width="100%"}
+knitr::include_graphics("figures/initial_data_template_example.png")
 ```
 
 This template should be used at the
