@@ -27,8 +27,8 @@ recorded [where]
 Kramnik)
 
 We have created a spreadsheet template that can be used to record these data,
-which you can download by clicking here. This template currently includes
-example data (colored in red to help you remember that it's only there as an 
+which you can download by clicking [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/mice_id_sheet.xlsx). This template currently includes
+example data (colored in blue to help you remember that it's only there as an 
 example). To Use this template, take a look at the example data, then delete it
 and replace with the real data for your experiment.
 
