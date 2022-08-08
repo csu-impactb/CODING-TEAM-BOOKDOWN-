@@ -33,11 +33,16 @@ of this spread sheet, you should put 0.5 in the `prop_resuspended` column.
 ## Read in data
 
 ```{r message = FALSE, warning = FALSE}
+
 library(readxl)
 library(dplyr)
 library(purrr)
 library(tidyr)
 library(stringr)
+library(tidyverse)
+library(gridExtra)
+library(ggplot2)
+library(ggpubr)
 
 #Replace w/ path to CFU sheet
 path <- c("DATA/Copy of baa_cfu_sheet.xlsx")
