@@ -7,7 +7,7 @@
 <title>Chapter 5 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
 <meta name="description" content="5.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
-<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
 <meta property="og:description" content="5.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="5.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “[x]”) is used to record some metadata for the experiment, while the following sheets are...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -125,91 +125,94 @@ of this spread sheet, you should put 0.5 in the <code>prop_resuspended</code> co
 <h2>
 <span class="header-section-number">5.2</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span>
-
-<span class="co">#Replace w/ path to CFU sheet</span>
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DATA/Copy of baa_cfu_sheet.xlsx"</span><span class="op">)</span>
-
-<span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
-<span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span><span class="op">[</span><span class="op">!</span><span class="va">sheet_names</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"metadata"</span><span class="op">)</span><span class="op">]</span>
-
-<span class="va">merged_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  
-  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>organ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-  
-  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="co">#mutate(missing_col = NA) %&gt;% </span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.double</span>, <span class="va">as.numeric</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"dil_"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"dilution"</span>,
-                 values_to <span class="op">=</span> <span class="st">"CFUs"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,
-           dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
-    
-  
-  <span class="va">merged_data</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">data</span>
-  
-  
-<span class="op">}</span>
-  
-<span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">merged_data</span>, .id <span class="op">=</span> <span class="st">"column_label"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">column_label</span><span class="op">)</span>
-  
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">merged_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Replace w/ path to CFU sheet</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DATA/Copy of baa_cfu_sheet.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
+<span><span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span><span class="op">[</span><span class="op">!</span><span class="va">sheet_names</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"metadata"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">merged_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>organ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">sheet_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="co">#mutate(missing_col = NA) %&gt;% </span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.double</span>, <span class="va">as.numeric</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"dil_"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"dilution"</span>,</span>
+<span>                 values_to <span class="op">=</span> <span class="st">"CFUs"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,</span>
+<span>           dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span>  </span>
+<span>  <span class="va">merged_data</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">data</span></span>
+<span>  </span>
+<span>  </span>
+<span><span class="op">}</span></span>
+<span>  </span>
+<span><span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">merged_data</span>, .id <span class="op">=</span> <span class="st">"column_label"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">column_label</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">merged_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [[1]]
 ## # A tibble: 342 × 8
-##    count_date           who_plated who_counted groups mouse organ dilution CFUs 
-##    &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
-##  1 "\"February 21 2022… BK         BK          group… A     lung         0 TNTC 
-##  2 "\"February 21 2022… BK         BK          group… A     lung         1 TNTC 
-##  3 "\"February 21 2022… BK         BK          group… A     lung         2 TNTC 
-##  4 "\"February 21 2022… BK         BK          group… A     lung         3 53   
-##  5 "\"February 21 2022… BK         BK          group… A     lung         4 9    
-##  6 "\"February 21 2022… BK         BK          group… A     lung         5 4    
-##  7 "\"February 21 2022… BK         BK          group… A     lung         6 2    
-##  8 "\"February 21 2022… BK         BK          group… A     lung         7 1    
-##  9 "\"February 21 2022… BK         BK          group… A     lung         8 0    
-## 10 "\"February 21 2022… BK         BK          group… B     lung         0 TNTC 
-## # … with 332 more rows
+##    count_date             who_plated who_coun…¹ groups mouse organ dilut…² CFUs 
+##    &lt;chr&gt;                  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
+##  1 "\"February 21 2022\"" BK         BK         group… A     lung        0 TNTC 
+##  2 "\"February 21 2022\"" BK         BK         group… A     lung        1 TNTC 
+##  3 "\"February 21 2022\"" BK         BK         group… A     lung        2 TNTC 
+##  4 "\"February 21 2022\"" BK         BK         group… A     lung        3 53   
+##  5 "\"February 21 2022\"" BK         BK         group… A     lung        4 9    
+##  6 "\"February 21 2022\"" BK         BK         group… A     lung        5 4    
+##  7 "\"February 21 2022\"" BK         BK         group… A     lung        6 2    
+##  8 "\"February 21 2022\"" BK         BK         group… A     lung        7 1    
+##  9 "\"February 21 2022\"" BK         BK         group… A     lung        8 0    
+## 10 "\"February 21 2022\"" BK         BK         group… B     lung        0 TNTC 
+## # … with 332 more rows, and abbreviated variable names ¹​who_counted, ²​dilution
+## # ℹ Use `print(n = ...)` to see more rows
 ## 
 ## [[2]]
 ## # A tibble: 112 × 8
-##    count_date          who_plated who_counted groups  mouse organ dilution CFUs 
+##    count_date          who_plated who_counted groups  mouse organ  dilut…¹ CFUs 
 ##    &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
-##  1 "\"April 25 2022\"" JR         JR          group_1 A     sple…        0 TNTC 
-##  2 "\"April 25 2022\"" JR         JR          group_1 A     sple…        1 TNTC 
-##  3 "\"April 25 2022\"" JR         JR          group_1 A     sple…        2 53   
-##  4 "\"April 25 2022\"" JR         JR          group_1 A     sple…        3 9    
-##  5 "\"April 25 2022\"" JR         JR          group_1 A     sple…        4 4    
-##  6 "\"April 25 2022\"" JR         JR          group_1 A     sple…        5 2    
-##  7 "\"April 25 2022\"" JR         JR          group_1 A     sple…        6 1    
-##  8 "\"April 25 2022\"" JR         JR          group_1 A     sple…        7 0    
-##  9 "\"April 25 2022\"" JR         JR          group_1 B     sple…        0 TNTC 
-## 10 "\"April 25 2022\"" JR         JR          group_1 B     sple…        1 TNTC 
-## # … with 102 more rows</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">all_data</span><span class="op">)</span></code></pre></div>
+##  1 "\"April 25 2022\"" JR         JR          group_1 A     spleen       0 TNTC 
+##  2 "\"April 25 2022\"" JR         JR          group_1 A     spleen       1 TNTC 
+##  3 "\"April 25 2022\"" JR         JR          group_1 A     spleen       2 53   
+##  4 "\"April 25 2022\"" JR         JR          group_1 A     spleen       3 9    
+##  5 "\"April 25 2022\"" JR         JR          group_1 A     spleen       4 4    
+##  6 "\"April 25 2022\"" JR         JR          group_1 A     spleen       5 2    
+##  7 "\"April 25 2022\"" JR         JR          group_1 A     spleen       6 1    
+##  8 "\"April 25 2022\"" JR         JR          group_1 A     spleen       7 0    
+##  9 "\"April 25 2022\"" JR         JR          group_1 B     spleen       0 TNTC 
+## 10 "\"April 25 2022\"" JR         JR          group_1 B     spleen       1 TNTC 
+## # … with 102 more rows, and abbreviated variable name ¹​dilution
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">all_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
-## 1 "\"February 21 2022\… BK         BK          group… A     lung         0 TNTC 
-## 2 "\"February 21 2022\… BK         BK          group… A     lung         1 TNTC 
-## 3 "\"February 21 2022\… BK         BK          group… A     lung         2 TNTC 
-## 4 "\"February 21 2022\… BK         BK          group… A     lung         3 53   
-## 5 "\"February 21 2022\… BK         BK          group… A     lung         4 9    
-## 6 "\"February 21 2022\… BK         BK          group… A     lung         5 4</code></pre>
+##   count_date             who_plated who_counted groups mouse organ dilut…¹ CFUs 
+##   &lt;chr&gt;                  &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
+## 1 "\"February 21 2022\"" BK         BK          group… A     lung        0 TNTC 
+## 2 "\"February 21 2022\"" BK         BK          group… A     lung        1 TNTC 
+## 3 "\"February 21 2022\"" BK         BK          group… A     lung        2 TNTC 
+## 4 "\"February 21 2022\"" BK         BK          group… A     lung        3 53   
+## 5 "\"February 21 2022\"" BK         BK          group… A     lung        4 9    
+## 6 "\"February 21 2022\"" BK         BK          group… A     lung        5 4    
+## # … with abbreviated variable name ¹​dilution</code></pre>
 </div>
 <div id="example-one" class="section level2" number="5.3">
 <h2>
@@ -238,27 +241,28 @@ each organ:</p>
 the following person or persons:
 Based on the input data, the plates included in these data were counted on
 the following date or dates:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">count_date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">count_date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 3 × 4
 ##   organ  who_plated who_counted count_date            
 ##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;                 
 ## 1 lung   BK         BK          "\"February 21 2022\""
 ## 2 lung   BK         BK          "\"April 18 2022\""   
 ## 3 spleen JR         JR          "\"April 25 2022\""</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">all_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">all_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
-## 1 "\"February 21 2022\… BK         BK          group… A     lung         0 TNTC 
-## 2 "\"February 21 2022\… BK         BK          group… A     lung         1 TNTC 
-## 3 "\"February 21 2022\… BK         BK          group… A     lung         2 TNTC 
-## 4 "\"February 21 2022\… BK         BK          group… A     lung         3 53   
-## 5 "\"February 21 2022\… BK         BK          group… A     lung         4 9    
-## 6 "\"February 21 2022\… BK         BK          group… A     lung         5 4</code></pre>
+##   count_date             who_plated who_counted groups mouse organ dilut…¹ CFUs 
+##   &lt;chr&gt;                  &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
+## 1 "\"February 21 2022\"" BK         BK          group… A     lung        0 TNTC 
+## 2 "\"February 21 2022\"" BK         BK          group… A     lung        1 TNTC 
+## 3 "\"February 21 2022\"" BK         BK          group… A     lung        2 TNTC 
+## 4 "\"February 21 2022\"" BK         BK          group… A     lung        3 53   
+## 5 "\"February 21 2022\"" BK         BK          group… A     lung        4 9    
+## 6 "\"February 21 2022\"" BK         BK          group… A     lung        5 4    
+## # … with abbreviated variable name ¹​dilution</code></pre>
 <p><strong>Distribution of CFUs at each dilution:</strong></p>
 <p>Here’s a plot that shows how many plates were too numerous to count at each
 dilution level:</p>
@@ -269,101 +273,103 @@ level in the data:</p>
 <h2>
 <span class="header-section-number">5.6</span> Identify a good dilution for each sample<a class="anchor" aria-label="anchor" href="#identify-a-good-dilution-for-each-sample"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Make all_data into tidy data and filter for CFUs between 10-75</span>
-  
-<span class="va">tidy_cfu_data</span> <span class="op">&lt;-</span> <span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,
-         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">CFUs</span> <span class="op">&gt;=</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">CFUs</span> <span class="op">&lt;=</span> <span class="fl">95</span><span class="op">)</span> <span class="op">|</span> <span class="va">groups</span> <span class="op">==</span> <span class="st">"control"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">CFUs</span><span class="op">)</span><span class="op">)</span> 
-
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_cfu_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Make all_data into tidy data and filter for CFUs between 10-75</span></span>
+<span>  </span>
+<span><span class="va">tidy_cfu_data</span> <span class="op">&lt;-</span> <span class="va">all_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"[0-9]+"</span><span class="op">)</span>,</span>
+<span>         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">CFUs</span> <span class="op">&gt;=</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">CFUs</span> <span class="op">&lt;=</span> <span class="fl">95</span><span class="op">)</span> <span class="op">|</span> <span class="va">groups</span> <span class="op">==</span> <span class="st">"control"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">CFUs</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_cfu_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 8
-##   count_date            who_plated who_counted groups mouse organ dilution  CFUs
-##   &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-## 1 "\"February 21 2022\… BK         BK          group… A     lung         3    53
-## 2 "\"February 21 2022\… BK         BK          group… A     lung         4     9
-## 3 "\"February 21 2022\… BK         BK          group… C     lung         5     8
-## 4 "\"February 21 2022\… BK         BK          group… D     lung         3    53
-## 5 "\"February 21 2022\… BK         BK          group… A     lung         2    92
-## 6 "\"February 21 2022\… BK         BK          group… A     lung         4     7</code></pre>
+##   count_date             who_plated who_counted groups mouse organ dilut…¹  CFUs
+##   &lt;chr&gt;                  &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 "\"February 21 2022\"" BK         BK          group… A     lung        3    53
+## 2 "\"February 21 2022\"" BK         BK          group… A     lung        4     9
+## 3 "\"February 21 2022\"" BK         BK          group… C     lung        5     8
+## 4 "\"February 21 2022\"" BK         BK          group… D     lung        3    53
+## 5 "\"February 21 2022\"" BK         BK          group… A     lung        2    92
+## 6 "\"February 21 2022\"" BK         BK          group… A     lung        4     7
+## # … with abbreviated variable name ¹​dilution</code></pre>
 </div>
 <div id="calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution" class="section level2" number="5.7">
 <h2>
 <span class="header-section-number">5.7</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution<a class="anchor" aria-label="anchor" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().</span>
-<span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="st">"metadata"</span><span class="op">)</span>
-
-<span class="va">tidy_cfu_meta_joined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">meta</span>, <span class="va">tidy_cfu_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs_per_ml <span class="op">=</span> <span class="op">(</span><span class="va">CFUs</span> <span class="op">*</span> <span class="op">(</span><span class="va">dilution_factor</span><span class="op">^</span><span class="va">dilution</span><span class="op">)</span> <span class="op">*</span> 
-                          <span class="op">(</span><span class="va">total_resuspension_mL</span><span class="op">/</span><span class="va">volume_plated_ul</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">count_date</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">groups</span>,  <span class="va">mouse</span>, <span class="va">dilution</span>,  
-         <span class="va">CFUs</span>, <span class="va">CFUs_per_ml</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">path</span>, sheet <span class="op">=</span> <span class="st">"metadata"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tidy_cfu_meta_joined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">meta</span>, <span class="va">tidy_cfu_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CFUs_per_ml <span class="op">=</span> <span class="op">(</span><span class="va">CFUs</span> <span class="op">*</span> <span class="op">(</span><span class="va">dilution_factor</span><span class="op">^</span><span class="va">dilution</span><span class="op">)</span> <span class="op">*</span> </span>
+<span>                          <span class="op">(</span><span class="va">total_resuspension_mL</span><span class="op">/</span><span class="va">volume_plated_ul</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">organ</span>, <span class="va">count_date</span>, <span class="va">who_plated</span>, <span class="va">who_counted</span>, <span class="va">groups</span>,  <span class="va">mouse</span>, <span class="va">dilution</span>,  </span>
+<span>         <span class="va">CFUs</span>, <span class="va">CFUs_per_ml</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Joining, by = "organ"</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_cfu_meta_joined</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_cfu_meta_joined</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 9
-##   organ count_date            who_plated who_counted groups mouse dilution  CFUs
-##   &lt;chr&gt; &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-## 1 lung  "\"February 21 2022\… BK         BK          group… A            3    53
-## 2 lung  "\"February 21 2022\… BK         BK          group… A            4     9
-## 3 lung  "\"February 21 2022\… BK         BK          group… C            5     8
-## 4 lung  "\"February 21 2022\… BK         BK          group… D            3    53
-## 5 lung  "\"February 21 2022\… BK         BK          group… A            2    92
-## 6 lung  "\"February 21 2022\… BK         BK          group… A            4     7
-## # … with 1 more variable: CFUs_per_ml &lt;dbl&gt;</code></pre>
+##   organ count_date            who_p…¹ who_c…² groups mouse dilut…³  CFUs CFUs_…⁴
+##   &lt;chr&gt; &lt;chr&gt;                 &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 lung  "\"February 21 2022\… BK      BK      group… A           3    53   33125
+## 2 lung  "\"February 21 2022\… BK      BK      group… A           4     9   28125
+## 3 lung  "\"February 21 2022\… BK      BK      group… C           5     8  125000
+## 4 lung  "\"February 21 2022\… BK      BK      group… D           3    53   33125
+## 5 lung  "\"February 21 2022\… BK      BK      group… A           2    92   11500
+## 6 lung  "\"February 21 2022\… BK      BK      group… A           4     7   21875
+## # … with abbreviated variable names ¹​who_plated, ²​who_counted, ³​dilution,
+## #   ⁴​CFUs_per_ml</code></pre>
 </div>
 <div id="create-initial-report-information-for-these-data" class="section level2" number="5.8">
 <h2>
 <span class="header-section-number">5.8</span> Create initial report information for these data<a class="anchor" aria-label="anchor" href="#create-initial-report-information-for-these-data"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_lung_cfu_plot</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">organ</span> <span class="op">==</span> <span class="st">"lung"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">groups</span>, <span class="st">"group_1"</span>, <span class="st">"group_2"</span>, <span class="st">"group_3"</span>, <span class="st">"group_4"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">groups</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">groups</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">stat_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">groups</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span><span class="op">)</span><span class="op">)</span>, 
-    geom<span class="op">=</span><span class="st">'errorbar'</span>, linetype<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">groups</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"CFUs in early infected mouse lung"</span><span class="op">)</span>, x <span class="op">=</span> <span class="st">"Group"</span>, y <span class="op">=</span> <span class="st">"log10(CFU/mL)"</span>,
-       color <span class="op">=</span> <span class="st">"Group"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html">stat_compare_means</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"p.signif"</span>, method <span class="op">=</span> <span class="st">"t.test"</span>, ref.group <span class="op">=</span> <span class="st">"group_1"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">tidy_lung_cfu_plot</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_lung_cfu_plot</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">organ</span> <span class="op">==</span> <span class="st">"lung"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">groups</span>, <span class="st">"group_1"</span>, <span class="st">"group_2"</span>, <span class="st">"group_3"</span>, <span class="st">"group_4"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">groups</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">groups</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">stat_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">groups</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>    geom<span class="op">=</span><span class="st">'errorbar'</span>, linetype<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">groups</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"CFUs in early infected mouse lung"</span><span class="op">)</span>, x <span class="op">=</span> <span class="st">"Group"</span>, y <span class="op">=</span> <span class="st">"log10(CFU/mL)"</span>,</span>
+<span>       color <span class="op">=</span> <span class="st">"Group"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html">stat_compare_means</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"p.signif"</span>, method <span class="op">=</span> <span class="st">"t.test"</span>, ref.group <span class="op">=</span> <span class="st">"group_1"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tidy_lung_cfu_plot</span></span></code></pre></div>
 <div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
 </div>
 <div id="sample-anova" class="section level2" number="5.9">
 <h2>
 <span class="header-section-number">5.9</span> Sample ANOVA<a class="anchor" aria-label="anchor" href="#sample-anova"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cfu_stats</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">organ</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>aov_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span> <span class="op">~</span> <span class="va">groups</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span>,
-         tukey_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">aov_result</span>, <span class="va">TukeyHSD</span><span class="op">)</span>,
-         tidy_tukey <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">tukey_result</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">tidy_tukey</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">contrast</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contrast1"</span>, <span class="st">"contrast2"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">data</span>, <span class="op">-</span><span class="va">aov_result</span>, <span class="op">-</span><span class="va">tukey_result</span>, <span class="op">-</span><span class="va">term</span>, <span class="op">-</span><span class="va">null.value</span><span class="op">)</span><span class="co"># %&gt;%</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cfu_stats</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">organ</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>aov_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">CFUs_per_ml</span> <span class="op">~</span> <span class="va">groups</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         tukey_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">aov_result</span>, <span class="va">TukeyHSD</span><span class="op">)</span>,</span>
+<span>         tidy_tukey <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">tukey_result</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">tidy_tukey</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">contrast</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contrast1"</span>, <span class="st">"contrast2"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">data</span>, <span class="op">-</span><span class="va">aov_result</span>, <span class="op">-</span><span class="va">tukey_result</span>, <span class="op">-</span><span class="va">term</span>, <span class="op">-</span><span class="va">null.value</span><span class="op">)</span><span class="co"># %&gt;%</span></span></code></pre></div>
 <pre><code>## Warning: The `.drop` argument of `unnest()` is deprecated as of tidyr 1.0.0.
 ## All list-columns are now preserved.
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co"># filter(adj.p.value &lt;= 0.05)</span>
-
-<span class="va">cfu_stats</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  <span class="co"># filter(adj.p.value &lt;= 0.05)</span></span>
+<span></span>
+<span><span class="va">cfu_stats</span></span></code></pre></div>
 <pre><code>## # A tibble: 9 × 7
 ## # Groups:   organ [2]
 ##   organ  contrast1 contrast2 estimate conf.low conf.high adj.p.value
@@ -424,7 +430,7 @@ level in the data:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-08-08.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-08-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

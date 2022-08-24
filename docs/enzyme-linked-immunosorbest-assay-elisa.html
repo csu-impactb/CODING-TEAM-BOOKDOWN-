@@ -7,7 +7,7 @@
 <title>Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
 <meta name="description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
-<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
 <meta property="og:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -113,18 +113,14 @@ Figure 6.1: A caption
 <h2>
 <span class="header-section-number">6.1</span> Read in data from excel file<a class="anchor" aria-label="anchor" href="#read-in-data-from-excel-file"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">minpack.lm</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: package 'minpack.lm' was built under R version 4.1.2</code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: package 'broom' was built under R version 4.1.2</code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"B2:M9"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">minpack.lm</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"B2:M9"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...1`
 ## • `` -&gt; `...2`
@@ -138,8 +134,8 @@ Figure 6.1: A caption
 ## • `` -&gt; `...10`
 ## • `` -&gt; `...11`
 ## • `` -&gt; `...12`</code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 12
 ##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
 ##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -153,11 +149,11 @@ Figure 6.1: A caption
 <h3>
 <span class="header-section-number">6.1.1</span> Tidy the data<a class="anchor" aria-label="anchor" href="#tidy-the-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Convert all columns to numeric</span>
-
-<span class="va">elisa_raw_data_numeric</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert all columns to numeric</span></span>
+<span></span>
+<span><span class="va">elisa_raw_data_numeric</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
 ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
@@ -165,25 +161,25 @@ Figure 6.1: A caption
 ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
 ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># pivot longer the data</span>
-
-<span class="va">elisa_raw_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_raw_data_numeric</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"od_450nm"</span><span class="op">)</span>
-
-<span class="co"># remove "..." from the first column</span>
-
-<span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span>
-
-<span class="co"># Add new column to the data_frame</span>
-
-<span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy_new</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer the data</span></span>
+<span></span>
+<span><span class="va">elisa_raw_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_raw_data_numeric</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"od_450nm"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># remove "..." from the first column</span></span>
+<span></span>
+<span><span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add new column to the data_frame</span></span>
+<span></span>
+<span><span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_raw_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data_tidy_new</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   well_id od_450nm
 ##   &lt;chr&gt;      &lt;dbl&gt;
@@ -198,8 +194,8 @@ Figure 6.1: A caption
 <h3>
 <span class="header-section-number">6.1.2</span> Read in second data set<a class="anchor" aria-label="anchor" href="#read-in-second-data-set"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_label_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"Q2:AB9"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_label_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  range <span class="op">=</span> <span class="st">"Q2:AB9"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...1`
 ## • `` -&gt; `...2`
@@ -213,8 +209,8 @@ Figure 6.1: A caption
 ## • `` -&gt; `...10`
 ## • `` -&gt; `...11`
 ## • `` -&gt; `...12`</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 12
 ##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
 ##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -224,25 +220,25 @@ Figure 6.1: A caption
 ## 4 2B-1 (1/250 2B-1 … 2B-1… 2B-2… 2B-2… 2B-2… 2B-3… 2B-3… 2B-3… 2B-4… 2B-4… 2B-4…
 ## 5 3A-1 (1/250 3A-1 … 3A-1… 3A-2… 3A-2… 3A-2… 3A-3… 3A-3… 3A-3… 3A-4… 3A-4… 3A-4…
 ## 6 3B-1 (1/250 3B-1 … 3B-1… 3B-2… 3B-2… 3B-2… 3B-3… 3B-3… 3B-3… 3B-4… 3B-4… 3B-4…</code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># pivot longer the data</span>
-
-<span class="va">elisa_label_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_label_data</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span>
-
-<span class="co"># remove "..." from the first column</span>
-
-<span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span>
-
-<span class="co"># Add new column to the data_frame</span>
-
-<span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy_new</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer the data</span></span>
+<span></span>
+<span><span class="va">elisa_label_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_label_data</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># remove "..." from the first column</span></span>
+<span></span>
+<span><span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy</span><span class="op">$</span><span class="va">well_id</span>, <span class="st">"..."</span>, <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add new column to the data_frame</span></span>
+<span></span>
+<span><span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_label_data_tidy_new</span> <span class="op">&lt;-</span> <span class="va">elisa_label_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>well_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">well_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   well_id information  
 ##   &lt;chr&gt;   &lt;chr&gt;        
@@ -258,10 +254,10 @@ Figure 6.1: A caption
 <h2>
 <span class="header-section-number">6.2</span> #Join the OD table with the information table<a class="anchor" aria-label="anchor" href="#join-the-od-table-with-the-information-table"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">=</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span>, by<span class="op">=</span><span class="st">"well_id"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_data</span> <span class="op">=</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span>, by<span class="op">=</span><span class="st">"well_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
 ##   well_id od_450nm information  
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;        
@@ -275,11 +271,11 @@ Figure 6.1: A caption
 <h3>
 <span class="header-section-number">6.2.1</span> Separate the information table into sample ID and dilution columns<a class="anchor" aria-label="anchor" href="#separate-the-information-table-into-sample-id-and-dilution-columns"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"information"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dilution"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"information"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dilution"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].</code></pre>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##   well_id od_450nm sample_id   dilution
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   
@@ -289,16 +285,16 @@ Figure 6.1: A caption
 ## 4 A4         0.063 "1A-1 "     1/250   
 ## 5 A5         0.061 "1A-1 "     1/1250  
 ## 6 A6         0.122 "1A-1 "     1/6250</code></pre>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"(/)[0-9]+"</span><span class="op">)</span>,
-         dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"/"</span>, <span class="st">""</span><span class="op">)</span>,
-         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">well_id</span>, <span class="va">sample_id</span>, <span class="va">dilution</span>, <span class="va">od_450nm</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"(/)[0-9]+"</span><span class="op">)</span>,</span>
+<span>         dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"/"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>         dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">well_id</span>, <span class="va">sample_id</span>, <span class="va">dilution</span>, <span class="va">od_450nm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##   well_id sample_id   dilution od_450nm
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -314,7 +310,7 @@ Figure 6.1: A caption
 <h2>
 <span class="header-section-number">6.3</span> ELISA data analysis optimization<a class="anchor" aria-label="anchor" href="#elisa-data-analysis-optimization"><i class="fas fa-link"></i></a>
 </h2>
-<p>ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data:</p>
+<p>ELISA data can be analyzed in different ways based on how the data is acquired <span class="citation">(<a href="references.html#ref-hartman2018absorbance" role="doc-biblioref">Hartman et al. 2018</a>)</span>. There are a a few examples of the type of ELISA data :</p>
 <p><strong>1. With standard curve:</strong> ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
 different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.</p>
 <p><strong>2. Without standard curve:</strong> Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens.
@@ -332,22 +328,22 @@ For this type of ELISA, quantification of the antibody titers is performed using
 <span class="header-section-number">6.3.1</span> <strong>1. Fitting sigmoid model:</strong><a class="anchor" aria-label="anchor" href="#fitting-sigmoid-model"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/example_elisa_data.xlsx"</span><span class="op">)</span>
-
-<span class="co"># separate 1/</span>
-
-<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_example_data</span>, col <span class="op">=</span> <span class="st">"dilution"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, <span class="st">"denomenator"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span>
-
-<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span>
-
-<span class="va">elisa_example_data</span><span class="op">$</span><span class="va">dilution</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span><span class="op">$</span><span class="va">numerator</span> <span class="op">/</span> <span class="va">elisa_example_data</span><span class="op">$</span><span class="va">denomenator</span>  
-
-<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">dilution</span>, base <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_example_data</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/example_elisa_data.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># separate 1/</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_example_data</span>, col <span class="op">=</span> <span class="st">"dilution"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, <span class="st">"denomenator"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span><span class="op">$</span><span class="va">dilution</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span><span class="op">$</span><span class="va">numerator</span> <span class="op">/</span> <span class="va">elisa_example_data</span><span class="op">$</span><span class="va">denomenator</span>  </span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">dilution</span>, base <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_example_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 5
 ##   numerator denomenator absorbance dilution log_dilution
 ##       &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
@@ -357,17 +353,17 @@ For this type of ELISA, quantification of the antibody titers is performed using
 ## 4         1         810       1.1  0.00123         -6.10
 ## 5         1        2430       0.51 0.000412        -7.10
 ## 6         1        7290       0.22 0.000137        -8.10</code></pre>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
-data <span class="op">=</span> <span class="va">elisa_example_data</span>, 
-start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>a <span class="op">=</span> <span class="fl">4</span>, d<span class="op">=</span> <span class="fl">0</span>, c <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># a = maximum absorbance</span>
-<span class="co"># d = minimum absobance</span>
-<span class="co"># c = point of maximum growith (dilition where the curve is straight line)</span>
-<span class="co"># b = slope at c</span>
-
-<span class="va">mod_1</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,</span>
+<span>data <span class="op">=</span> <span class="va">elisa_example_data</span>, </span>
+<span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>a <span class="op">=</span> <span class="fl">4</span>, d<span class="op">=</span> <span class="fl">0</span>, c <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># a = maximum absorbance</span></span>
+<span><span class="co"># d = minimum absobance</span></span>
+<span><span class="co"># c = point of maximum growith (dilition where the curve is straight line)</span></span>
+<span><span class="co"># b = slope at c</span></span>
+<span></span>
+<span><span class="va">mod_1</span></span></code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ##    data: elisa_example_data
@@ -377,8 +373,8 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 ## 
 ## Number of iterations to convergence: 9 
 ## Achieved convergence tolerance: 1.49e-08</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Formula: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ## 
@@ -399,24 +395,24 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <h4>
 <span class="header-section-number">6.3.1.1</span> Fitted model curve<a class="anchor" aria-label="anchor" href="#fitted-model-curve"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_params</span> <span class="op">&lt;-</span> <span class="va">mod_1</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span>
-<span class="va">b</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span>
-<span class="va">c</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span>
-<span class="va">d</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span>
-
-<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">fitted</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_params</span> <span class="op">&lt;-</span> <span class="va">mod_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span></span>
+<span><span class="va">c</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_example_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">fitted</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
 </div>
 </div>
@@ -425,14 +421,14 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <span class="header-section-number">6.3.2</span> 2. Endpoint titer method<a class="anchor" aria-label="anchor" href="#endpoint-titer-method"><i class="fas fa-link"></i></a>
 </h3>
 <p>The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). <strong>The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.</strong> This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">0.2</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">b</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">0.2</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">b</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  -8.113  -8.113  -8.113  -8.113  -8.113  -8.113</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">endpoint_titer</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">endpoint_titer</span></span></code></pre></div>
 <pre><code>## [1] -8.113285</code></pre>
 </div>
 <div id="absorbance-summation-method" class="section level3" number="6.3.3">
@@ -440,10 +436,10 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <span class="header-section-number">6.3.3</span> Absorbance summation method<a class="anchor" aria-label="anchor" href="#absorbance-summation-method"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">AS</span> <span class="op">=</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.06</span> <span class="op">+</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.22</span> <span class="op">+</span> <span class="fl">0.51</span> <span class="op">+</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">2.34</span> <span class="op">+</span> <span class="fl">3.73</span> <span class="op">+</span> <span class="fl">4.0</span>
-
-<span class="va">AS</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AS</span> <span class="op">=</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.06</span> <span class="op">+</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.22</span> <span class="op">+</span> <span class="fl">0.51</span> <span class="op">+</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">2.34</span> <span class="op">+</span> <span class="fl">3.73</span> <span class="op">+</span> <span class="fl">4.0</span></span>
+<span></span>
+<span><span class="va">AS</span></span></code></pre></div>
 <pre><code>## [1] 12.24</code></pre>
 </div>
 </div>
@@ -456,17 +452,17 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <h3>
 <span class="header-section-number">6.4.1</span> read in the data<a class="anchor" aria-label="anchor" href="#read-in-the-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_data_serial_dilution.xlsx"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_data_serial_dilution.xlsx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="make-the-tidy-data" class="section level3" number="6.4.2">
 <h3>
 <span class="header-section-number">6.4.2</span> make the tidy data<a class="anchor" aria-label="anchor" href="#make-the-tidy-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_data</span>, cols <span class="op">=</span> <span class="st">"Mouse_1"</span><span class="op">:</span><span class="st">"Mouse_5"</span>, names_to <span class="op">=</span> <span class="st">"mouse_id"</span>, values_to <span class="op">=</span> <span class="st">"absorbance"</span><span class="op">)</span>
-
-<span class="va">elisa_data</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_data</span>, cols <span class="op">=</span> <span class="st">"Mouse_1"</span><span class="op">:</span><span class="st">"Mouse_5"</span>, names_to <span class="op">=</span> <span class="st">"mouse_id"</span>, values_to <span class="op">=</span> <span class="st">"absorbance"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data</span></span></code></pre></div>
 <pre><code>## # A tibble: 100 × 4
 ##    Groups  Dilution mouse_id absorbance
 ##    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;
@@ -480,23 +476,24 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 ##  8 Group 1 1/100    Mouse_3         3.6
 ##  9 Group 1 1/100    Mouse_4         3.7
 ## 10 Group 1 1/100    Mouse_5         3.8
-## # … with 90 more rows</code></pre>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># separate dilution column and convert it to log2</span>
-
-<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"Dilution"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, <span class="st">"denomenator"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span>
-
-<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>numerator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">numerator</span><span class="op">)</span>,
-            denomenator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">denomenator</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="va">elisa_data</span><span class="op">$</span><span class="va">numerator</span> <span class="op">/</span> <span class="va">elisa_data</span><span class="op">$</span><span class="va">denomenator</span><span class="op">)</span> 
-
-<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_data</span></code></pre></div>
+## # … with 90 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># separate dilution column and convert it to log2</span></span>
+<span></span>
+<span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"Dilution"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, <span class="st">"denomenator"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>numerator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">numerator</span><span class="op">)</span>,</span>
+<span>            denomenator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">denomenator</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="va">elisa_data</span><span class="op">$</span><span class="va">numerator</span> <span class="op">/</span> <span class="va">elisa_data</span><span class="op">$</span><span class="va">denomenator</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data</span></span></code></pre></div>
 <pre><code>##      Groups numerator denomenator mouse_id absorbance    dilution log_dilution
 ## 1   Group 1         1          50  Mouse_1       4.10 2.00000e-02    -5.643856
 ## 2   Group 1         1          50  Mouse_2       3.90 2.00000e-02    -5.643856
@@ -598,16 +595,16 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 ## 98  Group 2         1       25600  Mouse_3       0.04 3.90625e-05   -14.643856
 ## 99  Group 2         1       25600  Mouse_4       0.08 3.90625e-05   -14.643856
 ## 100 Group 2         1       25600  Mouse_5       0.06 3.90625e-05   -14.643856</code></pre>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># converting data into dataframe</span>
-
-<span class="va">elisa_data_df</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="va">log_dilution</span>, absorbance <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override using
-## the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_data_df</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># converting data into dataframe</span></span>
+<span></span>
+<span><span class="va">elisa_data_df</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="va">log_dilution</span>, absorbance <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override
+## using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_data_df</span></span></code></pre></div>
 <pre><code>## # A tibble: 100 × 4
 ## # Groups:   Groups, mouse_id [10]
 ##    Groups  mouse_id log_dilution absorbance
@@ -622,13 +619,14 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 ##  8 Group 1 Mouse_1        -12.6        0.52
 ##  9 Group 1 Mouse_1        -13.6        0.26
 ## 10 Group 1 Mouse_1        -14.6        0.12
-## # … with 90 more rows</code></pre>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_data_nested</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">elisa_data_nested</span></code></pre></div>
+## # … with 90 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_data_nested</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data_nested</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ## # Groups:   Groups, mouse_id [10]
 ##    Groups  mouse_id data             
@@ -643,14 +641,14 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 ##  8 Group 2 Mouse_3  &lt;tibble [10 × 5]&gt;
 ##  9 Group 2 Mouse_4  &lt;tibble [10 × 5]&gt;
 ## 10 Group 2 Mouse_5  &lt;tibble [10 × 5]&gt;</code></pre>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># plot the curves to evaluate the a, d, c, and b</span>
-
-<span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">Groups</span> <span class="op">~</span> <span class="va">mouse_id</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot the curves to evaluate the a, d, c, and b</span></span>
+<span></span>
+<span><span class="va">elisa_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">Groups</span> <span class="op">~</span> <span class="va">mouse_id</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-34-1.png" width="672"></div>
 <p>Based on the curve, the values are:</p>
 <p>a = 4,
@@ -663,21 +661,21 @@ b = 1</p>
 <h2>
 <span class="header-section-number">6.5</span> Creating a function for fitting model<a class="anchor" aria-label="anchor" href="#creating-a-function-for-fitting-model"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Creating a function for fitted model</span>
-
-<span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, <span class="va">start_a</span>, <span class="va">start_d</span>, <span class="va">start_c</span>, <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
-data <span class="op">=</span> <span class="va">df_elisa</span>,
-start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Creating a function for fitted model</span></span>
+<span></span>
+<span><span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, <span class="va">start_a</span>, <span class="va">start_d</span>, <span class="va">start_c</span>, <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,</span>
+<span>data <span class="op">=</span> <span class="va">df_elisa</span>,</span>
+<span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div id="fitting-the-model-into-the-data" class="section level3" number="6.5.1">
 <h3>
 <span class="header-section-number">6.5.1</span> Fitting the model into the data<a class="anchor" aria-label="anchor" href="#fitting-the-model-into-the-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ##    data: df_elisa
@@ -692,11 +690,11 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <h3>
 <span class="header-section-number">6.5.2</span> Apply the fitted model function to the whole dataframe<a class="anchor" aria-label="anchor" href="#apply-the-fitted-model-function-to-the-whole-dataframe"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_fitted_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data_nested</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted_data <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">.x</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">elisa_fitted_data</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_fitted_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted_data <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">.x</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_fitted_data</span></span></code></pre></div>
 <pre><code>## # A tibble: 10 × 4
 ## # Groups:   Groups, mouse_id [10]
 ##    Groups  mouse_id data              fitted_data
@@ -716,16 +714,16 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <h3>
 <span class="header-section-number">6.5.3</span> Take out the summary of the data<a class="anchor" aria-label="anchor" href="#take-out-the-summary-of-the-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elisa_fitted_data_summary</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>elisa_fitted_data_summary <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">fitted_data</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">unnested</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data_summary</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">elisa_fitted_data_summary</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span>, <span class="va">fitted_data</span><span class="op">)</span>
-
-<span class="va">unnested</span><span class="op">$</span><span class="va">fitted_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elisa_fitted_data_summary</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>elisa_fitted_data_summary <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">fitted_data</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">unnested</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data_summary</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">elisa_fitted_data_summary</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span>, <span class="va">fitted_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">unnested</span><span class="op">$</span><span class="va">fitted_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ##    data: df_elisa
@@ -741,34 +739,59 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <h2>
 <span class="header-section-number">6.6</span> Create a merge function of Fitted model and endpoint titer<a class="anchor" aria-label="anchor" href="#create-a-merge-function-of-fitted-model-and-endpoint-titer"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Fitted model function</span>
-<span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, <span class="va">start_a</span>, <span class="va">start_d</span>, <span class="va">start_c</span>, <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
-data <span class="op">=</span> <span class="va">df_elisa</span>,
-start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># Run fitted model on the data</span>
-
-<span class="va">elisa_fitted_data</span> <span class="op">&lt;-</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
-
-<span class="co"># Taking output of the fitted model function and input it into endpoint titer function</span>
-
-<span class="va">endpoint_titer_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fitted_data</span>, <span class="va">back_value</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">tidy_fitted</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">fitted_data</span><span class="op">)</span>
-  <span class="va">est_a</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span>
-  <span class="va">est_b</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span>
-  <span class="va">est_c</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span>
-  <span class="va">est_d</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span>
-  <span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">est_c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">est_a</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">back_value</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">est_b</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># Run the endpoint titer function</span>
-<span class="fu">endpoint_titer_elisa</span><span class="op">(</span><span class="va">elisa_fitted_data</span>, back_value <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] -13.9726</code></pre>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Fitted model function</span></span>
+<span><span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, <span class="va">start_a</span>, <span class="va">start_d</span>, <span class="va">start_c</span>, <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,</span>
+<span>data <span class="op">=</span> <span class="va">df_elisa</span>,</span>
+<span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Run fitted model on the data</span></span>
+<span></span>
+<span><span class="va">elisa_data_with_fit_model</span> <span class="op">&lt;-</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Fitting the model into the whole dataframe</span></span>
+<span></span>
+<span><span class="va">elisa_data_with_fit_model_whole</span> <span class="op">&lt;-</span> <span class="va">elisa_data_nested</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted_data <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">.x</span>, start_a <span class="op">=</span> <span class="fl">4</span>, start_d <span class="op">=</span> <span class="fl">0</span>, start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elisa_data_with_fit_model_whole</span></span></code></pre></div>
+<pre><code>## # A tibble: 10 × 4
+## # Groups:   Groups, mouse_id [10]
+##    Groups  mouse_id data              fitted_data
+##    &lt;chr&gt;   &lt;chr&gt;    &lt;list&gt;            &lt;list&gt;     
+##  1 Group 1 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  2 Group 1 Mouse_2  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  3 Group 1 Mouse_3  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  4 Group 1 Mouse_4  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  7 Group 2 Mouse_2  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  8 Group 2 Mouse_3  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+##  9 Group 2 Mouse_4  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 10 Group 2 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;</code></pre>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Endpoint titer function</span></span>
+<span></span>
+<span><span class="va">endpoint_titer_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fitted_data</span>, <span class="va">back_value</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">tidy_fitted</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">fitted_data</span><span class="op">)</span></span>
+<span>  <span class="va">est_a</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span></span>
+<span>  <span class="va">est_b</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span></span>
+<span>  <span class="va">est_c</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span></span>
+<span>  <span class="va">est_d</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span></span>
+<span>  <span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">est_c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">est_a</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">back_value</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">est_b</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">endpoint_titer_elisa</span><span class="op">(</span><span class="va">elisa_data_with_fit_model</span>, back_value <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -13.87993</code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Taking output of the fitted model function and input it into endpoint titer function</span></span>
+<span></span>
+<span><span class="va">elisa_data_with_endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">elisa_data_with_fit_model_whole</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>endpoint_data <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">fitted_data</span>, <span class="op">~</span> <span class="fu">endpoint_titer_elisa</span><span class="op">(</span><span class="va">.x</span>, back_value <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
 </div>
 </div>
@@ -825,7 +848,7 @@ start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-08-08.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-08-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
