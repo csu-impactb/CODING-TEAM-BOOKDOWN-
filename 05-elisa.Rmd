@@ -43,6 +43,7 @@ library(tidyverse)
 library(minpack.lm)
 library(broom)
 library(purrr)
+library(ggbeeswarm)
 ```
 
 ### An example of ELISA data
@@ -397,13 +398,33 @@ endpoint_titer_elisa <- function(fitted_data, back_value) {
 elisa_data_with_fit_model <- elisa_data_nested %>%
   mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, start_d = 0, start_c = -8, start_b = 1)))
 
-head(elisa_data_with_fit_model_whole)
+head(elisa_data_with_fit_model)
 ```
 
 ##### Taking output of the fitted model function and into endpoint titer function
 
 ```{r}
-elisa_data_with_endpoint_titer <- elisa_data_with_fit_model_whole %>%
+elisa_data_with_endpoint_titer <- elisa_data_with_fit_model %>%
   mutate(endpoint_data = purrr::map(fitted_data, ~ endpoint_titer_elisa(.x, back_value = 0.2)))
+```
+
+#### Plot the endpoint titer data for the two groups
+
+```{r}
+
+elisa_data_with_endpoint_titer$endpoint_data=as.numeric(elisa_data_with_endpoint_titer$endpoint_data)
+
+elisa_data_with_endpoint_titer %>%
+  ggplot(aes(x = Groups, y = endpoint_data, color = Groups)) +
+ geom_beeswarm(cex = 3) 
+```
+
+#### Perform statistical analysis on the data
+
+```{r}
+elisa_data_stats <- t.test(endpoint_data ~ Groups, data = elisa_data_with_endpoint_titer)
+
+elisa_data_stats %>%
+  tidy()
 ```
 

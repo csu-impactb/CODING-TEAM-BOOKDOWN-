@@ -754,8 +754,8 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \includegraphics[width=1\linewidth]{DATA/elisa} \caption{A caption}\label{fig:pressure}
 \end{figure}
 
-\hypertarget{read-in-data-from-excel-file}{%
-\section{Read in data from excel file}\label{read-in-data-from-excel-file}}
+\hypertarget{loading-libraries}{%
+\subsection{Loading libraries}\label{loading-libraries}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -764,8 +764,17 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \FunctionTok{library}\NormalTok{(minpack.lm)}
 \FunctionTok{library}\NormalTok{(broom)}
 \FunctionTok{library}\NormalTok{(purrr)}
+\FunctionTok{library}\NormalTok{(ggbeeswarm)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{an-example-of-elisa-data}{%
+\subsection{An example of ELISA data}\label{an-example-of-elisa-data}}
+
+\hypertarget{read-in-the-first-dataset}{%
+\subsubsection{Read in the first dataset}\label{read-in-the-first-dataset}}
+
+Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -807,8 +816,10 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 OVRFLW       3.69  1.43  OVRF~ 3.66  1.27  3.839 1.74  0.444 2.49~ 0.637 0.704
 \end{verbatim}
 
-\hypertarget{tidy-the-data}{%
-\subsection{Tidy the data}\label{tidy-the-data}}
+\hypertarget{tidy-dataset-1}{%
+\subsubsection{Tidy dataset 1}\label{tidy-dataset-1}}
+
+It is important to clean the data and arrange it in a format on which we can apply formulas and functions.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -864,8 +875,10 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 A6         0.122
 \end{verbatim}
 
-\hypertarget{read-in-second-data-set}{%
-\subsection{Read in second data set}\label{read-in-second-data-set}}
+\hypertarget{read-in-the-second-data-set}{%
+\subsubsection{Read in the second data set}\label{read-in-the-second-data-set}}
+
+The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -907,6 +920,9 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 3B-1 (1/250 3B-1 ~ 3B-1~ 3B-2~ 3B-2~ 3B-2~ 3B-3~ 3B-3~ 3B-3~ 3B-4~ 3B-4~ 3B-4~
 \end{verbatim}
 
+\hypertarget{tidy-dataset-2}{%
+\subsubsection{Tidy dataset-2}\label{tidy-dataset-2}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# pivot longer the data}
@@ -942,11 +958,15 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 A6      1A-1 (1/6250
 \end{verbatim}
 
-\hypertarget{join-the-od-table-with-the-information-table}{%
-\section{\#Join the OD table with the information table}\label{join-the-od-table-with-the-information-table}}
+\hypertarget{merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information}{%
+\subsubsection{Merge dataset-1 (with OD information) with dataset-2 (with respective data information)}\label{merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information}}
+
+To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\#Merge the two datasets}
+
 \NormalTok{elisa\_data }\OtherTok{=}\NormalTok{ elisa\_raw\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{inner\_join}\NormalTok{(elisa\_label\_data\_tidy\_new, }\AttributeTok{by=}\StringTok{"well\_id"}\NormalTok{)}
 
 \FunctionTok{head}\NormalTok{(elisa\_data)}
@@ -965,11 +985,10 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 A6         0.122 1A-1 (1/6250
 \end{verbatim}
 
-\hypertarget{separate-the-information-table-into-sample-id-and-dilution-columns}{%
-\subsection{Separate the information table into sample ID and dilution columns}\label{separate-the-information-table-into-sample-id-and-dilution-columns}}
-
 \begin{Shaded}
 \begin{Highlighting}[]
+\DocumentationTok{\#\#\# Separate the information table into sample ID and dilution columns}
+
 \NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_data, }\AttributeTok{col =} \StringTok{"information"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"sample\_id"}\NormalTok{, }\StringTok{"dilution"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{("}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1022,10 +1041,10 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 ## 6 A6      "1A-1 "         6250    0.122
 \end{verbatim}
 
-\hypertarget{elisa-data-analysis-optimization}{%
-\section{ELISA data analysis optimization}\label{elisa-data-analysis-optimization}}
+\hypertarget{elisa-data-analysis}{%
+\section{ELISA data analysis}\label{elisa-data-analysis}}
 
-ELISA data can be analyzed in different ways based on how the data is acquired \citep{hartman2018absorbance}. There are a a few examples of the type of ELISA data :
+Analysis of ELISA data is the most important part of the ELISA experiment. ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data :
 
 \textbf{1. With standard curve:} ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
 different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.
@@ -1033,7 +1052,7 @@ different concentrations of the known analyte and the concentration in the sampl
 \textbf{2. Without standard curve:} Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens.
 Therefore, plotting a standard curve is not feasible as there is no previous information available for antibody concentration or type of antibody. Also, because antibody response to a vaccine will differ depending on the individual,
 it is not practical to generate a calibration curve from which absolute concentrations can be extrapolated.
-For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the following three methods:
+For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the following three methods \citep{hartman2018absorbance}:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1045,17 +1064,30 @@ For this type of ELISA, quantification of the antibody titers is performed using
   3: Absorbance summation method
 \end{enumerate}
 
-Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform tis analysis.
+Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.
 
 \hypertarget{fitting-sigmoid-model}{%
 \subsection{\texorpdfstring{\textbf{1. Fitting sigmoid model:}}{1. Fitting sigmoid model:}}\label{fitting-sigmoid-model}}
 
-In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. Example data:
+In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve.
+
+\hypertarget{an-example-of-the-fitting-sigmoid-model-is-below}{%
+\subsubsection{An example of the fitting sigmoid model is below:}\label{an-example-of-the-fitting-sigmoid-model-is-below}}
+
+\hypertarget{read-in-the-data}{%
+\paragraph{Read in the data}\label{read-in-the-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/example\_elisa\_data.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+\hypertarget{clean-the-data}{%
+\paragraph{Clean the data}\label{clean-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# separate 1/}
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_example\_data, }\AttributeTok{col =} \StringTok{"dilution"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denomenator"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
@@ -1136,8 +1168,8 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{fitted-model-curve}{%
-\subsubsection{Fitted model curve}\label{fitted-model-curve}}
+\hypertarget{create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data}{%
+\paragraph{Create a fitted sigmoid model function and apply the function to the data}\label{create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1153,7 +1185,14 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted =} \FunctionTok{predict}\NormalTok{(mod\_1))}
+\end{Highlighting}
+\end{Shaded}
 
+\hypertarget{plot-the-signmoid-curve-with-fitted-sigmoid-model}{%
+\paragraph{Plot the signmoid curve with fitted sigmoid model}\label{plot-the-signmoid-curve-with-fitted-sigmoid-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
@@ -1161,12 +1200,15 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \subsection{2. Endpoint titer method}\label{endpoint-titer-method}}
 
 The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). \textbf{The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.} This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.
+
+\hypertarget{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}{%
+\subsubsection{Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.}\label{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1208,13 +1250,13 @@ In this model of data analysis, we sum all the absorbance values from each sampl
 ## [1] 12.24
 \end{verbatim}
 
-\hypertarget{use-the-the-data-analysis-models-in-our-data}{%
-\section{Use the the data analysis models in our data}\label{use-the-the-data-analysis-models-in-our-data}}
+\hypertarget{apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset}{%
+\section{Apply the fitting sigmoid model and endpoint titer function in our dataset}\label{apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset}}
 
 The presented data is from a mouse study. In this data, presence of IgG antibody has been evaluated against receptor binding domain (RBD) of SARS-CoV-2 virus in two different groups of mice. We need to elucidate which group has higher concentration of the antibodies.
 
-\hypertarget{read-in-the-data}{%
-\subsection{read in the data}\label{read-in-the-data}}
+\hypertarget{read-in-the-data-1}{%
+\subsubsection{Read in the data}\label{read-in-the-data-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1222,8 +1264,8 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{make-the-tidy-data}{%
-\subsection{make the tidy data}\label{make-the-tidy-data}}
+\hypertarget{tidy-the-data}{%
+\subsubsection{Tidy the data}\label{tidy-the-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1375,10 +1417,11 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 ## 100 Group 2         1       25600  Mouse_5       0.06 3.90625e-05   -14.643856
 \end{verbatim}
 
+\hypertarget{converting-data-into-dataframe}{%
+\paragraph{converting data into dataframe}\label{converting-data-into-dataframe}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# converting data into dataframe}
-
 \NormalTok{elisa\_data\_df }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(Groups, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{log\_dilution =}\NormalTok{ log\_dilution, }\AttributeTok{absorbance =}\NormalTok{ absorbance)}
@@ -1442,10 +1485,11 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 ## 10 Group 2 Mouse_5  <tibble [10 x 5]>
 \end{verbatim}
 
+\hypertarget{plot-the-curves-to-evaluate-the-a-d-c-and-b}{%
+\paragraph{plot the curves to evaluate the a, d, c, and b}\label{plot-the-curves-to-evaluate-the-a-d-c-and-b}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# plot the curves to evaluate the a, d, c, and b}
-
 \NormalTok{elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
@@ -1454,7 +1498,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 Based on the curve, the values are:
 
@@ -1464,12 +1508,10 @@ c = 2
 b = 1
 
 \hypertarget{creating-a-function-for-fitting-model}{%
-\section{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}}
+\subsection{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Creating a function for fitted model}
-
 \NormalTok{fitted\_model\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df\_elisa, start\_a, start\_d, start\_c, start\_b) \{}
 \NormalTok{  mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
 \AttributeTok{data =}\NormalTok{ df\_elisa,}
@@ -1479,8 +1521,8 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{fitting-the-model-into-the-data}{%
-\subsection{Fitting the model into the data}\label{fitting-the-model-into-the-data}}
+\hypertarget{fitting-the-model-into-the-dataset}{%
+\subsubsection{Fitting the model into the dataset}\label{fitting-the-model-into-the-dataset}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1501,7 +1543,7 @@ b = 1
 \end{verbatim}
 
 \hypertarget{apply-the-fitted-model-function-to-the-whole-dataframe}{%
-\subsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}}
+\subsubsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1530,7 +1572,7 @@ b = 1
 \end{verbatim}
 
 \hypertarget{take-out-the-summary-of-the-data}{%
-\subsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}}
+\subsubsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1558,8 +1600,8 @@ b = 1
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{create-a-merge-function-of-fitted-model-and-endpoint-titer}{%
-\section{Create a merge function of Fitted model and endpoint titer}\label{create-a-merge-function-of-fitted-model-and-endpoint-titer}}
+\hypertarget{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}{%
+\section{Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer}\label{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1571,38 +1613,6 @@ b = 1
   \FunctionTok{return}\NormalTok{(mod\_1)}
 \NormalTok{\}}
 
-\CommentTok{\# Run fitted model on the data}
-
-\NormalTok{elisa\_data\_with\_fit\_model }\OtherTok{\textless{}{-}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(elisa\_data\_nested}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{2}\NormalTok{]], }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{) }
-
-\CommentTok{\# Fitting the model into the whole dataframe}
-
-\NormalTok{elisa\_data\_with\_fit\_model\_whole }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_nested }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(.x, }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)))}
-
-\NormalTok{elisa\_data\_with\_fit\_model\_whole}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 10 x 4
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data              fitted_data
-##    <chr>   <chr>    <list>            <list>     
-##  1 Group 1 Mouse_1  <tibble [10 x 5]> <nls>      
-##  2 Group 1 Mouse_2  <tibble [10 x 5]> <nls>      
-##  3 Group 1 Mouse_3  <tibble [10 x 5]> <nls>      
-##  4 Group 1 Mouse_4  <tibble [10 x 5]> <nls>      
-##  5 Group 1 Mouse_5  <tibble [10 x 5]> <nls>      
-##  6 Group 2 Mouse_1  <tibble [10 x 5]> <nls>      
-##  7 Group 2 Mouse_2  <tibble [10 x 5]> <nls>      
-##  8 Group 2 Mouse_3  <tibble [10 x 5]> <nls>      
-##  9 Group 2 Mouse_4  <tibble [10 x 5]> <nls>      
-## 10 Group 2 Mouse_5  <tibble [10 x 5]> <nls>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\# Endpoint titer function}
 
 \NormalTok{endpoint\_titer\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fitted\_data, back\_value) \{}
@@ -1614,23 +1624,82 @@ b = 1
 \NormalTok{  endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ est\_c }\SpecialCharTok{*}\NormalTok{ (((est\_a }\SpecialCharTok{{-}}\NormalTok{ est\_d) }\SpecialCharTok{/}\NormalTok{ (back\_value }\SpecialCharTok{{-}}\NormalTok{ est\_d)) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\^{}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ est\_b)}
   \FunctionTok{return}\NormalTok{(endpoint\_titer)}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\FunctionTok{endpoint\_titer\_elisa}\NormalTok{(elisa\_data\_with\_fit\_model, }\AttributeTok{back\_value =} \FloatTok{0.2}\NormalTok{)}
+\hypertarget{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}{%
+\subsubsection{Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation}\label{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}}
+
+\hypertarget{run-fitted-model-on-the-data}{%
+\paragraph{Run fitted model on the data}\label{run-fitted-model-on-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_data\_with\_fit\_model }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_nested }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(.x, }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }\AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }\AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }\AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)))}
+
+\FunctionTok{head}\NormalTok{(elisa\_data\_with\_fit\_model)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -13.87993
+## # A tibble: 6 x 4
+## # Groups:   Groups, mouse_id [6]
+##   Groups  mouse_id data              fitted_data
+##   <chr>   <chr>    <list>            <list>     
+## 1 Group 1 Mouse_1  <tibble [10 x 5]> <nls>      
+## 2 Group 1 Mouse_2  <tibble [10 x 5]> <nls>      
+## 3 Group 1 Mouse_3  <tibble [10 x 5]> <nls>      
+## 4 Group 1 Mouse_4  <tibble [10 x 5]> <nls>      
+## 5 Group 1 Mouse_5  <tibble [10 x 5]> <nls>      
+## 6 Group 2 Mouse_1  <tibble [10 x 5]> <nls>
 \end{verbatim}
+
+\hypertarget{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}{%
+\paragraph{Taking output of the fitted model function and into endpoint titer function}\label{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Taking output of the fitted model function and input it into endpoint titer function}
-
-\NormalTok{elisa\_data\_with\_endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_with\_fit\_model\_whole }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{elisa\_data\_with\_endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_with\_fit\_model }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{endpoint\_data =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, }\SpecialCharTok{\textasciitilde{}} \FunctionTok{endpoint\_titer\_elisa}\NormalTok{(.x, }\AttributeTok{back\_value =} \FloatTok{0.2}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{plot-the-endpoint-titer-data-for-the-two-groups}{%
+\subsubsection{Plot the endpoint titer data for the two groups}\label{plot-the-endpoint-titer-data-for-the-two-groups}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_data\_with\_endpoint\_titer}\SpecialCharTok{$}\NormalTok{endpoint\_data}\OtherTok{=}\FunctionTok{as.numeric}\NormalTok{(elisa\_data\_with\_endpoint\_titer}\SpecialCharTok{$}\NormalTok{endpoint\_data)}
+
+\NormalTok{elisa\_data\_with\_endpoint\_titer }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Groups, }\AttributeTok{y =}\NormalTok{ endpoint\_data, }\AttributeTok{color =}\NormalTok{ Groups)) }\SpecialCharTok{+}
+ \FunctionTok{geom\_beeswarm}\NormalTok{(}\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+\hypertarget{perform-statistical-analysis-on-the-data}{%
+\subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{elisa\_data\_stats }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(endpoint\_data }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Groups, }\AttributeTok{data =}\NormalTok{ elisa\_data\_with\_endpoint\_titer)}
+
+\NormalTok{elisa\_data\_stats }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 10
+##   estim~1 estim~2 estim~3 stati~4 p.value param~5 conf.~6 conf.~7 method alter~8
+##     <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>  <chr>  
+## 1  -0.800   -14.0   -13.2   -18.8 2.68e-6    5.63  -0.906  -0.695 Welch~ two.si~
+## # ... with abbreviated variable names 1: estimate, 2: estimate1, 3: estimate2,
+## #   4: statistic, 5: parameter, 6: conf.low, 7: conf.high, 8: alternative
+\end{verbatim}
 
 \hypertarget{flow-cytometry}{%
 \chapter{Flow cytometry}\label{flow-cytometry}}
@@ -1923,7 +1992,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-50-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1932,6 +2001,11 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{pathology}{%
+\chapter{Pathology}\label{pathology}}
+
+\hypertarget{pathology-1}{%
+\chapter{Pathology}\label{pathology-1}}
 
   \bibliography{book.bib,packages.bib}
 
