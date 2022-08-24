@@ -1,3 +1,89 @@
+--- 
+title: "ImpactTB/BAA: Standard Operating Procedures for Data Analysis"
+author: "Colorado State University Coding Team"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination."
+---
+
+# Overview
+
+Placeholder
+
+
+## About the project
+## About this book
+
+<!--chapter:end:index.Rmd-->
+
+# Experimental metadata
+
+Metadata for an experiment: 
+
+- `species`
+- `start_date`
+- `end_date`
+- `experimental_groups`
+
+
+
+
+<!--chapter:end:01-metadata.Rmd-->
+
+
+# Initial mouse characteristics
+
+Placeholder
+
+
+
+<!--chapter:end:02-initial_mouse_characteristics.Rmd-->
+
+
+# Mouse Weights
+
+Placeholder
+
+
+### Overview
+### Parameters
+### Read in data
+### Can also use rio to read in the data, more streamlined
+### Clean data
+### Body weight over time graph and statistics
+### Weight loss over time graph and statistics 
+### Weight vs CFU
+### Weight vs ELISA results 
+### Weight vs lesion burden
+
+<!--chapter:end:03-mouse_weights.Rmd-->
+
+
+# Colony forming units to determine bacterial counts 
+
+Placeholder
+
+
+## Data description
+## Read in data
+## Example one
+## Exploratory analysis and quality checks
+## Exploratory analysis
+## Identify a good dilution for each sample
+## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
+## Create initial report information for these data
+## Sample ANOVA
+## Save processed data to database
+## Example two
+
+<!--chapter:end:04-cfus.Rmd-->
+
 ---
 output:
   pdf_document: default
@@ -403,7 +489,52 @@ head(elisa_data_with_fit_model_whole)
 ##### Taking output of the fitted model function and into endpoint titer function
 
 ```{r}
-elisa_data_with_endpoint_titer <- elisa_data_with_fit_model_whole %>%
+elisa_data_with_endpoint_titer <- elisa_data_with_fit_model %>%
   mutate(endpoint_data = purrr::map(fitted_data, ~ endpoint_titer_elisa(.x, back_value = 0.2)))
+
+head(elisa_data_with_endpoint_titer)
 ```
+
+
+<!--chapter:end:05-elisa.Rmd-->
+
+
+# Flow cytometry
+
+Placeholder
+
+
+## Loading packages
+## panel information
+## Loading data
+## Making the data tidy for plotting
+## boxplot
+
+<!--chapter:end:06-flow.Rmd-->
+
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Pathology 
+
+<!--chapter:end:07-pathology.Rmd-->
+
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Pathology 
+
+<!--chapter:end:08-proteomics.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:09-references.Rmd-->
 
