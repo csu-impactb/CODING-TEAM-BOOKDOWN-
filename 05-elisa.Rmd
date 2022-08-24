@@ -1,6 +1,8 @@
 ---
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
 ---
 # Enzyme-linked immunosorbest assay (ELISA)
@@ -137,7 +139,7 @@ head(tidy_elisa_data)
 
 ## ELISA data analysis optimization
 
-ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data:
+ELISA data can be analyzed in different ways based on how the data is acquired [@hartman2018absorbance]. There are a a few examples of the type of ELISA data :
 
 **1. With standard curve:** ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
 different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.
@@ -188,6 +190,7 @@ mod_1
 summary(mod_1)
 
 ```
+
 #### Fitted model curve
 ```{r}
 tidy_params <- mod_1 %>% tidy()
@@ -206,7 +209,7 @@ elisa_example_data <- elisa_example_data %>%
 elisa_example_data %>%
   ggplot(aes(x = log_dilution, y = absorbance)) +
   geom_point() +
-  geom_line(aes(y=fitted), color = "blue")
+  geom_line(aes(y=fitted), color = "dodgerblue")
 ```
 
 ### 2. Endpoint titer method
@@ -351,7 +354,6 @@ unnested$fitted_data[[1]]
 ## Create a merge function of Fitted model and endpoint titer
 
 ```{r}
-
 # Fitted model function
 fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
   mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
@@ -362,9 +364,16 @@ start = list(a = start_a, d = start_d, c = start_c, b = start_b))
 
 # Run fitted model on the data
 
-elisa_fitted_data <- fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1) 
+elisa_data_with_fit_model <- fitted_model_elisa(elisa_data_nested$data[[2]], start_a = 4, start_d = 0, start_c = -8, start_b = 1) 
 
-# Taking output of the fitted model function and input it into endpoint titer function
+# Fitting the model into the whole dataframe
+
+elisa_data_with_fit_model_whole <- elisa_data_nested %>%
+  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, start_d = 0, start_c = -8, start_b = 1)))
+
+elisa_data_with_fit_model_whole
+
+# Endpoint titer function
 
 endpoint_titer_elisa <- function(fitted_data, back_value) {
   tidy_fitted <- broom::tidy(fitted_data)
@@ -376,10 +385,12 @@ endpoint_titer_elisa <- function(fitted_data, back_value) {
   return(endpoint_titer)
 }
 
-# Run the endpoint titer function
-endpoint_titer_elisa(elisa_fitted_data, back_value = 0.2)
+endpoint_titer_elisa(elisa_data_with_fit_model, back_value = 0.2)
+
+# Taking output of the fitted model function and input it into endpoint titer function
+
+elisa_data_with_endpoint_titer <- elisa_data_with_fit_model_whole %>%
+  mutate(endpoint_data = purrr::map(fitted_data, ~ endpoint_titer_elisa(.x, back_value = 0.2)))
 ```
-
-
 
 
