@@ -11,7 +11,7 @@ ELISA is a standard molecular biology assay for detecting and quantifying a
 variety of compounds, including peptides, proteins, and antibodies in a sample.
 The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
 
-#### **Importance of ELISA**
+## **Importance of ELISA**
 
 An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, 
 it aids in the detection of antibodies in the body. ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, 
@@ -21,7 +21,7 @@ In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting h
 be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in 
 the serum different time points post-vaccination. 
 
-#### **Principle of ELISA**
+### **Principle of ELISA**
 
 ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme's activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:
 
@@ -71,41 +71,45 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.
 
-### **1. Fitting sigmoid model:** 
+## **1. Fitting sigmoid model:** 
 
 In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. 
 
-#### An example of the fitting sigmoid model is below: 
+### An example of the fitting sigmoid model is below: 
 
-##### Read in the data
+#### Read in the data
 ```{r}
 elisa_example_data <- read_excel("DATA/example_elisa_data.xlsx")
 ```
 
-##### Clean the data
+#### Clean the data
 ```{r}
 # separate 1/
 
-elisa_example_data <- separate(elisa_example_data, col = "dilution", 
-                               into = c("numerator", "denomenator"), sep = "\\/")
+elisa_example_data <- separate(elisa_example_data, 
+                               col = "dilution", 
+                               into = c("numerator", "denominator"), 
+                               sep = "\\/")
 
 elisa_example_data <- elisa_example_data %>% 
   mutate_if(is.character, as.numeric)
 
-elisa_example_data$dilution <- elisa_example_data$numerator / elisa_example_data$denomenator  
+elisa_example_data$dilution <- 
+  elisa_example_data$numerator/elisa_example_data$denominator  
 
 elisa_example_data <- elisa_example_data %>%
   mutate(log_dilution = log(dilution, base = 3))
 
 head(elisa_example_data)
 
-mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+mod_1 <- nlsLM(absorbance ~ 
+                 ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = elisa_example_data, 
 start = list (a = 4, d= 0, c = -5, b = 1))
 
 # a = maximum absorbance
 # d = minimum absobance
-# c = point of maximum growith (dilition where the curve is straight line)
+# c = point of maximum growth 
 # b = slope at c
 
 mod_1
@@ -113,7 +117,7 @@ mod_1
 summary(mod_1)
 ```
 
-##### Create a fitted sigmoid model function and apply the function to the data
+#### Create a fitted sigmoid model function and apply the function to the data
 ```{r}
 tidy_params <- mod_1 %>% tidy()
 
@@ -129,7 +133,7 @@ elisa_example_data <- elisa_example_data %>%
   mutate(fitted = predict(mod_1))
 ```
 
-##### Plot the signmoid curve with fitted sigmoid model
+#### Plot the signmoid curve with fitted sigmoid model
 ```{r}
 elisa_example_data %>%
   ggplot(aes(x = log_dilution, y = absorbance)) +
@@ -137,11 +141,11 @@ elisa_example_data %>%
   geom_line(aes(y=fitted), color = "dodgerblue")
 ```
 
-### 2. Endpoint titer method
+## 2. Endpoint titer method
 
 The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). **The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.** This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.
 
-#### Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.
+### Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.
 
 ```{r}
 endpoint_titer <- c * (((a - d) / (0.2 - d)) - 1) ^ (1 / b)
@@ -157,7 +161,8 @@ endpoint_titer
 In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:
 
 ```{r}
-AS = 0.04 + 0.04 + 0.05 + 0.05 + 0.06 + 0.1 + 0.22 + 0.51 + 1.1 + 2.34 + 3.73 + 4.0
+AS = 0.04 + 0.04 + 0.05 + 0.05 + 0.06 + 
+  0.1 + 0.22 + 0.51 + 1.1 + 2.34 + 3.73 + 4.0
 
 AS
 
@@ -177,27 +182,33 @@ elisa_data <- read_excel("DATA/elisa_data_serial_dilution.xlsx")
 
 ```{r}
 
-elisa_data <- pivot_longer(data = elisa_data, cols = "Mouse_1":"Mouse_5", 
-                           names_to = "mouse_id", values_to = "absorbance")
+elisa_data <- pivot_longer(data = elisa_data, 
+                           cols = "Mouse_1":"Mouse_5", 
+                           names_to = "mouse_id", 
+                           values_to = "absorbance")
 
-elisa_data
+head(elisa_data)
 
 # separate dilution column and convert it to log2
 
-elisa_data <- separate(elisa_data, col = "Dilution", 
-                       into = c("numerator", "denomenator"), sep = "\\/")
+elisa_data <- separate(elisa_data, 
+                       col = "Dilution", 
+                       into = c("numerator", 
+                                "denomenator"), 
+                       sep = "\\/")
 
 elisa_data <- elisa_data %>% 
   transform(numerator = as.numeric(numerator),
             denomenator = as.numeric(denomenator))
 
 elisa_data <- elisa_data %>%
-  mutate(dilution = elisa_data$numerator / elisa_data$denomenator) 
+  mutate(dilution = 
+           elisa_data$numerator/elisa_data$denomenator) 
 
 elisa_data <- elisa_data %>%
   mutate(log_dilution = log2(dilution))
 
-elisa_data
+head(elisa_data)
 
 ```
 
@@ -205,20 +216,20 @@ elisa_data
 ```{r}
 elisa_data_df <- elisa_data %>% 
   group_by(Groups, mouse_id) %>% 
-  summarize(log_dilution = log_dilution, absorbance = absorbance)
-
-elisa_data_df
+  summarize(log_dilution = log_dilution, 
+            absorbance = absorbance)
 
 elisa_data_nested <- elisa_data %>%
   group_by(Groups, mouse_id) %>%
   nest()
 
-elisa_data_nested
+head(elisa_data_nested)
 
 ```
 
 ##### plot the curves to evaluate the a, d, c, and b
-```{r}
+```{r fig.width= 8, fig.height= 8, fig.align="center"}
+
 elisa_data %>%
   ggplot(aes(x = log_dilution, y = absorbance)) +
   geom_point() +
@@ -236,8 +247,11 @@ b = 1
 ### Creating a function for fitting model 
 ```{r}
 
-fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
-  mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+fitted_model_elisa <- function(df_elisa, 
+                               start_a, start_d, 
+                               start_c, start_b) {
+  mod_1 <- nlsLM(absorbance ~ 
+                   ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = df_elisa,
 start = list(a = start_a, d = start_d, c = start_c, b = start_b))
   return(mod_1)
@@ -247,7 +261,11 @@ start = list(a = start_a, d = start_d, c = start_c, b = start_b))
 #### Fitting the model into the dataset
 
 ```{r}
-fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_c = -8, start_b = 1)
+fitted_model_elisa(elisa_data_nested$data[[1]], 
+                   start_a = 4, 
+                   start_d = 0, 
+                   start_c = -8, 
+                   start_b = 1)
 ```
 
 #### Apply the fitted model function to the whole dataframe
@@ -255,19 +273,22 @@ fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_
 ```{r}
 
 elisa_fitted_data <- elisa_data_nested %>%
-  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, 
-                                                             start_d = 0, 
-                                                             start_c = -8, 
-                                                             start_b = 1)))
+  mutate(fitted_data = 
+           purrr::map(data, ~ 
+                        fitted_model_elisa(.x,start_a = 4, 
+                                              start_d = 0, 
+                                              start_c = -8, 
+                                              start_b = 1)))
 
-elisa_fitted_data
+head(elisa_fitted_data)
 ```
 
 #### Take out the summary of the data
 
 ```{r}
 elisa_fitted_data_summary <- elisa_fitted_data %>%
-  mutate(elisa_fitted_data_summary = purrr::map(fitted_data, broom::glance))
+  mutate(elisa_fitted_data_summary = 
+           purrr::map(fitted_data, broom::glance))
 
 unnested <- elisa_fitted_data_summary %>%
 unnest(elisa_fitted_data_summary) %>%
@@ -282,8 +303,13 @@ unnested$fitted_data[[1]]
 
 ```{r}
 # Fitted model function
-fitted_model_elisa <- function(df_elisa, start_a, start_d, start_c, start_b) {
-  mod_1 <- nlsLM(absorbance ~ ((a-d)/(1+(log_dilution/c)^b)) + d,
+fitted_model_elisa <- function(df_elisa, 
+                               start_a, 
+                               start_d, 
+                               start_c, 
+                               start_b) {
+  mod_1 <- nlsLM(absorbance ~ 
+                   ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = df_elisa,
 start = list(a = start_a, d = start_d, c = start_c, b = start_b))
   return(mod_1)
@@ -307,10 +333,11 @@ endpoint_titer_elisa <- function(fitted_data, back_value) {
 ##### Run fitted model on the data
 ```{r}
 elisa_data_with_fit_model <- elisa_data_nested %>%
-  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, 
-                                                             start_d = 0, 
-                                                             start_c = -8, 
-                                                             start_b = 1)))
+  mutate(fitted_data = purrr::map(data, 
+                                  ~ fitted_model_elisa(.x, start_a = 4, 
+                                                          start_d = 0, 
+                                                          start_c = -8, 
+                                                          start_b = 1)))
 
 head(elisa_data_with_fit_model)
 ```
@@ -319,7 +346,9 @@ head(elisa_data_with_fit_model)
 
 ```{r}
 elisa_data_with_endpoint_titer <- elisa_data_with_fit_model %>%
-  mutate(endpoint_data = purrr::map(fitted_data, ~ endpoint_titer_elisa(.x, back_value = 0.2)))
+  mutate(endpoint_data = 
+           purrr::map(fitted_data, 
+                      ~ endpoint_titer_elisa(.x, back_value = 0.2)))
 ```
 
 #### Plot the endpoint titer data for the two groups
@@ -356,7 +385,8 @@ Below is the example ELISA data that has came straight out of the plate reader. 
 
 ```{r}
 elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", 
-                             sheet = "S1", col_names = FALSE,  range = "B2:M9")
+                             sheet = "S1", col_names = FALSE,  
+                             range = "B2:M9")
 
 
 head(elisa_raw_data)
