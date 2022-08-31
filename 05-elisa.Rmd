@@ -46,107 +46,6 @@ library(purrr)
 library(ggbeeswarm)
 ```
 
-### An example of ELISA data
-
-#### Read in the first dataset
-Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
-
-```{r}
-elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "B2:M9")
-
-
-head(elisa_raw_data)
-```
-
-#### Tidy dataset 1
-It is important to clean the data and arrange it in a format on which we can apply formulas and functions. 
-
-```{r}
-# Convert all columns to numeric
-
-elisa_raw_data_numeric <- elisa_raw_data %>% 
-  mutate_if(is.character, as.numeric)
-
-# pivot longer the data
-
-elisa_raw_data_tidy <- pivot_longer(data = elisa_raw_data_numeric, cols = "...1":"...12", names_to = "well_id", values_to = "od_450nm")
-
-# remove "..." from the first column
-
-elisa_raw_data_tidy$well_id <- str_replace(elisa_raw_data_tidy$well_id, "...", "")
-
-# Add new column to the data_frame
-
-elisa_raw_data_tidy_new <- elisa_raw_data_tidy %>%
-  mutate(name = rep(LETTERS[1:8], each = 12))
-
-elisa_raw_data_tidy_new <- elisa_raw_data_tidy_new %>%
-  mutate(well_id = paste0(name, well_id)) %>%
-  select(-name)
-
-head(elisa_raw_data_tidy_new)
-
-```
-
-#### Read in the second data set
-The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1. 
-
-```{r}
-elisa_label_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "Q2:AB9")
-
-head(elisa_label_data)
-```
-
-#### Tidy dataset-2
-```{r}
-# pivot longer the data
-
-elisa_label_data_tidy <- pivot_longer(data = elisa_label_data, cols = "...1":"...12", names_to = "well_id", values_to = "information")
-
-# remove "..." from the first column
-
-elisa_label_data_tidy$well_id <- str_replace(elisa_label_data_tidy$well_id, "...", "")
-
-# Add new column to the data_frame
-
-elisa_label_data_tidy_new <- elisa_label_data_tidy %>%
-  mutate(name = rep(LETTERS[1:8], each = 12))
-
-elisa_label_data_tidy_new <- elisa_label_data_tidy_new %>%
-  mutate(well_id = paste0(name, well_id)) %>%
-  select(-name)
-
-head(elisa_label_data_tidy_new)
-```
-
-#### Merge dataset-1 (with OD information) with dataset-2 (with respective data information)
-To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns. 
-
-```{r}
-#Merge the two datasets
-
-elisa_data = elisa_raw_data_tidy_new %>% inner_join(elisa_label_data_tidy_new, by="well_id")
-
-head(elisa_data)
-
-### Separate the information table into sample ID and dilution columns
-
-tidy_elisa_data <- separate(elisa_data, col = "information", into = c("sample_id", "dilution"), sep = "\\(")
-
-head(tidy_elisa_data)
-```
-```{r}
-tidy_elisa_data <- tidy_elisa_data %>%
-  mutate(dilution = str_extract(dilution, "(/)[0-9]+"),
-         dilution = str_replace(dilution, "/", ""),
-         dilution = as.numeric(dilution))
-
-tidy_elisa_data <- tidy_elisa_data %>%
-  select(well_id, sample_id, dilution, od_450nm)
-
-head(tidy_elisa_data)
-
-```
 
 ## ELISA data analysis
 
@@ -428,3 +327,109 @@ elisa_data_stats %>%
   tidy()
 ```
 
+#### Statistical data analysis for more than two groups
+
+
+# ELISA data processing
+
+We read ELISA plate in a 96 well plate using a plate reader. The plate reader generates the data in form of number in an excel sheet. We have created this pipeline/worksheet to bring out the information from the excl sheet to a tidy format in which the above created fitted model and endpoint titer functions can be applied. 
+
+#### Read in the first dataset
+Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
+
+```{r}
+elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "B2:M9")
+
+
+head(elisa_raw_data)
+```
+
+#### Tidy dataset 1
+It is important to clean the data and arrange it in a format on which we can apply formulas and functions. 
+
+```{r}
+# Convert all columns to numeric
+
+elisa_raw_data_numeric <- elisa_raw_data %>% 
+  mutate_if(is.character, as.numeric)
+
+# pivot longer the data
+
+elisa_raw_data_tidy <- pivot_longer(data = elisa_raw_data_numeric, cols = "...1":"...12", names_to = "well_id", values_to = "od_450nm")
+
+# remove "..." from the first column
+
+elisa_raw_data_tidy$well_id <- str_replace(elisa_raw_data_tidy$well_id, "...", "")
+
+# Add new column to the data_frame
+
+elisa_raw_data_tidy_new <- elisa_raw_data_tidy %>%
+  mutate(name = rep(LETTERS[1:8], each = 12))
+
+elisa_raw_data_tidy_new <- elisa_raw_data_tidy_new %>%
+  mutate(well_id = paste0(name, well_id)) %>%
+  select(-name)
+
+head(elisa_raw_data_tidy_new)
+
+```
+
+#### Read in the second data set
+The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1. 
+
+```{r}
+elisa_label_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "Q2:AB9")
+
+head(elisa_label_data)
+```
+
+#### Tidy dataset-2
+```{r}
+# pivot longer the data
+
+elisa_label_data_tidy <- pivot_longer(data = elisa_label_data, cols = "...1":"...12", names_to = "well_id", values_to = "information")
+
+# remove "..." from the first column
+
+elisa_label_data_tidy$well_id <- str_replace(elisa_label_data_tidy$well_id, "...", "")
+
+# Add new column to the data_frame
+
+elisa_label_data_tidy_new <- elisa_label_data_tidy %>%
+  mutate(name = rep(LETTERS[1:8], each = 12))
+
+elisa_label_data_tidy_new <- elisa_label_data_tidy_new %>%
+  mutate(well_id = paste0(name, well_id)) %>%
+  select(-name)
+
+head(elisa_label_data_tidy_new)
+```
+
+#### Merge dataset-1 (with OD information) with dataset-2 (with respective data information)
+To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns. 
+
+```{r}
+#Merge the two datasets
+
+elisa_data = elisa_raw_data_tidy_new %>% inner_join(elisa_label_data_tidy_new, by="well_id")
+
+head(elisa_data)
+
+### Separate the information table into sample ID and dilution columns
+
+tidy_elisa_data <- separate(elisa_data, col = "information", into = c("sample_id", "dilution"), sep = "\\(")
+
+head(tidy_elisa_data)
+```
+```{r}
+tidy_elisa_data <- tidy_elisa_data %>%
+  mutate(dilution = str_extract(dilution, "(/)[0-9]+"),
+         dilution = str_replace(dilution, "/", ""),
+         dilution = as.numeric(dilution))
+
+tidy_elisa_data <- tidy_elisa_data %>%
+  select(well_id, sample_id, dilution, od_450nm)
+
+head(tidy_elisa_data)
+
+```
