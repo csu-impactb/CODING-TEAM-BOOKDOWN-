@@ -7,13 +7,19 @@ editor_options:
 ---
 # Enzyme-linked immunosorbest assay (ELISA)
 
-ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
+ELISA is a standard molecular biology assay for detecting and quantifying a 
+variety of compounds, including peptides, proteins, and antibodies in a sample.
+The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
 
 #### **Importance of ELISA**
 
-An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, it aids in the detection of antibodies in the body.ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, which is often a polystyrene multiwell plate.
+An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease, 
+it aids in the detection of antibodies in the body. ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces, 
+which is often a polystyrene multi-well plate.
 
-In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in the serum different time points post-vaccination. 
+In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will 
+be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in 
+the serum different time points post-vaccination. 
 
 #### **Principle of ELISA**
 
@@ -80,7 +86,8 @@ elisa_example_data <- read_excel("DATA/example_elisa_data.xlsx")
 ```{r}
 # separate 1/
 
-elisa_example_data <- separate(elisa_example_data, col = "dilution", into = c("numerator", "denomenator"), sep = "\\/")
+elisa_example_data <- separate(elisa_example_data, col = "dilution", 
+                               into = c("numerator", "denomenator"), sep = "\\/")
 
 elisa_example_data <- elisa_example_data %>% 
   mutate_if(is.character, as.numeric)
@@ -170,13 +177,15 @@ elisa_data <- read_excel("DATA/elisa_data_serial_dilution.xlsx")
 
 ```{r}
 
-elisa_data <- pivot_longer(data = elisa_data, cols = "Mouse_1":"Mouse_5", names_to = "mouse_id", values_to = "absorbance")
+elisa_data <- pivot_longer(data = elisa_data, cols = "Mouse_1":"Mouse_5", 
+                           names_to = "mouse_id", values_to = "absorbance")
 
 elisa_data
 
 # separate dilution column and convert it to log2
 
-elisa_data <- separate(elisa_data, col = "Dilution", into = c("numerator", "denomenator"), sep = "\\/")
+elisa_data <- separate(elisa_data, col = "Dilution", 
+                       into = c("numerator", "denomenator"), sep = "\\/")
 
 elisa_data <- elisa_data %>% 
   transform(numerator = as.numeric(numerator),
@@ -246,7 +255,10 @@ fitted_model_elisa(elisa_data_nested$data[[1]], start_a = 4, start_d = 0, start_
 ```{r}
 
 elisa_fitted_data <- elisa_data_nested %>%
-  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, start_d = 0, start_c = -8, start_b = 1)))
+  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, 
+                                                             start_d = 0, 
+                                                             start_c = -8, 
+                                                             start_b = 1)))
 
 elisa_fitted_data
 ```
@@ -295,7 +307,10 @@ endpoint_titer_elisa <- function(fitted_data, back_value) {
 ##### Run fitted model on the data
 ```{r}
 elisa_data_with_fit_model <- elisa_data_nested %>%
-  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, start_d = 0, start_c = -8, start_b = 1)))
+  mutate(fitted_data = purrr::map(data, ~ fitted_model_elisa(.x, start_a = 4, 
+                                                             start_d = 0, 
+                                                             start_c = -8, 
+                                                             start_b = 1)))
 
 head(elisa_data_with_fit_model)
 ```
@@ -311,7 +326,8 @@ elisa_data_with_endpoint_titer <- elisa_data_with_fit_model %>%
 
 ```{r}
 
-elisa_data_with_endpoint_titer$endpoint_data=as.numeric(elisa_data_with_endpoint_titer$endpoint_data)
+elisa_data_with_endpoint_titer$endpoint_data=
+  as.numeric(elisa_data_with_endpoint_titer$endpoint_data)
 
 elisa_data_with_endpoint_titer %>%
   ggplot(aes(x = Groups, y = endpoint_data, color = Groups)) +
@@ -321,7 +337,8 @@ elisa_data_with_endpoint_titer %>%
 #### Perform statistical analysis on the data
 
 ```{r}
-elisa_data_stats <- t.test(endpoint_data ~ Groups, data = elisa_data_with_endpoint_titer)
+elisa_data_stats <- t.test(endpoint_data ~ Groups, 
+                           data = elisa_data_with_endpoint_titer)
 
 elisa_data_stats %>%
   tidy()
@@ -338,7 +355,8 @@ We read ELISA plate in a 96 well plate using a plate reader. The plate reader ge
 Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
 
 ```{r}
-elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "B2:M9")
+elisa_raw_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", 
+                             sheet = "S1", col_names = FALSE,  range = "B2:M9")
 
 
 head(elisa_raw_data)
@@ -378,7 +396,9 @@ head(elisa_raw_data_tidy_new)
 The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1. 
 
 ```{r}
-elisa_label_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", sheet = "S1", col_names = FALSE,  range = "Q2:AB9")
+elisa_label_data <- read_excel("DATA/elisa_s1_07-25-20.xlsx", 
+                               sheet = "S1", col_names = FALSE,  
+                               range = "Q2:AB9")
 
 head(elisa_label_data)
 ```
@@ -387,7 +407,10 @@ head(elisa_label_data)
 ```{r}
 # pivot longer the data
 
-elisa_label_data_tidy <- pivot_longer(data = elisa_label_data, cols = "...1":"...12", names_to = "well_id", values_to = "information")
+elisa_label_data_tidy <- pivot_longer(data = elisa_label_data, 
+                                      cols = "...1":"...12", 
+                                      names_to = "well_id", 
+                                      values_to = "information")
 
 # remove "..." from the first column
 
@@ -411,13 +434,16 @@ To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we m
 ```{r}
 #Merge the two datasets
 
-elisa_data = elisa_raw_data_tidy_new %>% inner_join(elisa_label_data_tidy_new, by="well_id")
+elisa_data = elisa_raw_data_tidy_new %>% inner_join(elisa_label_data_tidy_new,
+                                                    by="well_id")
 
 head(elisa_data)
 
 ### Separate the information table into sample ID and dilution columns
 
-tidy_elisa_data <- separate(elisa_data, col = "information", into = c("sample_id", "dilution"), sep = "\\(")
+tidy_elisa_data <- separate(elisa_data, col = "information", 
+                            into = c("sample_id", "dilution"),
+                            sep = "\\(")
 
 head(tidy_elisa_data)
 ```
