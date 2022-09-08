@@ -1,260 +1,83 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
-  <meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
-  
-  <meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  
-
-<meta name="author" content="Colorado State University Coding Team" />
-
-
-<meta name="date" content="2022-08-31" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="colony-forming-units-to-determine-bacterial-counts.html"/>
-<link rel="next" href="elisa-data-processing.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+<meta name="author" content="Colorado State University Coding Team">
+<meta name="description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta property="og:type" content="book">
+<meta property="og:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Enzyme-linked immunosorbest assay (ELISA) | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="twitter:description" content="ELISA is a standard molecular biology assay for detecting and quantifying a variety of compounds, including peptides, proteins, and antibodies in a sample. The sample could be serum, plasma, or...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Bookdown CSU Coding Team Example</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-the-project"><i class="fa fa-check"></i><b>1.1</b> About the project</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.2</b> About this book</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="experimental-metadata.html"><a href="experimental-metadata.html"><i class="fa fa-check"></i><b>2</b> Experimental metadata</a></li>
-<li class="chapter" data-level="3" data-path="initial-mouse-characteristics.html"><a href="initial-mouse-characteristics.html"><i class="fa fa-check"></i><b>3</b> Initial mouse characteristics</a></li>
-<li class="chapter" data-level="4" data-path="mouse-weights.html"><a href="mouse-weights.html"><i class="fa fa-check"></i><b>4</b> Mouse Weights</a>
-<ul>
-<li class="chapter" data-level="4.0.1" data-path="mouse-weights.html"><a href="mouse-weights.html#overview-1"><i class="fa fa-check"></i><b>4.0.1</b> Overview</a></li>
-<li class="chapter" data-level="4.0.2" data-path="mouse-weights.html"><a href="mouse-weights.html#parameters"><i class="fa fa-check"></i><b>4.0.2</b> Parameters</a></li>
-<li class="chapter" data-level="4.0.3" data-path="mouse-weights.html"><a href="mouse-weights.html#read-in-data"><i class="fa fa-check"></i><b>4.0.3</b> Read in data</a></li>
-<li class="chapter" data-level="4.0.4" data-path="mouse-weights.html"><a href="mouse-weights.html#can-also-use-rio-to-read-in-the-data-more-streamlined"><i class="fa fa-check"></i><b>4.0.4</b> Can also use rio to read in the data, more streamlined</a></li>
-<li class="chapter" data-level="4.0.5" data-path="mouse-weights.html"><a href="mouse-weights.html#clean-data"><i class="fa fa-check"></i><b>4.0.5</b> Clean data</a></li>
-<li class="chapter" data-level="4.0.6" data-path="mouse-weights.html"><a href="mouse-weights.html#body-weight-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.6</b> Body weight over time graph and statistics</a></li>
-<li class="chapter" data-level="4.0.7" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-loss-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.7</b> Weight loss over time graph and statistics</a></li>
-<li class="chapter" data-level="4.0.8" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-cfu"><i class="fa fa-check"></i><b>4.0.8</b> Weight vs CFU</a></li>
-<li class="chapter" data-level="4.0.9" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-elisa-results"><i class="fa fa-check"></i><b>4.0.9</b> Weight vs ELISA results</a></li>
-<li class="chapter" data-level="4.0.10" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-lesion-burden"><i class="fa fa-check"></i><b>4.0.10</b> Weight vs lesion burden</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html"><i class="fa fa-check"></i><b>5</b> Colony forming units to determine bacterial counts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#data-description"><i class="fa fa-check"></i><b>5.1</b> Data description</a></li>
-<li class="chapter" data-level="5.2" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#read-in-data-1"><i class="fa fa-check"></i><b>5.2</b> Read in data</a></li>
-<li class="chapter" data-level="5.3" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-one"><i class="fa fa-check"></i><b>5.3</b> Example one</a></li>
-<li class="chapter" data-level="5.4" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis-and-quality-checks"><i class="fa fa-check"></i><b>5.4</b> Exploratory analysis and quality checks</a></li>
-<li class="chapter" data-level="5.5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis"><i class="fa fa-check"></i><b>5.5</b> Exploratory analysis</a></li>
-<li class="chapter" data-level="5.6" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#identify-a-good-dilution-for-each-sample"><i class="fa fa-check"></i><b>5.6</b> Identify a good dilution for each sample</a></li>
-<li class="chapter" data-level="5.7" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fa fa-check"></i><b>5.7</b> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
-<li class="chapter" data-level="5.8" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#create-initial-report-information-for-these-data"><i class="fa fa-check"></i><b>5.8</b> Create initial report information for these data</a></li>
-<li class="chapter" data-level="5.9" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#sample-anova"><i class="fa fa-check"></i><b>5.9</b> Sample ANOVA</a></li>
-<li class="chapter" data-level="5.10" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#save-processed-data-to-database"><i class="fa fa-check"></i><b>5.10</b> Save processed data to database</a></li>
-<li class="chapter" data-level="5.11" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-two"><i class="fa fa-check"></i><b>5.11</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html"><i class="fa fa-check"></i><b>6</b> Enzyme-linked immunosorbest assay (ELISA)</a>
-<ul>
-<li class="chapter" data-level="6.0.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#loading-libraries"><i class="fa fa-check"></i><b>6.0.1</b> Loading libraries</a></li>
-<li class="chapter" data-level="6.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis"><i class="fa fa-check"></i><b>6.1</b> ELISA data analysis</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-sigmoid-model"><i class="fa fa-check"></i><b>6.1.1</b> <strong>1. Fitting sigmoid model:</strong></a></li>
-<li class="chapter" data-level="6.1.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#endpoint-titer-method"><i class="fa fa-check"></i><b>6.1.2</b> 2. Endpoint titer method</a></li>
-<li class="chapter" data-level="6.1.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#absorbance-summation-method"><i class="fa fa-check"></i><b>6.1.3</b> Absorbance summation method</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset"><i class="fa fa-check"></i><b>6.2</b> Apply the fitting sigmoid model and endpoint titer function in our dataset</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#creating-a-function-for-fitting-model"><i class="fa fa-check"></i><b>6.2.1</b> Creating a function for fitting model</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer"><i class="fa fa-check"></i><b>6.3</b> Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="elisa-data-processing.html"><a href="elisa-data-processing.html"><i class="fa fa-check"></i><b>7</b> ELISA data processing</a></li>
-<li class="chapter" data-level="8" data-path="flow-cytometry.html"><a href="flow-cytometry.html"><i class="fa fa-check"></i><b>8</b> Flow cytometry</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-packages"><i class="fa fa-check"></i><b>8.1</b> Loading packages</a></li>
-<li class="chapter" data-level="8.2" data-path="flow-cytometry.html"><a href="flow-cytometry.html#panel-information"><i class="fa fa-check"></i><b>8.2</b> panel information</a></li>
-<li class="chapter" data-level="8.3" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-data"><i class="fa fa-check"></i><b>8.3</b> Loading data</a></li>
-<li class="chapter" data-level="8.4" data-path="flow-cytometry.html"><a href="flow-cytometry.html#making-the-data-tidy-for-plotting"><i class="fa fa-check"></i><b>8.4</b> Making the data tidy for plotting</a></li>
-<li class="chapter" data-level="8.5" data-path="flow-cytometry.html"><a href="flow-cytometry.html#boxplot"><i class="fa fa-check"></i><b>8.5</b> boxplot</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="pathology.html"><a href="pathology.html"><i class="fa fa-check"></i><b>9</b> Pathology</a></li>
-<li class="chapter" data-level="10" data-path="pathology-1.html"><a href="pathology-1.html"><i class="fa fa-check"></i><b>10</b> Pathology</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
+<li><a class="" href="experimental-metadata.html"><span class="header-section-number">2</span> Experimental metadata</a></li>
+<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
+<li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
+<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="active" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="" href="elisa-data-processing.html"><span class="header-section-number">7</span> ELISA data processing</a></li>
+<li><a class="" href="flow-cytometry.html"><span class="header-section-number">8</span> Flow cytometry</a></li>
+<li><a class="" href="pathology.html"><span class="header-section-number">9</span> Pathology</a></li>
+<li><a class="" href="pathology-1.html"><span class="header-section-number">10</span> Pathology</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="enzyme-linked-immunosorbest-assay-elisa" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Enzyme-linked immunosorbest assay (ELISA)<a href="enzyme-linked-immunosorbest-assay-elisa.html#enzyme-linked-immunosorbest-assay-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="enzyme-linked-immunosorbest-assay-elisa" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)<a class="anchor" aria-label="anchor" href="#enzyme-linked-immunosorbest-assay-elisa"><i class="fas fa-link"></i></a>
+</h1>
 <p>ELISA is a standard molecular biology assay for detecting and quantifying a
 variety of compounds, including peptides, proteins, and antibodies in a sample.
 The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).</p>
-<div id="importance-of-elisa" class="section level4 hasAnchor" number="6.0.0.1">
-<h4><span class="header-section-number">6.0.0.1</span> <strong>Importance of ELISA</strong><a href="enzyme-linked-immunosorbest-assay-elisa.html#importance-of-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="importance-of-elisa" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> <strong>Importance of ELISA</strong><a class="anchor" aria-label="anchor" href="#importance-of-elisa"><i class="fas fa-link"></i></a>
+</h2>
 <p>An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease,
 it aids in the detection of antibodies in the body. ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces,
 which is often a polystyrene multi-well plate.</p>
 <p>In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting humoral immunity and generating antibodies against vaccine antigen. ELISA will
 be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in
 the serum different time points post-vaccination.</p>
-</div>
-<div id="principle-of-elisa" class="section level4 hasAnchor" number="6.0.0.2">
-<h4><span class="header-section-number">6.0.0.2</span> <strong>Principle of ELISA</strong><a href="enzyme-linked-immunosorbest-assay-elisa.html#principle-of-elisa" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="principle-of-elisa" class="section level3" number="6.1.1">
+<h3>
+<span class="header-section-number">6.1.1</span> <strong>Principle of ELISA</strong><a class="anchor" aria-label="anchor" href="#principle-of-elisa"><i class="fas fa-link"></i></a>
+</h3>
 <p>ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme’s activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:</p>
 <p><strong>1. Coating multiwell plate with antigen/antibody</strong>: This step depends on what we want to detect the sample. If we need to evaluate the the presence of antibody, the plate will be coated with the antigen, and vice versa. To coat the plate, a fixed concentration of antigen (protein) is added to a 96 well high-binding plate (charged plate). Plate is incubated over night with the antigen at 4 degree celsius (as proteins are temperature sensitive) so that antigens are completely bound to the well.</p>
 <p><strong>2. Blocking</strong>: It is possible that not each and every site of the well is coated with the targeted antigen, and there could be uncovered areas. It is important to block those empty spaces so that primary antibody (which we will add to the next step) binds to these spaces and give us false positive results. For this, microplate well surface-binding sites are blocked with an unrelated protein or other substance.Most common blocking agents are bovine serum albumin, skim milk, and casein. One of the best blocking agents is to use the serum from the organism in which your secondary (detection antibody) is raised. For example, if the secondary antibody is raised in goat, then we can use goat serum as a blocking agent.</p>
@@ -262,72 +85,84 @@ the serum different time points post-vaccination.</p>
 <p><strong>4. Washing</strong>: After the incubation of sample containing primary antibody, the wells are washed so that any unbound antibody is washed away. Washing solution contains phosphate buffer saline + 0.05% tween-20 (a mild detergent). 0.05% tween-20 washes away all the non-specific interactions as those are not strong, but keeps all the specific interaction as those are strong and cannot be detached with mild detergent.</p>
 <p><strong>5. Detection</strong>: To detect the presence of antibody-antigen complex, a secondary antibody labelled with an enzyme (usually horseradish peroxidase) is added to the wells, incubated and washed.</p>
 <p><strong>6. Signal Measurement</strong>: Finally to detect “if” and “how much” of the antibody is present, a chromogenic substrate (like 3,3’,5,5’-Tetramethylbenzidine) is added to the wells, which can be cleaved the the enzyme that is tagged to the secondary antibody. The color compund is formed after the addition of the substrate, which is directly proportional to the amount of antibody present in the sample. The plate is read on a plate reader, where color is converted to numbers.</p>
-<div class="figure"><span style="display:block;" id="fig:pressure"></span>
-<img src="DATA/elisa.png" alt="A caption" width="100%" />
-<p class="caption">
+<div class="figure">
+<span style="display:block;" id="fig:pressure"></span>
+<img src="DATA/elisa.png" alt="A caption" width="100%"><p class="caption">
 Figure 6.1: A caption
 </p>
 </div>
 </div>
-<div id="loading-libraries" class="section level3 hasAnchor" number="6.0.1">
-<h3><span class="header-section-number">6.0.1</span> Loading libraries<a href="enzyme-linked-immunosorbest-assay-elisa.html#loading-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.1
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(minpack.lm)</span>
-<span id="cb3-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb3-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb3-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span></code></pre></div>
+<div id="loading-libraries" class="section level3" number="6.1.2">
+<h3>
+<span class="header-section-number">6.1.2</span> Loading libraries<a class="anchor" aria-label="anchor" href="#loading-libraries"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">minpack.lm</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm">ggbeeswarm</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="elisa-data-analysis" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> ELISA data analysis<a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="elisa-data-analysis" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> ELISA data analysis<a class="anchor" aria-label="anchor" href="#elisa-data-analysis"><i class="fas fa-link"></i></a>
+</h2>
 <p>Analysis of ELISA data is the most important part of the ELISA experiment. ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data :</p>
 <p><strong>1. With standard curve:</strong> ELISA can be used to determine the concentrations of the antigen and antibody. This type of ELISA data usually have a standard curve with
 different concentrations of the known analyte and the concentration in the sample is determined by extrapolating the unknown values in the curve. This type of assay is straightforward, easy to interpret and are more robust.</p>
 <p><strong>2. Without standard curve:</strong> Usually vaccine studies involve investigating the presence of high-affinity (and novel) antibodies against the vaccine antigens.
 Therefore, plotting a standard curve is not feasible as there is no previous information available for antibody concentration or type of antibody. Also, because antibody response to a vaccine will differ depending on the individual,
 it is not practical to generate a calibration curve from which absolute concentrations can be extrapolated.
-For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the following three methods <span class="citation">(<a href="#ref-hartman2018absorbance" role="doc-biblioref">Hartman et al. 2018</a>)</span>:</p>
+For this type of ELISA, quantification of the antibody titers is performed using serial dilutions of the test samples, and analysis can be performed using the following three methods <span class="citation">(<a href="references.html#ref-hartman2018absorbance" role="doc-biblioref">Hartman et al. 2018</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>Fitting sigmoid model</li>
 <li>Endpoint titer method
 3: Absorbance summation method</li>
 </ol>
 <p>Let’s have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.</p>
-<div id="fitting-sigmoid-model" class="section level3 hasAnchor" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> <strong>1. Fitting sigmoid model:</strong><a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-sigmoid-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve.</p>
-<div id="an-example-of-the-fitting-sigmoid-model-is-below" class="section level4 hasAnchor" number="6.1.1.1">
-<h4><span class="header-section-number">6.1.1.1</span> An example of the fitting sigmoid model is below:<a href="enzyme-linked-immunosorbest-assay-elisa.html#an-example-of-the-fitting-sigmoid-model-is-below" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div id="read-in-the-data" class="section level5 hasAnchor" number="6.1.1.1.1">
-<h5><span class="header-section-number">6.1.1.1.1</span> Read in the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb4-1" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/example_elisa_data.xlsx&quot;</span>)</span></code></pre></div>
 </div>
-<div id="clean-the-data" class="section level5 hasAnchor" number="6.1.1.1.2">
-<h5><span class="header-section-number">6.1.1.1.2</span> Clean the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#clean-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separate 1/</span></span>
-<span id="cb5-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-3" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(elisa_example_data, <span class="at">col =</span> <span class="st">&quot;dilution&quot;</span>, </span>
-<span id="cb5-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;numerator&quot;</span>, <span class="st">&quot;denomenator&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">/&quot;</span>)</span>
-<span id="cb5-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-6" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> elisa_example_data <span class="sc">%&gt;%</span> </span>
-<span id="cb5-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric)</span>
-<span id="cb5-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-9" aria-hidden="true" tabindex="-1"></a>elisa_example_data<span class="sc">$</span>dilution <span class="ot">&lt;-</span> elisa_example_data<span class="sc">$</span>numerator <span class="sc">/</span> elisa_example_data<span class="sc">$</span>denomenator  </span>
-<span id="cb5-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-11" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> elisa_example_data <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_dilution =</span> <span class="fu">log</span>(dilution, <span class="at">base =</span> <span class="dv">3</span>))</span>
-<span id="cb5-13"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_example_data)</span></code></pre></div>
+<div id="fitting-sigmoid-model" class="section level2" number="6.3">
+<h2>
+<span class="header-section-number">6.3</span> <strong>1. Fitting sigmoid model:</strong><a class="anchor" aria-label="anchor" href="#fitting-sigmoid-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve.</p>
+<div id="an-example-of-the-fitting-sigmoid-model-is-below" class="section level3" number="6.3.1">
+<h3>
+<span class="header-section-number">6.3.1</span> An example of the fitting sigmoid model is below:<a class="anchor" aria-label="anchor" href="#an-example-of-the-fitting-sigmoid-model-is-below"><i class="fas fa-link"></i></a>
+</h3>
+<div id="read-in-the-data" class="section level4" number="6.3.1.1">
+<h4>
+<span class="header-section-number">6.3.1.1</span> Read in the data<a class="anchor" aria-label="anchor" href="#read-in-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/example_elisa_data.xlsx"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="clean-the-data" class="section level4" number="6.3.1.2">
+<h4>
+<span class="header-section-number">6.3.1.2</span> Clean the data<a class="anchor" aria-label="anchor" href="#clean-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># separate 1/</span>
+
+<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_example_data</span>, 
+                               col <span class="op">=</span> <span class="st">"dilution"</span>, 
+                               into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, <span class="st">"denominator"</span><span class="op">)</span>, 
+                               sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span>
+
+<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span>
+
+<span class="va">elisa_example_data</span><span class="op">$</span><span class="va">dilution</span> <span class="op">&lt;-</span> 
+  <span class="va">elisa_example_data</span><span class="op">$</span><span class="va">numerator</span><span class="op">/</span><span class="va">elisa_example_data</span><span class="op">$</span><span class="va">denominator</span>  
+
+<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">dilution</span>, base <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_example_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 5
-##   numerator denomenator absorbance dilution log_dilution
+##   numerator denominator absorbance dilution log_dilution
 ##       &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
 ## 1         1          30       4    0.0333          -3.10
 ## 2         1          90       3.73 0.0111          -4.10
@@ -335,16 +170,18 @@ For this type of ELISA, quantification of the antibody titers is performed using
 ## 4         1         810       1.1  0.00123         -6.10
 ## 5         1        2430       0.51 0.000412        -7.10
 ## 6         1        7290       0.22 0.000137        -8.10</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-1" aria-hidden="true" tabindex="-1"></a>mod_1 <span class="ot">&lt;-</span> <span class="fu">nlsLM</span>(absorbance <span class="sc">~</span> ((a<span class="sc">-</span>d)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>(log_dilution<span class="sc">/</span>c)<span class="sc">^</span>b)) <span class="sc">+</span> d,</span>
-<span id="cb7-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">data =</span> elisa_example_data, </span>
-<span id="cb7-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">start =</span> <span class="fu">list</span> (<span class="at">a =</span> <span class="dv">4</span>, <span class="at">d=</span> <span class="dv">0</span>, <span class="at">c =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">b =</span> <span class="dv">1</span>))</span>
-<span id="cb7-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># a = maximum absorbance</span></span>
-<span id="cb7-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># d = minimum absobance</span></span>
-<span id="cb7-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># c = point of maximum growith (dilition where the curve is straight line)</span></span>
-<span id="cb7-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># b = slope at c</span></span>
-<span id="cb7-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb7-10" aria-hidden="true" tabindex="-1"></a>mod_1</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> 
+                 <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
+data <span class="op">=</span> <span class="va">elisa_example_data</span>, 
+start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>a <span class="op">=</span> <span class="fl">4</span>, d<span class="op">=</span> <span class="fl">0</span>, c <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># a = maximum absorbance</span>
+<span class="co"># d = minimum absobance</span>
+<span class="co"># c = point of maximum growth </span>
+<span class="co"># b = slope at c</span>
+
+<span class="va">mod_1</span></code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ##    data: elisa_example_data
@@ -354,7 +191,8 @@ For this type of ELISA, quantification of the antibody titers is performed using
 ## 
 ## Number of iterations to convergence: 9 
 ## Achieved convergence tolerance: 1.49e-08</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_1)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Formula: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ## 
@@ -365,258 +203,175 @@ For this type of ELISA, quantification of the antibody titers is performed using
 ## c -5.31056    0.03933 -135.037 1.01e-14 ***
 ## b  7.62972    0.35854   21.280 2.50e-08 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.05269 on 8 degrees of freedom
 ## 
 ## Number of iterations to convergence: 9 
 ## Achieved convergence tolerance: 1.49e-08</code></pre>
 </div>
-<div id="create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data" class="section level5 hasAnchor" number="6.1.1.1.3">
-<h5><span class="header-section-number">6.1.1.1.3</span> Create a fitted sigmoid model function and apply the function to the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-1" aria-hidden="true" tabindex="-1"></a>tidy_params <span class="ot">&lt;-</span> mod_1 <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
-<span id="cb11-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> tidy_params<span class="sc">$</span>estimate[tidy_params<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;a&quot;</span>]</span>
-<span id="cb11-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-4" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> tidy_params<span class="sc">$</span>estimate[tidy_params<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;b&quot;</span>]</span>
-<span id="cb11-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-5" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> tidy_params<span class="sc">$</span>estimate[tidy_params<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;c&quot;</span>]</span>
-<span id="cb11-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-6" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> tidy_params<span class="sc">$</span>estimate[tidy_params<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;d&quot;</span>]</span>
-<span id="cb11-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-8" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> elisa_example_data <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fitted =</span> <span class="fu">predict</span>(mod_1))</span>
-<span id="cb11-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-11" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="ot">&lt;-</span> elisa_example_data <span class="sc">%&gt;%</span></span>
-<span id="cb11-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fitted =</span> <span class="fu">predict</span>(mod_1))</span></code></pre></div>
+<div id="create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data" class="section level4" number="6.3.1.3">
+<h4>
+<span class="header-section-number">6.3.1.3</span> Create a fitted sigmoid model function and apply the function to the data<a class="anchor" aria-label="anchor" href="#create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tidy_params</span> <span class="op">&lt;-</span> <span class="va">mod_1</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span>
+<span class="va">c</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="va">tidy_params</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_params</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span>
+
+<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">elisa_example_data</span> <span class="op">&lt;-</span> <span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="plot-the-signmoid-curve-with-fitted-sigmoid-model" class="section level5 hasAnchor" number="6.1.1.1.4">
-<h5><span class="header-section-number">6.1.1.1.4</span> Plot the signmoid curve with fitted sigmoid model<a href="enzyme-linked-immunosorbest-assay-elisa.html#plot-the-signmoid-curve-with-fitted-sigmoid-model" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-1" aria-hidden="true" tabindex="-1"></a>elisa_example_data <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_dilution, <span class="at">y =</span> absorbance)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>fitted), <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="plot-the-signmoid-curve-with-fitted-sigmoid-model" class="section level4" number="6.3.1.4">
+<h4>
+<span class="header-section-number">6.3.1.4</span> Plot the signmoid curve with fitted sigmoid model<a class="anchor" aria-label="anchor" href="#plot-the-signmoid-curve-with-fitted-sigmoid-model"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_example_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">fitted</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-23-1.png" width="672"></div>
 </div>
 </div>
 </div>
-<div id="endpoint-titer-method" class="section level3 hasAnchor" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> 2. Endpoint titer method<a href="enzyme-linked-immunosorbest-assay-elisa.html#endpoint-titer-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="endpoint-titer-method" class="section level2" number="6.4">
+<h2>
+<span class="header-section-number">6.4</span> 2. Endpoint titer method<a class="anchor" aria-label="anchor" href="#endpoint-titer-method"><i class="fas fa-link"></i></a>
+</h2>
 <p>The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). <strong>The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.</strong> This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.</p>
-<div id="create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values." class="section level4 hasAnchor" number="6.1.2.1">
-<h4><span class="header-section-number">6.1.2.1</span> Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.<a href="enzyme-linked-immunosorbest-assay-elisa.html#create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values." class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb13-1" aria-hidden="true" tabindex="-1"></a>endpoint_titer <span class="ot">&lt;-</span> c <span class="sc">*</span> (((a <span class="sc">-</span> d) <span class="sc">/</span> (<span class="fl">0.2</span> <span class="sc">-</span> d)) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">/</span> b)</span>
-<span id="cb13-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(endpoint_titer)</span></code></pre></div>
+<div id="create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values." class="section level3" number="6.4.1">
+<h3>
+<span class="header-section-number">6.4.1</span> Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.<a class="anchor" aria-label="anchor" href="#create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values."><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">0.2</span> <span class="op">-</span> <span class="va">d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">b</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  -8.113  -8.113  -8.113  -8.113  -8.113  -8.113</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb15-1" aria-hidden="true" tabindex="-1"></a>endpoint_titer</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">endpoint_titer</span></code></pre></div>
 <pre><code>## [1] -8.113285</code></pre>
 </div>
-</div>
-<div id="absorbance-summation-method" class="section level3 hasAnchor" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> Absorbance summation method<a href="enzyme-linked-immunosorbest-assay-elisa.html#absorbance-summation-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="absorbance-summation-method" class="section level3" number="6.4.2">
+<h3>
+<span class="header-section-number">6.4.2</span> Absorbance summation method<a class="anchor" aria-label="anchor" href="#absorbance-summation-method"><i class="fas fa-link"></i></a>
+</h3>
 <p>In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb17-1" aria-hidden="true" tabindex="-1"></a>AS <span class="ot">=</span> <span class="fl">0.04</span> <span class="sc">+</span> <span class="fl">0.04</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">+</span> <span class="fl">0.06</span> <span class="sc">+</span> <span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.22</span> <span class="sc">+</span> <span class="fl">0.51</span> <span class="sc">+</span> <span class="fl">1.1</span> <span class="sc">+</span> <span class="fl">2.34</span> <span class="sc">+</span> <span class="fl">3.73</span> <span class="sc">+</span> <span class="fl">4.0</span></span>
-<span id="cb17-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb17-3" aria-hidden="true" tabindex="-1"></a>AS</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">AS</span> <span class="op">=</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.04</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">+</span> <span class="fl">0.06</span> <span class="op">+</span> 
+  <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.22</span> <span class="op">+</span> <span class="fl">0.51</span> <span class="op">+</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">2.34</span> <span class="op">+</span> <span class="fl">3.73</span> <span class="op">+</span> <span class="fl">4.0</span>
+
+<span class="va">AS</span></code></pre></div>
 <pre><code>## [1] 12.24</code></pre>
 </div>
 </div>
-<div id="apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Apply the fitting sigmoid model and endpoint titer function in our dataset<a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset" class="section level2" number="6.5">
+<h2>
+<span class="header-section-number">6.5</span> Apply the fitting sigmoid model and endpoint titer function in our dataset<a class="anchor" aria-label="anchor" href="#apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset"><i class="fas fa-link"></i></a>
+</h2>
 <p>The presented data is from a mouse study. In this data, presence of IgG antibody has been evaluated against receptor binding domain (RBD) of SARS-CoV-2 virus in two different groups of mice. We need to elucidate which group has higher concentration of the antibodies.</p>
-<div id="read-in-the-data-1" class="section level4 hasAnchor" number="6.2.0.1">
-<h4><span class="header-section-number">6.2.0.1</span> Read in the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#read-in-the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb19-1" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;DATA/elisa_data_serial_dilution.xlsx&quot;</span>)</span></code></pre></div>
+<div id="read-in-the-data-1" class="section level4" number="6.5.0.1">
+<h4>
+<span class="header-section-number">6.5.0.1</span> Read in the data<a class="anchor" aria-label="anchor" href="#read-in-the-data-1"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_data_serial_dilution.xlsx"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="tidy-the-data" class="section level4 hasAnchor" number="6.2.0.2">
-<h4><span class="header-section-number">6.2.0.2</span> Tidy the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#tidy-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-1" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data =</span> elisa_data, <span class="at">cols =</span> <span class="st">&quot;Mouse_1&quot;</span><span class="sc">:</span><span class="st">&quot;Mouse_5&quot;</span>, </span>
-<span id="cb20-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">names_to =</span> <span class="st">&quot;mouse_id&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;absorbance&quot;</span>)</span>
-<span id="cb20-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb20-4" aria-hidden="true" tabindex="-1"></a>elisa_data</span></code></pre></div>
-<pre><code>## # A tibble: 100 × 4
-##    Groups  Dilution mouse_id absorbance
-##    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;
-##  1 Group 1 1/50     Mouse_1         4.1
-##  2 Group 1 1/50     Mouse_2         3.9
-##  3 Group 1 1/50     Mouse_3         4.3
-##  4 Group 1 1/50     Mouse_4         4.2
-##  5 Group 1 1/50     Mouse_5         4  
-##  6 Group 1 1/100    Mouse_1         3.9
-##  7 Group 1 1/100    Mouse_2         3.8
-##  8 Group 1 1/100    Mouse_3         3.6
-##  9 Group 1 1/100    Mouse_4         3.7
-## 10 Group 1 1/100    Mouse_5         3.8
-## # … with 90 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separate dilution column and convert it to log2</span></span>
-<span id="cb22-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-3" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(elisa_data, <span class="at">col =</span> <span class="st">&quot;Dilution&quot;</span>, </span>
-<span id="cb22-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;numerator&quot;</span>, <span class="st">&quot;denomenator&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">/&quot;</span>)</span>
-<span id="cb22-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-6" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> elisa_data <span class="sc">%&gt;%</span> </span>
-<span id="cb22-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">numerator =</span> <span class="fu">as.numeric</span>(numerator),</span>
-<span id="cb22-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">denomenator =</span> <span class="fu">as.numeric</span>(denomenator))</span>
-<span id="cb22-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-10" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> elisa_data <span class="sc">%&gt;%</span></span>
-<span id="cb22-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dilution =</span> elisa_data<span class="sc">$</span>numerator <span class="sc">/</span> elisa_data<span class="sc">$</span>denomenator) </span>
-<span id="cb22-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-13"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-13" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="ot">&lt;-</span> elisa_data <span class="sc">%&gt;%</span></span>
-<span id="cb22-14"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_dilution =</span> <span class="fu">log2</span>(dilution))</span>
-<span id="cb22-15"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb22-16" aria-hidden="true" tabindex="-1"></a>elisa_data</span></code></pre></div>
-<pre><code>##      Groups numerator denomenator mouse_id absorbance    dilution log_dilution
-## 1   Group 1         1          50  Mouse_1       4.10 2.00000e-02    -5.643856
-## 2   Group 1         1          50  Mouse_2       3.90 2.00000e-02    -5.643856
-## 3   Group 1         1          50  Mouse_3       4.30 2.00000e-02    -5.643856
-## 4   Group 1         1          50  Mouse_4       4.20 2.00000e-02    -5.643856
-## 5   Group 1         1          50  Mouse_5       4.00 2.00000e-02    -5.643856
-## 6   Group 1         1         100  Mouse_1       3.90 1.00000e-02    -6.643856
-## 7   Group 1         1         100  Mouse_2       3.80 1.00000e-02    -6.643856
-## 8   Group 1         1         100  Mouse_3       3.60 1.00000e-02    -6.643856
-## 9   Group 1         1         100  Mouse_4       3.70 1.00000e-02    -6.643856
-## 10  Group 1         1         100  Mouse_5       3.80 1.00000e-02    -6.643856
-## 11  Group 1         1         200  Mouse_1       3.42 5.00000e-03    -7.643856
-## 12  Group 1         1         200  Mouse_2       3.35 5.00000e-03    -7.643856
-## 13  Group 1         1         200  Mouse_3       3.56 5.00000e-03    -7.643856
-## 14  Group 1         1         200  Mouse_4       3.28 5.00000e-03    -7.643856
-## 15  Group 1         1         200  Mouse_5       3.29 5.00000e-03    -7.643856
-## 16  Group 1         1         400  Mouse_1       2.89 2.50000e-03    -8.643856
-## 17  Group 1         1         400  Mouse_2       2.98 2.50000e-03    -8.643856
-## 18  Group 1         1         400  Mouse_3       2.64 2.50000e-03    -8.643856
-## 19  Group 1         1         400  Mouse_4       2.78 2.50000e-03    -8.643856
-## 20  Group 1         1         400  Mouse_5       2.91 2.50000e-03    -8.643856
-## 21  Group 1         1         800  Mouse_1       2.12 1.25000e-03    -9.643856
-## 22  Group 1         1         800  Mouse_2       2.18 1.25000e-03    -9.643856
-## 23  Group 1         1         800  Mouse_3       2.17 1.25000e-03    -9.643856
-## 24  Group 1         1         800  Mouse_4       2.14 1.25000e-03    -9.643856
-## 25  Group 1         1         800  Mouse_5       2.21 1.25000e-03    -9.643856
-## 26  Group 1         1        1600  Mouse_1       1.89 6.25000e-04   -10.643856
-## 27  Group 1         1        1600  Mouse_2       1.98 6.25000e-04   -10.643856
-## 28  Group 1         1        1600  Mouse_3       1.76 6.25000e-04   -10.643856
-## 29  Group 1         1        1600  Mouse_4       1.69 6.25000e-04   -10.643856
-## 30  Group 1         1        1600  Mouse_5       1.82 6.25000e-04   -10.643856
-## 31  Group 1         1        3200  Mouse_1       0.97 3.12500e-04   -11.643856
-## 32  Group 1         1        3200  Mouse_2       0.85 3.12500e-04   -11.643856
-## 33  Group 1         1        3200  Mouse_3       0.88 3.12500e-04   -11.643856
-## 34  Group 1         1        3200  Mouse_4       0.84 3.12500e-04   -11.643856
-## 35  Group 1         1        3200  Mouse_5       0.91 3.12500e-04   -11.643856
-## 36  Group 1         1        6400  Mouse_1       0.52 1.56250e-04   -12.643856
-## 37  Group 1         1        6400  Mouse_2       0.48 1.56250e-04   -12.643856
-## 38  Group 1         1        6400  Mouse_3       0.42 1.56250e-04   -12.643856
-## 39  Group 1         1        6400  Mouse_4       0.48 1.56250e-04   -12.643856
-## 40  Group 1         1        6400  Mouse_5       0.47 1.56250e-04   -12.643856
-## 41  Group 1         1       12800  Mouse_1       0.26 7.81250e-05   -13.643856
-## 42  Group 1         1       12800  Mouse_2       0.21 7.81250e-05   -13.643856
-## 43  Group 1         1       12800  Mouse_3       0.27 7.81250e-05   -13.643856
-## 44  Group 1         1       12800  Mouse_4       0.26 7.81250e-05   -13.643856
-## 45  Group 1         1       12800  Mouse_5       0.28 7.81250e-05   -13.643856
-## 46  Group 1         1       25600  Mouse_1       0.12 3.90625e-05   -14.643856
-## 47  Group 1         1       25600  Mouse_2       0.16 3.90625e-05   -14.643856
-## 48  Group 1         1       25600  Mouse_3       0.17 3.90625e-05   -14.643856
-## 49  Group 1         1       25600  Mouse_4       0.16 3.90625e-05   -14.643856
-## 50  Group 1         1       25600  Mouse_5       0.14 3.90625e-05   -14.643856
-## 51  Group 2         1          50  Mouse_1       3.20 2.00000e-02    -5.643856
-## 52  Group 2         1          50  Mouse_2       3.40 2.00000e-02    -5.643856
-## 53  Group 2         1          50  Mouse_3       3.60 2.00000e-02    -5.643856
-## 54  Group 2         1          50  Mouse_4       3.20 2.00000e-02    -5.643856
-## 55  Group 2         1          50  Mouse_5       3.70 2.00000e-02    -5.643856
-## 56  Group 2         1         100  Mouse_1       2.90 1.00000e-02    -6.643856
-## 57  Group 2         1         100  Mouse_2       2.80 1.00000e-02    -6.643856
-## 58  Group 2         1         100  Mouse_3       2.70 1.00000e-02    -6.643856
-## 59  Group 2         1         100  Mouse_4       2.80 1.00000e-02    -6.643856
-## 60  Group 2         1         100  Mouse_5       2.80 1.00000e-02    -6.643856
-## 61  Group 2         1         200  Mouse_1       2.32 5.00000e-03    -7.643856
-## 62  Group 2         1         200  Mouse_2       2.35 5.00000e-03    -7.643856
-## 63  Group 2         1         200  Mouse_3       2.56 5.00000e-03    -7.643856
-## 64  Group 2         1         200  Mouse_4       2.28 5.00000e-03    -7.643856
-## 65  Group 2         1         200  Mouse_5       2.29 5.00000e-03    -7.643856
-## 66  Group 2         1         400  Mouse_1       1.89 2.50000e-03    -8.643856
-## 67  Group 2         1         400  Mouse_2       1.98 2.50000e-03    -8.643856
-## 68  Group 2         1         400  Mouse_3       1.64 2.50000e-03    -8.643856
-## 69  Group 2         1         400  Mouse_4       1.78 2.50000e-03    -8.643856
-## 70  Group 2         1         400  Mouse_5       1.91 2.50000e-03    -8.643856
-## 71  Group 2         1         800  Mouse_1       1.12 1.25000e-03    -9.643856
-## 72  Group 2         1         800  Mouse_2       1.18 1.25000e-03    -9.643856
-## 73  Group 2         1         800  Mouse_3       1.17 1.25000e-03    -9.643856
-## 74  Group 2         1         800  Mouse_4       1.14 1.25000e-03    -9.643856
-## 75  Group 2         1         800  Mouse_5       1.21 1.25000e-03    -9.643856
-## 76  Group 2         1        1600  Mouse_1       0.89 6.25000e-04   -10.643856
-## 77  Group 2         1        1600  Mouse_2       0.98 6.25000e-04   -10.643856
-## 78  Group 2         1        1600  Mouse_3       0.76 6.25000e-04   -10.643856
-## 79  Group 2         1        1600  Mouse_4       0.69 6.25000e-04   -10.643856
-## 80  Group 2         1        1600  Mouse_5       0.82 6.25000e-04   -10.643856
-## 81  Group 2         1        3200  Mouse_1       0.47 3.12500e-04   -11.643856
-## 82  Group 2         1        3200  Mouse_2       0.45 3.12500e-04   -11.643856
-## 83  Group 2         1        3200  Mouse_3       0.48 3.12500e-04   -11.643856
-## 84  Group 2         1        3200  Mouse_4       0.44 3.12500e-04   -11.643856
-## 85  Group 2         1        3200  Mouse_5       0.41 3.12500e-04   -11.643856
-## 86  Group 2         1        6400  Mouse_1       0.20 1.56250e-04   -12.643856
-## 87  Group 2         1        6400  Mouse_2       0.28 1.56250e-04   -12.643856
-## 88  Group 2         1        6400  Mouse_3       0.22 1.56250e-04   -12.643856
-## 89  Group 2         1        6400  Mouse_4       0.28 1.56250e-04   -12.643856
-## 90  Group 2         1        6400  Mouse_5       0.27 1.56250e-04   -12.643856
-## 91  Group 2         1       12800  Mouse_1       0.16 7.81250e-05   -13.643856
-## 92  Group 2         1       12800  Mouse_2       0.11 7.81250e-05   -13.643856
-## 93  Group 2         1       12800  Mouse_3       0.17 7.81250e-05   -13.643856
-## 94  Group 2         1       12800  Mouse_4       0.16 7.81250e-05   -13.643856
-## 95  Group 2         1       12800  Mouse_5       0.18 7.81250e-05   -13.643856
-## 96  Group 2         1       25600  Mouse_1       0.02 3.90625e-05   -14.643856
-## 97  Group 2         1       25600  Mouse_2       0.06 3.90625e-05   -14.643856
-## 98  Group 2         1       25600  Mouse_3       0.04 3.90625e-05   -14.643856
-## 99  Group 2         1       25600  Mouse_4       0.08 3.90625e-05   -14.643856
-## 100 Group 2         1       25600  Mouse_5       0.06 3.90625e-05   -14.643856</code></pre>
-<div id="converting-data-into-dataframe" class="section level5 hasAnchor" number="6.2.0.2.1">
-<h5><span class="header-section-number">6.2.0.2.1</span> converting data into dataframe<a href="enzyme-linked-immunosorbest-assay-elisa.html#converting-data-into-dataframe" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb24-1" aria-hidden="true" tabindex="-1"></a>elisa_data_df <span class="ot">&lt;-</span> elisa_data <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Groups, mouse_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">log_dilution =</span> log_dilution, <span class="at">absorbance =</span> absorbance)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Groups&#39;, &#39;mouse_id&#39;. You can override
-## using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb26-1" aria-hidden="true" tabindex="-1"></a>elisa_data_df</span></code></pre></div>
-<pre><code>## # A tibble: 100 × 4
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id log_dilution absorbance
-##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Group 1 Mouse_1         -5.64       4.1 
-##  2 Group 1 Mouse_1         -6.64       3.9 
-##  3 Group 1 Mouse_1         -7.64       3.42
-##  4 Group 1 Mouse_1         -8.64       2.89
-##  5 Group 1 Mouse_1         -9.64       2.12
-##  6 Group 1 Mouse_1        -10.6        1.89
-##  7 Group 1 Mouse_1        -11.6        0.97
-##  8 Group 1 Mouse_1        -12.6        0.52
-##  9 Group 1 Mouse_1        -13.6        0.26
-## 10 Group 1 Mouse_1        -14.6        0.12
-## # … with 90 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-1" aria-hidden="true" tabindex="-1"></a>elisa_data_nested <span class="ot">&lt;-</span> elisa_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Groups, mouse_id) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>()</span>
-<span id="cb28-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb28-5" aria-hidden="true" tabindex="-1"></a>elisa_data_nested</span></code></pre></div>
-<pre><code>## # A tibble: 10 × 3
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data             
-##    &lt;chr&gt;   &lt;chr&gt;    &lt;list&gt;           
-##  1 Group 1 Mouse_1  &lt;tibble [10 × 5]&gt;
-##  2 Group 1 Mouse_2  &lt;tibble [10 × 5]&gt;
-##  3 Group 1 Mouse_3  &lt;tibble [10 × 5]&gt;
-##  4 Group 1 Mouse_4  &lt;tibble [10 × 5]&gt;
-##  5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt;
-##  6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt;
-##  7 Group 2 Mouse_2  &lt;tibble [10 × 5]&gt;
-##  8 Group 2 Mouse_3  &lt;tibble [10 × 5]&gt;
-##  9 Group 2 Mouse_4  &lt;tibble [10 × 5]&gt;
-## 10 Group 2 Mouse_5  &lt;tibble [10 × 5]&gt;</code></pre>
+<div id="tidy-the-data" class="section level4" number="6.5.0.2">
+<h4>
+<span class="header-section-number">6.5.0.2</span> Tidy the data<a class="anchor" aria-label="anchor" href="#tidy-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_data</span>, 
+                           cols <span class="op">=</span> <span class="st">"Mouse_1"</span><span class="op">:</span><span class="st">"Mouse_5"</span>, 
+                           names_to <span class="op">=</span> <span class="st">"mouse_id"</span>, 
+                           values_to <span class="op">=</span> <span class="st">"absorbance"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+##   Groups  Dilution mouse_id absorbance
+##   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;
+## 1 Group 1 1/50     Mouse_1         4.1
+## 2 Group 1 1/50     Mouse_2         3.9
+## 3 Group 1 1/50     Mouse_3         4.3
+## 4 Group 1 1/50     Mouse_4         4.2
+## 5 Group 1 1/50     Mouse_5         4  
+## 6 Group 1 1/100    Mouse_1         3.9</code></pre>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># separate dilution column and convert it to log2</span>
+
+<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, 
+                       col <span class="op">=</span> <span class="st">"Dilution"</span>, 
+                       into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerator"</span>, 
+                                <span class="st">"denomenator"</span><span class="op">)</span>, 
+                       sep <span class="op">=</span> <span class="st">"\\/"</span><span class="op">)</span>
+
+<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>numerator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">numerator</span><span class="op">)</span>,
+            denomenator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">denomenator</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> 
+           <span class="va">elisa_data</span><span class="op">$</span><span class="va">numerator</span><span class="op">/</span><span class="va">elisa_data</span><span class="op">$</span><span class="va">denomenator</span><span class="op">)</span> 
+
+<span class="va">elisa_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">dilution</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data</span><span class="op">)</span></code></pre></div>
+<pre><code>##    Groups numerator denomenator mouse_id absorbance dilution log_dilution
+## 1 Group 1         1          50  Mouse_1        4.1     0.02    -5.643856
+## 2 Group 1         1          50  Mouse_2        3.9     0.02    -5.643856
+## 3 Group 1         1          50  Mouse_3        4.3     0.02    -5.643856
+## 4 Group 1         1          50  Mouse_4        4.2     0.02    -5.643856
+## 5 Group 1         1          50  Mouse_5        4.0     0.02    -5.643856
+## 6 Group 1         1         100  Mouse_1        3.9     0.01    -6.643856</code></pre>
+<div id="converting-data-into-dataframe" class="section level5" number="6.5.0.2.1">
+<h5>
+<span class="header-section-number">6.5.0.2.1</span> converting data into dataframe<a class="anchor" aria-label="anchor" href="#converting-data-into-dataframe"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_df</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>log_dilution <span class="op">=</span> <span class="va">log_dilution</span>, 
+            absorbance <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override using
+## the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_nested</span> <span class="op">&lt;-</span> <span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+## # Groups:   Groups, mouse_id [6]
+##   Groups  mouse_id data             
+##   &lt;chr&gt;   &lt;chr&gt;    &lt;list&gt;           
+## 1 Group 1 Mouse_1  &lt;tibble [10 × 5]&gt;
+## 2 Group 1 Mouse_2  &lt;tibble [10 × 5]&gt;
+## 3 Group 1 Mouse_3  &lt;tibble [10 × 5]&gt;
+## 4 Group 1 Mouse_4  &lt;tibble [10 × 5]&gt;
+## 5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt;
+## 6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt;</code></pre>
 </div>
-<div id="plot-the-curves-to-evaluate-the-a-d-c-and-b" class="section level5 hasAnchor" number="6.2.0.2.2">
-<h5><span class="header-section-number">6.2.0.2.2</span> plot the curves to evaluate the a, d, c, and b<a href="enzyme-linked-immunosorbest-assay-elisa.html#plot-the-curves-to-evaluate-the-a-d-c-and-b" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb30-1" aria-hidden="true" tabindex="-1"></a>elisa_data <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_dilution, <span class="at">y =</span> absorbance)) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb30-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb30-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(Groups <span class="sc">~</span> mouse_id)</span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div id="plot-the-curves-to-evaluate-the-a-d-c-and-b" class="section level5" number="6.5.0.2.2">
+<h5>
+<span class="header-section-number">6.5.0.2.2</span> plot the curves to evaluate the a, d, c, and b<a class="anchor" aria-label="anchor" href="#plot-the-curves-to-evaluate-the-a-d-c-and-b"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log_dilution</span>, y <span class="op">=</span> <span class="va">absorbance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">Groups</span> <span class="op">~</span> <span class="va">mouse_id</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-29-1.png" width="768" style="display: block; margin: auto;"></div>
 <p>Based on the curve, the values are:</p>
 <p>a = 4,
 d = 0
@@ -624,17 +379,30 @@ c = 2
 b = 1</p>
 </div>
 </div>
-<div id="creating-a-function-for-fitting-model" class="section level3 hasAnchor" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> Creating a function for fitting model<a href="enzyme-linked-immunosorbest-assay-elisa.html#creating-a-function-for-fitting-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-1" aria-hidden="true" tabindex="-1"></a>fitted_model_elisa <span class="ot">&lt;-</span> <span class="cf">function</span>(df_elisa, start_a, start_d, start_c, start_b) {</span>
-<span id="cb31-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  mod_1 <span class="ot">&lt;-</span> <span class="fu">nlsLM</span>(absorbance <span class="sc">~</span> ((a<span class="sc">-</span>d)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>(log_dilution<span class="sc">/</span>c)<span class="sc">^</span>b)) <span class="sc">+</span> d,</span>
-<span id="cb31-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">data =</span> df_elisa,</span>
-<span id="cb31-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="at">start =</span> <span class="fu">list</span>(<span class="at">a =</span> start_a, <span class="at">d =</span> start_d, <span class="at">c =</span> start_c, <span class="at">b =</span> start_b))</span>
-<span id="cb31-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mod_1)</span>
-<span id="cb31-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb31-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div id="fitting-the-model-into-the-dataset" class="section level4 hasAnchor" number="6.2.1.1">
-<h4><span class="header-section-number">6.2.1.1</span> Fitting the model into the dataset<a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-the-model-into-the-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted_model_elisa</span>(elisa_data_nested<span class="sc">$</span>data[[<span class="dv">1</span>]], <span class="at">start_a =</span> <span class="dv">4</span>, <span class="at">start_d =</span> <span class="dv">0</span>, <span class="at">start_c =</span> <span class="sc">-</span><span class="dv">8</span>, <span class="at">start_b =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div id="creating-a-function-for-fitting-model" class="section level3" number="6.5.1">
+<h3>
+<span class="header-section-number">6.5.1</span> Creating a function for fitting model<a class="anchor" aria-label="anchor" href="#creating-a-function-for-fitting-model"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, 
+                               <span class="va">start_a</span>, <span class="va">start_d</span>, 
+                               <span class="va">start_c</span>, <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> 
+                   <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
+data <span class="op">=</span> <span class="va">df_elisa</span>,
+start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<div id="fitting-the-model-into-the-dataset" class="section level4" number="6.5.1.1">
+<h4>
+<span class="header-section-number">6.5.1.1</span> Fitting the model into the dataset<a class="anchor" aria-label="anchor" href="#fitting-the-model-into-the-dataset"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">elisa_data_nested</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, 
+                   start_a <span class="op">=</span> <span class="fl">4</span>, 
+                   start_d <span class="op">=</span> <span class="fl">0</span>, 
+                   start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, 
+                   start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
 ##    data: df_elisa
@@ -645,85 +413,20 @@ b = 1</p>
 ## Number of iterations to convergence: 7 
 ## Achieved convergence tolerance: 1.49e-08</code></pre>
 </div>
-<div id="apply-the-fitted-model-function-to-the-whole-dataframe" class="section level4 hasAnchor" number="6.2.1.2">
-<h4><span class="header-section-number">6.2.1.2</span> Apply the fitted model function to the whole dataframe<a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitted-model-function-to-the-whole-dataframe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-1" aria-hidden="true" tabindex="-1"></a>elisa_fitted_data <span class="ot">&lt;-</span> elisa_data_nested <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fitted_data =</span> purrr<span class="sc">::</span><span class="fu">map</span>(data, <span class="sc">~</span> <span class="fu">fitted_model_elisa</span>(.x, <span class="at">start_a =</span> <span class="dv">4</span>, </span>
-<span id="cb34-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-3" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_d =</span> <span class="dv">0</span>, </span>
-<span id="cb34-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-4" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_c =</span> <span class="sc">-</span><span class="dv">8</span>, </span>
-<span id="cb34-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-5" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_b =</span> <span class="dv">1</span>)))</span>
-<span id="cb34-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb34-7" aria-hidden="true" tabindex="-1"></a>elisa_fitted_data</span></code></pre></div>
-<pre><code>## # A tibble: 10 × 4
-## # Groups:   Groups, mouse_id [10]
-##    Groups  mouse_id data              fitted_data
-##    &lt;chr&gt;   &lt;chr&gt;    &lt;list&gt;            &lt;list&gt;     
-##  1 Group 1 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  2 Group 1 Mouse_2  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  3 Group 1 Mouse_3  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  4 Group 1 Mouse_4  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  7 Group 2 Mouse_2  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  8 Group 2 Mouse_3  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-##  9 Group 2 Mouse_4  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
-## 10 Group 2 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;</code></pre>
-</div>
-<div id="take-out-the-summary-of-the-data" class="section level4 hasAnchor" number="6.2.1.3">
-<h4><span class="header-section-number">6.2.1.3</span> Take out the summary of the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#take-out-the-summary-of-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-1" aria-hidden="true" tabindex="-1"></a>elisa_fitted_data_summary <span class="ot">&lt;-</span> elisa_fitted_data <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">elisa_fitted_data_summary =</span> purrr<span class="sc">::</span><span class="fu">map</span>(fitted_data, broom<span class="sc">::</span>glance))</span>
-<span id="cb36-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-4" aria-hidden="true" tabindex="-1"></a>unnested <span class="ot">&lt;-</span> elisa_fitted_data_summary <span class="sc">%&gt;%</span></span>
-<span id="cb36-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">unnest</span>(elisa_fitted_data_summary) <span class="sc">%&gt;%</span></span>
-<span id="cb36-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb36-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-7" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(Groups, mouse_id, fitted_data)</span>
-<span id="cb36-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb36-9" aria-hidden="true" tabindex="-1"></a>unnested<span class="sc">$</span>fitted_data[[<span class="dv">1</span>]]</span></code></pre></div>
-<pre><code>## Nonlinear regression model
-##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
-##    data: df_elisa
-##        a        d        c        b 
-##   4.3070  -0.6009 -10.2577   5.2893 
-##  residual sum-of-squares: 0.1199
-## 
-## Number of iterations to convergence: 7 
-## Achieved convergence tolerance: 1.49e-08</code></pre>
-</div>
-</div>
-</div>
-<div id="create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer<a href="enzyme-linked-immunosorbest-assay-elisa.html#create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitted model function</span></span>
-<span id="cb38-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-2" aria-hidden="true" tabindex="-1"></a>fitted_model_elisa <span class="ot">&lt;-</span> <span class="cf">function</span>(df_elisa, start_a, start_d, start_c, start_b) {</span>
-<span id="cb38-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  mod_1 <span class="ot">&lt;-</span> <span class="fu">nlsLM</span>(absorbance <span class="sc">~</span> ((a<span class="sc">-</span>d)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>(log_dilution<span class="sc">/</span>c)<span class="sc">^</span>b)) <span class="sc">+</span> d,</span>
-<span id="cb38-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="at">data =</span> df_elisa,</span>
-<span id="cb38-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="at">start =</span> <span class="fu">list</span>(<span class="at">a =</span> start_a, <span class="at">d =</span> start_d, <span class="at">c =</span> start_c, <span class="at">b =</span> start_b))</span>
-<span id="cb38-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mod_1)</span>
-<span id="cb38-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb38-8"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-9"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Endpoint titer function</span></span>
-<span id="cb38-10"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-11"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-11" aria-hidden="true" tabindex="-1"></a>endpoint_titer_elisa <span class="ot">&lt;-</span> <span class="cf">function</span>(fitted_data, back_value) {</span>
-<span id="cb38-12"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-12" aria-hidden="true" tabindex="-1"></a>  tidy_fitted <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(fitted_data)</span>
-<span id="cb38-13"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-13" aria-hidden="true" tabindex="-1"></a>  est_a <span class="ot">&lt;-</span> tidy_fitted<span class="sc">$</span>estimate[tidy_fitted<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;a&quot;</span>]</span>
-<span id="cb38-14"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-14" aria-hidden="true" tabindex="-1"></a>  est_b <span class="ot">&lt;-</span> tidy_fitted<span class="sc">$</span>estimate[tidy_fitted<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;b&quot;</span>]</span>
-<span id="cb38-15"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-15" aria-hidden="true" tabindex="-1"></a>  est_c <span class="ot">&lt;-</span> tidy_fitted<span class="sc">$</span>estimate[tidy_fitted<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;c&quot;</span>]</span>
-<span id="cb38-16"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-16" aria-hidden="true" tabindex="-1"></a>  est_d <span class="ot">&lt;-</span> tidy_fitted<span class="sc">$</span>estimate[tidy_fitted<span class="sc">$</span>term <span class="sc">==</span> <span class="st">&quot;d&quot;</span>]</span>
-<span id="cb38-17"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-17" aria-hidden="true" tabindex="-1"></a>  endpoint_titer <span class="ot">&lt;-</span> est_c <span class="sc">*</span> (((est_a <span class="sc">-</span> est_d) <span class="sc">/</span> (back_value <span class="sc">-</span> est_d)) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">/</span> est_b)</span>
-<span id="cb38-18"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(endpoint_titer)</span>
-<span id="cb38-19"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb38-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div id="apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation" class="section level4 hasAnchor" number="6.3.0.1">
-<h4><span class="header-section-number">6.3.0.1</span> Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation<a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div id="run-fitted-model-on-the-data" class="section level5 hasAnchor" number="6.3.0.1.1">
-<h5><span class="header-section-number">6.3.0.1.1</span> Run fitted model on the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#run-fitted-model-on-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-1" aria-hidden="true" tabindex="-1"></a>elisa_data_with_fit_model <span class="ot">&lt;-</span> elisa_data_nested <span class="sc">%&gt;%</span></span>
-<span id="cb39-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fitted_data =</span> purrr<span class="sc">::</span><span class="fu">map</span>(data, <span class="sc">~</span> <span class="fu">fitted_model_elisa</span>(.x, <span class="at">start_a =</span> <span class="dv">4</span>, </span>
-<span id="cb39-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-3" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_d =</span> <span class="dv">0</span>, </span>
-<span id="cb39-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-4" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_c =</span> <span class="sc">-</span><span class="dv">8</span>, </span>
-<span id="cb39-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-5" aria-hidden="true" tabindex="-1"></a>                                                             <span class="at">start_b =</span> <span class="dv">1</span>)))</span>
-<span id="cb39-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elisa_data_with_fit_model)</span></code></pre></div>
+<div id="apply-the-fitted-model-function-to-the-whole-dataframe" class="section level4" number="6.5.1.2">
+<h4>
+<span class="header-section-number">6.5.1.2</span> Apply the fitted model function to the whole dataframe<a class="anchor" aria-label="anchor" href="#apply-the-fitted-model-function-to-the-whole-dataframe"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_fitted_data</span> <span class="op">&lt;-</span> <span class="va">elisa_data_nested</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted_data <span class="op">=</span> 
+           <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> 
+                        <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">.x</span>,start_a <span class="op">=</span> <span class="fl">4</span>, 
+                                              start_d <span class="op">=</span> <span class="fl">0</span>, 
+                                              start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, 
+                                              start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_fitted_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ## # Groups:   Groups, mouse_id [6]
 ##   Groups  mouse_id data              fitted_data
@@ -735,107 +438,188 @@ b = 1</p>
 ## 5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
 ## 6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;</code></pre>
 </div>
-<div id="taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function" class="section level5 hasAnchor" number="6.3.0.1.2">
-<h5><span class="header-section-number">6.3.0.1.2</span> Taking output of the fitted model function and into endpoint titer function<a href="enzyme-linked-immunosorbest-assay-elisa.html#taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb41-1" aria-hidden="true" tabindex="-1"></a>elisa_data_with_endpoint_titer <span class="ot">&lt;-</span> elisa_data_with_fit_model <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">endpoint_data =</span> purrr<span class="sc">::</span><span class="fu">map</span>(fitted_data, <span class="sc">~</span> <span class="fu">endpoint_titer_elisa</span>(.x, <span class="at">back_value =</span> <span class="fl">0.2</span>)))</span></code></pre></div>
+<div id="take-out-the-summary-of-the-data" class="section level4" number="6.5.1.3">
+<h4>
+<span class="header-section-number">6.5.1.3</span> Take out the summary of the data<a class="anchor" aria-label="anchor" href="#take-out-the-summary-of-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_fitted_data_summary</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>elisa_fitted_data_summary <span class="op">=</span> 
+           <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">fitted_data</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">unnested</span> <span class="op">&lt;-</span> <span class="va">elisa_fitted_data_summary</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">elisa_fitted_data_summary</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Groups</span>, <span class="va">mouse_id</span>, <span class="va">fitted_data</span><span class="op">)</span>
+
+<span class="va">unnested</span><span class="op">$</span><span class="va">fitted_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## Nonlinear regression model
+##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
+##    data: df_elisa
+##        a        d        c        b 
+##   4.3070  -0.6009 -10.2577   5.2893 
+##  residual sum-of-squares: 0.1199
+## 
+## Number of iterations to convergence: 7 
+## Achieved convergence tolerance: 1.49e-08</code></pre>
 </div>
 </div>
-<div id="plot-the-endpoint-titer-data-for-the-two-groups" class="section level4 hasAnchor" number="6.3.0.2">
-<h4><span class="header-section-number">6.3.0.2</span> Plot the endpoint titer data for the two groups<a href="enzyme-linked-immunosorbest-assay-elisa.html#plot-the-endpoint-titer-data-for-the-two-groups" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-1" aria-hidden="true" tabindex="-1"></a>elisa_data_with_endpoint_titer<span class="sc">$</span>endpoint_data<span class="ot">=</span></span>
-<span id="cb42-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(elisa_data_with_endpoint_titer<span class="sc">$</span>endpoint_data)</span>
-<span id="cb42-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-4" aria-hidden="true" tabindex="-1"></a>elisa_data_with_endpoint_titer <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Groups, <span class="at">y =</span> endpoint_data, <span class="at">color =</span> Groups)) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb42-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_beeswarm</span>(<span class="at">cex =</span> <span class="dv">3</span>) </span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
-<div id="perform-statistical-analysis-on-the-data" class="section level4 hasAnchor" number="6.3.0.3">
-<h4><span class="header-section-number">6.3.0.3</span> Perform statistical analysis on the data<a href="enzyme-linked-immunosorbest-assay-elisa.html#perform-statistical-analysis-on-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb43-1" aria-hidden="true" tabindex="-1"></a>elisa_data_stats <span class="ot">&lt;-</span> <span class="fu">t.test</span>(endpoint_data <span class="sc">~</span> Groups, </span>
-<span id="cb43-2"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb43-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> elisa_data_with_endpoint_titer)</span>
-<span id="cb43-3"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb43-4" aria-hidden="true" tabindex="-1"></a>elisa_data_stats <span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="enzyme-linked-immunosorbest-assay-elisa.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<div id="create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer" class="section level2" number="6.6">
+<h2>
+<span class="header-section-number">6.6</span> Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer<a class="anchor" aria-label="anchor" href="#create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Fitted model function</span>
+<span class="va">fitted_model_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_elisa</span>, 
+                               <span class="va">start_a</span>, 
+                               <span class="va">start_d</span>, 
+                               <span class="va">start_c</span>, 
+                               <span class="va">start_b</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">mod_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/minpack.lm/man/nlsLM.html">nlsLM</a></span><span class="op">(</span><span class="va">absorbance</span> <span class="op">~</span> 
+                   <span class="op">(</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="va">d</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="va">log_dilution</span><span class="op">/</span><span class="va">c</span><span class="op">)</span><span class="op">^</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span>,
+data <span class="op">=</span> <span class="va">df_elisa</span>,
+start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">start_a</span>, d <span class="op">=</span> <span class="va">start_d</span>, c <span class="op">=</span> <span class="va">start_c</span>, b <span class="op">=</span> <span class="va">start_b</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Endpoint titer function</span>
+
+<span class="va">endpoint_titer_elisa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fitted_data</span>, <span class="va">back_value</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">tidy_fitted</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">fitted_data</span><span class="op">)</span>
+  <span class="va">est_a</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"a"</span><span class="op">]</span>
+  <span class="va">est_b</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"b"</span><span class="op">]</span>
+  <span class="va">est_c</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"c"</span><span class="op">]</span>
+  <span class="va">est_d</span> <span class="op">&lt;-</span> <span class="va">tidy_fitted</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">tidy_fitted</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"d"</span><span class="op">]</span>
+  <span class="va">endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">est_c</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">est_a</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">back_value</span> <span class="op">-</span> <span class="va">est_d</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">^</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">est_b</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">endpoint_titer</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<div id="apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation" class="section level4" number="6.6.0.1">
+<h4>
+<span class="header-section-number">6.6.0.1</span> Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation<a class="anchor" aria-label="anchor" href="#apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation"><i class="fas fa-link"></i></a>
+</h4>
+<div id="run-fitted-model-on-the-data" class="section level5" number="6.6.0.1.1">
+<h5>
+<span class="header-section-number">6.6.0.1.1</span> Run fitted model on the data<a class="anchor" aria-label="anchor" href="#run-fitted-model-on-the-data"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_with_fit_model</span> <span class="op">&lt;-</span> <span class="va">elisa_data_nested</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fitted_data <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, 
+                                  <span class="op">~</span> <span class="fu">fitted_model_elisa</span><span class="op">(</span><span class="va">.x</span>, start_a <span class="op">=</span> <span class="fl">4</span>, 
+                                                          start_d <span class="op">=</span> <span class="fl">0</span>, 
+                                                          start_c <span class="op">=</span> <span class="op">-</span><span class="fl">8</span>, 
+                                                          start_b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_data_with_fit_model</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 4
+## # Groups:   Groups, mouse_id [6]
+##   Groups  mouse_id data              fitted_data
+##   &lt;chr&gt;   &lt;chr&gt;    &lt;list&gt;            &lt;list&gt;     
+## 1 Group 1 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 2 Group 1 Mouse_2  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 3 Group 1 Mouse_3  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 4 Group 1 Mouse_4  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 5 Group 1 Mouse_5  &lt;tibble [10 × 5]&gt; &lt;nls&gt;      
+## 6 Group 2 Mouse_1  &lt;tibble [10 × 5]&gt; &lt;nls&gt;</code></pre>
+</div>
+<div id="taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function" class="section level5" number="6.6.0.1.2">
+<h5>
+<span class="header-section-number">6.6.0.1.2</span> Taking output of the fitted model function and into endpoint titer function<a class="anchor" aria-label="anchor" href="#taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_with_endpoint_titer</span> <span class="op">&lt;-</span> <span class="va">elisa_data_with_fit_model</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>endpoint_data <span class="op">=</span> 
+           <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">fitted_data</span>, 
+                      <span class="op">~</span> <span class="fu">endpoint_titer_elisa</span><span class="op">(</span><span class="va">.x</span>, back_value <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="plot-the-endpoint-titer-data-for-the-two-groups" class="section level4" number="6.6.0.2">
+<h4>
+<span class="header-section-number">6.6.0.2</span> Plot the endpoint titer data for the two groups<a class="anchor" aria-label="anchor" href="#plot-the-endpoint-titer-data-for-the-two-groups"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_with_endpoint_titer</span><span class="op">$</span><span class="va">endpoint_data</span><span class="op">=</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">elisa_data_with_endpoint_titer</span><span class="op">$</span><span class="va">endpoint_data</span><span class="op">)</span>
+
+<span class="va">elisa_data_with_endpoint_titer</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Groups</span>, y <span class="op">=</span> <span class="va">endpoint_data</span>, color <span class="op">=</span> <span class="va">Groups</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+ <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-37-1.png" width="672"></div>
+</div>
+<div id="perform-statistical-analysis-on-the-data" class="section level4" number="6.6.0.3">
+<h4>
+<span class="header-section-number">6.6.0.3</span> Perform statistical analysis on the data<a class="anchor" aria-label="anchor" href="#perform-statistical-analysis-on-the-data"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">elisa_data_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">endpoint_data</span> <span class="op">~</span> <span class="va">Groups</span>, 
+                           data <span class="op">=</span> <span class="va">elisa_data_with_endpoint_titer</span><span class="op">)</span>
+
+<span class="va">elisa_data_stats</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 10
-##   estim…¹ estim…² estim…³ stati…⁴ p.value param…⁵ conf.…⁶ conf.…⁷ method alter…⁸
-##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  
-## 1  -0.800   -14.0   -13.2   -18.8 2.68e-6    5.63  -0.906  -0.695 Welch… two.si…
-## # … with abbreviated variable names ¹​estimate, ²​estimate1, ³​estimate2,
-## #   ⁴​statistic, ⁵​parameter, ⁶​conf.low, ⁷​conf.high, ⁸​alternative</code></pre>
+##   estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high
+##      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1   -0.800     -14.0     -13.2     -18.8 0.00000268      5.63   -0.906    -0.695
+## # … with 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
 </div>
-<div id="statistical-data-analysis-for-more-than-two-groups" class="section level4 hasAnchor" number="6.3.0.4">
-<h4><span class="header-section-number">6.3.0.4</span> Statistical data analysis for more than two groups<a href="enzyme-linked-immunosorbest-assay-elisa.html#statistical-data-analysis-for-more-than-two-groups" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-</div>
-</div>
-</div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-hartman2018absorbance" class="csl-entry">
-Hartman, Holly, Yuge Wang, Harry W Schroeder Jr, and Xiangqin Cui. 2018. <span>“Absorbance Summation: A Novel Approach for Analyzing High-Throughput ELISA Data in the Absence of a Standard.”</span> <em>PloS One</em> 13 (6): e0198528.
+<div id="statistical-data-analysis-for-more-than-two-groups" class="section level4" number="6.6.0.4">
+<h4>
+<span class="header-section-number">6.6.0.4</span> Statistical data analysis for more than two groups<a class="anchor" aria-label="anchor" href="#statistical-data-analysis-for-more-than-two-groups"><i class="fas fa-link"></i></a>
+</h4>
 </div>
 </div>
-            </section>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></div>
+<div class="next"><a href="elisa-data-processing.html"><span class="header-section-number">7</span> ELISA data processing</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#enzyme-linked-immunosorbest-assay-elisa"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li>
+<a class="nav-link" href="#importance-of-elisa"><span class="header-section-number">6.1</span> Importance of ELISA</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#principle-of-elisa"><span class="header-section-number">6.1.1</span> Principle of ELISA</a></li>
+<li><a class="nav-link" href="#loading-libraries"><span class="header-section-number">6.1.2</span> Loading libraries</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#elisa-data-analysis"><span class="header-section-number">6.2</span> ELISA data analysis</a></li>
+<li>
+<a class="nav-link" href="#fitting-sigmoid-model"><span class="header-section-number">6.3</span> 1. Fitting sigmoid model:</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#an-example-of-the-fitting-sigmoid-model-is-below"><span class="header-section-number">6.3.1</span> An example of the fitting sigmoid model is below:</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#endpoint-titer-method"><span class="header-section-number">6.4</span> 2. Endpoint titer method</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values."><span class="header-section-number">6.4.1</span> Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.</a></li>
+<li><a class="nav-link" href="#absorbance-summation-method"><span class="header-section-number">6.4.2</span> Absorbance summation method</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset"><span class="header-section-number">6.5</span> Apply the fitting sigmoid model and endpoint titer function in our dataset</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#creating-a-function-for-fitting-model"><span class="header-section-number">6.5.1</span> Creating a function for fitting model</a></li></ul>
+</li>
+<li><a class="nav-link" href="#create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer"><span class="header-section-number">6.6</span> Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="colony-forming-units-to-determine-bacterial-counts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="elisa-data-processing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-09-08.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["csu-impactb.pdf", "csu-impactb.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
-});
-</script>
 
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>

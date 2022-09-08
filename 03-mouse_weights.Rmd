@@ -1,6 +1,7 @@
 # Mouse Weights
 
 ### Overview
+
 Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease [@baazim2022interplay]. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans [@baazim2022interplay]. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration  [@baazim2019cd8],  and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
 
 In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies [@smith2022host; @segueni2016controlled]. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers [@smith2022host]. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression. 
@@ -8,13 +9,21 @@ In recognition of cachexia related illnesses and diseases, we tracked the progre
 The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
 
 ### Parameters
+
 Weights are recorded in an excel worksheet. 
 
-Column titles are as follows: who_collected	date_collected	sex	dob	notch_id	mouse_number	weight	unit	cage_number	group	notes
+Column titles are as follows:
 
-Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
-
-The notes column contains information regarding clinical observations. 
+- `who_collected`: Record the first name of the person who read the weight for the mouse from the scale. 
+- `date_collected`: Record the date using quotation marks, with the month, then day, then year. For example, "May 31, 2022".
+- `sex`: Record as "m" for male or "f" for female
+- `notch_id`: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be "0" for no notches, "1R" for one notch in the right ear, "1L" for one notch in the left ear, and "1R1L" for one notch in each ear.
+- `mouse_number`
+- `weight`: Record as a number, with a unit in this column. The next column will be used for the units.	
+- `unit`:	Provide the units that were used to take the weight (e.g., "g" for grams)
+- `cage_number`: Provide the cage number. If a provisional cage number is being used, ... If the mouse was switched from its original cage, ...
+- `group`: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
+- `notes`: The notes column contains information regarding clinical observations. 
 
 good reference: https://elifesciences.org/articles/74419#s4
 
@@ -31,23 +40,34 @@ Data is stored in one excel sheet, each week is one sheet named as the date -> r
 weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
 excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
 
-multiplesheets <- function(fname) {
-   
-  # getting info about all excel sheets
-  sheets <- readxl::excel_sheets(fname)
-  tibble <- lapply(sheets, function(x) readxl::read_excel(fname, sheet = x))
-  data_frame <- lapply(tibble, as.data.frame)
-    
-  # assigning names to data frames
-  names(data_frame) <- sheets
-    
-  # print data frame
-  print(data_frame)
-}
+read_mouse_weights <- function(filepath) {
   
-# specifying the path name
-path <- "DATA/body_weights_measurement.xlsx"
-multiplesheets(path)
+  # getting info about all excel sheets
+  mouse_weights_sheets <- readxl::excel_sheets(filepath)
+  mouse_weights <- purrr::map(mouse_weights_sheets, 
+                              ~ readxl::read_excel(filepath, sheet = .x, 
+                                                   col_types = c("text",   # who_collected
+                                                                 "text",   # date_collected
+                                                                 "text",   #  sex
+                                                                 "text",   # dob
+                                                                 "text",   # notch_id
+                                                                 "numeric", # mouse_number
+                                                                 "numeric", # weight
+                                                                 "text",   # unit
+                                                                 "text",   # cage_number
+                                                                 "text",   # group
+                                                                 "text"    # notes
+                                                                 ))) %>% 
+    dplyr::bind_rows() %>% 
+    mutate(date_collected = lubridate::mdy(date_collected), 
+           dob = lubridate::mdy(dob), 
+           sex = forcats::as_factor(sex))
+
+  return(mouse_weights)
+}
+
+# Test function
+read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
 ```
 
 ### Can also use rio to read in the data, more streamlined

@@ -4,17 +4,14 @@
 %
 \documentclass[
 ]{book}
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-08-31}
-
-\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -85,7 +82,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -120,11 +117,15 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-09-08}
 
 \begin{document}
 \maketitle
@@ -268,7 +269,7 @@ experiment.
 \hypertarget{overview-1}{%
 \subsection{Overview}\label{overview-1}}
 
-Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease {[}@ baazim2022interplay{]}. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans {[}@ baazim2022interplay{]}. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration \citep{baazim2019cd8}, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
+Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease \citep{baazim2022interplay}. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans \citep{baazim2022interplay}. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration \citep{baazim2019cd8}, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
 
 In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies \citep{smith2022host, segueni2016controlled}. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers \citep{smith2022host}. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.
 
@@ -279,11 +280,31 @@ The following contains information about how the data was collected, organized, 
 
 Weights are recorded in an excel worksheet.
 
-Column titles are as follows: who\_collected date\_collected sex dob notch\_id mouse\_number weight unit cage\_number group notes
+Column titles are as follows:
 
-Groups included are: bcg, saline, bcg+id93, saline+id93, saline+noMtb
-
-The notes column contains information regarding clinical observations.
+\begin{itemize}
+\tightlist
+\item
+  \texttt{who\_collected}: Record the first name of the person who read the weight for the mouse from the scale.
+\item
+  \texttt{date\_collected}: Record the date using quotation marks, with the month, then day, then year. For example, ``May 31, 2022''.
+\item
+  \texttt{sex}: Record as ``m'' for male or ``f'' for female
+\item
+  \texttt{notch\_id}: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be ``0'' for no notches, ``1R'' for one notch in the right ear, ``1L'' for one notch in the left ear, and ``1R1L'' for one notch in each ear.
+\item
+  \texttt{mouse\_number}
+\item
+  \texttt{weight}: Record as a number, with a unit in this column. The next column will be used for the units.
+\item
+  \texttt{unit}: Provide the units that were used to take the weight (e.g., ``g'' for grams)
+\item
+  \texttt{cage\_number}: Provide the cage number. If a provisional cage number is being used, \ldots{} If the mouse was switched from its original cage, \ldots{}
+\item
+  \texttt{group}: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
+\item
+  \texttt{notes}: The notes column contains information regarding clinical observations.
+\end{itemize}
 
 good reference: \url{https://elifesciences.org/articles/74419\#s4}
 
@@ -295,11 +316,17 @@ good reference: \url{https://elifesciences.org/articles/74419\#s4}
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.3.6     v purrr   0.3.4
-## v tibble  3.1.7     v dplyr   1.0.9
-## v tidyr   1.2.0     v stringr 1.4.0
-## v readr   2.1.2     v forcats 0.5.1
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.7
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   2.1.1     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
@@ -442,38 +469,35 @@ the following columns:
 \begin{verbatim}
 ## [[1]]
 ## # A tibble: 342 x 8
-##    count_date             who_plated who_coun~1 groups mouse organ dilut~2 CFUs 
-##    <chr>                  <chr>      <chr>      <chr>  <chr> <chr>   <dbl> <chr>
-##  1 "\"February 21 2022\"" BK         BK         group~ A     lung        0 TNTC 
-##  2 "\"February 21 2022\"" BK         BK         group~ A     lung        1 TNTC 
-##  3 "\"February 21 2022\"" BK         BK         group~ A     lung        2 TNTC 
-##  4 "\"February 21 2022\"" BK         BK         group~ A     lung        3 53   
-##  5 "\"February 21 2022\"" BK         BK         group~ A     lung        4 9    
-##  6 "\"February 21 2022\"" BK         BK         group~ A     lung        5 4    
-##  7 "\"February 21 2022\"" BK         BK         group~ A     lung        6 2    
-##  8 "\"February 21 2022\"" BK         BK         group~ A     lung        7 1    
-##  9 "\"February 21 2022\"" BK         BK         group~ A     lung        8 0    
-## 10 "\"February 21 2022\"" BK         BK         group~ B     lung        0 TNTC 
-## # ... with 332 more rows, and abbreviated variable names 1: who_counted,
-## #   2: dilution
-## # i Use `print(n = ...)` to see more rows
+##    count_date           who_plated who_counted groups mouse organ dilution CFUs 
+##    <chr>                <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
+##  1 "\"February 21 2022~ BK         BK          group~ A     lung         0 TNTC 
+##  2 "\"February 21 2022~ BK         BK          group~ A     lung         1 TNTC 
+##  3 "\"February 21 2022~ BK         BK          group~ A     lung         2 TNTC 
+##  4 "\"February 21 2022~ BK         BK          group~ A     lung         3 53   
+##  5 "\"February 21 2022~ BK         BK          group~ A     lung         4 9    
+##  6 "\"February 21 2022~ BK         BK          group~ A     lung         5 4    
+##  7 "\"February 21 2022~ BK         BK          group~ A     lung         6 2    
+##  8 "\"February 21 2022~ BK         BK          group~ A     lung         7 1    
+##  9 "\"February 21 2022~ BK         BK          group~ A     lung         8 0    
+## 10 "\"February 21 2022~ BK         BK          group~ B     lung         0 TNTC 
+## # ... with 332 more rows
 ## 
 ## [[2]]
 ## # A tibble: 112 x 8
-##    count_date          who_plated who_counted groups  mouse organ  dilut~1 CFUs 
+##    count_date          who_plated who_counted groups  mouse organ dilution CFUs 
 ##    <chr>               <chr>      <chr>       <chr>   <chr> <chr>    <dbl> <chr>
-##  1 "\"April 25 2022\"" JR         JR          group_1 A     spleen       0 TNTC 
-##  2 "\"April 25 2022\"" JR         JR          group_1 A     spleen       1 TNTC 
-##  3 "\"April 25 2022\"" JR         JR          group_1 A     spleen       2 53   
-##  4 "\"April 25 2022\"" JR         JR          group_1 A     spleen       3 9    
-##  5 "\"April 25 2022\"" JR         JR          group_1 A     spleen       4 4    
-##  6 "\"April 25 2022\"" JR         JR          group_1 A     spleen       5 2    
-##  7 "\"April 25 2022\"" JR         JR          group_1 A     spleen       6 1    
-##  8 "\"April 25 2022\"" JR         JR          group_1 A     spleen       7 0    
-##  9 "\"April 25 2022\"" JR         JR          group_1 B     spleen       0 TNTC 
-## 10 "\"April 25 2022\"" JR         JR          group_1 B     spleen       1 TNTC 
-## # ... with 102 more rows, and abbreviated variable name 1: dilution
-## # i Use `print(n = ...)` to see more rows
+##  1 "\"April 25 2022\"" JR         JR          group_1 A     sple~        0 TNTC 
+##  2 "\"April 25 2022\"" JR         JR          group_1 A     sple~        1 TNTC 
+##  3 "\"April 25 2022\"" JR         JR          group_1 A     sple~        2 53   
+##  4 "\"April 25 2022\"" JR         JR          group_1 A     sple~        3 9    
+##  5 "\"April 25 2022\"" JR         JR          group_1 A     sple~        4 4    
+##  6 "\"April 25 2022\"" JR         JR          group_1 A     sple~        5 2    
+##  7 "\"April 25 2022\"" JR         JR          group_1 A     sple~        6 1    
+##  8 "\"April 25 2022\"" JR         JR          group_1 A     sple~        7 0    
+##  9 "\"April 25 2022\"" JR         JR          group_1 B     sple~        0 TNTC 
+## 10 "\"April 25 2022\"" JR         JR          group_1 B     sple~        1 TNTC 
+## # ... with 102 more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -484,15 +508,14 @@ the following columns:
 
 \begin{verbatim}
 ## # A tibble: 6 x 8
-##   count_date             who_plated who_counted groups mouse organ dilut~1 CFUs 
-##   <chr>                  <chr>      <chr>       <chr>  <chr> <chr>   <dbl> <chr>
-## 1 "\"February 21 2022\"" BK         BK          group~ A     lung        0 TNTC 
-## 2 "\"February 21 2022\"" BK         BK          group~ A     lung        1 TNTC 
-## 3 "\"February 21 2022\"" BK         BK          group~ A     lung        2 TNTC 
-## 4 "\"February 21 2022\"" BK         BK          group~ A     lung        3 53   
-## 5 "\"February 21 2022\"" BK         BK          group~ A     lung        4 9    
-## 6 "\"February 21 2022\"" BK         BK          group~ A     lung        5 4    
-## # ... with abbreviated variable name 1: dilution
+##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
+##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
+## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
+## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
+## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
+## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
+## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
+## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
 \end{verbatim}
 
 \hypertarget{example-one}{%
@@ -549,15 +572,14 @@ the following date or dates:
 
 \begin{verbatim}
 ## # A tibble: 6 x 8
-##   count_date             who_plated who_counted groups mouse organ dilut~1 CFUs 
-##   <chr>                  <chr>      <chr>       <chr>  <chr> <chr>   <dbl> <chr>
-## 1 "\"February 21 2022\"" BK         BK          group~ A     lung        0 TNTC 
-## 2 "\"February 21 2022\"" BK         BK          group~ A     lung        1 TNTC 
-## 3 "\"February 21 2022\"" BK         BK          group~ A     lung        2 TNTC 
-## 4 "\"February 21 2022\"" BK         BK          group~ A     lung        3 53   
-## 5 "\"February 21 2022\"" BK         BK          group~ A     lung        4 9    
-## 6 "\"February 21 2022\"" BK         BK          group~ A     lung        5 4    
-## # ... with abbreviated variable name 1: dilution
+##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
+##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
+## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
+## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
+## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
+## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
+## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
+## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
 \end{verbatim}
 
 \textbf{Distribution of CFUs at each dilution:}
@@ -588,15 +610,14 @@ level in the data:
 
 \begin{verbatim}
 ## # A tibble: 6 x 8
-##   count_date             who_plated who_counted groups mouse organ dilut~1  CFUs
-##   <chr>                  <chr>      <chr>       <chr>  <chr> <chr>   <dbl> <dbl>
-## 1 "\"February 21 2022\"" BK         BK          group~ A     lung        3    53
-## 2 "\"February 21 2022\"" BK         BK          group~ A     lung        4     9
-## 3 "\"February 21 2022\"" BK         BK          group~ C     lung        5     8
-## 4 "\"February 21 2022\"" BK         BK          group~ D     lung        3    53
-## 5 "\"February 21 2022\"" BK         BK          group~ A     lung        2    92
-## 6 "\"February 21 2022\"" BK         BK          group~ A     lung        4     7
-## # ... with abbreviated variable name 1: dilution
+##   count_date            who_plated who_counted groups mouse organ dilution  CFUs
+##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <dbl>
+## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         3    53
+## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         4     9
+## 3 "\"February 21 2022\~ BK         BK          group~ C     lung         5     8
+## 4 "\"February 21 2022\~ BK         BK          group~ D     lung         3    53
+## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         2    92
+## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         4     7
 \end{verbatim}
 
 \hypertarget{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}{%
@@ -629,16 +650,15 @@ level in the data:
 
 \begin{verbatim}
 ## # A tibble: 6 x 9
-##   organ count_date            who_p~1 who_c~2 groups mouse dilut~3  CFUs CFUs_~4
-##   <chr> <chr>                 <chr>   <chr>   <chr>  <chr>   <dbl> <dbl>   <dbl>
-## 1 lung  "\"February 21 2022\~ BK      BK      group~ A           3    53   33125
-## 2 lung  "\"February 21 2022\~ BK      BK      group~ A           4     9   28125
-## 3 lung  "\"February 21 2022\~ BK      BK      group~ C           5     8  125000
-## 4 lung  "\"February 21 2022\~ BK      BK      group~ D           3    53   33125
-## 5 lung  "\"February 21 2022\~ BK      BK      group~ A           2    92   11500
-## 6 lung  "\"February 21 2022\~ BK      BK      group~ A           4     7   21875
-## # ... with abbreviated variable names 1: who_plated, 2: who_counted,
-## #   3: dilution, 4: CFUs_per_ml
+##   organ count_date            who_plated who_counted groups mouse dilution  CFUs
+##   <chr> <chr>                 <chr>      <chr>       <chr>  <chr>    <dbl> <dbl>
+## 1 lung  "\"February 21 2022\~ BK         BK          group~ A            3    53
+## 2 lung  "\"February 21 2022\~ BK         BK          group~ A            4     9
+## 3 lung  "\"February 21 2022\~ BK         BK          group~ C            5     8
+## 4 lung  "\"February 21 2022\~ BK         BK          group~ D            3    53
+## 5 lung  "\"February 21 2022\~ BK         BK          group~ A            2    92
+## 6 lung  "\"February 21 2022\~ BK         BK          group~ A            4     7
+## # ... with 1 more variable: CFUs_per_ml <dbl>
 \end{verbatim}
 
 \hypertarget{create-initial-report-information-for-these-data}{%
@@ -825,14 +845,14 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_example\_data, }
                                \AttributeTok{col =} \StringTok{"dilution"}\NormalTok{, }
-                               \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denomenator"}\NormalTok{), }
+                               \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denominator"}\NormalTok{), }
                                \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
 
 \NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{dilution }\OtherTok{\textless{}{-}} 
-\NormalTok{  elisa\_example\_data}\SpecialCharTok{$}\NormalTok{numerator}\SpecialCharTok{/}\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{denomenator  }
+\NormalTok{  elisa\_example\_data}\SpecialCharTok{$}\NormalTok{numerator}\SpecialCharTok{/}\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{denominator  }
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_dilution =} \FunctionTok{log}\NormalTok{(dilution, }\AttributeTok{base =} \DecValTok{3}\NormalTok{))}
@@ -843,7 +863,7 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 
 \begin{verbatim}
 ## # A tibble: 6 x 5
-##   numerator denomenator absorbance dilution log_dilution
+##   numerator denominator absorbance dilution log_dilution
 ##       <dbl>       <dbl>      <dbl>    <dbl>        <dbl>
 ## 1         1          30       4    0.0333          -3.10
 ## 2         1          90       3.73 0.0111          -4.10
@@ -1077,8 +1097,8 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override
-## using the `.groups` argument.
+## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override using
+## the `.groups` argument.
 \end{verbatim}
 
 \begin{Shaded}
@@ -1335,11 +1355,10 @@ b = 1
 
 \begin{verbatim}
 ## # A tibble: 1 x 10
-##   estim~1 estim~2 estim~3 stati~4 p.value param~5 conf.~6 conf.~7 method alter~8
-##     <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>  <chr>  
-## 1  -0.800   -14.0   -13.2   -18.8 2.68e-6    5.63  -0.906  -0.695 Welch~ two.si~
-## # ... with abbreviated variable names 1: estimate, 2: estimate1, 3: estimate2,
-## #   4: statistic, 5: parameter, 6: conf.low, 7: conf.high, 8: alternative
+##   estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high
+##      <dbl>     <dbl>     <dbl>     <dbl>      <dbl>     <dbl>    <dbl>     <dbl>
+## 1   -0.800     -14.0     -13.2     -18.8 0.00000268      5.63   -0.906    -0.695
+## # ... with 2 more variables: method <chr>, alternative <chr>
 \end{verbatim}
 
 \hypertarget{statistical-data-analysis-for-more-than-two-groups}{%
@@ -1365,18 +1384,12 @@ Below is the example ELISA data that has came straight out of the plate reader. 
 
 \begin{verbatim}
 ## New names:
-## * `` -> `...1`
-## * `` -> `...2`
-## * `` -> `...3`
-## * `` -> `...4`
-## * `` -> `...5`
-## * `` -> `...6`
-## * `` -> `...7`
-## * `` -> `...8`
-## * `` -> `...9`
-## * `` -> `...10`
-## * `` -> `...11`
-## * `` -> `...12`
+## * `` -> ...1
+## * `` -> ...2
+## * `` -> ...3
+## * `` -> ...4
+## * `` -> ...5
+## * ...
 \end{verbatim}
 
 \begin{Shaded}
@@ -1471,18 +1484,12 @@ The second dataset contains the information such as groups, mouse id, and diluti
 
 \begin{verbatim}
 ## New names:
-## * `` -> `...1`
-## * `` -> `...2`
-## * `` -> `...3`
-## * `` -> `...4`
-## * `` -> `...5`
-## * `` -> `...6`
-## * `` -> `...7`
-## * `` -> `...8`
-## * `` -> `...9`
-## * `` -> `...10`
-## * `` -> `...11`
-## * `` -> `...12`
+## * `` -> ...1
+## * `` -> ...2
+## * `` -> ...3
+## * `` -> ...4
+## * `` -> ...5
+## * ...
 \end{verbatim}
 
 \begin{Shaded}
@@ -1799,7 +1806,6 @@ This example data set is from an innate response study whcih investigated the im
 ##  9 "CD45+ CD3-   CD11b+ CD86-  CD64+ " 
 ## 10 "CD45+ CD3-   CD11b+ CD86+  CD64+ " 
 ## # ... with 118 more rows
-## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{Shaded}
