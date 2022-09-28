@@ -86,24 +86,32 @@ There are two major steps in performing curve fitting model for non-linear data 
 
 We have presented an example below where we have performed a 8-10 point serial dilution of our sample and fitted a 4 parameter curve model. 
 
-### An example of the fitting sigmoid model is below: 
+### An example of the curve fitting model
 
 #### Read in the data
+
+This information comes from the 2018 study conducted by Hartman et al. Hartman et al. analyzed the ELISA data in their study utilizing fitted sigmoid analysis, end point titer, and absorbance summation. We utilized this information to determine whether our formulas and calculations provide the same outcomes and values as theirs.
+
 ```{r}
 elisa_example_data <- read_excel("DATA/example_elisa_data.xlsx")
 ```
 
-#### Clean the data
+#### Tidying the data
+
+We next performed tidying the data and make it in a format so that we can plot a sigmoid curve with that. 
+
 ```{r}
-# separate 1/
+# Divide dilution column into two seoparate columns
 
 elisa_example_data <- separate(elisa_example_data, 
                                col = "dilution", 
                                into = c("numerator", "denominator"), 
                                sep = "\\/")
 
+# Convert the tabke from character to numeric
 elisa_example_data <- elisa_example_data %>% 
   mutate_if(is.character, as.numeric)
+
 
 elisa_example_data$dilution <- 
   elisa_example_data$numerator/elisa_example_data$denominator  
@@ -113,6 +121,14 @@ elisa_example_data <- elisa_example_data %>%
 
 head(elisa_example_data)
 
+```
+
+#### Create function for curve fitting model
+
+We next created the curve fitting model function by using nlsLM function from "minpacl.lm" package. 
+The purpose of nlslm is to minimize the sum square of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. In the early 1960s, the Levenberg-Marquardt algorithm was developed to address nonlinear least squares problems. Through a series of well-chosen updates to model parameter values, Levenberg-Marquardt algorithm lower the sum of the squares of the errors between the model function and the data points.
+
+```{r}
 mod_1 <- nlsLM(absorbance ~ 
                  ((a-d)/(1+(log_dilution/c)^b)) + d,
 data = elisa_example_data, 
@@ -127,6 +143,8 @@ mod_1
 
 summary(mod_1)
 ```
+
+
 
 #### Create a fitted sigmoid model function and apply the function to the data
 ```{r}
