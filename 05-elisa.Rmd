@@ -71,9 +71,20 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.
 
-## **1. Fitting sigmoid model:** 
+## **1. Curve fitting model:** 
 
-In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve. 
+The curve in ELISA data represents a plot of known concentrations versus their corresponding signal responses. The typical range of these calibration curves is one to two orders of magnitude on the response axis and two or more orders of magnitude on the concentration axis. The real curve of each assay could be easily identified if an infinite number of concentration dilutions with an infinite number of repetitions could be tested. The correct curve must be approximated from a relatively small number of noisy points, though, because there are a finite number of dilutions that may be performed. To estimate the dose-response relationship between standard dilutions, a method of interpolating between standards is required because there cannot be a standard at every concentration. This process is typically performed using a mathematical function or regression to approximate the true shape of the curve. A curve model is the name given to this approximating function, which commonly uses two or more parameters to describe a family of curves, and are then adjusted in order to find the curve from the family of curves that best fits the assay data. 
+
+Three qualities should be included in a good curve fitting model. 
+1. The true curve's shape must be accurately approximated by the curve model. If the curve model does not accomplish this, there is no way to adjust for this component of the total error that results from a lack of fit. 
+2. In order to get concentration estimates with minimal inaccuracy, a decent curve model must be able to average away as much of the random variation as is practical. 3. A successful curve model must be capable of accurately predicting concentration values for points between the anchor points of the standard dilutions. 
+
+### How do we perform curve fitting model
+There are two major steps in performing curve fitting model for non-linear data like ELISA:
+1. Finding the initial starting estimates of the parameters
+2. locating the optimal solution in a region of the initial estimates
+
+We have presented an example below where we have performed a 8-10 point serial dilution of our sample and fitted a 4 parameter curve model. 
 
 ### An example of the fitting sigmoid model is below: 
 
