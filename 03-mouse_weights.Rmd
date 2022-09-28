@@ -14,7 +14,7 @@ Weights are recorded in an excel worksheet.
 
 Column titles are as follows:
 
-- `who_collected`: Record the first name of the person who read the weight for the mouse from the scale. 
+- `who_collected`: Record the first name of the person who actually handled the mouse from the scale. 
 - `date_collected`: Record the date using quotation marks, with the month, then day, then year. For example, "May 31, 2022".
 - `sex`: Record as "m" for male or "f" for female
 - `notch_id`: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be "0" for no notches, "1R" for one notch in the right ear, "1L" for one notch in the left ear, and "1R1L" for one notch in each ear.
@@ -54,7 +54,8 @@ read_mouse_weights <- function(filepath) {
                                                                  "numeric", # mouse_number
                                                                  "numeric", # weight
                                                                  "text",   # unit
-                                                                 "text",   # cage_number
+                                                                 "text",   # existing_cage_number
+                                                                 "text",   # new_cage_number
                                                                  "text",   # group
                                                                  "text"    # notes
                                                                  ))) %>% 
@@ -71,6 +72,7 @@ read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
 ```
 
 ### Can also use rio to read in the data, more streamlined
+
 ```{r include=FALSE}
 library(rio)
 # specifying the path name
@@ -87,7 +89,7 @@ print (data)
 ### Clean data
 ```{r}
 dataset <- data$before_vaccination %>%
- select("sex", "mouse_number", "weight", "cage_number", "group")
+ select("sex", "mouse_number", "weight", "existing_cage_number", "group")
 
 ```
 
