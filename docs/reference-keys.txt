@@ -71,3 +71,13 @@ making-the-data-tidy-for-plotting
 boxplot
 pathology
 pathology-1
+curve-fitting-model
+how-do-we-perform-curve-fitting-model
+an-example-of-the-curve-fitting-model
+tidying-the-data
+create-function-for-curve-fitting-model
+apply-the-function-to-the-data
+plot-the-sigmoid-curve-with-fitted-sigmoid-model
+other-methods-to-analyze-elisa-data
+absorption-summation
+area-under-the-curve

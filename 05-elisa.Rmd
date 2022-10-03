@@ -125,7 +125,7 @@ head(elisa_example_data)
 
 #### Create function for curve fitting model
 
-We next created the curve fitting model function by using nlsLM function from "minpacl.lm" package. 
+We next created the curve fitting model function by using nlsLM function from "minpack.lm" package. 
 The purpose of nlslm is to minimize the sum square of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. In the early 1960s, the Levenberg-Marquardt algorithm was developed to address nonlinear least squares problems. Through a series of well-chosen updates to model parameter values, Levenberg-Marquardt algorithm lower the sum of the squares of the errors between the model function and the data points.
 
 ```{r}
@@ -144,9 +144,7 @@ mod_1
 summary(mod_1)
 ```
 
-
-
-#### Create a fitted sigmoid model function and apply the function to the data
+#### Apply the function to the data
 ```{r}
 tidy_params <- mod_1 %>% tidy()
 
