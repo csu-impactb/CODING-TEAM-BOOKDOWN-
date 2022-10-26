@@ -1,0 +1,31 @@
+---
+title: "Connect R to Microsoft Teams"
+author: "Taru Dutt"
+date: "2022-10-19"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Download Microsoft365R package
+
+```{r}
+install.packages("Microsoft365R")
+```
+
+## Load the package
+
+```{r}
+library(Microsoft365R)
+```
+
+## SEt up teams via R
+
+```{r}
+get_personal_onedrive()
+```
+

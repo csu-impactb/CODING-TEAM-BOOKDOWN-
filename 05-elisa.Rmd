@@ -146,7 +146,7 @@ summary(mod_1)
 
 #### Apply the function to the data
 ```{r}
-tidy_params <- mod_1 %>% tidy()
+tidy_params <- mod_1 %>% tidy() 
 
 a <- tidy_params$estimate[tidy_params$term == "a"]
 b <- tidy_params$estimate[tidy_params$term == "b"]
