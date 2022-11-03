@@ -31,10 +31,18 @@ library(AzureAuth)
 ## SEt up teams via R
 
 ```{r}
-my_team <- get_team("CVMBS T_cell_mask_study", 
-             app = "04b07795-8ddb-461a-bbee-02f9e1bf7b46")
+my_team <- get_team("CVMBS-MIP IMPAc-TB", app = "04b07795-8ddb-461a-bbee-02f9e1bf7b46")
 
-my_team$list_channels()
+channels <- my_team$get_channel()
+
+folder <- channels$get_folder()
+
+files <- folder$list_files()
+
+item <- folder$get_item("Mouse_labeling_and_weighing/Body Weights.xlsx")
+item$open()
+item$download(overwrite=TRUE)
+
 ```
 
 
