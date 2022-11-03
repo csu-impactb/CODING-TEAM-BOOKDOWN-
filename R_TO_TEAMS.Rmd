@@ -15,17 +15,26 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 install.packages("Microsoft365R")
+install.packages("AzureGraph")
+install.packages("RODBC")
 ```
 
 ## Load the package
 
 ```{r}
 library(Microsoft365R)
+library(AzureGraph)
+library(AzureAuth)
+
 ```
 
 ## SEt up teams via R
 
 ```{r}
-get_personal_onedrive()
+my_team <- get_team("CVMBS T_cell_mask_study", 
+             app = "04b07795-8ddb-461a-bbee-02f9e1bf7b46")
+
+my_team$list_channels()
 ```
+
 
