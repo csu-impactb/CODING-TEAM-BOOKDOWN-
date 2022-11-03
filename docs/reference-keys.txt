@@ -37,10 +37,12 @@ an-example-of-the-fitting-sigmoid-model-is-below
 read-in-the-data
 clean-the-data
 create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data
-plot-the-signmoid-curve-with-fitted-sigmoid-model
+plot-the-sigmoid-curve-with-fitted-sigmoid-model
 endpoint-titer-method
 create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.
-absorbance-summation-method
+other-methods-to-analyze-elisa-data
+absorption-summation
+area-under-the-curve
 apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset
 read-in-the-data-1
 tidy-the-data
@@ -71,3 +73,4 @@ making-the-data-tidy-for-plotting
 boxplot
 pathology
 pathology-1
+proteomics

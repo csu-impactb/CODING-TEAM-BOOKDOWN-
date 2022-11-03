@@ -17,8 +17,8 @@ Column titles are as follows:
 - `who_collected`: Record the first name of the person who actually handled the mouse from the scale. 
 - `date_collected`: Record the date using quotation marks, with the month, then day, then year. For example, "May 31, 2022".
 - `sex`: Record as "m" for male or "f" for female
-- `notch_id`: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be "0" for no notches, "1R" for one notch in the right ear, "1L" for one notch in the left ear, and "1R1L" for one notch in each ear.
-- `mouse_number`
+- `notch_id`: Record the ear notch pattern in the mouse. Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be "0" for no notches, "1R" for one notch in the right ear, "1L" for one notch in the left ear, and "1R1L" for one notch in each ear.
+- `mouse_number`: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch "1L" might be given the number "1"; if so, its number should always be recorded in this column as "1"). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study. 
 - `weight`: Record as a number, with a unit in this column. The next column will be used for the units.	
 - `unit`:	Provide the units that were used to take the weight (e.g., "g" for grams)
 - `cage_number`: Provide the cage number. If a provisional cage number is being used, ... If the mouse was switched from its original cage, ...
@@ -27,7 +27,7 @@ Column titles are as follows:
 
 good reference: https://elifesciences.org/articles/74419#s4
 
-```{r}
+```{r message = FALSE, warning = FALSE}
 library(readxl)
 library(tidyverse)
 ```
@@ -36,7 +36,7 @@ library(tidyverse)
 
 Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
 
-```{r include=FALSE}
+```{r include = FALSE}
 weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
 excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
 
@@ -68,7 +68,149 @@ read_mouse_weights <- function(filepath) {
 }
 
 # Test function
-read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
+ex <- read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
+```
+
+```{r}
+# Function to add unique mouse IDs based on their most up-to-date cages
+# By using the most up-to-date cages, we can use an ID that will be easy 
+# to use to identify a specific mouse at the current time (for example, 
+# if you need to ID a mouse with a large change in weight that has happened
+# recently.)
+#
+# !! NEED TO CHANGE: Right now, it would miss mice that were sacrificed / died
+# !! before the latest time point that was collected
+add_latest_mouse_id <- function(mouse_weight_data) {
+  
+  mouse_weight_data <- mouse_weight_data %>%
+  mutate(current_cage = case_when(
+    date_collected != last(date_collected) ~ as.character(NA),
+    !is.na(new_cage_number) ~ new_cage_number, 
+    TRUE ~ existing_cage_number
+  ),
+         mouse_id = if_else(!is.na(current_cage), 
+                            paste(current_cage, notch_id, sep = "-"), 
+                            as.character(NA)))
+  return(mouse_weight_data)
+}
+
+ex <- add_latest_mouse_id(ex)
+
+ex %>% 
+  mutate(mouse_id = case_when(
+    # Only create for the first time point, otherwise set to NA
+    date_collected != first(date_collected) ~ NA_character_,
+    # If the new cage number is missing, it means the animal did not 
+    # change cages, so you can use the existing cage number
+    is.na(new_cage_number) ~ paste(existing_cage_number, notch_id, sep = "-"),
+    TRUE ~ paste(new_cage_number, notch_id, sep = "-")
+  ))
+
+add_first_mouse_id <- function(mouse_weight_data) {
+  
+  mouse_weight_data <- mouse_weight_data %>%
+  mutate(mouse_id = case_when(
+    # Only create for the first time point, otherwise set to NA
+    date_collected != first(date_collected) ~ NA_character_,
+    # If the new cage number is missing, it means the animal did not 
+    # change cages, so you can use the existing cage number
+    is.na(new_cage_number) ~ paste(existing_cage_number, notch_id, sep = "-"),
+    TRUE ~ paste(new_cage_number, notch_id, sep = "-")
+  ))
+  return(mouse_weight_data)
+}
+
+add_latest_mouse_id(ex)
+```
+
+```{r}
+# Function to get the cage history of a mouse based on it's latest mouse ID
+# and the mouse weight data. This works back through cage changes to track the 
+# cages that a mouse has been in over the course of the experiment. 
+get_cage_history <- function(latest_mouse_id, 
+                             mouse_weight_data) {
+  
+  cage_history <- latest_mouse_id %>% 
+    str_remove("\\-.+")
+  last_cage <- cage_history[1]
+  
+  while(length(last_cage) > 0){
+    last_cage <- mouse_weight_data %>% 
+      filter(new_cage_number == last_cage) %>% 
+      pull(existing_cage_number)
+    if(length(last_cage) > 0) {
+      cage_history <- c(cage_history, last_cage)
+    }
+  }
+  
+  cage_history <- unique(cage_history)
+  
+  return(cage_history)
+}
+
+get_cage_history(latest_mouse_id = "22009A-0", 
+                 mouse_weight_data = ex)
+
+ex_cage_history <- get_cage_history(latest_mouse_id = "22009A-0", 
+                 mouse_weight_data = ex)
+
+
+# Use the function to get cage histories for all the mice
+latest_mouse_ids <- ex %>% 
+  filter(!is.na(mouse_id)) %>% 
+  pull(mouse_id) %>% 
+  unique()
+  
+mouse_cage_histories <- purrr::map(latest_mouse_ids, get_cage_history, 
+                                   mouse_weight_data = ex)
+names(mouse_cage_histories) <- latest_mouse_ids
+```
+
+```{r}
+add_one_mouse_id <- function(latest_mouse_id, cage_history, mouse_weight_data) {
+  
+  mouse_notch <- str_remove(latest_mouse_id, ".+\\-")
+  
+  mouse_weight_data <- mouse_weight_data %>% 
+    mutate(mouse_id = if_else((existing_cage_number %in% cage_history) & 
+                                notch_id == mouse_notch, 
+           latest_mouse_id, 
+           mouse_id))
+  
+  return(mouse_weight_data)
+}
+
+ex2 <- add_one_mouse_id(latest_mouse_id = names(mouse_cage_histories)[1], 
+                 cage_history = mouse_cage_histories[[1]], 
+                 mouse_weight_data = ex)
+
+ex2 %>% filter(existing_cage_number == "22003" & notch_id == "0")
+
+for(i in 1:length(mouse_cage_histories)) {
+  ex <- add_one_mouse_id(latest_mouse_id = names(mouse_cage_histories)[i], 
+                         cage_history = mouse_cage_histories[[i]], 
+                         mouse_weight_data = ex) 
+}
+
+ex
+```
+
+```{r}
+# Explore this data a bit
+ex %>% 
+  ggplot(aes(x = date_collected, y = weight, group = mouse_id, color = sex)) + 
+  geom_line() + 
+  facet_wrap(~ group)
+
+ex %>% 
+  ggplot(aes(x = date_collected, y = weight, color = who_collected)) + geom_point()
+
+library(ggbeeswarm)
+ex %>% 
+  filter(date_collected == last(date_collected)) %>% 
+  ggplot(aes(x = group, y = weight)) + 
+  geom_beeswarm(aes(color = sex)) + 
+  geom_boxplot(fill = NA, color = "dodgerblue")
 ```
 
 ### Can also use rio to read in the data, more streamlined

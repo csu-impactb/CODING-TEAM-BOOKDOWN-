@@ -4,4 +4,78 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Pathology 
+# Proteomics
+
+For proteomics data, we will be getting data that have already been collected and 
+pre-processed by another part of the team. The following shows an example of the 
+type of data we will get as an input:
+
+```{r}
+library(tidyverse)
+
+prot_a <- read_csv("DATA/Transition Results_CCTSI_A.csv")
+
+prot_a
+```
+
+These data include the following columns: 
+
+- `Peptide`: A short string of peptides that are being measured
+- `Protein`: The protein that those peptides come from
+- `Replicate`: An identifier for the sample that the measurement was taken on
+- `Precursor Mz`, `Precursor Charge`, `Product Mz`, `Product Charge`, 
+`Fragment Ion`, `Retention Time`: Measurements that help in identifying the peptide
+that is being measured (?)
+- `Area`: 
+- `Background`: 
+- `Peak Rank`: 
+- `Ratio Dot Product`: 
+- `Total Area Normalized`: 
+- `Total Area Ratio`
+- `Library Dot Product`: 
+- `RatioLightToHeavy`: 
+- `DotProductLightToHeavy`: 
+
+[More about how these data were pre-processed. Softwarei: Skyline]
+
+Here are all the unique replicates in this file: 
+
+```{r}
+prot_a %>% 
+  pull(Replicate) %>% 
+  unique()
+```
+
+The three groups in this data are labeled with "LT", "H", and "TB" somewhere in 
+the identifier. We can create a new column in the dataset that pulls out this
+treatment group information: 
+
+```{r}
+prot_a <- prot_a %>% 
+  mutate(treatment_group = str_extract(Replicate, "[A-Z]+")) 
+
+prot_a %>% 
+  filter(Peptide == first(Peptide)) %>% 
+  group_by(treatment_group) %>% 
+  count()
+
+prot_a %>% 
+  filter(Peptide == first(Peptide) & 
+           Replicate == first(Replicate))
+``` 
+
+
+```{r}
+prot_a %>% 
+  pull(Protein) %>% 
+  unique()
+```
+
+- Cfp10
+- acpM
+- Ag85A
+- MtbH37Rv|Rv3841|BfrB
+- MtbH37Rv|Rv1837c|GlcB
+- MtbH37Rv|Rv3418c|GroES
+- MtbH37Rv|Rv3248c|SahH
+- MtbH37Rv|Rv2031c|hspX
