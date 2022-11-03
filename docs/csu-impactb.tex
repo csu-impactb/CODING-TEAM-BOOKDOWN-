@@ -37,8 +37,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={ImpactTB/BAA: Standard Operating Procedures for Data Analysis},
-  pdfauthor={Colorado State University Coding Team},
+  pdftitle={Connect R to Microsoft Teams},
+  pdfauthor={Taru Dutt},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -123,9 +123,9 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2022-09-29}
+\title{Connect R to Microsoft Teams}
+\author{Taru Dutt}
+\date{2022-10-19}
 
 \begin{document}
 \maketitle
@@ -291,9 +291,9 @@ Column titles are as follows:
 \item
   \texttt{sex}: Record as ``m'' for male or ``f'' for female
 \item
-  \texttt{notch\_id}: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be ``0'' for no notches, ``1R'' for one notch in the right ear, ``1L'' for one notch in the left ear, and ``1R1L'' for one notch in each ear.
+  \texttt{notch\_id}: Record the ear notch pattern in the mouse. Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be ``0'' for no notches, ``1R'' for one notch in the right ear, ``1L'' for one notch in the left ear, and ``1R1L'' for one notch in each ear.
 \item
-  \texttt{mouse\_number}
+  \texttt{mouse\_number}: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch ``1L'' might be given the number ``1''; if so, its number should always be recorded in this column as ``1''). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study.
 \item
   \texttt{weight}: Record as a number, with a unit in this column. The next column will be used for the units.
 \item
@@ -1055,16 +1055,31 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.
 
-\hypertarget{fitting-sigmoid-model}{%
-\section{\texorpdfstring{\textbf{1. Fitting sigmoid model:}}{1. Fitting sigmoid model:}}\label{fitting-sigmoid-model}}
+\hypertarget{curve-fitting-model}{%
+\section{\texorpdfstring{\textbf{1. Curve fitting model:}}{1. Curve fitting model:}}\label{curve-fitting-model}}
 
-In this model, we will perform a 8-10 point serial dilution of our sample and plot a 4 parameter sigmoidal curve.
+The curve in ELISA data represents a plot of known concentrations versus their corresponding signal responses. The typical range of these calibration curves is one to two orders of magnitude on the response axis and two or more orders of magnitude on the concentration axis. The real curve of each assay could be easily identified if an infinite number of concentration dilutions with an infinite number of repetitions could be tested. The correct curve must be approximated from a relatively small number of noisy points, though, because there are a finite number of dilutions that may be performed. To estimate the dose-response relationship between standard dilutions, a method of interpolating between standards is required because there cannot be a standard at every concentration. This process is typically performed using a mathematical function or regression to approximate the true shape of the curve. A curve model is the name given to this approximating function, which commonly uses two or more parameters to describe a family of curves, and are then adjusted in order to find the curve from the family of curves that best fits the assay data.
 
-\hypertarget{an-example-of-the-fitting-sigmoid-model-is-below}{%
-\subsection{An example of the fitting sigmoid model is below:}\label{an-example-of-the-fitting-sigmoid-model-is-below}}
+Three qualities should be included in a good curve fitting model.
+1. The true curve's shape must be accurately approximated by the curve model. If the curve model does not accomplish this, there is no way to adjust for this component of the total error that results from a lack of fit.
+2. In order to get concentration estimates with minimal inaccuracy, a decent curve model must be able to average away as much of the random variation as is practical. 3. A successful curve model must be capable of accurately predicting concentration values for points between the anchor points of the standard dilutions.
+
+\hypertarget{how-do-we-perform-curve-fitting-model}{%
+\subsection{How do we perform curve fitting model}\label{how-do-we-perform-curve-fitting-model}}
+
+There are two major steps in performing curve fitting model for non-linear data like ELISA:
+1. Finding the initial starting estimates of the parameters
+2. locating the optimal solution in a region of the initial estimates
+
+We have presented an example below where we have performed a 8-10 point serial dilution of our sample and fitted a 4 parameter curve model.
+
+\hypertarget{an-example-of-the-curve-fitting-model}{%
+\subsection{An example of the curve fitting model}\label{an-example-of-the-curve-fitting-model}}
 
 \hypertarget{read-in-the-data}{%
 \subsubsection{Read in the data}\label{read-in-the-data}}
+
+This information comes from the 2018 study conducted by Hartman et al.~Hartman et al.~analyzed the ELISA data in their study utilizing fitted sigmoid analysis, end point titer, and absorbance summation. We utilized this information to determine whether our formulas and calculations provide the same outcomes and values as theirs.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1072,20 +1087,24 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{clean-the-data}{%
-\subsubsection{Clean the data}\label{clean-the-data}}
+\hypertarget{tidying-the-data}{%
+\subsubsection{Tidying the data}\label{tidying-the-data}}
+
+We next performed tidying the data and make it in a format so that we can plot a sigmoid curve with that.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# separate 1/}
+\CommentTok{\# Divide dilution column into two seoparate columns}
 
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_example\_data, }
                                \AttributeTok{col =} \StringTok{"dilution"}\NormalTok{, }
                                \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denominator"}\NormalTok{), }
                                \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
 
+\CommentTok{\# Convert the tabke from character to numeric}
 \NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
+
 
 \NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{dilution }\OtherTok{\textless{}{-}} 
 \NormalTok{  elisa\_example\_data}\SpecialCharTok{$}\NormalTok{numerator}\SpecialCharTok{/}\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{denominator  }
@@ -1108,6 +1127,12 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 ## 5         1        2430       0.51 0.000412        -7.10
 ## 6         1        7290       0.22 0.000137        -8.10
 \end{verbatim}
+
+\hypertarget{create-function-for-curve-fitting-model}{%
+\subsubsection{Create function for curve fitting model}\label{create-function-for-curve-fitting-model}}
+
+We next created the curve fitting model function by using nlsLM function from ``minpack.lm'' package.
+The purpose of nlslm is to minimize the sum square of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. In the early 1960s, the Levenberg-Marquardt algorithm was developed to address nonlinear least squares problems. Through a series of well-chosen updates to model parameter values, Levenberg-Marquardt algorithm lower the sum of the squares of the errors between the model function and the data points.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1162,12 +1187,12 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data}{%
-\subsubsection{Create a fitted sigmoid model function and apply the function to the data}\label{create-a-fitted-sigmoid-model-function-and-apply-the-function-to-the-data}}
+\hypertarget{apply-the-function-to-the-data}{%
+\subsubsection{Apply the function to the data}\label{apply-the-function-to-the-data}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy\_params }\OtherTok{\textless{}{-}}\NormalTok{ mod\_1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{tidy}\NormalTok{()}
+\NormalTok{tidy\_params }\OtherTok{\textless{}{-}}\NormalTok{ mod\_1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{tidy}\NormalTok{() }
 
 \NormalTok{a }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"a"}\NormalTok{]}
 \NormalTok{b }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"b"}\NormalTok{]}
@@ -1194,7 +1219,7 @@ In this model, we will perform a 8-10 point serial dilution of our sample and pl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-27-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-28-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1379,7 +1404,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -1580,7 +1605,7 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-42-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
@@ -1882,7 +1907,7 @@ To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we m
 \hypertarget{flow-cytometry}{%
 \chapter{Flow cytometry}\label{flow-cytometry}}
 
-Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a \texttt{.csv} file. This \texttt{.csv} file is the primary input for this R pipeline which aims to output box plots for each gated cell population.
+Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a \texttt{.csv} file. This \texttt{.csv} file is the primary input for this R pipeline which aims to output box plots for each gated cell population.
 
 This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.
 
@@ -2169,7 +2194,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-55-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2181,8 +2206,241 @@ This example data set is from an innate response study whcih investigated the im
 \hypertarget{pathology}{%
 \chapter{Pathology}\label{pathology}}
 
-\hypertarget{pathology-1}{%
-\chapter{Pathology}\label{pathology-1}}
+\hypertarget{proteomics}{%
+\chapter{Proteomics}\label{proteomics}}
+
+For proteomics data, we will be getting data that have already been collected and
+pre-processed by another part of the team. The following shows an example of the
+type of data we will get as an input:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{prot\_a }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"DATA/Transition Results\_CCTSI\_A.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 3393 Columns: 18
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (7): Peptide, Protein, Replicate, Fragment Ion, Ratio Dot Product, Tota...
+## dbl (11): Precursor Mz, Precursor Charge, Product Mz, Product Charge, Retent...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prot\_a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3,393 x 18
+##    Peptide     Protein Replicate   `Precursor Mz` `Precursor Char~` `Product Mz`
+##    <chr>       <chr>   <chr>                <dbl>             <dbl>        <dbl>
+##  1 QELDEISTNIR Cfp10   091322_LT1            659.                 2        1061.
+##  2 QELDEISTNIR Cfp10   091322_LT2            659.                 2        1061.
+##  3 QELDEISTNIR Cfp10   091322_LT3            659.                 2        1061.
+##  4 QELDEISTNIR Cfp10   091322_LT4            659.                 2        1061.
+##  5 QELDEISTNIR Cfp10   091322_LT5            659.                 2        1061.
+##  6 QELDEISTNIR Cfp10   091322_LT6            659.                 2        1061.
+##  7 QELDEISTNIR Cfp10   091322_LT7            659.                 2        1061.
+##  8 QELDEISTNIR Cfp10   091322_LT8            659.                 2        1061.
+##  9 QELDEISTNIR Cfp10   091322_LT10           659.                 2        1061.
+## 10 QELDEISTNIR Cfp10   091322_LT11           659.                 2        1061.
+## # ... with 3,383 more rows, and 12 more variables: `Product Charge` <dbl>,
+## #   `Fragment Ion` <chr>, `Retention Time` <dbl>, Area <dbl>, Background <dbl>,
+## #   `Peak Rank` <dbl>, `Ratio Dot Product` <chr>,
+## #   `Total Area Normalized` <chr>, `Total Area Ratio` <chr>,
+## #   `Library Dot Product` <dbl>, RatioLightToHeavy <dbl>,
+## #   DotProductLightToHeavy <dbl>
+\end{verbatim}
+
+These data include the following columns:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Peptide}: A short string of peptides that are being measured
+\item
+  \texttt{Protein}: The protein that those peptides come from
+\item
+  \texttt{Replicate}: An identifier for the sample that the measurement was taken on
+\item
+  \texttt{Precursor\ Mz}, \texttt{Precursor\ Charge}, \texttt{Product\ Mz}, \texttt{Product\ Charge},
+  \texttt{Fragment\ Ion}, \texttt{Retention\ Time}: Measurements that help in identifying the peptide
+  that is being measured (?)
+\item
+  \texttt{Area}:
+\item
+  \texttt{Background}:
+\item
+  \texttt{Peak\ Rank}:
+\item
+  \texttt{Ratio\ Dot\ Product}:
+\item
+  \texttt{Total\ Area\ Normalized}:
+\item
+  \texttt{Total\ Area\ Ratio}
+\item
+  \texttt{Library\ Dot\ Product}:
+\item
+  \texttt{RatioLightToHeavy}:
+\item
+  \texttt{DotProductLightToHeavy}:
+\end{itemize}
+
+{[}More about how these data were pre-processed. Softwarei: Skyline{]}
+
+Here are all the unique replicates in this file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(Replicate) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unique}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "091322_LT1"  "091322_LT2"  "091322_LT3"  "091322_LT4"  "091322_LT5" 
+##  [6] "091322_LT6"  "091322_LT7"  "091322_LT8"  "091322_LT10" "091322_LT11"
+## [11] "091322_LT12" "091322_LT13" "091322_LT14" "091322_H1"   "091322_H2"  
+## [16] "091322_H3"   "091322_H4"   "091322_H5"   "091322_H6"   "091322_H7"  
+## [21] "091322_H8"   "091322_H9"   "091322_H10"  "091322_H11"  "091322_H12" 
+## [26] "091322_H13"  "091322_H14"  "091322_TB1"  "091322_TB2"  "091322_TB3" 
+## [31] "091322_TB4"  "091322_TB5"  "091322_TB6"  "091322_TB7"  "091322_TB8" 
+## [36] "091322_TB9"  "091322_TB10" "091322_TB11" "091322_TB12"
+\end{verbatim}
+
+The three groups in this data are labeled with ``LT'', ``H'', and ``TB'' somewhere in
+the identifier. We can create a new column in the dataset that pulls out this
+treatment group information:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prot\_a }\OtherTok{\textless{}{-}}\NormalTok{ prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{treatment\_group =} \FunctionTok{str\_extract}\NormalTok{(Replicate, }\StringTok{"[A{-}Z]+"}\NormalTok{)) }
+
+\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Peptide }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Peptide)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(treatment\_group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+## # Groups:   treatment_group [3]
+##   treatment_group     n
+##   <chr>           <int>
+## 1 H                 140
+## 2 LT                130
+## 3 TB                120
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Peptide }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Peptide) }\SpecialCharTok{\&} 
+\NormalTok{           Replicate }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Replicate))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 19
+##    Peptide     Protein Replicate  `Precursor Mz` `Precursor Charge` `Product Mz`
+##    <chr>       <chr>   <chr>               <dbl>              <dbl>        <dbl>
+##  1 QELDEISTNIR Cfp10   091322_LT1           659.                  2        1061.
+##  2 QELDEISTNIR Cfp10   091322_LT1           659.                  2         832.
+##  3 QELDEISTNIR Cfp10   091322_LT1           659.                  2         703.
+##  4 QELDEISTNIR Cfp10   091322_LT1           659.                  2         590.
+##  5 QELDEISTNIR Cfp10   091322_LT1           659.                  2         503.
+##  6 QELDEISTNIR Cfp10   091322_LT1           664.                  2        1071.
+##  7 QELDEISTNIR Cfp10   091322_LT1           664.                  2         842.
+##  8 QELDEISTNIR Cfp10   091322_LT1           664.                  2         713.
+##  9 QELDEISTNIR Cfp10   091322_LT1           664.                  2         600.
+## 10 QELDEISTNIR Cfp10   091322_LT1           664.                  2         513.
+## # ... with 13 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
+## #   `Retention Time` <dbl>, Area <dbl>, Background <dbl>, `Peak Rank` <dbl>,
+## #   `Ratio Dot Product` <chr>, `Total Area Normalized` <chr>,
+## #   `Total Area Ratio` <chr>, `Library Dot Product` <dbl>,
+## #   RatioLightToHeavy <dbl>, DotProductLightToHeavy <dbl>,
+## #   treatment_group <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(Protein) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unique}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Cfp10"                  "acpM"                   "Ag85A"                 
+## [4] "MtbH37Rv|Rv3841|BfrB"   "MtbH37Rv|Rv1837c|GlcB"  "MtbH37Rv|Rv3418c|GroES"
+## [7] "MtbH37Rv|Rv3248c|SahH"  "MtbH37Rv|Rv2031c|hspX"
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Cfp10
+\item
+  acpM
+\item
+  Ag85A
+\item
+  MtbH37Rv\textbar Rv3841\textbar BfrB
+\item
+  MtbH37Rv\textbar Rv1837c\textbar GlcB
+\item
+  MtbH37Rv\textbar Rv3418c\textbar GroES
+\item
+  MtbH37Rv\textbar Rv3248c\textbar SahH
+\item
+  MtbH37Rv\textbar Rv2031c\textbar hspX
+\end{itemize}
+
+\hypertarget{download-microsoft365r-package}{%
+\section{Download Microsoft365R package}\label{download-microsoft365r-package}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"Microsoft365R"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"AzureGraph"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"RODBC"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{load-the-package}{%
+\section{Load the package}\label{load-the-package}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Microsoft365R)}
+\FunctionTok{library}\NormalTok{(AzureGraph)}
+\FunctionTok{library}\NormalTok{(AzureAuth)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{set-up-teams-via-r}{%
+\section{SEt up teams via R}\label{set-up-teams-via-r}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_team }\OtherTok{\textless{}{-}} \FunctionTok{get\_team}\NormalTok{(}\StringTok{"CVMBS T\_cell\_mask\_study"}\NormalTok{, }
+             \AttributeTok{app =} \StringTok{"04b07795{-}8ddb{-}461a{-}bbee{-}02f9e1bf7b46"}\NormalTok{)}
+
+\NormalTok{my\_team}\SpecialCharTok{$}\FunctionTok{list\_channels}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 

@@ -1,315 +1,146 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Mouse Weights | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
-  <meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 4 Mouse Weights | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Mouse Weights | ImpactTB/BAA: Standard Operating Procedures for Data Analysis" />
-  
-  <meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination." />
-  
-
-<meta name="author" content="Colorado State University Coding Team" />
-
-
-<meta name="date" content="2022-11-03" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="initial-mouse-characteristics.html"/>
-<link rel="next" href="colony-forming-units-to-determine-bacterial-counts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Mouse Weights | Connect R to Microsoft Teams</title>
+<meta name="author" content="Taru Dutt">
+<meta name="description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Mouse Weights | Connect R to Microsoft Teams">
+<meta property="og:type" content="book">
+<meta property="og:description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Mouse Weights | Connect R to Microsoft Teams">
+<meta name="twitter:description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Bookdown CSU Coding Team Example</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-the-project"><i class="fa fa-check"></i><b>1.1</b> About the project</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.2</b> About this book</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="experimental-metadata.html"><a href="experimental-metadata.html"><i class="fa fa-check"></i><b>2</b> Experimental metadata</a></li>
-<li class="chapter" data-level="3" data-path="initial-mouse-characteristics.html"><a href="initial-mouse-characteristics.html"><i class="fa fa-check"></i><b>3</b> Initial mouse characteristics</a></li>
-<li class="chapter" data-level="4" data-path="mouse-weights.html"><a href="mouse-weights.html"><i class="fa fa-check"></i><b>4</b> Mouse Weights</a>
-<ul>
-<li class="chapter" data-level="4.0.1" data-path="mouse-weights.html"><a href="mouse-weights.html#overview-1"><i class="fa fa-check"></i><b>4.0.1</b> Overview</a></li>
-<li class="chapter" data-level="4.0.2" data-path="mouse-weights.html"><a href="mouse-weights.html#parameters"><i class="fa fa-check"></i><b>4.0.2</b> Parameters</a></li>
-<li class="chapter" data-level="4.0.3" data-path="mouse-weights.html"><a href="mouse-weights.html#read-in-data"><i class="fa fa-check"></i><b>4.0.3</b> Read in data</a></li>
-<li class="chapter" data-level="4.0.4" data-path="mouse-weights.html"><a href="mouse-weights.html#can-also-use-rio-to-read-in-the-data-more-streamlined"><i class="fa fa-check"></i><b>4.0.4</b> Can also use rio to read in the data, more streamlined</a></li>
-<li class="chapter" data-level="4.0.5" data-path="mouse-weights.html"><a href="mouse-weights.html#clean-data"><i class="fa fa-check"></i><b>4.0.5</b> Clean data</a></li>
-<li class="chapter" data-level="4.0.6" data-path="mouse-weights.html"><a href="mouse-weights.html#body-weight-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.6</b> Body weight over time graph and statistics</a></li>
-<li class="chapter" data-level="4.0.7" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-loss-over-time-graph-and-statistics"><i class="fa fa-check"></i><b>4.0.7</b> Weight loss over time graph and statistics</a></li>
-<li class="chapter" data-level="4.0.8" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-cfu"><i class="fa fa-check"></i><b>4.0.8</b> Weight vs CFU</a></li>
-<li class="chapter" data-level="4.0.9" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-elisa-results"><i class="fa fa-check"></i><b>4.0.9</b> Weight vs ELISA results</a></li>
-<li class="chapter" data-level="4.0.10" data-path="mouse-weights.html"><a href="mouse-weights.html#weight-vs-lesion-burden"><i class="fa fa-check"></i><b>4.0.10</b> Weight vs lesion burden</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html"><i class="fa fa-check"></i><b>5</b> Colony forming units to determine bacterial counts</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#data-description"><i class="fa fa-check"></i><b>5.1</b> Data description</a></li>
-<li class="chapter" data-level="5.2" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#read-in-data-1"><i class="fa fa-check"></i><b>5.2</b> Read in data</a></li>
-<li class="chapter" data-level="5.3" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-one"><i class="fa fa-check"></i><b>5.3</b> Example one</a></li>
-<li class="chapter" data-level="5.4" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis-and-quality-checks"><i class="fa fa-check"></i><b>5.4</b> Exploratory analysis and quality checks</a></li>
-<li class="chapter" data-level="5.5" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#exploratory-analysis"><i class="fa fa-check"></i><b>5.5</b> Exploratory analysis</a></li>
-<li class="chapter" data-level="5.6" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#identify-a-good-dilution-for-each-sample"><i class="fa fa-check"></i><b>5.6</b> Identify a good dilution for each sample</a></li>
-<li class="chapter" data-level="5.7" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fa fa-check"></i><b>5.7</b> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
-<li class="chapter" data-level="5.8" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#create-initial-report-information-for-these-data"><i class="fa fa-check"></i><b>5.8</b> Create initial report information for these data</a></li>
-<li class="chapter" data-level="5.9" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#sample-anova"><i class="fa fa-check"></i><b>5.9</b> Sample ANOVA</a></li>
-<li class="chapter" data-level="5.10" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#save-processed-data-to-database"><i class="fa fa-check"></i><b>5.10</b> Save processed data to database</a></li>
-<li class="chapter" data-level="5.11" data-path="colony-forming-units-to-determine-bacterial-counts.html"><a href="colony-forming-units-to-determine-bacterial-counts.html#example-two"><i class="fa fa-check"></i><b>5.11</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html"><i class="fa fa-check"></i><b>6</b> Enzyme-linked immunosorbest assay (ELISA)</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#importance-of-elisa"><i class="fa fa-check"></i><b>6.1</b> <strong>Importance of ELISA</strong></a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#principle-of-elisa"><i class="fa fa-check"></i><b>6.1.1</b> <strong>Principle of ELISA</strong></a></li>
-<li class="chapter" data-level="6.1.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#loading-libraries"><i class="fa fa-check"></i><b>6.1.2</b> Loading libraries</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#elisa-data-analysis"><i class="fa fa-check"></i><b>6.2</b> ELISA data analysis</a></li>
-<li class="chapter" data-level="6.3" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#fitting-sigmoid-model"><i class="fa fa-check"></i><b>6.3</b> <strong>1. Fitting sigmoid model:</strong></a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#an-example-of-the-fitting-sigmoid-model-is-below"><i class="fa fa-check"></i><b>6.3.1</b> An example of the fitting sigmoid model is below:</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#endpoint-titer-method"><i class="fa fa-check"></i><b>6.4</b> 2. Endpoint titer method</a>
-<ul>
-<li class="chapter" data-level="6.4.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values."><i class="fa fa-check"></i><b>6.4.1</b> Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.</a></li>
-<li class="chapter" data-level="6.4.2" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#other-methods-to-analyze-elisa-data"><i class="fa fa-check"></i><b>6.4.2</b> Other methods to analyze ELISA data</a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset"><i class="fa fa-check"></i><b>6.5</b> Apply the fitting sigmoid model and endpoint titer function in our dataset</a>
-<ul>
-<li class="chapter" data-level="6.5.1" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#creating-a-function-for-fitting-model"><i class="fa fa-check"></i><b>6.5.1</b> Creating a function for fitting model</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="enzyme-linked-immunosorbest-assay-elisa.html"><a href="enzyme-linked-immunosorbest-assay-elisa.html#create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer"><i class="fa fa-check"></i><b>6.6</b> Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="flow-cytometry.html"><a href="flow-cytometry.html"><i class="fa fa-check"></i><b>7</b> Flow cytometry</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-packages"><i class="fa fa-check"></i><b>7.1</b> Loading packages</a></li>
-<li class="chapter" data-level="7.2" data-path="flow-cytometry.html"><a href="flow-cytometry.html#panel-information"><i class="fa fa-check"></i><b>7.2</b> panel information</a></li>
-<li class="chapter" data-level="7.3" data-path="flow-cytometry.html"><a href="flow-cytometry.html#loading-data"><i class="fa fa-check"></i><b>7.3</b> Loading data</a></li>
-<li class="chapter" data-level="7.4" data-path="flow-cytometry.html"><a href="flow-cytometry.html#making-the-data-tidy-for-plotting"><i class="fa fa-check"></i><b>7.4</b> Making the data tidy for plotting</a></li>
-<li class="chapter" data-level="7.5" data-path="flow-cytometry.html"><a href="flow-cytometry.html#boxplot"><i class="fa fa-check"></i><b>7.5</b> boxplot</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="pathology.html"><a href="pathology.html"><i class="fa fa-check"></i><b>8</b> Pathology</a></li>
-<li class="chapter" data-level="9" data-path="proteomics.html"><a href="proteomics.html"><i class="fa fa-check"></i><b>9</b> Proteomics</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Connect R to Microsoft Teams</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
+<li><a class="" href="experimental-metadata.html"><span class="header-section-number">2</span> Experimental metadata</a></li>
+<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
+<li><a class="active" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
+<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="" href="elisa-data-processing.html"><span class="header-section-number">7</span> ELISA data processing</a></li>
+<li><a class="" href="flow-cytometry.html"><span class="header-section-number">8</span> Flow cytometry</a></li>
+<li><a class="" href="pathology.html"><span class="header-section-number">9</span> Pathology</a></li>
+<li><a class="" href="proteomics.html"><span class="header-section-number">10</span> Proteomics</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="mouse-weights" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Mouse Weights</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="mouse-weights" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Mouse Weights<a class="anchor" aria-label="anchor" href="#mouse-weights"><i class="fas fa-link"></i></a>
+</h1>
 <div id="overview-1" class="section level3" number="4.0.1">
-<h3><span class="header-section-number">4.0.1</span> Overview</h3>
-<p>Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease <span class="citation">(<a href="#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans <span class="citation">(<a href="#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration <span class="citation">(<a href="#ref-baazim2019cd8" role="doc-biblioref">Baazim et al. 2019</a>)</span>, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.</p>
-<p>In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies <span class="citation">(<a href="#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>; <a href="#ref-segueni2016controlled" role="doc-biblioref">Segueni et al. 2016</a>)</span>. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers <span class="citation">(<a href="#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>)</span>. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.</p>
+<h3>
+<span class="header-section-number">4.0.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration <span class="citation">(<a href="references.html#ref-baazim2019cd8" role="doc-biblioref">Baazim et al. 2019</a>)</span>, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.</p>
+<p>In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>; <a href="references.html#ref-segueni2016controlled" role="doc-biblioref">Segueni et al. 2016</a>)</span>. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>)</span>. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.</p>
 <p>The following contains information about how the data was collected, organized, and curated for analysis in RStudio.</p>
 </div>
 <div id="parameters" class="section level3" number="4.0.2">
-<h3><span class="header-section-number">4.0.2</span> Parameters</h3>
+<h3>
+<span class="header-section-number">4.0.2</span> Parameters<a class="anchor" aria-label="anchor" href="#parameters"><i class="fas fa-link"></i></a>
+</h3>
 <p>Weights are recorded in an excel worksheet.</p>
 <p>Column titles are as follows:</p>
 <ul>
-<li><code>who_collected</code>: Record the first name of the person who actually handled the mouse from the scale.</li>
-<li><code>date_collected</code>: Record the date using quotation marks, with the month, then day, then year. For example, “May 31, 2022.”</li>
-<li><code>sex</code>: Record as “m” for male or “f” for female</li>
-<li><code>notch_id</code>: Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be “0” for no notches, “1R” for one notch in the right ear, “1L” for one notch in the left ear, and “1R1L” for one notch in each ear.</li>
-<li><code>mouse_number</code></li>
-<li><code>weight</code>: Record as a number, with a unit in this column. The next column will be used for the units.</li>
-<li><code>unit</code>: Provide the units that were used to take the weight (e.g., “g” for grams)</li>
-<li><code>cage_number</code>: Provide the cage number. If a provisional cage number is being used, … If the mouse was switched from its original cage, …</li>
-<li><code>group</code>: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb</li>
-<li><code>notes</code>: The notes column contains information regarding clinical observations.</li>
+<li>
+<code>who_collected</code>: Record the first name of the person who actually handled the mouse from the scale.</li>
+<li>
+<code>date_collected</code>: Record the date using quotation marks, with the month, then day, then year. For example, “May 31, 2022.”</li>
+<li>
+<code>sex</code>: Record as “m” for male or “f” for female</li>
+<li>
+<code>notch_id</code>: Record the ear notch pattern in the mouse. Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be “0” for no notches, “1R” for one notch in the right ear, “1L” for one notch in the left ear, and “1R1L” for one notch in each ear.</li>
+<li>
+<code>mouse_number</code>: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch “1L” might be given the number “1”; if so, its number should always be recorded in this column as “1”). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study.</li>
+<li>
+<code>weight</code>: Record as a number, with a unit in this column. The next column will be used for the units.</li>
+<li>
+<code>unit</code>: Provide the units that were used to take the weight (e.g., “g” for grams)</li>
+<li>
+<code>cage_number</code>: Provide the cage number. If a provisional cage number is being used, … If the mouse was switched from its original cage, …</li>
+<li>
+<code>group</code>: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb</li>
+<li>
+<code>notes</code>: The notes column contains information regarding clinical observations.</li>
 </ul>
 <p>good reference: <a href="https://elifesciences.org/articles/74419#s4" class="uri">https://elifesciences.org/articles/74419#s4</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="mouse-weights.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-2"><a href="mouse-weights.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="read-in-data" class="section level3" number="4.0.3">
-<h3><span class="header-section-number">4.0.3</span> Read in data</h3>
+<h3>
+<span class="header-section-number">4.0.3</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data"><i class="fas fa-link"></i></a>
+</h3>
 <p>Data is stored in one excel sheet, each week is one sheet named as the date -&gt; return vector for each sheet name</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="mouse-weights.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to add unique mouse IDs based on their most up-to-date cages</span></span>
-<span id="cb2-2"><a href="mouse-weights.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># By using the most up-to-date cages, we can use an ID that will be easy </span></span>
-<span id="cb2-3"><a href="mouse-weights.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to use to identify a specific mouse at the current time (for example, </span></span>
-<span id="cb2-4"><a href="mouse-weights.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># if you need to ID a mouse with a large change in weight that has happened</span></span>
-<span id="cb2-5"><a href="mouse-weights.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># recently.)</span></span>
-<span id="cb2-6"><a href="mouse-weights.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb2-7"><a href="mouse-weights.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># !! NEED TO CHANGE: Right now, it would miss mice that were sacrificed / died</span></span>
-<span id="cb2-8"><a href="mouse-weights.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># !! before the latest time point that was collected</span></span>
-<span id="cb2-9"><a href="mouse-weights.html#cb2-9" aria-hidden="true" tabindex="-1"></a>add_latest_mouse_id <span class="ot">&lt;-</span> <span class="cf">function</span>(mouse_weight_data) {</span>
-<span id="cb2-10"><a href="mouse-weights.html#cb2-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-11"><a href="mouse-weights.html#cb2-11" aria-hidden="true" tabindex="-1"></a>  mouse_weight_data <span class="ot">&lt;-</span> mouse_weight_data <span class="sc">%&gt;%</span></span>
-<span id="cb2-12"><a href="mouse-weights.html#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">current_cage =</span> <span class="fu">case_when</span>(</span>
-<span id="cb2-13"><a href="mouse-weights.html#cb2-13" aria-hidden="true" tabindex="-1"></a>    date_collected <span class="sc">!=</span> <span class="fu">last</span>(date_collected) <span class="sc">~</span> <span class="fu">as.character</span>(<span class="cn">NA</span>),</span>
-<span id="cb2-14"><a href="mouse-weights.html#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(new_cage_number) <span class="sc">~</span> new_cage_number, </span>
-<span id="cb2-15"><a href="mouse-weights.html#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> existing_cage_number</span>
-<span id="cb2-16"><a href="mouse-weights.html#cb2-16" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb2-17"><a href="mouse-weights.html#cb2-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">mouse_id =</span> <span class="fu">if_else</span>(<span class="sc">!</span><span class="fu">is.na</span>(current_cage), </span>
-<span id="cb2-18"><a href="mouse-weights.html#cb2-18" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">paste</span>(current_cage, notch_id, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>), </span>
-<span id="cb2-19"><a href="mouse-weights.html#cb2-19" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">as.character</span>(<span class="cn">NA</span>)))</span>
-<span id="cb2-20"><a href="mouse-weights.html#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mouse_weight_data)</span>
-<span id="cb2-21"><a href="mouse-weights.html#cb2-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-22"><a href="mouse-weights.html#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="mouse-weights.html#cb2-23" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="fu">add_latest_mouse_id</span>(ex)</span>
-<span id="cb2-24"><a href="mouse-weights.html#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="mouse-weights.html#cb2-25" aria-hidden="true" tabindex="-1"></a>ex <span class="sc">%&gt;%</span> </span>
-<span id="cb2-26"><a href="mouse-weights.html#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mouse_id =</span> <span class="fu">case_when</span>(</span>
-<span id="cb2-27"><a href="mouse-weights.html#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Only create for the first time point, otherwise set to NA</span></span>
-<span id="cb2-28"><a href="mouse-weights.html#cb2-28" aria-hidden="true" tabindex="-1"></a>    date_collected <span class="sc">!=</span> <span class="fu">first</span>(date_collected) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb2-29"><a href="mouse-weights.html#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the new cage number is missing, it means the animal did not </span></span>
-<span id="cb2-30"><a href="mouse-weights.html#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># change cages, so you can use the existing cage number</span></span>
-<span id="cb2-31"><a href="mouse-weights.html#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(new_cage_number) <span class="sc">~</span> <span class="fu">paste</span>(existing_cage_number, notch_id, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>),</span>
-<span id="cb2-32"><a href="mouse-weights.html#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(new_cage_number, notch_id, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>)</span>
-<span id="cb2-33"><a href="mouse-weights.html#cb2-33" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Function to add unique mouse IDs based on their most up-to-date cages</span>
+<span class="co"># By using the most up-to-date cages, we can use an ID that will be easy </span>
+<span class="co"># to use to identify a specific mouse at the current time (for example, </span>
+<span class="co"># if you need to ID a mouse with a large change in weight that has happened</span>
+<span class="co"># recently.)</span>
+<span class="co">#</span>
+<span class="co"># !! NEED TO CHANGE: Right now, it would miss mice that were sacrificed / died</span>
+<span class="co"># !! before the latest time point that was collected</span>
+<span class="va">add_latest_mouse_id</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mouse_weight_data</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="va">mouse_weight_data</span> <span class="op">&lt;-</span> <span class="va">mouse_weight_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>current_cage <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+    <span class="va">date_collected</span> <span class="op">!=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">last</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>,
+    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">new_cage_number</span><span class="op">)</span> <span class="op">~</span> <span class="va">new_cage_number</span>, 
+    <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">existing_cage_number</span>
+  <span class="op">)</span>,
+         mouse_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">current_cage</span><span class="op">)</span>, 
+                            <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">current_cage</span>, <span class="va">notch_id</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>, 
+                            <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mouse_weight_data</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">add_latest_mouse_id</span><span class="op">(</span><span class="va">ex</span><span class="op">)</span>
+
+<span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mouse_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+    <span class="co"># Only create for the first time point, otherwise set to NA</span>
+    <span class="va">date_collected</span> <span class="op">!=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span> <span class="op">~</span> <span class="cn">NA_character_</span>,
+    <span class="co"># If the new cage number is missing, it means the animal did not </span>
+    <span class="co"># change cages, so you can use the existing cage number</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">new_cage_number</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">existing_cage_number</span>, <span class="va">notch_id</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>,
+    <span class="cn">TRUE</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">new_cage_number</span>, <span class="va">notch_id</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 980 × 14
 ##    who_collected date_collected sex   dob        notch_id mouse_number weight
 ##    &lt;chr&gt;         &lt;date&gt;         &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
@@ -326,21 +157,22 @@ div.csl-indent {
 ## # … with 970 more rows, and 7 more variables: unit &lt;chr&gt;,
 ## #   existing_cage_number &lt;chr&gt;, new_cage_number &lt;chr&gt;, group &lt;chr&gt;,
 ## #   notes &lt;chr&gt;, current_cage &lt;chr&gt;, mouse_id &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="mouse-weights.html#cb4-1" aria-hidden="true" tabindex="-1"></a>add_first_mouse_id <span class="ot">&lt;-</span> <span class="cf">function</span>(mouse_weight_data) {</span>
-<span id="cb4-2"><a href="mouse-weights.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-3"><a href="mouse-weights.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  mouse_weight_data <span class="ot">&lt;-</span> mouse_weight_data <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="mouse-weights.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mouse_id =</span> <span class="fu">case_when</span>(</span>
-<span id="cb4-5"><a href="mouse-weights.html#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Only create for the first time point, otherwise set to NA</span></span>
-<span id="cb4-6"><a href="mouse-weights.html#cb4-6" aria-hidden="true" tabindex="-1"></a>    date_collected <span class="sc">!=</span> <span class="fu">first</span>(date_collected) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb4-7"><a href="mouse-weights.html#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the new cage number is missing, it means the animal did not </span></span>
-<span id="cb4-8"><a href="mouse-weights.html#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># change cages, so you can use the existing cage number</span></span>
-<span id="cb4-9"><a href="mouse-weights.html#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(new_cage_number) <span class="sc">~</span> <span class="fu">paste</span>(existing_cage_number, notch_id, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>),</span>
-<span id="cb4-10"><a href="mouse-weights.html#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">paste</span>(new_cage_number, notch_id, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>)</span>
-<span id="cb4-11"><a href="mouse-weights.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb4-12"><a href="mouse-weights.html#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mouse_weight_data)</span>
-<span id="cb4-13"><a href="mouse-weights.html#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-14"><a href="mouse-weights.html#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="mouse-weights.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">add_latest_mouse_id</span>(ex)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">add_first_mouse_id</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mouse_weight_data</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="va">mouse_weight_data</span> <span class="op">&lt;-</span> <span class="va">mouse_weight_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mouse_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+    <span class="co"># Only create for the first time point, otherwise set to NA</span>
+    <span class="va">date_collected</span> <span class="op">!=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span> <span class="op">~</span> <span class="cn">NA_character_</span>,
+    <span class="co"># If the new cage number is missing, it means the animal did not </span>
+    <span class="co"># change cages, so you can use the existing cage number</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">new_cage_number</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">existing_cage_number</span>, <span class="va">notch_id</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>,
+    <span class="cn">TRUE</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">new_cage_number</span>, <span class="va">notch_id</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mouse_weight_data</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">add_latest_mouse_id</span><span class="op">(</span><span class="va">ex</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 980 × 14
 ##    who_collected date_collected sex   dob        notch_id mouse_number weight
 ##    &lt;chr&gt;         &lt;date&gt;         &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
@@ -357,64 +189,67 @@ div.csl-indent {
 ## # … with 970 more rows, and 7 more variables: unit &lt;chr&gt;,
 ## #   existing_cage_number &lt;chr&gt;, new_cage_number &lt;chr&gt;, group &lt;chr&gt;,
 ## #   notes &lt;chr&gt;, current_cage &lt;chr&gt;, mouse_id &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="mouse-weights.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to get the cage history of a mouse based on it&#39;s latest mouse ID</span></span>
-<span id="cb6-2"><a href="mouse-weights.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and the mouse weight data. This works back through cage changes to track the </span></span>
-<span id="cb6-3"><a href="mouse-weights.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cages that a mouse has been in over the course of the experiment. </span></span>
-<span id="cb6-4"><a href="mouse-weights.html#cb6-4" aria-hidden="true" tabindex="-1"></a>get_cage_history <span class="ot">&lt;-</span> <span class="cf">function</span>(latest_mouse_id, </span>
-<span id="cb6-5"><a href="mouse-weights.html#cb6-5" aria-hidden="true" tabindex="-1"></a>                             mouse_weight_data) {</span>
-<span id="cb6-6"><a href="mouse-weights.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-7"><a href="mouse-weights.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  cage_history <span class="ot">&lt;-</span> latest_mouse_id <span class="sc">%&gt;%</span> </span>
-<span id="cb6-8"><a href="mouse-weights.html#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">-.+&quot;</span>)</span>
-<span id="cb6-9"><a href="mouse-weights.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  last_cage <span class="ot">&lt;-</span> cage_history[<span class="dv">1</span>]</span>
-<span id="cb6-10"><a href="mouse-weights.html#cb6-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-11"><a href="mouse-weights.html#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="fu">length</span>(last_cage) <span class="sc">&gt;</span> <span class="dv">0</span>){</span>
-<span id="cb6-12"><a href="mouse-weights.html#cb6-12" aria-hidden="true" tabindex="-1"></a>    last_cage <span class="ot">&lt;-</span> mouse_weight_data <span class="sc">%&gt;%</span> </span>
-<span id="cb6-13"><a href="mouse-weights.html#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(new_cage_number <span class="sc">==</span> last_cage) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-14"><a href="mouse-weights.html#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(existing_cage_number)</span>
-<span id="cb6-15"><a href="mouse-weights.html#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(last_cage) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb6-16"><a href="mouse-weights.html#cb6-16" aria-hidden="true" tabindex="-1"></a>      cage_history <span class="ot">&lt;-</span> <span class="fu">c</span>(cage_history, last_cage)</span>
-<span id="cb6-17"><a href="mouse-weights.html#cb6-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-18"><a href="mouse-weights.html#cb6-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-19"><a href="mouse-weights.html#cb6-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-20"><a href="mouse-weights.html#cb6-20" aria-hidden="true" tabindex="-1"></a>  cage_history <span class="ot">&lt;-</span> <span class="fu">unique</span>(cage_history)</span>
-<span id="cb6-21"><a href="mouse-weights.html#cb6-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-22"><a href="mouse-weights.html#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cage_history)</span>
-<span id="cb6-23"><a href="mouse-weights.html#cb6-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-24"><a href="mouse-weights.html#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="mouse-weights.html#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">get_cage_history</span>(<span class="at">latest_mouse_id =</span> <span class="st">&quot;22009A-0&quot;</span>, </span>
-<span id="cb6-26"><a href="mouse-weights.html#cb6-26" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mouse_weight_data =</span> ex)</span></code></pre></div>
-<pre><code>## [1] &quot;22009A&quot; &quot;22009&quot;</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="mouse-weights.html#cb8-1" aria-hidden="true" tabindex="-1"></a>ex_cage_history <span class="ot">&lt;-</span> <span class="fu">get_cage_history</span>(<span class="at">latest_mouse_id =</span> <span class="st">&quot;22009A-0&quot;</span>, </span>
-<span id="cb8-2"><a href="mouse-weights.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mouse_weight_data =</span> ex)</span>
-<span id="cb8-3"><a href="mouse-weights.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="mouse-weights.html#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="mouse-weights.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the function to get cage histories for all the mice</span></span>
-<span id="cb8-6"><a href="mouse-weights.html#cb8-6" aria-hidden="true" tabindex="-1"></a>latest_mouse_ids <span class="ot">&lt;-</span> ex <span class="sc">%&gt;%</span> </span>
-<span id="cb8-7"><a href="mouse-weights.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mouse_id)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-8"><a href="mouse-weights.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mouse_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-9"><a href="mouse-weights.html#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
-<span id="cb8-10"><a href="mouse-weights.html#cb8-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-11"><a href="mouse-weights.html#cb8-11" aria-hidden="true" tabindex="-1"></a>mouse_cage_histories <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(latest_mouse_ids, get_cage_history, </span>
-<span id="cb8-12"><a href="mouse-weights.html#cb8-12" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">mouse_weight_data =</span> ex)</span>
-<span id="cb8-13"><a href="mouse-weights.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mouse_cage_histories) <span class="ot">&lt;-</span> latest_mouse_ids</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="mouse-weights.html#cb9-1" aria-hidden="true" tabindex="-1"></a>add_one_mouse_id <span class="ot">&lt;-</span> <span class="cf">function</span>(latest_mouse_id, cage_history, mouse_weight_data) {</span>
-<span id="cb9-2"><a href="mouse-weights.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-3"><a href="mouse-weights.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  mouse_notch <span class="ot">&lt;-</span> <span class="fu">str_remove</span>(latest_mouse_id, <span class="st">&quot;.+</span><span class="sc">\\</span><span class="st">-&quot;</span>)</span>
-<span id="cb9-4"><a href="mouse-weights.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-5"><a href="mouse-weights.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  mouse_weight_data <span class="ot">&lt;-</span> mouse_weight_data <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="mouse-weights.html#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mouse_id =</span> <span class="fu">if_else</span>((existing_cage_number <span class="sc">%in%</span> cage_history) <span class="sc">&amp;</span> </span>
-<span id="cb9-7"><a href="mouse-weights.html#cb9-7" aria-hidden="true" tabindex="-1"></a>                                notch_id <span class="sc">==</span> mouse_notch, </span>
-<span id="cb9-8"><a href="mouse-weights.html#cb9-8" aria-hidden="true" tabindex="-1"></a>           latest_mouse_id, </span>
-<span id="cb9-9"><a href="mouse-weights.html#cb9-9" aria-hidden="true" tabindex="-1"></a>           mouse_id))</span>
-<span id="cb9-10"><a href="mouse-weights.html#cb9-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-11"><a href="mouse-weights.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mouse_weight_data)</span>
-<span id="cb9-12"><a href="mouse-weights.html#cb9-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-13"><a href="mouse-weights.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="mouse-weights.html#cb9-14" aria-hidden="true" tabindex="-1"></a>ex2 <span class="ot">&lt;-</span> <span class="fu">add_one_mouse_id</span>(<span class="at">latest_mouse_id =</span> <span class="fu">names</span>(mouse_cage_histories)[<span class="dv">1</span>], </span>
-<span id="cb9-15"><a href="mouse-weights.html#cb9-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cage_history =</span> mouse_cage_histories[[<span class="dv">1</span>]], </span>
-<span id="cb9-16"><a href="mouse-weights.html#cb9-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mouse_weight_data =</span> ex)</span>
-<span id="cb9-17"><a href="mouse-weights.html#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="mouse-weights.html#cb9-18" aria-hidden="true" tabindex="-1"></a>ex2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(existing_cage_number <span class="sc">==</span> <span class="st">&quot;22003&quot;</span> <span class="sc">&amp;</span> notch_id <span class="sc">==</span> <span class="st">&quot;0&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Function to get the cage history of a mouse based on it's latest mouse ID</span>
+<span class="co"># and the mouse weight data. This works back through cage changes to track the </span>
+<span class="co"># cages that a mouse has been in over the course of the experiment. </span>
+<span class="va">get_cage_history</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">latest_mouse_id</span>, 
+                             <span class="va">mouse_weight_data</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="va">cage_history</span> <span class="op">&lt;-</span> <span class="va">latest_mouse_id</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="st">"\\-.+"</span><span class="op">)</span>
+  <span class="va">last_cage</span> <span class="op">&lt;-</span> <span class="va">cage_history</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+  
+  <span class="kw">while</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">last_cage</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">last_cage</span> <span class="op">&lt;-</span> <span class="va">mouse_weight_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">new_cage_number</span> <span class="op">==</span> <span class="va">last_cage</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">existing_cage_number</span><span class="op">)</span>
+    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">last_cage</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">cage_history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cage_history</span>, <span class="va">last_cage</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+  
+  <span class="va">cage_history</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">cage_history</span><span class="op">)</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">cage_history</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu">get_cage_history</span><span class="op">(</span>latest_mouse_id <span class="op">=</span> <span class="st">"22009A-0"</span>, 
+                 mouse_weight_data <span class="op">=</span> <span class="va">ex</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "22009A" "22009"</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ex_cage_history</span> <span class="op">&lt;-</span> <span class="fu">get_cage_history</span><span class="op">(</span>latest_mouse_id <span class="op">=</span> <span class="st">"22009A-0"</span>, 
+                 mouse_weight_data <span class="op">=</span> <span class="va">ex</span><span class="op">)</span>
+
+
+<span class="co"># Use the function to get cage histories for all the mice</span>
+<span class="va">latest_mouse_ids</span> <span class="op">&lt;-</span> <span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mouse_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
+  
+<span class="va">mouse_cage_histories</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">latest_mouse_ids</span>, <span class="va">get_cage_history</span>, 
+                                   mouse_weight_data <span class="op">=</span> <span class="va">ex</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mouse_cage_histories</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">latest_mouse_ids</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">add_one_mouse_id</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">latest_mouse_id</span>, <span class="va">cage_history</span>, <span class="va">mouse_weight_data</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="va">mouse_notch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">latest_mouse_id</span>, <span class="st">".+\\-"</span><span class="op">)</span>
+  
+  <span class="va">mouse_weight_data</span> <span class="op">&lt;-</span> <span class="va">mouse_weight_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mouse_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="op">(</span><span class="va">existing_cage_number</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">cage_history</span><span class="op">)</span> <span class="op">&amp;</span> 
+                                <span class="va">notch_id</span> <span class="op">==</span> <span class="va">mouse_notch</span>, 
+           <span class="va">latest_mouse_id</span>, 
+           <span class="va">mouse_id</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mouse_weight_data</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">ex2</span> <span class="op">&lt;-</span> <span class="fu">add_one_mouse_id</span><span class="op">(</span>latest_mouse_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mouse_cage_histories</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, 
+                 cage_history <span class="op">=</span> <span class="va">mouse_cage_histories</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, 
+                 mouse_weight_data <span class="op">=</span> <span class="va">ex</span><span class="op">)</span>
+
+<span class="va">ex2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">existing_cage_number</span> <span class="op">==</span> <span class="st">"22003"</span> <span class="op">&amp;</span> <span class="va">notch_id</span> <span class="op">==</span> <span class="st">"0"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 7 × 14
 ##   who_collected date_collected sex   dob        notch_id mouse_number weight
 ##   &lt;chr&gt;         &lt;date&gt;         &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
@@ -428,13 +263,14 @@ div.csl-indent {
 ## # … with 7 more variables: unit &lt;chr&gt;, existing_cage_number &lt;chr&gt;,
 ## #   new_cage_number &lt;chr&gt;, group &lt;chr&gt;, notes &lt;chr&gt;, current_cage &lt;chr&gt;,
 ## #   mouse_id &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="mouse-weights.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mouse_cage_histories)) {</span>
-<span id="cb11-2"><a href="mouse-weights.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  ex <span class="ot">&lt;-</span> <span class="fu">add_one_mouse_id</span>(<span class="at">latest_mouse_id =</span> <span class="fu">names</span>(mouse_cage_histories)[i], </span>
-<span id="cb11-3"><a href="mouse-weights.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cage_history =</span> mouse_cage_histories[[i]], </span>
-<span id="cb11-4"><a href="mouse-weights.html#cb11-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mouse_weight_data =</span> ex) </span>
-<span id="cb11-5"><a href="mouse-weights.html#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-6"><a href="mouse-weights.html#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="mouse-weights.html#cb11-7" aria-hidden="true" tabindex="-1"></a>ex</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">mouse_cage_histories</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">add_one_mouse_id</span><span class="op">(</span>latest_mouse_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mouse_cage_histories</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, 
+                         cage_history <span class="op">=</span> <span class="va">mouse_cage_histories</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, 
+                         mouse_weight_data <span class="op">=</span> <span class="va">ex</span><span class="op">)</span> 
+<span class="op">}</span>
+
+<span class="va">ex</span></code></pre></div>
 <pre><code>## # A tibble: 980 × 14
 ##    who_collected date_collected sex   dob        notch_id mouse_number weight
 ##    &lt;chr&gt;         &lt;date&gt;         &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;
@@ -451,126 +287,112 @@ div.csl-indent {
 ## # … with 970 more rows, and 7 more variables: unit &lt;chr&gt;,
 ## #   existing_cage_number &lt;chr&gt;, new_cage_number &lt;chr&gt;, group &lt;chr&gt;,
 ## #   notes &lt;chr&gt;, current_cage &lt;chr&gt;, mouse_id &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="mouse-weights.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore this data a bit</span></span>
-<span id="cb13-2"><a href="mouse-weights.html#cb13-2" aria-hidden="true" tabindex="-1"></a>ex <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="mouse-weights.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_collected, <span class="at">y =</span> weight, <span class="at">group =</span> mouse_id, <span class="at">color =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb13-4"><a href="mouse-weights.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb13-5"><a href="mouse-weights.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> group)</span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="mouse-weights.html#cb14-1" aria-hidden="true" tabindex="-1"></a>ex <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="mouse-weights.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_collected, <span class="at">y =</span> weight, <span class="at">color =</span> who_collected)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="mouse-weights.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
-<span id="cb15-2"><a href="mouse-weights.html#cb15-2" aria-hidden="true" tabindex="-1"></a>ex <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="mouse-weights.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_collected <span class="sc">==</span> <span class="fu">last</span>(date_collected)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="mouse-weights.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> weight)) <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="mouse-weights.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="fu">aes</span>(<span class="at">color =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb15-6"><a href="mouse-weights.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
-<p><img src="csu-impactb_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Explore this data a bit</span>
+<span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_collected</span>, y <span class="op">=</span> <span class="va">weight</span>, group <span class="op">=</span> <span class="va">mouse_id</span>, color <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_collected</span>, y <span class="op">=</span> <span class="va">weight</span>, color <span class="op">=</span> <span class="va">who_collected</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-8-2.png" width="672"></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm">ggbeeswarm</a></span><span class="op">)</span>
+<span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_collected</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">last</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">group</span>, y <span class="op">=</span> <span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-8-3.png" width="672"></div>
 </div>
 <div id="can-also-use-rio-to-read-in-the-data-more-streamlined" class="section level3" number="4.0.4">
-<h3><span class="header-section-number">4.0.4</span> Can also use rio to read in the data, more streamlined</h3>
+<h3>
+<span class="header-section-number">4.0.4</span> Can also use rio to read in the data, more streamlined<a class="anchor" aria-label="anchor" href="#can-also-use-rio-to-read-in-the-data-more-streamlined"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 <div id="clean-data" class="section level3" number="4.0.5">
-<h3><span class="header-section-number">4.0.5</span> Clean data</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="mouse-weights.html#cb16-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> data<span class="sc">$</span>before_vaccination <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="mouse-weights.html#cb16-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;mouse_number&quot;</span>, <span class="st">&quot;weight&quot;</span>, <span class="st">&quot;existing_cage_number&quot;</span>, <span class="st">&quot;group&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="mouse-weights.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combining columns mouse_number and cage_number</span></span>
-<span id="cb17-2"><a href="mouse-weights.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="mouse-weights.html#cb17-3" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>mouse_id <span class="ot">&lt;-</span> <span class="fu">paste</span>(dataset<span class="sc">$</span>mouse_number, <span class="st">&quot;-&quot;</span>, dataset<span class="sc">$</span>cage_number)</span></code></pre></div>
+<h3>
+<span class="header-section-number">4.0.5</span> Clean data<a class="anchor" aria-label="anchor" href="#clean-data"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">before_vaccination</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+ <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"mouse_number"</span>, <span class="st">"weight"</span>, <span class="st">"existing_cage_number"</span>, <span class="st">"group"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># combining columns mouse_number and cage_number</span>
+
+<span class="va">dataset</span><span class="op">$</span><span class="va">mouse_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">$</span><span class="va">mouse_number</span>, <span class="st">"-"</span>, <span class="va">dataset</span><span class="op">$</span><span class="va">cage_number</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="body-weight-over-time-graph-and-statistics" class="section level3" number="4.0.6">
-<h3><span class="header-section-number">4.0.6</span> Body weight over time graph and statistics</h3>
+<h3>
+<span class="header-section-number">4.0.6</span> Body weight over time graph and statistics<a class="anchor" aria-label="anchor" href="#body-weight-over-time-graph-and-statistics"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 <div id="weight-loss-over-time-graph-and-statistics" class="section level3" number="4.0.7">
-<h3><span class="header-section-number">4.0.7</span> Weight loss over time graph and statistics</h3>
+<h3>
+<span class="header-section-number">4.0.7</span> Weight loss over time graph and statistics<a class="anchor" aria-label="anchor" href="#weight-loss-over-time-graph-and-statistics"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 <div id="weight-vs-cfu" class="section level3" number="4.0.8">
-<h3><span class="header-section-number">4.0.8</span> Weight vs CFU</h3>
+<h3>
+<span class="header-section-number">4.0.8</span> Weight vs CFU<a class="anchor" aria-label="anchor" href="#weight-vs-cfu"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 <div id="weight-vs-elisa-results" class="section level3" number="4.0.9">
-<h3><span class="header-section-number">4.0.9</span> Weight vs ELISA results</h3>
+<h3>
+<span class="header-section-number">4.0.9</span> Weight vs ELISA results<a class="anchor" aria-label="anchor" href="#weight-vs-elisa-results"><i class="fas fa-link"></i></a>
+</h3>
 </div>
 <div id="weight-vs-lesion-burden" class="section level3" number="4.0.10">
-<h3><span class="header-section-number">4.0.10</span> Weight vs lesion burden</h3>
+<h3>
+<span class="header-section-number">4.0.10</span> Weight vs lesion burden<a class="anchor" aria-label="anchor" href="#weight-vs-lesion-burden"><i class="fas fa-link"></i></a>
+</h3>
 
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-baazim2022interplay" class="csl-entry">
-Baazim, Hatoon, Laura Antonio-Herrera, and Andreas Bergthaler. 2022. <span>“The Interplay of Immunology and Cachexia in Infection and Cancer.”</span> <em>Nature Reviews Immunology</em> 22 (5): 309–21.
-</div>
-<div id="ref-baazim2019cd8" class="csl-entry">
-Baazim, Hatoon, Martina Schweiger, Michael Moschinger, Haifeng Xu, Thomas Scherer, Alexandra Popa, Suchira Gallage, et al. 2019. <span>“Cd8+ t Cells Induce Cachexia During Chronic Viral Infection.”</span> <em>Nature Immunology</em> 20 (6): 701–10.
-</div>
-<div id="ref-segueni2016controlled" class="csl-entry">
-Segueni, Noria, Elaine Tritto, Marie-Laure Bourigault, Stéphanie Rose, François Erard, Marc Le Bert, Muazzam Jacobs, et al. 2016. <span>“Controlled Mycobacterium Tuberculosis Infection in Mice Under Treatment with Anti-IL-17a or IL-17f Antibodies, in Contrast to TNF-Alpha Neutralization.”</span> <em>Scientific Reports</em> 6 (1): 1–17.
-</div>
-<div id="ref-smith2022host" class="csl-entry">
-Smith, Clare M, Richard E Baker, Megan K Proulx, Bibhuti B Mishra, Jarukit E Long, Sae Woong Park, Ha-Na Lee, et al. 2022. <span>“Host-Pathogen Genetic Interactions Underlie Tuberculosis Susceptibility in Genetically Diverse Mice.”</span> <em>Elife</em> 11: e74419.
-</div>
-</div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></div>
+<div class="next"><a href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#mouse-weights"><span class="header-section-number">4</span> Mouse Weights</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#overview-1"><span class="header-section-number">4.0.1</span> Overview</a></li>
+<li><a class="nav-link" href="#parameters"><span class="header-section-number">4.0.2</span> Parameters</a></li>
+<li><a class="nav-link" href="#read-in-data"><span class="header-section-number">4.0.3</span> Read in data</a></li>
+<li><a class="nav-link" href="#can-also-use-rio-to-read-in-the-data-more-streamlined"><span class="header-section-number">4.0.4</span> Can also use rio to read in the data, more streamlined</a></li>
+<li><a class="nav-link" href="#clean-data"><span class="header-section-number">4.0.5</span> Clean data</a></li>
+<li><a class="nav-link" href="#body-weight-over-time-graph-and-statistics"><span class="header-section-number">4.0.6</span> Body weight over time graph and statistics</a></li>
+<li><a class="nav-link" href="#weight-loss-over-time-graph-and-statistics"><span class="header-section-number">4.0.7</span> Weight loss over time graph and statistics</a></li>
+<li><a class="nav-link" href="#weight-vs-cfu"><span class="header-section-number">4.0.8</span> Weight vs CFU</a></li>
+<li><a class="nav-link" href="#weight-vs-elisa-results"><span class="header-section-number">4.0.9</span> Weight vs ELISA results</a></li>
+<li><a class="nav-link" href="#weight-vs-lesion-burden"><span class="header-section-number">4.0.10</span> Weight vs lesion burden</a></li>
+</ul>
+</li></ul>
 
-          </div>
-        </div>
-      </div>
-<a href="initial-mouse-characteristics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="colony-forming-units-to-determine-bacterial-counts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Connect R to Microsoft Teams</strong>" was written by Taru Dutt. It was last built on 2022-10-19.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["csu-impactb.pdf", "csu-impactb.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
-});
-</script>
 
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>

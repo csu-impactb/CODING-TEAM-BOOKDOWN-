@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 8 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
-<meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
+<title>Chapter 8 Flow cytometry | Connect R to Microsoft Teams</title>
+<meta name="author" content="Taru Dutt">
+<meta name="description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 8 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta property="og:title" content="Chapter 8 Flow cytometry | Connect R to Microsoft Teams">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
+<meta property="og:description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 8 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
+<meta name="twitter:title" content="Chapter 8 Flow cytometry | Connect R to Microsoft Teams">
+<meta name="twitter:description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -27,7 +27,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">ImpactTB/BAA: Standard Operating Procedures for Data Analysis</a>
+        <a href="index.html" title="">Connect R to Microsoft Teams</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -48,7 +48,7 @@
 <li><a class="" href="elisa-data-processing.html"><span class="header-section-number">7</span> ELISA data processing</a></li>
 <li><a class="active" href="flow-cytometry.html"><span class="header-section-number">8</span> Flow cytometry</a></li>
 <li><a class="" href="pathology.html"><span class="header-section-number">9</span> Pathology</a></li>
-<li><a class="" href="pathology-1.html"><span class="header-section-number">10</span> Pathology</a></li>
+<li><a class="" href="proteomics.html"><span class="header-section-number">10</span> Proteomics</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -61,7 +61,7 @@
 <h1>
 <span class="header-section-number">8</span> Flow cytometry<a class="anchor" aria-label="anchor" href="#flow-cytometry"><i class="fas fa-link"></i></a>
 </h1>
-<p>Flow cytometery data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a <code>.csv</code> file. This <code>.csv</code> file is the primary input for this R pipeline which aims to output box plots for each gated cell population.</p>
+<p>Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a <code>.csv</code> file. This <code>.csv</code> file is the primary input for this R pipeline which aims to output box plots for each gated cell population.</p>
 <p>This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.</p>
 <div id="loading-packages" class="section level2" number="8.1">
 <h2>
@@ -291,7 +291,7 @@
                      ref.group <span class="op">=</span> <span class="st">"CNT"</span><span class="op">)</span>
 
 <span class="va">CD3pos_CD11bneg_bar_plot</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-54-1.png" width="480"></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-55-1.png" width="480"></div>
 <div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># CD3neg_CD11bpos_bar_plot</span>
 <span class="co"># CD3neg_CD11bneg_bar_plot</span></code></pre></div>
@@ -326,7 +326,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-09-29.</p>
+    <p>"<strong>Connect R to Microsoft Teams</strong>" was written by Taru Dutt. It was last built on 2022-10-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

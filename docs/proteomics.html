@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Proteomics | Connect R to Microsoft Teams</title>
+<meta name="author" content="Taru Dutt">
+<meta name="description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 10 Proteomics | Connect R to Microsoft Teams">
+<meta property="og:type" content="book">
+<meta property="og:description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 10 Proteomics | Connect R to Microsoft Teams">
+<meta name="twitter:description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Connect R to Microsoft Teams</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
+<li><a class="" href="experimental-metadata.html"><span class="header-section-number">2</span> Experimental metadata</a></li>
+<li><a class="" href="initial-mouse-characteristics.html"><span class="header-section-number">3</span> Initial mouse characteristics</a></li>
+<li><a class="" href="mouse-weights.html"><span class="header-section-number">4</span> Mouse Weights</a></li>
+<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">5</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">6</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="" href="elisa-data-processing.html"><span class="header-section-number">7</span> ELISA data processing</a></li>
+<li><a class="" href="flow-cytometry.html"><span class="header-section-number">8</span> Flow cytometry</a></li>
+<li><a class="" href="pathology.html"><span class="header-section-number">9</span> Pathology</a></li>
+<li><a class="active" href="proteomics.html"><span class="header-section-number">10</span> Proteomics</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="proteomics" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Proteomics<a class="anchor" aria-label="anchor" href="#proteomics"><i class="fas fa-link"></i></a>
+</h1>
+<p>For proteomics data, we will be getting data that have already been collected and
+pre-processed by another part of the team. The following shows an example of the
+type of data we will get as an input:</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+
+<span class="va">prot_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"DATA/Transition Results_CCTSI_A.csv"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Rows: 3393 Columns: 18
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr  (7): Peptide, Protein, Replicate, Fragment Ion, Ratio Dot Product, Tota...
+## dbl (11): Precursor Mz, Precursor Charge, Product Mz, Product Charge, Retent...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prot_a</span></code></pre></div>
+<pre><code>## # A tibble: 3,393 × 18
+##    Peptide     Protein Replicate   `Precursor Mz` `Precursor Char…` `Product Mz`
+##    &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;                &lt;dbl&gt;             &lt;dbl&gt;        &lt;dbl&gt;
+##  1 QELDEISTNIR Cfp10   091322_LT1            659.                 2        1061.
+##  2 QELDEISTNIR Cfp10   091322_LT2            659.                 2        1061.
+##  3 QELDEISTNIR Cfp10   091322_LT3            659.                 2        1061.
+##  4 QELDEISTNIR Cfp10   091322_LT4            659.                 2        1061.
+##  5 QELDEISTNIR Cfp10   091322_LT5            659.                 2        1061.
+##  6 QELDEISTNIR Cfp10   091322_LT6            659.                 2        1061.
+##  7 QELDEISTNIR Cfp10   091322_LT7            659.                 2        1061.
+##  8 QELDEISTNIR Cfp10   091322_LT8            659.                 2        1061.
+##  9 QELDEISTNIR Cfp10   091322_LT10           659.                 2        1061.
+## 10 QELDEISTNIR Cfp10   091322_LT11           659.                 2        1061.
+## # … with 3,383 more rows, and 12 more variables: `Product Charge` &lt;dbl&gt;,
+## #   `Fragment Ion` &lt;chr&gt;, `Retention Time` &lt;dbl&gt;, Area &lt;dbl&gt;, Background &lt;dbl&gt;,
+## #   `Peak Rank` &lt;dbl&gt;, `Ratio Dot Product` &lt;chr&gt;,
+## #   `Total Area Normalized` &lt;chr&gt;, `Total Area Ratio` &lt;chr&gt;,
+## #   `Library Dot Product` &lt;dbl&gt;, RatioLightToHeavy &lt;dbl&gt;,
+## #   DotProductLightToHeavy &lt;dbl&gt;</code></pre>
+<p>These data include the following columns:</p>
+<ul>
+<li>
+<code>Peptide</code>: A short string of peptides that are being measured</li>
+<li>
+<code>Protein</code>: The protein that those peptides come from</li>
+<li>
+<code>Replicate</code>: An identifier for the sample that the measurement was taken on</li>
+<li>
+<code>Precursor Mz</code>, <code>Precursor Charge</code>, <code>Product Mz</code>, <code>Product Charge</code>,
+<code>Fragment Ion</code>, <code>Retention Time</code>: Measurements that help in identifying the peptide
+that is being measured (?)</li>
+<li>
+<code>Area</code>:</li>
+<li>
+<code>Background</code>:</li>
+<li>
+<code>Peak Rank</code>:</li>
+<li>
+<code>Ratio Dot Product</code>:</li>
+<li>
+<code>Total Area Normalized</code>:</li>
+<li><code>Total Area Ratio</code></li>
+<li>
+<code>Library Dot Product</code>:</li>
+<li>
+<code>RatioLightToHeavy</code>:</li>
+<li>
+<code>DotProductLightToHeavy</code>:</li>
+</ul>
+<p>[More about how these data were pre-processed. Softwarei: Skyline]</p>
+<p>Here are all the unique replicates in this file:</p>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">Replicate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>##  [1] "091322_LT1"  "091322_LT2"  "091322_LT3"  "091322_LT4"  "091322_LT5" 
+##  [6] "091322_LT6"  "091322_LT7"  "091322_LT8"  "091322_LT10" "091322_LT11"
+## [11] "091322_LT12" "091322_LT13" "091322_LT14" "091322_H1"   "091322_H2"  
+## [16] "091322_H3"   "091322_H4"   "091322_H5"   "091322_H6"   "091322_H7"  
+## [21] "091322_H8"   "091322_H9"   "091322_H10"  "091322_H11"  "091322_H12" 
+## [26] "091322_H13"  "091322_H14"  "091322_TB1"  "091322_TB2"  "091322_TB3" 
+## [31] "091322_TB4"  "091322_TB5"  "091322_TB6"  "091322_TB7"  "091322_TB8" 
+## [36] "091322_TB9"  "091322_TB10" "091322_TB11" "091322_TB12"</code></pre>
+<p>The three groups in this data are labeled with “LT,” “H,” and “TB” somewhere in
+the identifier. We can create a new column in the dataset that pulls out this
+treatment group information:</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prot_a</span> <span class="op">&lt;-</span> <span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>treatment_group <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">Replicate</span>, <span class="st">"[A-Z]+"</span><span class="op">)</span><span class="op">)</span> 
+
+<span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Peptide</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">Peptide</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">treatment_group</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+## # Groups:   treatment_group [3]
+##   treatment_group     n
+##   &lt;chr&gt;           &lt;int&gt;
+## 1 H                 140
+## 2 LT                130
+## 3 TB                120</code></pre>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Peptide</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">Peptide</span><span class="op">)</span> <span class="op">&amp;</span> 
+           <span class="va">Replicate</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">Replicate</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 19
+##    Peptide     Protein Replicate  `Precursor Mz` `Precursor Charge` `Product Mz`
+##    &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;
+##  1 QELDEISTNIR Cfp10   091322_LT1           659.                  2        1061.
+##  2 QELDEISTNIR Cfp10   091322_LT1           659.                  2         832.
+##  3 QELDEISTNIR Cfp10   091322_LT1           659.                  2         703.
+##  4 QELDEISTNIR Cfp10   091322_LT1           659.                  2         590.
+##  5 QELDEISTNIR Cfp10   091322_LT1           659.                  2         503.
+##  6 QELDEISTNIR Cfp10   091322_LT1           664.                  2        1071.
+##  7 QELDEISTNIR Cfp10   091322_LT1           664.                  2         842.
+##  8 QELDEISTNIR Cfp10   091322_LT1           664.                  2         713.
+##  9 QELDEISTNIR Cfp10   091322_LT1           664.                  2         600.
+## 10 QELDEISTNIR Cfp10   091322_LT1           664.                  2         513.
+## # … with 13 more variables: `Product Charge` &lt;dbl&gt;, `Fragment Ion` &lt;chr&gt;,
+## #   `Retention Time` &lt;dbl&gt;, Area &lt;dbl&gt;, Background &lt;dbl&gt;, `Peak Rank` &lt;dbl&gt;,
+## #   `Ratio Dot Product` &lt;chr&gt;, `Total Area Normalized` &lt;chr&gt;,
+## #   `Total Area Ratio` &lt;chr&gt;, `Library Dot Product` &lt;dbl&gt;,
+## #   RatioLightToHeavy &lt;dbl&gt;, DotProductLightToHeavy &lt;dbl&gt;,
+## #   treatment_group &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">Protein</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Cfp10"                  "acpM"                   "Ag85A"                 
+## [4] "MtbH37Rv|Rv3841|BfrB"   "MtbH37Rv|Rv1837c|GlcB"  "MtbH37Rv|Rv3418c|GroES"
+## [7] "MtbH37Rv|Rv3248c|SahH"  "MtbH37Rv|Rv2031c|hspX"</code></pre>
+<ul>
+<li>Cfp10</li>
+<li>acpM</li>
+<li>Ag85A</li>
+<li>MtbH37Rv|Rv3841|BfrB</li>
+<li>MtbH37Rv|Rv1837c|GlcB</li>
+<li>MtbH37Rv|Rv3418c|GroES</li>
+<li>MtbH37Rv|Rv3248c|SahH</li>
+<li>MtbH37Rv|Rv2031c|hspX</li>
+</ul>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="pathology.html"><span class="header-section-number">9</span> Pathology</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#proteomics"><span class="header-section-number">10</span> Proteomics</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Connect R to Microsoft Teams</strong>" was written by Taru Dutt. It was last built on 2022-10-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+---
+title: "Connect R to Microsoft Teams"
+author: "Taru Dutt"
+date: "2022-10-19"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+## Download Microsoft365R package
+
+```{r}
+install.packages("Microsoft365R")
+install.packages("AzureGraph")
+install.packages("RODBC")
+```
+
+## Load the package
+
+```{r}
+library(Microsoft365R)
+library(AzureGraph)
+library(AzureAuth)
+
+```
+
+## SEt up teams via R
+
+```{r}
+my_team <- get_team("CVMBS T_cell_mask_study", 
+             app = "04b07795-8ddb-461a-bbee-02f9e1bf7b46")
+
+my_team$list_channels()
+```
+
+
