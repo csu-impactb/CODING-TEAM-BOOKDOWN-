@@ -34,6 +34,7 @@ library(AzureAuth)
 my_team <- get_team("CVMBS-MIP IMPAc-TB", app = "04b07795-8ddb-461a-bbee-02f9e1bf7b46")
 
 # get the channel
+
 channels <- my_team$get_channel()
 
 # get the folder
