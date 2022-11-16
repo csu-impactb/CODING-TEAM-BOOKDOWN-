@@ -6,7 +6,7 @@ experimental-metadata
 initial-mouse-characteristics
 mouse-weights
 overview-1
-parameters
+template-description
 read-in-data
 colony-forming-units-to-determine-bacterial-counts
 data-description
