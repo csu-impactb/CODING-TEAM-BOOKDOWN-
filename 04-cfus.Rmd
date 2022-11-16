@@ -9,7 +9,7 @@ editor_options:
 ## Data description
 
 The data are collected in a spreadsheet with multiple sheets. The first sheet
-(named "[x]") is used to record some metadata for the experiment, while the 
+(named "metadata") is used to record some metadata for the experiment, while the 
 following sheets are used to record CFUs counts from the plates used for samples
 from each organ, with one sheet per organ. For example, if you plated data
 from both the lung and spleen, there would be three sheets in the file: one 
