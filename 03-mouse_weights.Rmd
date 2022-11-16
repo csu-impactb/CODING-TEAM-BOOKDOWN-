@@ -8,9 +8,20 @@ In recognition of cachexia related illnesses and diseases, we tracked the progre
 
 The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
 
-### Parameters
+### Template description
 
-Weights are recorded in an excel worksheet. 
+Weights should be recorded in an excel worksheet. You can download a copy of the
+template [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx). Here is what the template looks like: 
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/weight_template.png")
+```
+
+
+When you download the template, it will have example values filled out in blue.
+Use these to get an idea for how to record your own data. When you are ready 
+to record your own data, delete these example values and replace them with 
+data collected from your own experiment. 
 
 Column titles are as follows:
 
@@ -52,7 +63,6 @@ read_mouse_weights <- function(filepath) {
                                                                  "text",   #  sex
                                                                  "text",   # dob
                                                                  "text",   # notch_id
-                                                                 "numeric", # mouse_number
                                                                  "numeric", # weight
                                                                  "text",   # unit
                                                                  "text",   # existing_cage_number
@@ -175,6 +185,8 @@ ex %>%
   ggplot(aes(x = group, y = weight)) + 
   geom_beeswarm(aes(color = sex)) + 
   geom_boxplot(fill = NA, color = "dodgerblue")
+
+write_csv(ex, "DATA/example_mouse_output.csv")
 ```
 
 
