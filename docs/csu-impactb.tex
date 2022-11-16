@@ -295,15 +295,17 @@ Column titles are as follows:
 \item
   \texttt{mouse\_number}: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch ``1L'' might be given the number ``1''; if so, its number should always be recorded in this column as ``1''). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study.
 \item
-  \texttt{weight}: Record as a number, with a unit in this column. The next column will be used for the units.
+  \texttt{weight}: Record as a number, without a unit in this column. The next column will be used for the units.\\
 \item
-  \texttt{unit}: Provide the units that were used to take the weight (e.g., ``g'' for grams)
+  \texttt{unit}: Provide the units that were used to take the weight (e.g., ``g'' for grams). Be consistent across all animals and timepoints in the abbreviation that you use (e.g., always use ``g'' for grams, not ``g'' sometimes and ``grams'' sometimes)
 \item
-  \texttt{cage\_number}: Provide the cage number. If a provisional cage number is being used, \ldots{} If the mouse was switched from its original cage, \ldots{}
+  \texttt{existing\_cage\_number}: Provide the cage number that the mouse is in when you start weighing at that time point. If the mouse is moved to another cage on this day, you will specify that in the next column. If the animal was moved from one cage to another between the last weighing and the date of the timepoint you are measuring, put in this column the cage number that the animal was in the last time it was weighed.
+\item
+  \texttt{new\_cage\_number}: If the animal is moved to a new cage on the date of the timepoint you are measuring, then use this column to record the number of the cage you move it too. Similarly, if the animal moved cages between the last measured timepoint and this one, use this column to record the cage it was moved to. Otherwise, if the animal stays in the same cage that it was at the last measured time point, leave this column empty.
 \item
   \texttt{group}: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 \item
-  \texttt{notes}: The notes column contains information regarding clinical observations.
+  \texttt{notes}: Record information regarding clinical observations (e.g., ``back is balding'', ``barbering'', ``excessive grooming'', ``euthanized'').
 \end{itemize}
 
 good reference: \url{https://elifesciences.org/articles/74419\#s4}
@@ -322,198 +324,128 @@ Data is stored in one excel sheet, each week is one sheet named as the date -\te
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Function to add unique mouse IDs based on their most up{-}to{-}date cages}
-\CommentTok{\# By using the most up{-}to{-}date cages, we can use an ID that will be easy }
-\CommentTok{\# to use to identify a specific mouse at the current time (for example, }
-\CommentTok{\# if you need to ID a mouse with a large change in weight that has happened}
-\CommentTok{\# recently.)}
-\CommentTok{\#}
-\CommentTok{\# !! NEED TO CHANGE: Right now, it would miss mice that were sacrificed / died}
-\CommentTok{\# !! before the latest time point that was collected}
-\NormalTok{add\_latest\_mouse\_id }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mouse\_weight\_data) \{}
-  
-\NormalTok{  mouse\_weight\_data }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_weight\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{current\_cage =} \FunctionTok{case\_when}\NormalTok{(}
-\NormalTok{    date\_collected }\SpecialCharTok{!=} \FunctionTok{last}\NormalTok{(date\_collected) }\SpecialCharTok{\textasciitilde{}} \FunctionTok{as.character}\NormalTok{(}\ConstantTok{NA}\NormalTok{),}
-    \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(new\_cage\_number) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ new\_cage\_number, }
-    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}}\NormalTok{ existing\_cage\_number}
-\NormalTok{  ),}
-         \AttributeTok{mouse\_id =} \FunctionTok{if\_else}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(current\_cage), }
-                            \FunctionTok{paste}\NormalTok{(current\_cage, notch\_id, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{), }
-                            \FunctionTok{as.character}\NormalTok{(}\ConstantTok{NA}\NormalTok{)))}
-  \FunctionTok{return}\NormalTok{(mouse\_weight\_data)}
-\NormalTok{\}}
-
-\NormalTok{ex }\OtherTok{\textless{}{-}} \FunctionTok{add\_latest\_mouse\_id}\NormalTok{(ex)}
-
-\NormalTok{ex }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \FunctionTok{case\_when}\NormalTok{(}
-    \CommentTok{\# Only create for the first time point, otherwise set to NA}
-\NormalTok{    date\_collected }\SpecialCharTok{!=} \FunctionTok{first}\NormalTok{(date\_collected) }\SpecialCharTok{\textasciitilde{}} \ConstantTok{NA\_character\_}\NormalTok{,}
-    \CommentTok{\# If the new cage number is missing, it means the animal did not }
-    \CommentTok{\# change cages, so you can use the existing cage number}
-    \FunctionTok{is.na}\NormalTok{(new\_cage\_number) }\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(existing\_cage\_number, notch\_id, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{),}
-    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(new\_cage\_number, notch\_id, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{)}
-\NormalTok{  ))}
+\NormalTok{weight\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{)}
+\FunctionTok{excel\_sheets}\NormalTok{(}\StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{) }\CommentTok{\#lists names of each sheet}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 980 x 14
-##    who_collected date_collected sex   dob        notch_id mouse_number weight
-##    <chr>         <date>         <fct> <date>     <chr>           <dbl>  <dbl>
-##  1 Taru          2022-05-26     f     2022-04-05 0                   1   18.4
-##  2 Taru          2022-05-26     f     2022-04-05 1R                  2   17.2
-##  3 Taru          2022-05-26     f     2022-04-05 1L                  3   17  
-##  4 Taru          2022-05-26     f     2022-04-05 1R1L                4   18.8
-##  5 Taru          2022-05-26     f     2022-04-05 0                   1   18.4
-##  6 Taru          2022-05-26     f     2022-04-05 1R                  2   17.7
-##  7 Taru          2022-05-26     f     2022-04-05 1L                  3   20.2
-##  8 Taru          2022-05-26     f     2022-04-05 1R1L                4   17.1
-##  9 Taru          2022-05-26     f     2022-04-05 0                   1   17.6
-## 10 Taru          2022-05-26     f     2022-04-05 1R                  2   20  
-## # ... with 970 more rows, and 7 more variables: unit <chr>,
-## #   existing_cage_number <chr>, new_cage_number <chr>, group <chr>,
-## #   notes <chr>, current_cage <chr>, mouse_id <chr>
+## [1] "before_vaccination" "6.3.22"             "6-9-22"            
+## [4] "6-16-22"            "6-21-22"            "7-1-22"            
+## [7] "07-07-22"
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{add\_first\_mouse\_id }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mouse\_weight\_data) \{}
+\NormalTok{read\_mouse\_weights }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(filepath) \{}
   
-\NormalTok{  mouse\_weight\_data }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_weight\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \FunctionTok{case\_when}\NormalTok{(}
-    \CommentTok{\# Only create for the first time point, otherwise set to NA}
-\NormalTok{    date\_collected }\SpecialCharTok{!=} \FunctionTok{first}\NormalTok{(date\_collected) }\SpecialCharTok{\textasciitilde{}} \ConstantTok{NA\_character\_}\NormalTok{,}
-    \CommentTok{\# If the new cage number is missing, it means the animal did not }
-    \CommentTok{\# change cages, so you can use the existing cage number}
-    \FunctionTok{is.na}\NormalTok{(new\_cage\_number) }\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(existing\_cage\_number, notch\_id, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{),}
-    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(new\_cage\_number, notch\_id, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{)}
-\NormalTok{  ))}
-  \FunctionTok{return}\NormalTok{(mouse\_weight\_data)}
+  \CommentTok{\# getting info about all excel sheets}
+\NormalTok{  mouse\_weights\_sheets }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{excel\_sheets}\NormalTok{(filepath)}
+\NormalTok{  mouse\_weights }\OtherTok{\textless{}{-}}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(mouse\_weights\_sheets, }
+                              \SpecialCharTok{\textasciitilde{}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_excel}\NormalTok{(filepath, }\AttributeTok{sheet =}\NormalTok{ .x, }
+                                                   \AttributeTok{col\_types =} \FunctionTok{c}\NormalTok{(}\StringTok{"text"}\NormalTok{,   }\CommentTok{\# who\_collected}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# date\_collected}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\#  sex}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# dob}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# notch\_id}
+                                                                 \StringTok{"numeric"}\NormalTok{, }\CommentTok{\# mouse\_number}
+                                                                 \StringTok{"numeric"}\NormalTok{, }\CommentTok{\# weight}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# unit}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# existing\_cage\_number}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# new\_cage\_number}
+                                                                 \StringTok{"text"}\NormalTok{,   }\CommentTok{\# group}
+                                                                 \StringTok{"text"}    \CommentTok{\# notes}
+\NormalTok{                                                                 ))) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{bind\_rows}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date\_collected =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{mdy}\NormalTok{(date\_collected), }
+           \AttributeTok{dob =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{mdy}\NormalTok{(dob), }
+           \AttributeTok{sex =}\NormalTok{ forcats}\SpecialCharTok{::}\FunctionTok{as\_factor}\NormalTok{(sex))}
+
+  \FunctionTok{return}\NormalTok{(mouse\_weights)}
 \NormalTok{\}}
 
-\FunctionTok{add\_latest\_mouse\_id}\NormalTok{(ex)}
+\CommentTok{\# Test function}
+\NormalTok{ex }\OtherTok{\textless{}{-}} \FunctionTok{read\_mouse\_weights}\NormalTok{(}\AttributeTok{filepath =} \StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 980 x 14
-##    who_collected date_collected sex   dob        notch_id mouse_number weight
-##    <chr>         <date>         <fct> <date>     <chr>           <dbl>  <dbl>
-##  1 Taru          2022-05-26     f     2022-04-05 0                   1   18.4
-##  2 Taru          2022-05-26     f     2022-04-05 1R                  2   17.2
-##  3 Taru          2022-05-26     f     2022-04-05 1L                  3   17  
-##  4 Taru          2022-05-26     f     2022-04-05 1R1L                4   18.8
-##  5 Taru          2022-05-26     f     2022-04-05 0                   1   18.4
-##  6 Taru          2022-05-26     f     2022-04-05 1R                  2   17.7
-##  7 Taru          2022-05-26     f     2022-04-05 1L                  3   20.2
-##  8 Taru          2022-05-26     f     2022-04-05 1R1L                4   17.1
-##  9 Taru          2022-05-26     f     2022-04-05 0                   1   17.6
-## 10 Taru          2022-05-26     f     2022-04-05 1R                  2   20  
-## # ... with 970 more rows, and 7 more variables: unit <chr>,
-## #   existing_cage_number <chr>, new_cage_number <chr>, group <chr>,
-## #   notes <chr>, current_cage <chr>, mouse_id <chr>
-\end{verbatim}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Function to get the cage history of a mouse based on it\textquotesingle{}s latest mouse ID}
-\CommentTok{\# and the mouse weight data. This works back through cage changes to track the }
-\CommentTok{\# cages that a mouse has been in over the course of the experiment. }
-\NormalTok{get\_cage\_history }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(latest\_mouse\_id, }
-\NormalTok{                             mouse\_weight\_data) \{}
+\CommentTok{\# Add a unique mouse ID, starting with just the first time point}
+\NormalTok{ex }\OtherTok{\textless{}{-}}\NormalTok{ ex }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{n}\NormalTok{(), }
+         \AttributeTok{mouse\_id =} \FunctionTok{ifelse}\NormalTok{(date\_collected }\SpecialCharTok{==}
+                                    \FunctionTok{first}\NormalTok{(date\_collected), }
+\NormalTok{                                  mouse\_id, }
+                                  \ConstantTok{NA}\NormalTok{))}
+
+\CommentTok{\# Function to get the next cage number based on the }
+\CommentTok{\# existing cage number and notch ID. If the mouse does not}
+\CommentTok{\# switch cages again, the output is a vector of length 0}
+\NormalTok{get\_next\_cage }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(existing\_cage\_number, notch\_id, }
+                          \AttributeTok{df =}\NormalTok{ ex)\{}
+\NormalTok{  next\_cage }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(.data}\SpecialCharTok{$}\NormalTok{existing\_cage\_number }\SpecialCharTok{==}\NormalTok{ \{\{existing\_cage\_number\}\} }\SpecialCharTok{\&}
+\NormalTok{             .data}\SpecialCharTok{$}\NormalTok{notch\_id }\SpecialCharTok{==}\NormalTok{ \{\{notch\_id\}\} }\SpecialCharTok{\&} 
+             \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(.data}\SpecialCharTok{$}\NormalTok{new\_cage\_number)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{pull}\NormalTok{(new\_cage\_number)}
   
-\NormalTok{  cage\_history }\OtherTok{\textless{}{-}}\NormalTok{ latest\_mouse\_id }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{str\_remove}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}.+"}\NormalTok{)}
-\NormalTok{  last\_cage }\OtherTok{\textless{}{-}}\NormalTok{ cage\_history[}\DecValTok{1}\NormalTok{]}
+  \FunctionTok{return}\NormalTok{(next\_cage)}
+\NormalTok{\}}
+
+\CommentTok{\# Function to get the full list of cages for each individual }
+\CommentTok{\# mouse, over the course of all data collected to date}
+\NormalTok{get\_mouse\_cages }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mouse\_starting\_cage, mouse\_notch\_id, }
+                            \AttributeTok{df =}\NormalTok{ ex)\{}
+\NormalTok{  mouse\_cage\_list }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_starting\_cage}
+\NormalTok{  i }\OtherTok{\textless{}{-}} \DecValTok{1}
   
-  \ControlFlowTok{while}\NormalTok{(}\FunctionTok{length}\NormalTok{(last\_cage) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)\{}
-\NormalTok{    last\_cage }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_weight\_data }\SpecialCharTok{\%\textgreater{}\%} 
-      \FunctionTok{filter}\NormalTok{(new\_cage\_number }\SpecialCharTok{==}\NormalTok{ last\_cage) }\SpecialCharTok{\%\textgreater{}\%} 
-      \FunctionTok{pull}\NormalTok{(existing\_cage\_number)}
-    \ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(last\_cage) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
-\NormalTok{      cage\_history }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(cage\_history, last\_cage)}
+  \ControlFlowTok{while}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{)\{}
+\NormalTok{    next\_cage }\OtherTok{\textless{}{-}} \FunctionTok{get\_next\_cage}\NormalTok{(}\AttributeTok{existing\_cage\_number =}
+\NormalTok{                               mouse\_cage\_list[i],}
+                               \AttributeTok{notch\_id =}\NormalTok{ mouse\_notch\_id, }
+                               \AttributeTok{df =}\NormalTok{ df)}
+    \ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(next\_cage) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+      \ControlFlowTok{break}
+\NormalTok{      \}}
+\NormalTok{    i }\OtherTok{\textless{}{-}}\NormalTok{ i }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{    mouse\_cage\_list[i] }\OtherTok{\textless{}{-}}\NormalTok{ next\_cage}
 \NormalTok{    \}}
-\NormalTok{  \}}
   
-\NormalTok{  cage\_history }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(cage\_history)}
-  
-  \FunctionTok{return}\NormalTok{(cage\_history)}
+  \FunctionTok{return}\NormalTok{(mouse\_cage\_list)}
 \NormalTok{\}}
 
-\FunctionTok{get\_cage\_history}\NormalTok{(}\AttributeTok{latest\_mouse\_id =} \StringTok{"22009A{-}0"}\NormalTok{, }
-                 \AttributeTok{mouse\_weight\_data =}\NormalTok{ ex)}
-\end{Highlighting}
-\end{Shaded}
+\CommentTok{\# Create a dataframe that lists all mice at the first time point, }
+\CommentTok{\# as well as a list of all the cages they have been in over the}
+\CommentTok{\# experiment}
+\NormalTok{mice\_cage\_lists }\OtherTok{\textless{}{-}}\NormalTok{ ex }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(date\_collected }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(date\_collected)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(notch\_id, existing\_cage\_number, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cage\_list =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ existing\_cage\_number, }
+                          \AttributeTok{.y =}\NormalTok{ notch\_id, }
+                          \AttributeTok{.f =} \SpecialCharTok{\textasciitilde{}} \FunctionTok{get\_mouse\_cages}\NormalTok{(.x, .y, }\AttributeTok{df =}\NormalTok{ ex)))}
 
-\begin{verbatim}
-## [1] "22009A" "22009"
-\end{verbatim}
+\CommentTok{\# Add a column with the latest cage to the weight dataframe}
+\NormalTok{ex}\SpecialCharTok{$}\NormalTok{latest\_cage }\OtherTok{\textless{}{-}} \ConstantTok{NA}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ex\_cage\_history }\OtherTok{\textless{}{-}} \FunctionTok{get\_cage\_history}\NormalTok{(}\AttributeTok{latest\_mouse\_id =} \StringTok{"22009A{-}0"}\NormalTok{, }
-                 \AttributeTok{mouse\_weight\_data =}\NormalTok{ ex)}
-
-
-\CommentTok{\# Use the function to get cage histories for all the mice}
-\NormalTok{latest\_mouse\_ids }\OtherTok{\textless{}{-}}\NormalTok{ ex }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(mouse\_id)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pull}\NormalTok{(mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unique}\NormalTok{()}
+\CommentTok{\# Loop through all the individual mice, based on mice with a }
+\CommentTok{\# measurement at the first time point. Add the unique ID for }
+\CommentTok{\# each mouse, which will apply throughout the experiment. Also }
+\CommentTok{\# add the most recent cage ID, so the mouse can be identified}
+\CommentTok{\# by lab members based on it\textquotesingle{}s current location}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(mice\_cage\_lists))\{}
+\NormalTok{  this\_notch\_id }\OtherTok{\textless{}{-}}\NormalTok{ mice\_cage\_lists[i, ]}\SpecialCharTok{$}\NormalTok{notch\_id}
+\NormalTok{  this\_cage\_list }\OtherTok{\textless{}{-}}\NormalTok{ mice\_cage\_lists[i, ]}\SpecialCharTok{$}\NormalTok{cage\_list[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{  this\_unique\_id }\OtherTok{\textless{}{-}}\NormalTok{ mice\_cage\_lists[i, ]}\SpecialCharTok{$}\NormalTok{mouse\_id}
+\NormalTok{  latest\_cage }\OtherTok{\textless{}{-}}\NormalTok{ this\_cage\_list[}\FunctionTok{length}\NormalTok{(this\_cage\_list)]}
   
-\NormalTok{mouse\_cage\_histories }\OtherTok{\textless{}{-}}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(latest\_mouse\_ids, get\_cage\_history, }
-                                   \AttributeTok{mouse\_weight\_data =}\NormalTok{ ex)}
-\FunctionTok{names}\NormalTok{(mouse\_cage\_histories) }\OtherTok{\textless{}{-}}\NormalTok{ latest\_mouse\_ids}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{add\_one\_mouse\_id }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(latest\_mouse\_id, cage\_history, mouse\_weight\_data) \{}
+\NormalTok{  ex}\SpecialCharTok{$}\NormalTok{mouse\_id[ex}\SpecialCharTok{$}\NormalTok{notch\_id }\SpecialCharTok{==}\NormalTok{ this\_notch\_id }\SpecialCharTok{\&} 
+\NormalTok{                       ex}\SpecialCharTok{$}\NormalTok{existing\_cage\_number }\SpecialCharTok{\%in\%} 
+\NormalTok{                       this\_cage\_list] }\OtherTok{\textless{}{-}}\NormalTok{ this\_unique\_id}
   
-\NormalTok{  mouse\_notch }\OtherTok{\textless{}{-}} \FunctionTok{str\_remove}\NormalTok{(latest\_mouse\_id, }\StringTok{".+}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}"}\NormalTok{)}
-  
-\NormalTok{  mouse\_weight\_data }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_weight\_data }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \FunctionTok{if\_else}\NormalTok{((existing\_cage\_number }\SpecialCharTok{\%in\%}\NormalTok{ cage\_history) }\SpecialCharTok{\&} 
-\NormalTok{                                notch\_id }\SpecialCharTok{==}\NormalTok{ mouse\_notch, }
-\NormalTok{           latest\_mouse\_id, }
-\NormalTok{           mouse\_id))}
-  
-  \FunctionTok{return}\NormalTok{(mouse\_weight\_data)}
-\NormalTok{\}}
-
-\NormalTok{ex2 }\OtherTok{\textless{}{-}} \FunctionTok{add\_one\_mouse\_id}\NormalTok{(}\AttributeTok{latest\_mouse\_id =} \FunctionTok{names}\NormalTok{(mouse\_cage\_histories)[}\DecValTok{1}\NormalTok{], }
-                 \AttributeTok{cage\_history =}\NormalTok{ mouse\_cage\_histories[[}\DecValTok{1}\NormalTok{]], }
-                 \AttributeTok{mouse\_weight\_data =}\NormalTok{ ex)}
-
-\NormalTok{ex2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(existing\_cage\_number }\SpecialCharTok{==} \StringTok{"22003"} \SpecialCharTok{\&}\NormalTok{ notch\_id }\SpecialCharTok{==} \StringTok{"0"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 7 x 14
-##   who_collected date_collected sex   dob        notch_id mouse_number weight
-##   <chr>         <date>         <fct> <date>     <chr>           <dbl>  <dbl>
-## 1 Taru          2022-05-26     f     2022-04-05 0                   1   18.4
-## 2 Forrest       2022-06-03     f     2022-04-05 0                   1   19  
-## 3 Pablo         2022-06-09     f     2022-04-05 0                   1   19.3
-## 4 Forrest       2022-06-16     f     2022-04-05 0                   1   20.9
-## 5 Amanda        2022-06-21     f     2022-04-05 0                   1   20.9
-## 6 Forrest       2022-07-01     f     2022-04-05 0                   1   22  
-## 7 Pablo         2022-07-07     f     2022-04-05 0                   1   23.1
-## # ... with 7 more variables: unit <chr>, existing_cage_number <chr>,
-## #   new_cage_number <chr>, group <chr>, notes <chr>, current_cage <chr>,
-## #   mouse_id <chr>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(mouse\_cage\_histories)) \{}
-\NormalTok{  ex }\OtherTok{\textless{}{-}} \FunctionTok{add\_one\_mouse\_id}\NormalTok{(}\AttributeTok{latest\_mouse\_id =} \FunctionTok{names}\NormalTok{(mouse\_cage\_histories)[i], }
-                         \AttributeTok{cage\_history =}\NormalTok{ mouse\_cage\_histories[[i]], }
-                         \AttributeTok{mouse\_weight\_data =}\NormalTok{ ex) }
+\NormalTok{  ex}\SpecialCharTok{$}\NormalTok{latest\_cage[ex}\SpecialCharTok{$}\NormalTok{notch\_id }\SpecialCharTok{==}\NormalTok{ this\_notch\_id }\SpecialCharTok{\&} 
+\NormalTok{                       ex}\SpecialCharTok{$}\NormalTok{existing\_cage\_number }\SpecialCharTok{\%in\%} 
+\NormalTok{                       this\_cage\_list] }\OtherTok{\textless{}{-}}\NormalTok{ latest\_cage}
 \NormalTok{\}}
 
 \NormalTok{ex}
@@ -536,20 +468,21 @@ Data is stored in one excel sheet, each week is one sheet named as the date -\te
 ## 10 Taru          2022-05-26     f     2022-04-05 1R                  2   20  
 ## # ... with 970 more rows, and 7 more variables: unit <chr>,
 ## #   existing_cage_number <chr>, new_cage_number <chr>, group <chr>,
-## #   notes <chr>, current_cage <chr>, mouse_id <chr>
+## #   notes <chr>, mouse_id <int>, latest_cage <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Explore this data a bit}
 \NormalTok{ex }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date\_collected, }\AttributeTok{y =}\NormalTok{ weight, }\AttributeTok{group =}\NormalTok{ mouse\_id, }\AttributeTok{color =}\NormalTok{ sex)) }\SpecialCharTok{+} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date\_collected, }\AttributeTok{y =}\NormalTok{ weight, }
+             \AttributeTok{group =}\NormalTok{ mouse\_id, }\AttributeTok{color =}\NormalTok{ sex)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ group)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -558,7 +491,7 @@ Data is stored in one excel sheet, each week is one sheet named as the date -\te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-8-2.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-6-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -571,43 +504,7 @@ Data is stored in one excel sheet, each week is one sheet named as the date -\te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-8-3.pdf}
-
-\hypertarget{can-also-use-rio-to-read-in-the-data-more-streamlined}{%
-\subsection{Can also use rio to read in the data, more streamlined}\label{can-also-use-rio-to-read-in-the-data-more-streamlined}}
-
-\hypertarget{clean-data}{%
-\subsection{Clean data}\label{clean-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dataset }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{before\_vaccination }\SpecialCharTok{\%\textgreater{}\%}
- \FunctionTok{select}\NormalTok{(}\StringTok{"sex"}\NormalTok{, }\StringTok{"mouse\_number"}\NormalTok{, }\StringTok{"weight"}\NormalTok{, }\StringTok{"existing\_cage\_number"}\NormalTok{, }\StringTok{"group"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# combining columns mouse\_number and cage\_number}
-
-\NormalTok{dataset}\SpecialCharTok{$}\NormalTok{mouse\_id }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(dataset}\SpecialCharTok{$}\NormalTok{mouse\_number, }\StringTok{"{-}"}\NormalTok{, dataset}\SpecialCharTok{$}\NormalTok{cage\_number)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{body-weight-over-time-graph-and-statistics}{%
-\subsection{Body weight over time graph and statistics}\label{body-weight-over-time-graph-and-statistics}}
-
-\hypertarget{weight-loss-over-time-graph-and-statistics}{%
-\subsection{Weight loss over time graph and statistics}\label{weight-loss-over-time-graph-and-statistics}}
-
-\hypertarget{weight-vs-cfu}{%
-\subsection{Weight vs CFU}\label{weight-vs-cfu}}
-
-\hypertarget{weight-vs-elisa-results}{%
-\subsection{Weight vs ELISA results}\label{weight-vs-elisa-results}}
-
-\hypertarget{weight-vs-lesion-burden}{%
-\subsection{Weight vs lesion burden}\label{weight-vs-lesion-burden}}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-6-3.pdf}
 
 \hypertarget{colony-forming-units-to-determine-bacterial-counts}{%
 \chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}}
@@ -921,7 +818,7 @@ level in the data:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \hypertarget{sample-anova}{%
 \section{Sample ANOVA}\label{sample-anova}}
@@ -1219,7 +1116,7 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-18-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1404,7 +1301,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -1605,7 +1502,7 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
@@ -2194,7 +2091,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-55-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]

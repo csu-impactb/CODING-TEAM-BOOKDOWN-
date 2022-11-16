@@ -64,7 +64,7 @@
 <p>For proteomics data, we will be getting data that have already been collected and
 pre-processed by another part of the team. The following shows an example of the
 type of data we will get as an input:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 
 <span class="va">prot_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"DATA/Transition Results_CCTSI_A.csv"</span><span class="op">)</span></code></pre></div>
@@ -76,7 +76,7 @@ type of data we will get as an input:</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span></code></pre></div>
 <pre><code>## # A tibble: 3,393 × 18
 ##    Peptide     Protein Replicate   `Precursor Mz` `Precursor Char…` `Product Mz`
@@ -129,7 +129,7 @@ that is being measured (?)</li>
 </ul>
 <p>[More about how these data were pre-processed. Softwarei: Skyline]</p>
 <p>Here are all the unique replicates in this file:</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">Replicate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -144,7 +144,7 @@ that is being measured (?)</li>
 <p>The three groups in this data are labeled with “LT,” “H,” and “TB” somewhere in
 the identifier. We can create a new column in the dataset that pulls out this
 treatment group information:</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span> <span class="op">&lt;-</span> <span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>treatment_group <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">Replicate</span>, <span class="st">"[A-Z]+"</span><span class="op">)</span><span class="op">)</span> 
 
@@ -159,7 +159,7 @@ treatment group information:</p>
 ## 1 H                 140
 ## 2 LT                130
 ## 3 TB                120</code></pre>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Peptide</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">Peptide</span><span class="op">)</span> <span class="op">&amp;</span> 
            <span class="va">Replicate</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">Replicate</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -182,7 +182,7 @@ treatment group information:</p>
 ## #   `Total Area Ratio` &lt;chr&gt;, `Library Dot Product` &lt;dbl&gt;,
 ## #   RatioLightToHeavy &lt;dbl&gt;, DotProductLightToHeavy &lt;dbl&gt;,
 ## #   treatment_group &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">Protein</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
