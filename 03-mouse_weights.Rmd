@@ -43,12 +43,11 @@ Other studies that use a mouse model of tuberculosis have collected mouse
 weights, as well [@smith2022host; @segueni2016controlled]. We plan to 
 investigate these data to visualize the trajectory of weight gain / loss in 
 each mouse both before and after they are challenged with tuberculosis. 
-We also plan to test whether each mouse's weight change after challenege
-is correlated with 
-
-These data may also
-be useful to correlate to CFU count as well as expression of cytokines and other
-biological markers [@smith2022host].
+We also plan to test whether each mouse's weight change after challenge
+is correlated with other metrics of the severity of disease and immune response.
+We will do this by testing the correlation between the percent change in 
+weight between challenge and sacrifice with CFUs at sacrifice as well as
+expression of cytokines and other biological markers [@smith2022host].
 
 ### Template description
 
@@ -112,26 +111,49 @@ For the second and later sheets, you will record:
 - `group`: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 - `notes`: Record information regarding clinical observations (e.g., "back is balding", "barbering", "excessive grooming", "euthanized"). 
 
-### Read in data
+### Processing collected data
 
-Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
+Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and 
+ultimately it will also write relevant results into a global database for the 
+experiment. 
+
+This section provides the details of that pipeline. It aims to explain the 
+code that processes the data and generates visualizations. You do not need to 
+run this code step-by-step, but instead can access a script with the full 
+code by clicking [here]. 
+
+The first step in the workflow is to read in the data from the spreadsheet. 
+As long as the data are collected following the template that was described
+earlier, this code should be able to read it in correctly and create a 
+master dataset with the data from all sheets of the spreadsheet. 
+
+First, the workflow loads some additional R libraries. You may need to install 
+these on your local R session if you do not already have them installed.
 
 ```{r}
 library(readxl)
 library(tidyverse)
-weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
-excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
+```
 
+Next, it uses a custom function to read in data from the spreadsheet. This
+function (`read_mouse_weights`) creates a list of all of the sheets in the
+spreadsheet, so it can be sure to read in all collected data. It creates
+a list with each of the sheets with weekly weight measures, so it can 
+read in each sheet in that list. Next, it reads in both the first sheet 
+(with the initial mouse measures), as well as all the weight sheets.
+
+```{r}
 read_mouse_weights <- function(filepath) {
   
   # getting info about all excel sheets
-  mouse_weights_sheets <- readxl::excel_sheets(filepath)
+  mouse_weights_sheets <- readxl::excel_sheets(filepath)[-1] # First sheet is initial data, not mouse weights
+  
   mouse_weights <- purrr::map(mouse_weights_sheets, 
                               ~ readxl::read_excel(filepath, sheet = .x, 
                                                    col_types = c("text",   # who_collected
                                                                  "text",   # date_collected
-                                                                 "text",   #  sex
-                                                                 "text",   # dob
                                                                  "text",   # notch_id
                                                                  "numeric", # weight
                                                                  "text",   # unit
@@ -141,20 +163,28 @@ read_mouse_weights <- function(filepath) {
                                                                  "text"    # notes
                                                                  ))) %>% 
     dplyr::bind_rows() %>% 
-    mutate(date_collected = lubridate::mdy(date_collected), 
-           dob = lubridate::mdy(dob), 
-           sex = forcats::as_factor(sex))
+    mutate(date_collected = lubridate::mdy(date_collected))
 
   return(mouse_weights)
 }
 
-# Test function
-ex <- read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
+# Use function to read in mouse weights from the sheet
+# (we'll read in the initial information later)
+our_mouse_weights <- read_mouse_weights(filepath = "DATA/body_weights_measurement.xlsx")
 ```
 
+The next part of the processing is needed to track each mouse throughout the study. 
+Some mice are moved from one cage to another. Often, this might be because the mice 
+are fighting or otherwise show signs that they'd do better if separated. The 
+researchers in the wet lab record the mouse information based on the cage the mouse 
+is in at the start of the day that the measurement is taken, and they also record
+if the mouse is moved to a new cage, specifically that new cage number. This code 
+is using that information to create a unique ID for each mouse as it moves to 
+different cages over the course of the study. 
+
 ```{r}
-# Add a unique mouse ID, starting with just the first time point
-ex <- ex %>% 
+# Add a unique mouse ID. For right now, add it only for the first time point.
+our_mouse_weights <- our_mouse_weights %>% 
   mutate(mouse_id = 1:n(), 
          mouse_id = ifelse(date_collected ==
                                     first(date_collected), 
@@ -165,7 +195,7 @@ ex <- ex %>%
 # existing cage number and notch ID. If the mouse does not
 # switch cages again, the output is a vector of length 0
 get_next_cage <- function(existing_cage_number, notch_id, 
-                          df = ex){
+                          df = our_mouse_weights){
   next_cage <- df %>% 
     filter(.data$existing_cage_number == {{existing_cage_number}} &
              .data$notch_id == {{notch_id}} & 
@@ -178,7 +208,7 @@ get_next_cage <- function(existing_cage_number, notch_id,
 # Function to get the full list of cages for each individual 
 # mouse, over the course of all data collected to date
 get_mouse_cages <- function(mouse_starting_cage, mouse_notch_id, 
-                            df = ex){
+                            df = our_mouse_weights){
   mouse_cage_list <- mouse_starting_cage
   i <- 1
   
@@ -200,15 +230,15 @@ get_mouse_cages <- function(mouse_starting_cage, mouse_notch_id,
 # Create a dataframe that lists all mice at the first time point, 
 # as well as a list of all the cages they have been in over the
 # experiment
-mice_cage_lists <- ex %>% 
+mice_cage_lists <- our_mouse_weights %>% 
   filter(date_collected == first(date_collected)) %>% 
   select(notch_id, existing_cage_number, mouse_id) %>% 
   mutate(cage_list = map2(.x = existing_cage_number, 
                           .y = notch_id, 
-                          .f = ~ get_mouse_cages(.x, .y, df = ex)))
+                          .f = ~ get_mouse_cages(.x, .y, df = our_mouse_weights)))
 
 # Add a column with the latest cage to the weight dataframe
-ex$latest_cage <- NA
+our_mouse_weights$latest_cage <- NA
 
 # Loop through all the individual mice, based on mice with a 
 # measurement at the first time point. Add the unique ID for 
@@ -221,42 +251,74 @@ for(i in 1:nrow(mice_cage_lists)){
   this_unique_id <- mice_cage_lists[i, ]$mouse_id
   latest_cage <- this_cage_list[length(this_cage_list)]
   
-  ex$mouse_id[ex$notch_id == this_notch_id & 
-                       ex$existing_cage_number %in% 
+  our_mouse_weights$mouse_id[our_mouse_weights$notch_id == this_notch_id & 
+                       our_mouse_weights$existing_cage_number %in% 
                        this_cage_list] <- this_unique_id
   
-  ex$latest_cage[ex$notch_id == this_notch_id & 
-                       ex$existing_cage_number %in% 
+  our_mouse_weights$latest_cage[our_mouse_weights$notch_id == this_notch_id & 
+                       our_mouse_weights$existing_cage_number %in% 
                        this_cage_list] <- latest_cage
 }
 
 # Add a label for each mouse based on its notch_id and latest cage
-ex <- ex %>% 
+our_mouse_weights <- our_mouse_weights %>% 
   mutate(mouse_label = paste("Cage:", latest_cage, 
                              "Notch:", notch_id))
 
-ex
+our_mouse_weights
 ```
+
+Now that the weekly weights are processed, the pipeline will read in and add the 
+information that was calculated in the first sheet of the spreadsheet. This 
+information is constant information for each mouse, like their sex, species, and 
+experimental group. 
+
+```{r}
+mouse_initial <- readxl::read_excel("DATA/body_weights_measurement.xlsx", 
+                                      sheet = 1, 
+                                      col_types = c("text", # notch_id
+                                                    "text", # starting_cage_number
+                                                    "text", # dob
+                                                    "text", # species
+                                                    "text", # sex
+                                                    "text" # group
+                                                    )) %>%
+  mutate(dob = lubridate::mdy(dob), 
+         sex = forcats::as_factor(sex))
+
+mouse_ids <- our_mouse_weights %>% 
+  filter(date_collected == first(date_collected)) %>% 
+  select(notch_id, existing_cage_number, mouse_id) %>% 
+  rename(starting_cage_number = existing_cage_number)
+
+mouse_initial <- mouse_initial %>% 
+  left_join(mouse_ids, by = c("notch_id", "starting_cage_number"))
+
+our_mouse_weights <- our_mouse_weights %>% 
+  left_join(mouse_initial, by = c("mouse_id", "notch_id", "group"))
+```
+
+
 
 ```{r}
 # Explore this data a bit
-ex %>% 
+our_mouse_weights %>% 
   ggplot(aes(x = date_collected, y = weight, 
              group = mouse_id, color = sex)) + 
   geom_line() + 
   facet_wrap(~ group)
 
-ex %>% 
+our_mouse_weights %>% 
   ggplot(aes(x = date_collected, y = weight, color = who_collected)) + geom_point()
 
 library(ggbeeswarm)
-ex %>% 
+our_mouse_weights %>% 
   filter(date_collected == last(date_collected)) %>% 
   ggplot(aes(x = group, y = weight)) + 
   geom_beeswarm(aes(color = sex)) + 
   geom_boxplot(fill = NA, color = "dodgerblue")
 
-write_csv(ex, "DATA/example_mouse_output.csv")
+write_csv(our_mouse_weights, "DATA/example_mouse_output.csv")
 ```
 
 
