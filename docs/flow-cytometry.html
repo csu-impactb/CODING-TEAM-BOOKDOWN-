@@ -67,7 +67,7 @@
 <h2>
 <span class="header-section-number">8.1</span> Loading packages<a class="anchor" aria-label="anchor" href="#loading-packages"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
@@ -82,7 +82,7 @@
 <pre><code>## The following object is masked from 'package:readr':
 ## 
 ##     col_factor</code></pre>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
@@ -98,21 +98,21 @@
 <pre><code>## The following object is masked from 'package:stats':
 ## 
 ##     filter</code></pre>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/writexl/">writexl</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="panel-information" class="section level2" number="8.2">
 <h2>
 <span class="header-section-number">8.2</span> panel information<a class="anchor" aria-label="anchor" href="#panel-information"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># antibody_panel &lt;- read_excel</span></code></pre></div>
 </div>
 <div id="loading-data" class="section level2" number="8.3">
 <h2>
 <span class="header-section-number">8.3</span> Loading data<a class="anchor" aria-label="anchor" href="#loading-data"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/innate_normalizedto45.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"CD3CD11b No Day 14"</span><span class="op">)</span>
 
 <span class="va">marker_legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/marker legend.xlsx"</span><span class="op">)</span>
@@ -138,7 +138,7 @@
 ##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Df1</span> <span class="op">&lt;-</span> <span class="va">Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\/Q[:digit:]+\\:"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\/"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -161,7 +161,7 @@
 <h2>
 <span class="header-section-number">8.4</span> Making the data tidy for plotting<a class="anchor" aria-label="anchor" href="#making-the-data-tidy-for-plotting"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Df1</span>, cols <span class="op">=</span>  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"CD45+"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"cell_types"</span>, values_to <span class="op">=</span> <span class="st">"percentage_of_CD45"</span><span class="op">)</span> 
 
 <span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -185,7 +185,7 @@
 ##  9 "CD45+ CD3-   CD11b+ CD86-  CD64+ " 
 ## 10 "CD45+ CD3-   CD11b+ CD86+  CD64+ " 
 ## # … with 118 more rows</code></pre>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">percentage_of_CD45</span> <span class="op">&gt;</span> <span class="fl">0.005</span><span class="op">)</span>
 
@@ -203,7 +203,7 @@
 ##  8 CNT   1         "CD45+ CD3-   CD11b+ CD11c-  CD64- "              24.3 
 ##  9 CNT   1         "CD45+ CD3-   CD11b+ CD86-  CD64+ "                0.43
 ## 10 CNT   1         "CD45+ CD3-   CD11b+ CD86+  CD64+ "                0.85</code></pre>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select CD3 &amp; CD11b populations and create new data frames </span>
  
 <span class="va">CD3pos_CD11bneg</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -219,7 +219,7 @@
 <h2>
 <span class="header-section-number">8.5</span> boxplot<a class="anchor" aria-label="anchor" href="#boxplot"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">CD3pos_CD11bneg_bar_plot</span> <span class="op">&lt;-</span> <span class="va">CD3pos_CD11bneg</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">day</span>,
             <span class="st">"CNT"</span>, <span class="st">"D3"</span>, <span class="st">"D7"</span>,
@@ -291,8 +291,8 @@
                      ref.group <span class="op">=</span> <span class="st">"CNT"</span><span class="op">)</span>
 
 <span class="va">CD3pos_CD11bneg_bar_plot</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-46-1.png" width="480"></div>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-48-1.png" width="480"></div>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># CD3neg_CD11bpos_bar_plot</span>
 <span class="co"># CD3neg_CD11bneg_bar_plot</span></code></pre></div>
 

@@ -7,10 +7,10 @@ initial-mouse-characteristics
 mouse-weights
 overview-1
 template-description
-read-in-data
+processing-collected-data
 colony-forming-units-to-determine-bacterial-counts
 data-description
-read-in-data-1
+read-in-data
 example-one
 exploratory-analysis-and-quality-checks
 exploratory-analysis

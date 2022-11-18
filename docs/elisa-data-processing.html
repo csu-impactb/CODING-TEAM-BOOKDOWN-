@@ -67,7 +67,7 @@
 <span class="header-section-number">7.0.0.1</span> Read in the first dataset<a class="anchor" aria-label="anchor" href="#read-in-the-first-dataset"><i class="fas fa-link"></i></a>
 </h4>
 <p>Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">elisa_raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, 
                              sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  
                              range <span class="op">=</span> <span class="st">"B2:M9"</span><span class="op">)</span></code></pre></div>
@@ -78,7 +78,7 @@
 ## * `` -&gt; ...4
 ## * `` -&gt; ...5
 ## * ...</code></pre>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_raw_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 12
 ##   ...1          ...2  ...3 ...4   ...5  ...6 ...7   ...8  ...9 ...10 ...11 ...12
@@ -95,7 +95,7 @@
 <span class="header-section-number">7.0.0.2</span> Tidy dataset 1<a class="anchor" aria-label="anchor" href="#tidy-dataset-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>It is important to clean the data and arrange it in a format on which we can apply formulas and functions.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Convert all columns to numeric</span>
 
 <span class="va">elisa_raw_data_numeric</span> <span class="op">&lt;-</span> <span class="va">elisa_raw_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -107,7 +107,7 @@
 ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
 
 ## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pivot longer the data</span>
 
 <span class="va">elisa_raw_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_raw_data_numeric</span>, cols <span class="op">=</span> <span class="st">"...1"</span><span class="op">:</span><span class="st">"...12"</span>, names_to <span class="op">=</span> <span class="st">"well_id"</span>, values_to <span class="op">=</span> <span class="st">"od_450nm"</span><span class="op">)</span>
@@ -141,7 +141,7 @@
 <span class="header-section-number">7.0.0.3</span> Read in the second data set<a class="anchor" aria-label="anchor" href="#read-in-the-second-data-set"><i class="fas fa-link"></i></a>
 </h4>
 <p>The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">elisa_label_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/elisa_s1_07-25-20.xlsx"</span>, 
                                sheet <span class="op">=</span> <span class="st">"S1"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span>,  
                                range <span class="op">=</span> <span class="st">"Q2:AB9"</span><span class="op">)</span></code></pre></div>
@@ -152,7 +152,7 @@
 ## * `` -&gt; ...4
 ## * `` -&gt; ...5
 ## * ...</code></pre>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">elisa_label_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 12
 ##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
@@ -168,7 +168,7 @@
 <h4>
 <span class="header-section-number">7.0.0.4</span> Tidy dataset-2<a class="anchor" aria-label="anchor" href="#tidy-dataset-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pivot longer the data</span>
 
 <span class="va">elisa_label_data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elisa_label_data</span>, 
@@ -205,7 +205,7 @@
 <span class="header-section-number">7.0.0.5</span> Merge dataset-1 (with OD information) with dataset-2 (with respective data information)<a class="anchor" aria-label="anchor" href="#merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information"><i class="fas fa-link"></i></a>
 </h4>
 <p>To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns.</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Merge the two datasets</span>
 
 <span class="va">elisa_data</span> <span class="op">=</span> <span class="va">elisa_raw_data_tidy_new</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">elisa_label_data_tidy_new</span>,
@@ -221,14 +221,14 @@
 ## 4 A4         0.063 1A-1 (1/250  
 ## 5 A5         0.061 1A-1 (1/1250 
 ## 6 A6         0.122 1A-1 (1/6250</code></pre>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">### Separate the information table into sample ID and dilution columns</span>
 
 <span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">elisa_data</span>, col <span class="op">=</span> <span class="st">"information"</span>, 
                             into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"dilution"</span><span class="op">)</span>,
                             sep <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].</code></pre>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_elisa_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##   well_id od_450nm sample_id   dilution
@@ -239,7 +239,7 @@
 ## 4 A4         0.063 "1A-1 "     1/250   
 ## 5 A5         0.061 "1A-1 "     1/1250  
 ## 6 A6         0.122 "1A-1 "     1/6250</code></pre>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tidy_elisa_data</span> <span class="op">&lt;-</span> <span class="va">tidy_elisa_data</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"(/)[0-9]+"</span><span class="op">)</span>,
          dilution <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">dilution</span>, <span class="st">"/"</span>, <span class="st">""</span><span class="op">)</span>,

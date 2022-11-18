@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Mouse Weights | Connect R to Microsoft Teams</title>
 <meta name="author" content="Taru Dutt">
-<meta name="description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<meta name="description" content="4.0.1 Overview In our experiments, we are measuring the mice every week to record their weight over the course of the experiment. This weight measuring begins before the first vaccination and...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Mouse Weights | Connect R to Microsoft Teams">
 <meta property="og:type" content="book">
-<meta property="og:description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<meta property="og:description" content="4.0.1 Overview In our experiments, we are measuring the mice every week to record their weight over the course of the experiment. This weight measuring begins before the first vaccination and...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Mouse Weights | Connect R to Microsoft Teams">
-<meta name="twitter:description" content="4.0.1 Overview Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease (Baazim, Antonio-Herrera,...">
+<meta name="twitter:description" content="4.0.1 Overview In our experiments, we are measuring the mice every week to record their weight over the course of the experiment. This weight measuring begins before the first vaccination and...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -65,33 +65,103 @@
 <h3>
 <span class="header-section-number">4.0.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-1"><i class="fas fa-link"></i></a>
 </h3>
-<p>Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration <span class="citation">(<a href="references.html#ref-baazim2019cd8" role="doc-biblioref">Baazim et al. 2019</a>)</span>, and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.</p>
-<p>In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>; <a href="references.html#ref-segueni2016controlled" role="doc-biblioref">Segueni et al. 2016</a>)</span>. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>)</span>. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression.</p>
-<p>The following contains information about how the data was collected, organized, and curated for analysis in RStudio.</p>
+<p>In our experiments, we are measuring the mice every week to record their weight
+over the course of the experiment. This weight measuring begins before the first
+vaccination and continues through until the last mouse is sacrificed. We have
+used ear notches to identify each mouse, and between the ear notch and the
+mouse’s cage number, we can uniquely track each mouse in the study.</p>
+<p>There are a few reasons that we are measuring these mouse weights. The first
+is to help us manage the mice. If there are mice that are losing a lot of
+weight, that can be an indication that they may need to be euthanized.
+[Anything on animal safety rules for weight monitoring of laboratory animals.]</p>
+<p>A second reason is that the weight measure might provide a record of each
+mouse’s general health over the course of the study. In the study, mice are
+weighed in grams weekly to monitor clinical status, as one potential sign of
+tuberculosis infection and severity is weight loss.</p>
+<p>In humans, tuberculosis patients frequently display weight loss as a clinical
+symptom associated with disease progression. In particular, extreme weight loss
+and loss of muscle mass, also known as cachexia, can present as a result of
+chronic inflammatory illnesses like tuberculosis <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>. This
+cachexia is part of a systemic response to inflammation, and in humans has been
+linked to upregulation of pro-inflammatory cytokines including tumor necrosis
+factor, interleukin-6, and interferon-gamma <span class="citation">(<a href="references.html#ref-baazim2022interplay" role="doc-biblioref">Baazim, Antonio-Herrera, and Bergthaler 2022</a>)</span>.
+Additionally, studies support a role in cachexia of key immune cell populations
+such as cytotoxic T-cells which, when depleted, counteract muscle and fat
+deterioration <span class="citation">(<a href="references.html#ref-baazim2019cd8" role="doc-biblioref">Baazim et al. 2019</a>)</span>, suggest that thsi type of T-cells may
+metabolically reprogram adipose tissue.</p>
+<p>Given these relationships between weight loss, diseases, and immune processes,
+it is possible that mouse weight might provide a regularly measurable insight
+into the severity of disease in each animal. While many of data points
+are collected to measure the final disease state of each animal, fewer are
+available before the animal is sacrificed. We are hoping that mouse weights
+will provide one measure that, while it may not perfectly capture disease
+severity, may provide some information throughout the experiment that is
+correlated to disease severity at regular time intervals.</p>
+<p>Other studies that use a mouse model of tuberculosis have collected mouse
+weights, as well <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>; <a href="references.html#ref-segueni2016controlled" role="doc-biblioref">Segueni et al. 2016</a>)</span>. We plan to
+investigate these data to visualize the trajectory of weight gain / loss in
+each mouse both before and after they are challenged with tuberculosis.
+We also plan to test whether each mouse’s weight change after challenge
+is correlated with other metrics of the severity of disease and immune response.
+We will do this by testing the correlation between the percent change in
+weight between challenge and sacrifice with CFUs at sacrifice as well as
+expression of cytokines and other biological markers <span class="citation">(<a href="references.html#ref-smith2022host" role="doc-biblioref">Smith et al. 2022</a>)</span>.</p>
 </div>
 <div id="template-description" class="section level3" number="4.0.2">
 <h3>
 <span class="header-section-number">4.0.2</span> Template description<a class="anchor" aria-label="anchor" href="#template-description"><i class="fas fa-link"></i></a>
 </h3>
 <p>Weights should be recorded in an excel worksheet. You can download a copy of the
-template <a href="https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx">here</a>. Here is what the template looks like:</p>
-<div class="inline-figure"><img src="figures/weight_template.png" width="2161"></div>
+template <a href="https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx">here</a>. The worksheet is divided into sheets. The first sheet is
+recorded at the first time point when the mice are measured and is used to record
+information about the mice that will remain unchanged over the course of the study,
+like species and sex.
+Here is what the first sheet of the template looks like:</p>
+<div class="inline-figure"><img src="figures/weight_template_initial.png" width="1890"></div>
+<p>The second and later sheets are used to record the weight at each measured timepoint.
+The second sheet will record the weights on the first date they are measured, so
+it should be recorded at the same time as the first sheet—with initial mouse
+information—is completed. Here is what the first sheet of the template looks like:</p>
+<div class="inline-figure"><img src="figures/weight_template_page.png" width="2096"></div>
+<p>As you continue to measure at new timepoints, you should add a sheet at each
+timepoint, with each new sheet following the format of the second sheet in the
+template. The second and later sheets should be labeled with the date when those
+weights were measured (e.g., “5.26.22” for weights measured on May 26, 2022).</p>
 <p>When you download the template, it will have example values filled out in blue.
 Use these to get an idea for how to record your own data. When you are ready
 to record your own data, delete these example values and replace them with
 data collected from your own experiment.</p>
-<p>Column titles are as follows:</p>
+<p>Column titles are as follows. First, in the first sheet, you will record:</p>
+<ul>
+<li>
+<code>notch_id</code>: Record the ear notch pattern in the mouse. Make sure that you
+record consistently across all timepoints, so that each mouse can be tracked
+across dates. If you are doing single notches, for example, this might be “0”
+for no notches, “1R” for one notch in the right ear, “1L” for one notch in the
+left ear, and “1R1L” for one notch in each ear.</li>
+<li>
+<code>starting_cage_number</code>: Record the number of the cage that the mouse is put
+into at the start of the experiment. In combination with the mouse’s <code>notch_id</code>,
+this will provide a unique identifier for each mouse at the start of the
+experiment.</li>
+<li>
+<code>dob</code>: Record the date the mouse was born.</li>
+<li>
+<code>species</code>: Record the species of the mouse (e.g., “C57BL/6” for C57 black 6 mice or
+“CBA” for CBA mice).</li>
+<li>
+<code>sex</code>: Record as “m” for male or “f” for female</li>
+<li>
+<code>group</code>: Provide the experimental group of the mouse. Be sure that you use the
+same abbreviation or notation across each timepoint. Examples of group
+designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb</li>
+</ul>
+<p>For the second and later sheets, you will record:</p>
 <ul>
 <li>
 <code>who_collected</code>: Record the first name of the person who actually handled the mouse from the scale.</li>
 <li>
 <code>date_collected</code>: Record the date using quotation marks, with the month, then day, then year. For example, “May 31, 2022.”</li>
-<li>
-<code>sex</code>: Record as “m” for male or “f” for female</li>
-<li>
-<code>notch_id</code>: Record the ear notch pattern in the mouse. Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be “0” for no notches, “1R” for one notch in the right ear, “1L” for one notch in the left ear, and “1R1L” for one notch in each ear.</li>
-<li>
-<code>mouse_number</code>: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch “1L” might be given the number “1”; if so, its number should always be recorded in this column as “1”). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study.</li>
 <li>
 <code>weight</code>: Record as a number, without a unit in this column. The next column will be used for the units.<br>
 </li>
@@ -106,31 +176,53 @@ data collected from your own experiment.</p>
 <li>
 <code>notes</code>: Record information regarding clinical observations (e.g., “back is balding,” “barbering,” “excessive grooming,” “euthanized”).</li>
 </ul>
-<p>good reference: <a href="https://elifesciences.org/articles/74419#s4" class="uri">https://elifesciences.org/articles/74419#s4</a></p>
+</div>
+<div id="processing-collected-data" class="section level3" number="4.0.3">
+<h3>
+<span class="header-section-number">4.0.3</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data"><i class="fas fa-link"></i></a>
+</h3>
+<p>Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and
+ultimately it will also write relevant results into a global database for the
+experiment.</p>
+<p>This section provides the details of that pipeline. It aims to explain the
+code that processes the data and generates visualizations. You do not need to
+run this code step-by-step, but instead can access a script with the full
+code by clicking [here].</p>
+<p>The first step in the workflow is to read in the data from the spreadsheet.
+As long as the data are collected following the template that was described
+earlier, this code should be able to read it in correctly and create a
+master dataset with the data from all sheets of the spreadsheet.</p>
+<p>First, the workflow loads some additional R libraries. You may need to install
+these on your local R session if you do not already have them installed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
-</div>
-<div id="read-in-data" class="section level3" number="4.0.3">
-<h3>
-<span class="header-section-number">4.0.3</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data"><i class="fas fa-link"></i></a>
-</h3>
-<p>Data is stored in one excel sheet, each week is one sheet named as the date -&gt; return vector for each sheet name</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">weight_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx</a></span><span class="op">(</span><span class="st">"DATA/body_weights_measurement.xlsx"</span><span class="op">)</span>
-<span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"DATA/body_weights_measurement.xlsx"</span><span class="op">)</span> <span class="co">#lists names of each sheet</span></code></pre></div>
-<pre><code>## [1] "5.26.22"  "6.3.22"   "6-9-22"   "6-16-22"  "6-21-22"  "7-1-22"   "07-07-22"</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>Next, it uses a custom function to read in data from the spreadsheet. This
+function (<code>read_mouse_weights</code>) creates a list of all of the sheets in the
+spreadsheet, so it can be sure to read in all collected data. It creates
+a list with each of the sheets with weekly weight measures, so it can
+read in each sheet in that list. Next, it reads in both the first sheet
+(with the initial mouse measures), as well as all the weight sheets.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">read_mouse_weights</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span> <span class="op">{</span>
   
   <span class="co"># getting info about all excel sheets</span>
-  <span class="va">mouse_weights_sheets</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span>
+  <span class="va">mouse_weights_sheets</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># First sheet is initial data, not mouse weights</span>
+  
   <span class="va">mouse_weights</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">mouse_weights_sheets</span>, 
                               <span class="op">~</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="va">.x</span>, 
                                                    col_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"text"</span>,   <span class="co"># who_collected</span>
                                                                  <span class="st">"text"</span>,   <span class="co"># date_collected</span>
-                                                                 <span class="st">"text"</span>,   <span class="co">#  sex</span>
-                                                                 <span class="st">"text"</span>,   <span class="co"># dob</span>
                                                                  <span class="st">"text"</span>,   <span class="co"># notch_id</span>
                                                                  <span class="st">"numeric"</span>, <span class="co"># weight</span>
                                                                  <span class="st">"text"</span>,   <span class="co"># unit</span>
@@ -140,18 +232,25 @@ data collected from your own experiment.</p>
                                                                  <span class="st">"text"</span>    <span class="co"># notes</span>
                                                                  <span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
     <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_collected <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span>, 
-           dob <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="va">dob</span><span class="op">)</span>, 
-           sex <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_collected <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span><span class="op">)</span>
 
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mouse_weights</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="co"># Test function</span>
-<span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">read_mouse_weights</span><span class="op">(</span>filepath <span class="op">=</span> <span class="st">"DATA/body_weights_measurement.xlsx"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Add a unique mouse ID, starting with just the first time point</span>
-<span class="va">ex</span> <span class="op">&lt;-</span> <span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="co"># Use function to read in mouse weights from the sheet</span>
+<span class="co"># (we'll read in the initial information later)</span>
+<span class="va">our_mouse_weights</span> <span class="op">&lt;-</span> <span class="fu">read_mouse_weights</span><span class="op">(</span>filepath <span class="op">=</span> <span class="st">"DATA/body_weights_measurement.xlsx"</span><span class="op">)</span></code></pre></div>
+<p>The next part of the processing is needed to track each mouse throughout the study.
+Some mice are moved from one cage to another. Often, this might be because the mice
+are fighting or otherwise show signs that they’d do better if separated. The
+researchers in the wet lab record the mouse information based on the cage the mouse
+is in at the start of the day that the measurement is taken, and they also record
+if the mouse is moved to a new cage, specifically that new cage number. This code
+is using that information to create a unique ID for each mouse as it moves to
+different cages over the course of the study.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Add a unique mouse ID. For right now, add it only for the first time point.</span>
+<span class="va">our_mouse_weights</span> <span class="op">&lt;-</span> <span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mouse_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, 
          mouse_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">date_collected</span> <span class="op">==</span>
                                     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span>, 
@@ -162,7 +261,7 @@ data collected from your own experiment.</p>
 <span class="co"># existing cage number and notch ID. If the mouse does not</span>
 <span class="co"># switch cages again, the output is a vector of length 0</span>
 <span class="va">get_next_cage</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">existing_cage_number</span>, <span class="va">notch_id</span>, 
-                          <span class="va">df</span> <span class="op">=</span> <span class="va">ex</span><span class="op">)</span><span class="op">{</span>
+                          <span class="va">df</span> <span class="op">=</span> <span class="va">our_mouse_weights</span><span class="op">)</span><span class="op">{</span>
   <span class="va">next_cage</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">existing_cage_number</span> <span class="op">==</span> <span class="op">{</span><span class="op">{</span><span class="va">existing_cage_number</span><span class="op">}</span><span class="op">}</span> <span class="op">&amp;</span>
              <span class="va">.data</span><span class="op">$</span><span class="va">notch_id</span> <span class="op">==</span> <span class="op">{</span><span class="op">{</span><span class="va">notch_id</span><span class="op">}</span><span class="op">}</span> <span class="op">&amp;</span> 
@@ -175,7 +274,7 @@ data collected from your own experiment.</p>
 <span class="co"># Function to get the full list of cages for each individual </span>
 <span class="co"># mouse, over the course of all data collected to date</span>
 <span class="va">get_mouse_cages</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mouse_starting_cage</span>, <span class="va">mouse_notch_id</span>, 
-                            <span class="va">df</span> <span class="op">=</span> <span class="va">ex</span><span class="op">)</span><span class="op">{</span>
+                            <span class="va">df</span> <span class="op">=</span> <span class="va">our_mouse_weights</span><span class="op">)</span><span class="op">{</span>
   <span class="va">mouse_cage_list</span> <span class="op">&lt;-</span> <span class="va">mouse_starting_cage</span>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span>
   
@@ -197,15 +296,15 @@ data collected from your own experiment.</p>
 <span class="co"># Create a dataframe that lists all mice at the first time point, </span>
 <span class="co"># as well as a list of all the cages they have been in over the</span>
 <span class="co"># experiment</span>
-<span class="va">mice_cage_lists</span> <span class="op">&lt;-</span> <span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="va">mice_cage_lists</span> <span class="op">&lt;-</span> <span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_collected</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">notch_id</span>, <span class="va">existing_cage_number</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cage_list <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">existing_cage_number</span>, 
                           .y <span class="op">=</span> <span class="va">notch_id</span>, 
-                          .f <span class="op">=</span> <span class="op">~</span> <span class="fu">get_mouse_cages</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, df <span class="op">=</span> <span class="va">ex</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+                          .f <span class="op">=</span> <span class="op">~</span> <span class="fu">get_mouse_cages</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, df <span class="op">=</span> <span class="va">our_mouse_weights</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Add a column with the latest cage to the weight dataframe</span>
-<span class="va">ex</span><span class="op">$</span><span class="va">latest_cage</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+<span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">latest_cage</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
 
 <span class="co"># Loop through all the individual mice, based on mice with a </span>
 <span class="co"># measurement at the first time point. Add the unique ID for </span>
@@ -218,59 +317,86 @@ data collected from your own experiment.</p>
   <span class="va">this_unique_id</span> <span class="op">&lt;-</span> <span class="va">mice_cage_lists</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span><span class="op">$</span><span class="va">mouse_id</span>
   <span class="va">latest_cage</span> <span class="op">&lt;-</span> <span class="va">this_cage_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">this_cage_list</span><span class="op">)</span><span class="op">]</span>
   
-  <span class="va">ex</span><span class="op">$</span><span class="va">mouse_id</span><span class="op">[</span><span class="va">ex</span><span class="op">$</span><span class="va">notch_id</span> <span class="op">==</span> <span class="va">this_notch_id</span> <span class="op">&amp;</span> 
-                       <span class="va">ex</span><span class="op">$</span><span class="va">existing_cage_number</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> 
+  <span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">mouse_id</span><span class="op">[</span><span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">notch_id</span> <span class="op">==</span> <span class="va">this_notch_id</span> <span class="op">&amp;</span> 
+                       <span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">existing_cage_number</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> 
                        <span class="va">this_cage_list</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">this_unique_id</span>
   
-  <span class="va">ex</span><span class="op">$</span><span class="va">latest_cage</span><span class="op">[</span><span class="va">ex</span><span class="op">$</span><span class="va">notch_id</span> <span class="op">==</span> <span class="va">this_notch_id</span> <span class="op">&amp;</span> 
-                       <span class="va">ex</span><span class="op">$</span><span class="va">existing_cage_number</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> 
+  <span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">latest_cage</span><span class="op">[</span><span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">notch_id</span> <span class="op">==</span> <span class="va">this_notch_id</span> <span class="op">&amp;</span> 
+                       <span class="va">our_mouse_weights</span><span class="op">$</span><span class="va">existing_cage_number</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> 
                        <span class="va">this_cage_list</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">latest_cage</span>
 <span class="op">}</span>
 
 <span class="co"># Add a label for each mouse based on its notch_id and latest cage</span>
-<span class="va">ex</span> <span class="op">&lt;-</span> <span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="va">our_mouse_weights</span> <span class="op">&lt;-</span> <span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mouse_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Cage:"</span>, <span class="va">latest_cage</span>, 
                              <span class="st">"Notch:"</span>, <span class="va">notch_id</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">ex</span></code></pre></div>
-<pre><code>## # A tibble: 980 × 14
-##    who_collected date_collected sex   dob        notch_id weight unit 
-##    &lt;chr&gt;         &lt;date&gt;         &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
-##  1 Taru          2022-05-26     f     2022-04-05 0          18.4 g    
-##  2 Taru          2022-05-26     f     2022-04-05 1R         17.2 g    
-##  3 Taru          2022-05-26     f     2022-04-05 1L         17   g    
-##  4 Taru          2022-05-26     f     2022-04-05 1R1L       18.8 g    
-##  5 Taru          2022-05-26     f     2022-04-05 0          18.4 g    
-##  6 Taru          2022-05-26     f     2022-04-05 1R         17.7 g    
-##  7 Taru          2022-05-26     f     2022-04-05 1L         20.2 g    
-##  8 Taru          2022-05-26     f     2022-04-05 1R1L       17.1 g    
-##  9 Taru          2022-05-26     f     2022-04-05 0          17.6 g    
-## 10 Taru          2022-05-26     f     2022-04-05 1R         20   g    
-## # … with 970 more rows, and 7 more variables: existing_cage_number &lt;chr&gt;,
-## #   new_cage_number &lt;chr&gt;, group &lt;chr&gt;, notes &lt;chr&gt;, mouse_id &lt;int&gt;,
-## #   latest_cage &lt;chr&gt;, mouse_label &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<span class="va">our_mouse_weights</span></code></pre></div>
+<pre><code>## # A tibble: 980 × 12
+##    who_collected date_collected notch_id weight unit  existing_cage_number
+##    &lt;chr&gt;         &lt;date&gt;         &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;               
+##  1 Taru          2022-05-26     0          18.4 g     22003               
+##  2 Taru          2022-05-26     1R         17.2 g     22003               
+##  3 Taru          2022-05-26     1L         17   g     22003               
+##  4 Taru          2022-05-26     1R1L       18.8 g     22003               
+##  5 Taru          2022-05-26     0          18.4 g     22004               
+##  6 Taru          2022-05-26     1R         17.7 g     22004               
+##  7 Taru          2022-05-26     1L         20.2 g     22004               
+##  8 Taru          2022-05-26     1R1L       17.1 g     22004               
+##  9 Taru          2022-05-26     0          17.6 g     22005               
+## 10 Taru          2022-05-26     1R         20   g     22005               
+## # … with 970 more rows, and 6 more variables: new_cage_number &lt;chr&gt;,
+## #   group &lt;chr&gt;, notes &lt;chr&gt;, mouse_id &lt;int&gt;, latest_cage &lt;chr&gt;,
+## #   mouse_label &lt;chr&gt;</code></pre>
+<p>Now that the weekly weights are processed, the pipeline will read in and add the
+information that was calculated in the first sheet of the spreadsheet. This
+information is constant information for each mouse, like their sex, species, and
+experimental group.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mouse_initial</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/body_weights_measurement.xlsx"</span>, 
+                                      sheet <span class="op">=</span> <span class="fl">1</span>, 
+                                      col_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="co"># notch_id</span>
+                                                    <span class="st">"text"</span>, <span class="co"># starting_cage_number</span>
+                                                    <span class="st">"text"</span>, <span class="co"># dob</span>
+                                                    <span class="st">"text"</span>, <span class="co"># species</span>
+                                                    <span class="st">"text"</span>, <span class="co"># sex</span>
+                                                    <span class="st">"text"</span> <span class="co"># group</span>
+                                                    <span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dob <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="va">dob</span><span class="op">)</span>, 
+         sex <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">mouse_ids</span> <span class="op">&lt;-</span> <span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_collected</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">notch_id</span>, <span class="va">existing_cage_number</span>, <span class="va">mouse_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>starting_cage_number <span class="op">=</span> <span class="va">existing_cage_number</span><span class="op">)</span>
+
+<span class="va">mouse_initial</span> <span class="op">&lt;-</span> <span class="va">mouse_initial</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">mouse_ids</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"notch_id"</span>, <span class="st">"starting_cage_number"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">our_mouse_weights</span> <span class="op">&lt;-</span> <span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">mouse_initial</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mouse_id"</span>, <span class="st">"notch_id"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Explore this data a bit</span>
-<span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_collected</span>, y <span class="op">=</span> <span class="va">weight</span>, 
              group <span class="op">=</span> <span class="va">mouse_id</span>, color <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_collected</span>, y <span class="op">=</span> <span class="va">weight</span>, color <span class="op">=</span> <span class="va">who_collected</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-7-2.png" width="672"></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-9-2.png" width="672"></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm">ggbeeswarm</a></span><span class="op">)</span>
-<span class="va">ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="va">our_mouse_weights</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_collected</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">last</a></span><span class="op">(</span><span class="va">date_collected</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">group</span>, y <span class="op">=</span> <span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-7-3.png" width="672"></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">ex</span>, <span class="st">"DATA/example_mouse_output.csv"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-9-3.png" width="672"></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">our_mouse_weights</span>, <span class="st">"DATA/example_mouse_output.csv"</span><span class="op">)</span></code></pre></div>
 
 </div>
 </div>
@@ -283,7 +409,7 @@ data collected from your own experiment.</p>
 <a class="nav-link" href="#mouse-weights"><span class="header-section-number">4</span> Mouse Weights</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#overview-1"><span class="header-section-number">4.0.1</span> Overview</a></li>
 <li><a class="nav-link" href="#template-description"><span class="header-section-number">4.0.2</span> Template description</a></li>
-<li><a class="nav-link" href="#read-in-data"><span class="header-section-number">4.0.3</span> Read in data</a></li>
+<li><a class="nav-link" href="#processing-collected-data"><span class="header-section-number">4.0.3</span> Processing collected data</a></li>
 </ul>
 </li></ul>
 
