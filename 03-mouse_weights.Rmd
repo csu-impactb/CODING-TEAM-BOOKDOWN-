@@ -2,34 +2,109 @@
 
 ### Overview
 
-Extreme weight loss and loss of muscle mass, also known as cachexia, typically presents along side chronic inflammatory illnesses like Tuberculosis disease [@baazim2022interplay]. We now recognize that cachexia is part of a systemic response to inflammation, and has been linked to upregulation of pro-inflammatory cytokines such as TNF, IL-6, and IFNg in humans [@baazim2022interplay]. Additionally, studies support the role of key immune cell populations such as CD8+ T-cells that, when depleted, counteract muscle and fat deterioration  [@baazim2019cd8],  and suggest that CD8+ T-cells may metabolically reprogram adipose tissue.
+In our experiments, we are measuring the mice every week to record their weight
+over the course of the experiment. This weight measuring begins before the first
+vaccination and continues through until the last mouse is sacrificed. We have
+used ear notches to identify each mouse, and between the ear notch and the
+mouse's cage number, we can uniquely track each mouse in the study.
 
-In recognition of cachexia related illnesses and diseases, we tracked the progression of weight loss over the course of this study, as is done with many TB-mouse studies [@smith2022host; @segueni2016controlled]. These data is also useful when correlating to CFU count as well as expression of cytokines and other biological markers [@smith2022host]. Here, mice are weighed in grams weekly to monitor clinical status as TB patients frequently display weight loss as clinical symptom associated with disease progression. 
+There are a few reasons that we are measuring these mouse weights. The first 
+is to help us manage the mice. If there are mice that are losing a lot of 
+weight, that can be an indication that they may need to be euthanized. 
+[Anything on animal safety rules for weight monitoring of laboratory animals.]
 
-The following contains information about how the data was collected, organized, and curated for analysis in RStudio.
+A second reason is that the weight measure might provide a record of each
+mouse's general health over the course of the study. In the study, mice are
+weighed in grams weekly to monitor clinical status, as one potential sign of 
+tuberculosis infection and severity is weight loss. 
+
+In humans, tuberculosis patients frequently display weight loss as a clinical
+symptom associated with disease progression. In particular, extreme weight loss
+and loss of muscle mass, also known as cachexia, can present as a result of
+chronic inflammatory illnesses like tuberculosis [@baazim2022interplay]. This
+cachexia is part of a systemic response to inflammation, and in humans has been
+linked to upregulation of pro-inflammatory cytokines including tumor necrosis
+factor, interleukin-6, and interferon-gamma [@baazim2022interplay].
+Additionally, studies support a role in cachexia of key immune cell populations
+such as cytotoxic T-cells which, when depleted, counteract muscle and fat
+deterioration [@baazim2019cd8], suggest that thsi type of T-cells may
+metabolically reprogram adipose tissue.
+
+Given these relationships between weight loss, diseases, and immune processes, 
+it is possible that mouse weight might provide a regularly measurable insight 
+into the severity of disease in each animal. While many of data points 
+are collected to measure the final disease state of each animal, fewer are 
+available before the animal is sacrificed. We are hoping that mouse weights
+will provide one measure that, while it may not perfectly capture disease 
+severity, may provide some information throughout the experiment that is 
+correlated to disease severity at regular time intervals.
+
+Other studies that use a mouse model of tuberculosis have collected mouse
+weights, as well [@smith2022host; @segueni2016controlled]. We plan to 
+investigate these data to visualize the trajectory of weight gain / loss in 
+each mouse both before and after they are challenged with tuberculosis. 
+We also plan to test whether each mouse's weight change after challenege
+is correlated with 
+
+These data may also
+be useful to correlate to CFU count as well as expression of cytokines and other
+biological markers [@smith2022host].
 
 ### Template description
 
 Weights should be recorded in an excel worksheet. You can download a copy of the
-template [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx). Here is what the template looks like: 
+template [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx). The worksheet is divided into sheets. The first sheet is 
+recorded at the first time point when the mice are measured and is used to record
+information about the mice that will remain unchanged over the course of the study, 
+like species and sex. 
+Here is what the first sheet of the template looks like: 
 
 ```{r echo = FALSE}
-knitr::include_graphics("figures/weight_template.png")
+knitr::include_graphics("figures/weight_template_initial.png")
 ```
 
+The second and later sheets are used to record the weight at each measured timepoint. 
+The second sheet will record the weights on the first date they are measured, so 
+it should be recorded at the same time as the first sheet---with initial mouse
+information---is completed. Here is what the first sheet of the template looks like: 
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/weight_template_page.png")
+```
+
+As you continue to measure at new timepoints, you should add a sheet at each
+timepoint, with each new sheet following the format of the second sheet in the
+template. The second and later sheets should be labeled with the date when those
+weights were measured (e.g., "5.26.22" for weights measured on May 26, 2022).
 
 When you download the template, it will have example values filled out in blue.
 Use these to get an idea for how to record your own data. When you are ready 
 to record your own data, delete these example values and replace them with 
 data collected from your own experiment. 
 
-Column titles are as follows:
+Column titles are as follows. First, in the first sheet, you will record: 
+
+- `notch_id`: Record the ear notch pattern in the mouse. Make sure that you
+record consistently across all timepoints, so that each mouse can be tracked
+across dates. If you are doing single notches, for example, this might be "0"
+for no notches, "1R" for one notch in the right ear, "1L" for one notch in the
+left ear, and "1R1L" for one notch in each ear.
+- `starting_cage_number`: Record the number of the cage that the mouse is put
+into at the start of the experiment. In combination with the mouse's `notch_id`,
+this will provide a unique identifier for each mouse at the start of the
+experiment.
+- `dob`: Record the date the mouse was born. 
+- `species`: Record the species of the mouse (e.g., "C57BL/6" for C57 black 6 mice or 
+"CBA" for CBA mice).
+- `sex`: Record as "m" for male or "f" for female
+- `group`: Provide the experimental group of the mouse. Be sure that you use the
+same abbreviation or notation across each timepoint. Examples of group
+designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
+
+For the second and later sheets, you will record: 
 
 - `who_collected`: Record the first name of the person who actually handled the mouse from the scale. 
 - `date_collected`: Record the date using quotation marks, with the month, then day, then year. For example, "May 31, 2022".
-- `sex`: Record as "m" for male or "f" for female
-- `notch_id`: Record the ear notch pattern in the mouse. Make sure that you record consistently across all timepoints, so that each mouse can be tracked across dates. If you are doing single notches, for example, this might be "0" for no notches, "1R" for one notch in the right ear, "1L" for one notch in the left ear, and "1R1L" for one notch in each ear.
-- `mouse_number`: Record as a number identifying mice within a cage. This should be consistent across all recorded timepoints (i.e., the mouse in a cage with ear notch "1L" might be given the number "1"; if so, its number should always be recorded in this column as "1"). This number will repeat across different cages, but if you combine this number with the cage number, it gives a unique identifier for each mouse in the study. 
 - `weight`: Record as a number, without a unit in this column. The next column will be used for the units.	
 - `unit`:	Provide the units that were used to take the weight (e.g., "g" for grams). Be consistent across all animals and timepoints in the abbreviation that you use (e.g., always use "g" for grams, not "g" sometimes and "grams" sometimes)
 - `existing_cage_number`: Provide the cage number that the mouse is in when you start weighing at that time point. If the mouse is moved to another cage on this day, you will specify that in the next column. If the animal was moved from one cage to another between the last weighing and the date of the timepoint you are measuring, put in this column the cage number that the animal was in the last time it was weighed.
@@ -37,18 +112,13 @@ Column titles are as follows:
 - `group`: Provide the experimental group of the mouse. Be sure that you use the same abbreviation or notation across each timepoint. Examples of group designations might be: bcg, saline, bcg+id93, saline+id93, saline+noMtb
 - `notes`: Record information regarding clinical observations (e.g., "back is balding", "barbering", "excessive grooming", "euthanized"). 
 
-good reference: https://elifesciences.org/articles/74419#s4
-
-```{r message = FALSE, warning = FALSE}
-library(readxl)
-library(tidyverse)
-```
-
 ### Read in data
 
 Data is stored in one excel sheet, each week is one sheet named as the date -> return vector for each sheet name 
 
 ```{r}
+library(readxl)
+library(tidyverse)
 weight_data <- read_xlsx("DATA/body_weights_measurement.xlsx")
 excel_sheets("DATA/body_weights_measurement.xlsx") #lists names of each sheet
 

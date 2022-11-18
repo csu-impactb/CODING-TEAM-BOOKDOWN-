@@ -8,4 +8,3 @@ Metadata for an experiment:
 - `experimental_groups`
 
 
-
