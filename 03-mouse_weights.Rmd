@@ -1,17 +1,32 @@
-# Mouse Weights
+# Animal initial conditions and weekly weights 
 
 ### Overview
 
-In our experiments, we are measuring the mice every week to record their weight
-over the course of the experiment. This weight measuring begins before the first
-vaccination and continues through until the last mouse is sacrificed. We have
-used ear notches to identify each mouse, and between the ear notch and the
-mouse's cage number, we can uniquely track each mouse in the study.
+We use the template in this section to record information about each animal 
+used in the experiment. This includes the species, sex, and experimental group.
+It also includes some information to identify the animal, which in the case
+of mice includes a code describing the pattern of notches put in the mouse's 
+ear and the cage that the animal is assigned to at the beginning of the 
+experiment. These are all values that can be determined at the start of the
+experiment, when the mice are first assigned to groups.
 
-There are a few reasons that we are measuring these mouse weights. The first 
-is to help us manage the mice. If there are mice that are losing a lot of 
-weight, that can be an indication that they may need to be euthanized. 
-[Anything on animal safety rules for weight monitoring of laboratory animals.]
+This template is also used to record some data over the course of the
+experiment. This includes adverse events and cases where an animal is moved from
+one cage to another during the experiment.
+
+In addition, in our experiments, we are measuring the mice every week to record
+their weight over the course of the experiment. This weight measuring begins
+before the first vaccination and continues through until the last mouse is
+sacrificed. We have used ear notches to identify each mouse, and between the ear
+notch and the mouse's cage number, we can uniquely track each mouse in the
+study.
+
+There are a few reasons that we are measuring these mouse weights. The first is
+to help us manage the mice, particularly in terms of animal welfare. If there
+are mice that are losing a lot of weight, that can be an indication that they
+may need to be euthanized. For example, some animal care standards consider that
+an adult animal that has lost 20% or more of its weight compared to its baseline
+weight is indicating a clear sign of morbidity or suffering.
 
 A second reason is that the weight measure might provide a record of each
 mouse's general health over the course of the study. In the study, mice are
@@ -51,14 +66,17 @@ expression of cytokines and other biological markers [@smith2022host].
 
 ### Template description
 
-Weights should be recorded in an excel worksheet. You can download a copy of the
-template [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/body_weights_template.xlsx). The worksheet is divided into sheets. The first sheet is 
-recorded at the first time point when the mice are measured and is used to record
-information about the mice that will remain unchanged over the course of the study, 
-like species and sex. 
-Here is what the first sheet of the template looks like: 
+Both the animals' initial conditions and their weekly measures (adverse events,
+cage changes, and weights) should be recorded in an excel worksheet. You can
+download a copy of the template
+[here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/body_weights_template.xlsx).
 
-```{r echo = FALSE}
+The worksheet is divided into sheets. The first sheet is recorded at the first
+time point when the mice are measured and is used to record information about
+the mice that will remain unchanged over the course of the study, like species
+and sex. Here is what the first sheet of the template looks like:
+
+```{r echo = FALSE, , out.width="100%"}
 knitr::include_graphics("figures/weight_template_initial.png")
 ```
 
@@ -67,7 +85,7 @@ The second sheet will record the weights on the first date they are measured, so
 it should be recorded at the same time as the first sheet---with initial mouse
 information---is completed. Here is what the first sheet of the template looks like: 
 
-```{r echo = FALSE}
+```{r echo = FALSE, out.width="100%"}
 knitr::include_graphics("figures/weight_template_page.png")
 ```
 
@@ -132,7 +150,7 @@ master dataset with the data from all sheets of the spreadsheet.
 First, the workflow loads some additional R libraries. You may need to install 
 these on your local R session if you do not already have them installed.
 
-```{r}
+```{r message = FALSE, warning = FALSE}
 library(readxl)
 library(tidyverse)
 ```

@@ -406,7 +406,7 @@ elisa_data_stats %>%
 #### Statistical data analysis for more than two groups
 
 
-# ELISA data processing
+## ELISA data processing
 
 We read ELISA plate in a 96 well plate using a plate reader. The plate reader generates the data in form of number in an excel sheet. We have created this pipeline/worksheet to bring out the information from the excl sheet to a tidy format in which the above created fitted model and endpoint titer functions can be applied. 
 
