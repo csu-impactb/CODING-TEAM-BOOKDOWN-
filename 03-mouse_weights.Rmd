@@ -76,7 +76,7 @@ time point when the mice are measured and is used to record information about
 the mice that will remain unchanged over the course of the study, like species
 and sex. Here is what the first sheet of the template looks like:
 
-```{r echo = FALSE, , out.width="100%"}
+```{r echo = FALSE, out.width="100%"}
 knitr::include_graphics("figures/weight_template_initial.png")
 ```
 
