@@ -134,13 +134,21 @@ For the second and later sheets, you will record:
 Once data are collected, the file can be run through an R workflow. This workflow
 will convert the data into a format that is easier to work with for data analysis
 and visualization. It will also produce a report on the data in the spreadsheet, and 
-ultimately it will also write relevant results into a global database for the 
-experiment. 
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project. 
 
-This section provides the details of that pipeline. It aims to explain the 
+The next section provides the details of the pipeline. It aims to explain the 
 code that processes the data and generates visualizations. You do not need to 
 run this code step-by-step, but instead can access a script with the full 
-code by clicking [here]. 
+code [here](https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/animal_weights.Rmd). 
+
+To use this reporting template, you need to download it to your computer, 
+saving it in the file directory where you saved the data you collected with 
+the data collection template. 
+
+
+
+### Details of processing script
 
 The first step in the workflow is to read in the data from the spreadsheet. 
 As long as the data are collected following the template that was described
