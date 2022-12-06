@@ -37,8 +37,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Connect R to Microsoft Teams},
-  pdfauthor={Taru Dutt},
+  pdftitle={ImpactTB/BAA: Standard Operating Procedures for Data Analysis},
+  pdfauthor={Colorado State University Coding Team},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -123,9 +123,9 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{Connect R to Microsoft Teams}
-\author{Taru Dutt}
-\date{2022-10-19}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2022-12-06}
 
 \begin{document}
 \maketitle
@@ -2466,55 +2466,6 @@ treatment group information:
 \item
   MtbH37Rv\textbar Rv2031c\textbar hspX
 \end{itemize}
-
-\hypertarget{download-microsoft365r-package}{%
-\section{Download Microsoft365R package}\label{download-microsoft365r-package}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"Microsoft365R"}\NormalTok{)}
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"AzureGraph"}\NormalTok{)}
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"RODBC"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{load-the-package}{%
-\section{Load the package}\label{load-the-package}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(Microsoft365R)}
-\FunctionTok{library}\NormalTok{(AzureGraph)}
-\FunctionTok{library}\NormalTok{(AzureAuth)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{set-up-teams-via-r}{%
-\section{Set up teams via R}\label{set-up-teams-via-r}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_team }\OtherTok{\textless{}{-}} \FunctionTok{get\_team}\NormalTok{(}\StringTok{"CVMBS{-}MIP IMPAc{-}TB"}\NormalTok{, }\AttributeTok{app =} \StringTok{"04b07795{-}8ddb{-}461a{-}bbee{-}02f9e1bf7b46"}\NormalTok{)}
-
-\CommentTok{\# get the channel}
-
-\NormalTok{channels }\OtherTok{\textless{}{-}}\NormalTok{ my\_team}\SpecialCharTok{$}\FunctionTok{get\_channel}\NormalTok{()}
-
-\CommentTok{\# get the folder}
-
-\NormalTok{folder }\OtherTok{\textless{}{-}}\NormalTok{ channels}\SpecialCharTok{$}\FunctionTok{get\_folder}\NormalTok{()}
-
-\CommentTok{\# list files}
-\NormalTok{files }\OtherTok{\textless{}{-}}\NormalTok{ folder}\SpecialCharTok{$}\FunctionTok{list\_files}\NormalTok{()}
-
-\CommentTok{\# open weight file}
-
-\NormalTok{body\_weight }\OtherTok{\textless{}{-}}\NormalTok{ folder}\SpecialCharTok{$}\FunctionTok{get\_item}\NormalTok{(}\StringTok{"Mouse\_labeling\_and\_weighing/Body Weights.xlsx"}\NormalTok{)}
-\NormalTok{body\_weight}\SpecialCharTok{$}\FunctionTok{open}\NormalTok{()}
-\NormalTok{body\_weight}\SpecialCharTok{$}\FunctionTok{download}\NormalTok{(}\AttributeTok{overwrite=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 
   \bibliography{book.bib,packages.bib}
 

@@ -68,6 +68,3 @@ making-the-data-tidy-for-plotting
 boxplot
 pathology
 proteomics
-download-microsoft365r-package
-load-the-package
-set-up-teams-via-r
