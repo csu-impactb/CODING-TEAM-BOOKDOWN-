@@ -1,6 +1,8 @@
 ---
 title: "Report on animal initial conditions and weekly weights"
 output: word_document
+params:
+  data: ../../DATA/body_weights_measurement.xlsx
 ---
 
 ```{r setup, include=FALSE}
@@ -11,6 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 # Load required packages
 library(readxl)
 library(tidyverse)
+library(ggbeeswarm)
 ```
 
 ```{r}
@@ -95,7 +98,7 @@ get_mouse_cages <- function(mouse_starting_cage, mouse_notch_id,
 
 # Read in the mouse weights from the Excel template. This creates one large
 # dataframe with the weights from all the timepoints. 
-our_mouse_weights <- read_mouse_weights(filepath = "../../DATA/body_weights_measurement.xlsx")
+our_mouse_weights <- read_mouse_weights(filepath = params$data)
 
 # Add a unique mouse ID for the first time point. This will become each mouse's
 # unique ID across all measured timepoints.
@@ -146,7 +149,7 @@ our_mouse_weights <- our_mouse_weights %>%
 
 # Read in the data from the original file with the initial animal 
 # characteristics
-mouse_initial <- readxl::read_excel("../../DATA/body_weights_measurement.xlsx", 
+mouse_initial <- readxl::read_excel(params$data, 
                                       sheet = 1, 
                                       col_types = c("text", # notch_id
                                                     "text", # starting_cage_number
@@ -196,4 +199,67 @@ mouse_initial %>%
                caption = "Summary of experimental animals at the start of the experiment", 
                align = c("r", "l"))
 ```
+
+\newpage
+
+# Animal weights
+
+This section provides summaries of mouse weights over the course of the 
+experiment. 
+
+```{r}
+our_mouse_weights %>% 
+  ggplot(aes(x = date_collected, y = weight, 
+             group = mouse_id, color = sex)) + 
+  geom_line() + 
+  facet_wrap(~ group) + 
+  ggtitle("Animal weights over time by experiment group") +
+  labs(x = "Date collected", 
+       y = "Weight (g)")
+```
+
+\newpage
+
+```{r}
+our_mouse_weights %>% 
+  filter(date_collected == last(date_collected)) %>% 
+  ggplot(aes(x = group, y = weight)) + 
+  geom_beeswarm(aes(color = sex)) + 
+  geom_boxplot(fill = NA, color = "dodgerblue") + 
+  ggtitle("Animal weights at last collection by experimental group") + 
+  labs(x = "Experimental group", 
+       y = "Weight (g)")
+```
+
+\newpage
+
+```{r}
+our_mouse_weights %>% 
+  ggplot(aes(x = date_collected, y = weight, color = who_collected)) + 
+  geom_point() + 
+  ggtitle("Animal weights by animal handler") + 
+  labs(x = "Date collected", 
+       y = "Weight (g)",
+       color = "Person who\nhandled the\nanimal")
+
+```
+
+\newpage
+
+```{r}
+our_mouse_weights %>% 
+  select(date_collected, weight, group, mouse_label, sex) %>% 
+  group_by(mouse_label) %>% 
+  mutate(weight_change = (weight - lag(weight)) / lag(weight)) %>% 
+  ungroup() %>% 
+  filter(date_collected == last(date_collected)) %>% 
+  mutate(formatted_weight_change = paste0(formatC(weight_change * 100, 
+                                                  digits = 1, format = "f"), "%")) %>% 
+  arrange(weight_change) %>% 
+  select(mouse_label, group, sex, weight, formatted_weight_change) %>% 
+  knitr::kable(col.names = c("Mouse", "Experimental group", "Sex", 
+                             "Weight (g)", "Weight change since last measure"), 
+               caption = "Individual data on weight changes in mice between current measurement and previous measurement.")
+```
+
 
