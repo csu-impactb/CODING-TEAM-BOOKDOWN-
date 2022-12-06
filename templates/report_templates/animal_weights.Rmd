@@ -4,6 +4,196 @@ output: word_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r message = FALSE, warning = FALSE}
+# Load required packages
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+# Create some functions that are used in later code
+
+## Function to read in mouse weights. This takes a filepath to an Excel sheet
+## that follows the template of the animal weight collection template. It 
+## identifies all the sheets in that file and reads in all the ones that 
+## measure weekly weights. It returns one large dataframe with all of the 
+## measured weights. 
+read_mouse_weights <- function(filepath) {
+  
+  # getting info about all excel sheets
+  mouse_weights_sheets <- readxl::excel_sheets(filepath)[-1] # First sheet is initial data, not mouse weights
+  
+  mouse_weights <- purrr::map(mouse_weights_sheets, 
+                              ~ readxl::read_excel(filepath, sheet = .x, 
+                                                   col_types = c("text",   # who_collected
+                                                                 "text",   # date_collected
+                                                                 "text",   # notch_id
+                                                                 "numeric", # weight
+                                                                 "text",   # unit
+                                                                 "text",   # existing_cage_number
+                                                                 "text",   # new_cage_number
+                                                                 "text",   # group
+                                                                 "text"    # notes
+                                                                 ))) %>% 
+    dplyr::bind_rows() %>% 
+    mutate(date_collected = lubridate::mdy(date_collected))
+
+  return(mouse_weights)
+}
+
+# Function to get the next cage number based on the 
+# existing cage number and notch ID. If the mouse does not
+# switch cages again, the output is a vector of length 0. 
+# This takes the dataframe and existing identifiers (notch id and
+# existing cage number) as inputs. It returns the next cage
+# that the mouse was moved to. If the mouse has not moved
+# from the existing case, the output has length 0.
+get_next_cage <- function(existing_cage_number, notch_id, 
+                          df = our_mouse_weights){
+  next_cage <- df %>% 
+    filter(.data$existing_cage_number == {{existing_cage_number}} &
+             .data$notch_id == {{notch_id}} & 
+             !is.na(.data$new_cage_number)) %>% 
+    pull(new_cage_number)
+  
+  return(next_cage)
+}
+
+# Function to get the full list of cages for each individual 
+# mouse, over the course of all data collected to date. This 
+# inputs the starting identifiers of the mouse (starting cage ID 
+# and notch ID). It then works through any cage changes to create
+# a list for that mouse of all cages it was put in over the 
+# course of the experiment. 
+get_mouse_cages <- function(mouse_starting_cage, mouse_notch_id, 
+                            df = our_mouse_weights){
+  mouse_cage_list <- mouse_starting_cage
+  i <- 1
+  
+  while(TRUE){
+    next_cage <- get_next_cage(existing_cage_number =
+                               mouse_cage_list[i],
+                               notch_id = mouse_notch_id, 
+                               df = df)
+    if(length(next_cage) == 0) {
+      break
+      }
+    i <- i + 1
+    mouse_cage_list[i] <- next_cage
+    }
+  
+  return(mouse_cage_list)
+}
+```
+
+
+```{r}
+# Read in and process the data
+
+# Read in the mouse weights from the Excel template. This creates one large
+# dataframe with the weights from all the timepoints. 
+our_mouse_weights <- read_mouse_weights(filepath = "../../DATA/body_weights_measurement.xlsx")
+
+# Add a unique mouse ID for the first time point. This will become each mouse's
+# unique ID across all measured timepoints.
+our_mouse_weights <- our_mouse_weights %>% 
+  mutate(mouse_id = 1:n(), 
+         mouse_id = ifelse(date_collected ==
+                                    first(date_collected), 
+                                  mouse_id, 
+                                  NA))
+
+# Create a dataframe that lists all mice at the first time point, 
+# as well as a list of all the cages they have been in over the
+# experiment
+mice_cage_lists <- our_mouse_weights %>% 
+  filter(date_collected == first(date_collected)) %>% 
+  select(notch_id, existing_cage_number, mouse_id) %>% 
+  mutate(cage_list = map2(.x = existing_cage_number, 
+                          .y = notch_id, 
+                          .f = ~ get_mouse_cages(.x, .y, df = our_mouse_weights)))
+
+# Add a column with the latest cage to the weight dataframe
+our_mouse_weights$latest_cage <- NA
+
+# Loop through all the individual mice, based on mice with a 
+# measurement at the first time point. Add the unique ID for 
+# each mouse, which will apply throughout the experiment. Also 
+# add the most recent cage ID, so the mouse can be identified
+# by lab members based on it's current location
+for(i in 1:nrow(mice_cage_lists)){
+  this_notch_id <- mice_cage_lists[i, ]$notch_id
+  this_cage_list <- mice_cage_lists[i, ]$cage_list[[1]]
+  this_unique_id <- mice_cage_lists[i, ]$mouse_id
+  latest_cage <- this_cage_list[length(this_cage_list)]
+  
+  our_mouse_weights$mouse_id[our_mouse_weights$notch_id == this_notch_id & 
+                       our_mouse_weights$existing_cage_number %in% 
+                       this_cage_list] <- this_unique_id
+  
+  our_mouse_weights$latest_cage[our_mouse_weights$notch_id == this_notch_id & 
+                       our_mouse_weights$existing_cage_number %in% 
+                       this_cage_list] <- latest_cage
+}
+
+# Add a label for each mouse based on its notch_id and latest cage
+our_mouse_weights <- our_mouse_weights %>% 
+  mutate(mouse_label = paste("Cage:", latest_cage, 
+                             "Notch:", notch_id))
+
+# Read in the data from the original file with the initial animal 
+# characteristics
+mouse_initial <- readxl::read_excel("../../DATA/body_weights_measurement.xlsx", 
+                                      sheet = 1, 
+                                      col_types = c("text", # notch_id
+                                                    "text", # starting_cage_number
+                                                    "text", # dob
+                                                    "text", # species
+                                                    "text", # sex
+                                                    "text" # group
+                                                    )) %>%
+  mutate(dob = lubridate::mdy(dob), 
+         sex = forcats::as_factor(sex))
+
+# Figure out the starting cage for each mouse, so they can be incorporated
+# with the initial data so we can get the mouse ID that was added for the 
+# starting time point
+mouse_ids <- our_mouse_weights %>% 
+  filter(date_collected == first(date_collected)) %>% 
+  select(notch_id, existing_cage_number, mouse_id) %>% 
+  rename(starting_cage_number = existing_cage_number)
+
+# Merge in the mouse IDs with the dataframe of initial mouse characteristics
+mouse_initial <- mouse_initial %>% 
+  left_join(mouse_ids, by = c("notch_id", "starting_cage_number"))
+
+# Join the initial data with the weekly weights data into one large dataset
+our_mouse_weights <- our_mouse_weights %>% 
+  left_join(mouse_initial, by = c("mouse_id", "notch_id", "group"))
+```
+
+# Summary of experimental animals
+
+This section gives some information on the experimental animals both 
+at the start of the experiment and over the course of the experiment. 
+
+```{r}
+mouse_initial %>% 
+  summarize(Species = paste(unique(species), collapse = ", "), 
+            `Total animals` = n(), 
+            `Sex distribution` = paste0("male: ", sum(sex == "m"), 
+                                      ", female: ", sum(sex == "f")),
+            `Experimental groups` = paste(unique(group), collapse = ", "),
+            `N. of starting cages` =
+              length(unique(starting_cage_number))) %>% 
+  mutate_all(as.character) %>% 
+  pivot_longer(everything()) %>% 
+  mutate(name = paste0(name, ":")) %>% 
+  knitr::kable(col.names = c("", ""), 
+               caption = "Summary of experimental animals at the start of the experiment", 
+               align = c("r", "l"))
 ```
 

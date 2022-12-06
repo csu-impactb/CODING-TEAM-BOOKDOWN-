@@ -4,7 +4,7 @@ about-the-project
 about-this-book
 experimental-metadata
 initial-mouse-characteristics
-mouse-weights
+animal-initial-conditions-and-weekly-weights
 overview-1
 template-description
 processing-collected-data
