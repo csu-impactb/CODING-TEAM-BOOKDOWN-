@@ -1,5 +1,13 @@
 # Animal initial conditions and weekly weights 
 
+### Downloads
+
+The downloads for this chapter are: 
+
+- [Data collection template](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/body_weights_template.xlsx) for collecting initial information about the experimental animals and regular weight measurements, cage changes, and adverse events throughout the experiment
+- [Report template](https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/animal_weights.Rmd) to process data collected with the template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
+- [Example output](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx) from the report template
+
 ### Overview
 
 We use the template in this section to record information about each animal 
@@ -202,7 +210,7 @@ well.
 First, the workflow loads some additional R libraries. You may need to install 
 these on your local R session if you do not already have them installed.
 
-```{r message = FALSE, warning = FALSE}
+```{r message = FALSE, warning = FALSE, results = "hide"}
 library(readxl)
 library(tidyverse)
 library(ggbeeswarm)
@@ -550,11 +558,13 @@ our_mouse_weights %>%
 The next piece of code creates a table with each of the animals that was still
 tracked at the last time point (if animals were sacrificed prior to the last
 recorded time point, they would not be included here). This table focuses on the
-weight change since the previous measured time point. It is ordered by the change 
-in weight, from the largest decrease to the largest increase. It is meant as an 
-aide in identifying mice that are showing signs of suffering and may need to be 
-considered for being euthanized. The animals are labeled in this table by their
-most recent cage location, so it will be easier to find them if necessary.
+weight change since the previous measured time point. It is ordered by the
+change in weight, from the largest decrease to the largest increase. It is meant
+as an aide in identifying mice that are showing signs of suffering and may need
+to be considered for being euthanized. The animals are labeled in this table by
+their most recent cage location, so it will be easier to find them if necessary.
+For this example code, we've shown only a sample of 15 animals, but the report
+will show data for all animals.
 
 ```{r}
 # Create table of animal weight changes since previous time point
@@ -568,6 +578,7 @@ our_mouse_weights %>%
                                                   digits = 1, format = "f"), "%")) %>% 
   arrange(weight_change) %>% 
   select(mouse_label, group, sex, weight, formatted_weight_change) %>% 
+  slice(1:15) %>%  # Only for the chapter--show a sample, not all
   knitr::kable(col.names = c("Mouse", "Experimental group", "Sex", 
                              "Weight (g)", "Weight change since last measure"), 
                caption = "Individual data on weight changes in mice between current measurement and previous measurement.")
