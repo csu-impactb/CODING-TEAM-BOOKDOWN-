@@ -6,6 +6,7 @@ about-the-project
 about-this-book
 experimental-metadata
 animal-initial-conditions-and-weekly-weights
+downloads
 overview-1
 template-description
 processing-collected-data
