@@ -12,8 +12,8 @@ The downloads for this chapter are:
 
 - [Data collection template](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx) for recording colony forming units counted on each 
 plate or section of plate in the laboratory
-- [Report template] to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
-- [Example output] from the report template
+- [Report template](https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/cfu_report.Rmd) to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
+- [Example output](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx) from the report template
 
 ### Overview
 
@@ -142,7 +142,7 @@ to populate a global database for all experiments in the project.
 The next section provides the details of the pipeline. It aims to explain the 
 code that processes the data and generates visualizations. You do not need to 
 run this code step-by-step, but instead can access a script with the full 
-code [here]. 
+code [here](https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/cfu_report.Rmd). 
 
 To use this reporting template, you need to download it to your computer and
 save it in the file directory where you saved the data you collected with the
@@ -167,7 +167,7 @@ The report includes the following elements:
 - 
 
 You can download an example of a report created using this template by 
-clicking [here].
+clicking [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx).
 
 When you knit to create the report, it will create a Word file in the 
 same file directory where you put your data file and report template. 
@@ -341,53 +341,40 @@ meta %>%
                caption = "Conditions of the CFU collection")
 ```
 
-
-
-
-**Distribution of CFUs at each dilution:**
-
-Here's a plot that shows how many plates were too numerous to count at each 
-dilution level: 
-
-Here is a plot that shows how the CFU counts were distributed by dilution
-level in the data: 
-
-
-
+Next, the pipeline creates a plot showing the distribution of CFUs by 
+experimental group in each of the organs:
 
 ```{r}
 tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
-  filter(organ == "lung") %>%
   mutate(group = fct_relevel(groups, "group_1", "group_2", "group_3", "group_4")) %>%
-  ggplot(aes(x = groups, y = log10(CFUs_per_ml), fill = groups))+
-  stat_boxplot( aes(x = groups, y = log10(CFUs_per_ml)), 
-    geom='errorbar', linetype=1, width=0.5)+ 
-  geom_boxplot(aes(group = groups), fill = NA, show.legend = FALSE, color = "lightgrey")+
-  geom_point(show.legend = FALSE)+
-  labs(title = paste0("CFUs in early infected mouse lung"), x = "Group", y = "log10(CFU/mL)",
-       color = "Group")+
-  guides(shape = "none")+
-  theme_minimal()+
+  ggplot(aes(x = groups, y = log10(CFUs_per_ml))) +
+    geom_quasirandom(color = "blue", alpha = 0.8) +
+  geom_boxplot(aes(group = groups), fill = NA, color = "grey", outlier.shape = NA)+
+  labs(title = paste0("CFUs in early infected mouse lung"), 
+       x = "Group", y = "log10(CFU/mL)")+
+  theme_minimal() +
   stat_compare_means(label = "p.signif", method = "t.test", ref.group = "group_1") + 
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 8))
+  facet_wrap(~ organ, ncol = 1)
 
 tidy_lung_cfu_plot
 ```
 
+Next, the pipeline runs an ANOVA analysis on the data. This is conducted after
+transforming the CFUs with a log-10 transform. 
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 cfu_stats <- tidy_cfu_meta_joined %>% 
   group_by(organ) %>%
   nest() %>%
-  mutate(aov_result = map(data, ~aov(CFUs_per_ml ~ groups, data = .x)),
+  mutate(aov_result = map(data, ~aov(log10(CFUs_per_ml) ~ groups, data = .x)),
          tukey_result = map(aov_result, TukeyHSD),
          tidy_tukey = map(tukey_result, broom::tidy)) %>%
   unnest(tidy_tukey, .drop = TRUE) %>%
   separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
-  select(-data, -aov_result, -tukey_result, -term, -null.value)# %>%
-  # filter(adj.p.value <= 0.05)
+  select(-data, -aov_result, -tukey_result, -term, -null.value)
 
-cfu_stats
+cfu_stats %>% 
+  knitr::kable(caption = "ANOVA results comparing CFUs in each organ across the experimental groups")
 ```
 
 As a last step, the code in the template writes a CSV file with the processed

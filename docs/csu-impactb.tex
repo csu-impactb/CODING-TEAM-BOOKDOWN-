@@ -125,7 +125,7 @@
 
 \title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
 \author{Colorado State University Coding Team}
-\date{2022-12-06}
+\date{2022-12-07}
 
 \begin{document}
 \maketitle
@@ -979,9 +979,9 @@ The downloads for this chapter are:
   \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx}{Data collection template} for recording colony forming units counted on each
   plate or section of plate in the laboratory
 \item
-  {[}Report template{]} to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
+  \href{https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/cfu_report.Rmd}{Report template} to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
 \item
-  {[}Example output{]} from the report template
+  \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx}{Example output} from the report template
 \end{itemize}
 
 \hypertarget{overview-2}{%
@@ -1127,7 +1127,7 @@ to populate a global database for all experiments in the project.
 The next section provides the details of the pipeline. It aims to explain the
 code that processes the data and generates visualizations. You do not need to
 run this code step-by-step, but instead can access a script with the full
-code {[}here{]}.
+code \href{https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/cfu_report.Rmd}{here}.
 
 To use this reporting template, you need to download it to your computer and
 save it in the file directory where you saved the data you collected with the
@@ -1153,7 +1153,7 @@ The report includes the following elements:
 \end{itemize}
 
 You can download an example of a report created using this template by
-clicking {[}here{]}.
+clicking \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx}{here}.
 
 When you knit to create the report, it will create a Word file in the
 same file directory where you put your data file and report template.
@@ -1457,30 +1457,21 @@ spleen & 50 & 100 & 5 & 0.5 & 125\\
 \end{tabular}
 \end{table}
 
-\textbf{Distribution of CFUs at each dilution:}
-
-Here's a plot that shows how many plates were too numerous to count at each
-dilution level:
-
-Here is a plot that shows how the CFU counts were distributed by dilution
-level in the data:
+Next, the pipeline creates a plot showing the distribution of CFUs by
+experimental group in each of the organs:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tidy\_lung\_cfu\_plot }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(organ }\SpecialCharTok{==} \StringTok{"lung"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{group =} \FunctionTok{fct\_relevel}\NormalTok{(groups, }\StringTok{"group\_1"}\NormalTok{, }\StringTok{"group\_2"}\NormalTok{, }\StringTok{"group\_3"}\NormalTok{, }\StringTok{"group\_4"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml), }\AttributeTok{fill =}\NormalTok{ groups))}\SpecialCharTok{+}
-  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml)), }
-    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+} 
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ groups), }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"lightgrey"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"CFUs in early infected mouse lung"}\NormalTok{), }\AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"log10(CFU/mL)"}\NormalTok{,}
-       \AttributeTok{color =} \StringTok{"Group"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{guides}\NormalTok{(}\AttributeTok{shape =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml))) }\SpecialCharTok{+}
+    \FunctionTok{geom\_quasirandom}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ groups), }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey"}\NormalTok{, }\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"CFUs in early infected mouse lung"}\NormalTok{), }
+       \AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"log10(CFU/mL)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{, }\AttributeTok{ref.group =} \StringTok{"group\_1"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ organ, }\AttributeTok{ncol =} \DecValTok{1}\NormalTok{)}
 
 \NormalTok{tidy\_lung\_cfu\_plot}
 \end{Highlighting}
@@ -1488,50 +1479,54 @@ level in the data:
 
 \includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-32-1.pdf}
 
+Next, the pipeline runs an ANOVA analysis on the data. This is conducted after
+transforming the CFUs with a log-10 transform.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cfu\_stats }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(organ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{aov\_result =} \FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{aov}\NormalTok{(CFUs\_per\_ml }\SpecialCharTok{\textasciitilde{}}\NormalTok{ groups, }\AttributeTok{data =}\NormalTok{ .x)),}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{aov\_result =} \FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{aov}\NormalTok{(}\FunctionTok{log10}\NormalTok{(CFUs\_per\_ml) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ groups, }\AttributeTok{data =}\NormalTok{ .x)),}
          \AttributeTok{tukey\_result =} \FunctionTok{map}\NormalTok{(aov\_result, TukeyHSD),}
          \AttributeTok{tidy\_tukey =} \FunctionTok{map}\NormalTok{(tukey\_result, broom}\SpecialCharTok{::}\NormalTok{tidy)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{unnest}\NormalTok{(tidy\_tukey, }\AttributeTok{.drop =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{separate}\NormalTok{(contrast, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"contrast1"}\NormalTok{, }\StringTok{"contrast2"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{data, }\SpecialCharTok{{-}}\NormalTok{aov\_result, }\SpecialCharTok{{-}}\NormalTok{tukey\_result, }\SpecialCharTok{{-}}\NormalTok{term, }\SpecialCharTok{{-}}\NormalTok{null.value)}\CommentTok{\# \%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{data, }\SpecialCharTok{{-}}\NormalTok{aov\_result, }\SpecialCharTok{{-}}\NormalTok{tukey\_result, }\SpecialCharTok{{-}}\NormalTok{term, }\SpecialCharTok{{-}}\NormalTok{null.value)}
+
+\NormalTok{cfu\_stats }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"ANOVA results comparing CFUs in each organ across the experimental groups"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: The `.drop` argument of `unnest()` is deprecated as of tidyr 1.0.0.
-## All list-columns are now preserved.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-\end{verbatim}
+\begin{table}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-  \CommentTok{\# filter(adj.p.value \textless{}= 0.05)}
-
-\NormalTok{cfu\_stats}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 9 x 7
-## # Groups:   organ [2]
-##   organ  contrast1 contrast2 estimate conf.low conf.high adj.p.value
-##   <chr>  <chr>     <chr>        <dbl>    <dbl>     <dbl>       <dbl>
-## 1 lung   group_2   group_1    -60953. -138742.    16836.      0.171 
-## 2 lung   group_3   group_1    -63903. -135699.     7893.      0.0963
-## 3 lung   group_4   group_1    -26214. -102416.    49987.      0.793 
-## 4 lung   group_3   group_2     -2950.  -69900.    64000.      0.999 
-## 5 lung   group_4   group_2     34739.  -36915.   106393.      0.569 
-## 6 lung   group_4   group_3     37689.  -27410.   102787.      0.417 
-## 7 spleen group_2   group_1     -6565   -13529.      399.      0.0656
-## 8 spleen group_3   group_1     -7310   -13341.    -1279.      0.0178
-## 9 spleen group_3   group_2      -745.   -6776.     5286.      0.943
-\end{verbatim}
+\caption{\label{tab:unnamed-chunk-33}ANOVA results comparing CFUs in each organ across the experimental groups}
+\centering
+\begin{tabular}[t]{l|l|l|r|r|r|r}
+\hline
+organ & contrast1 & contrast2 & estimate & conf.low & conf.high & adj.p.value\\
+\hline
+lung & group\_2 & group\_1 & -0.6937802 & -1.1459033 & -0.2416571 & 0.0010456\\
+\hline
+lung & group\_3 & group\_1 & -0.8587398 & -1.2760306 & -0.4414491 & 0.0000131\\
+\hline
+lung & group\_4 & group\_1 & -0.5759227 & -1.0188178 & -0.1330275 & 0.0063696\\
+\hline
+lung & group\_3 & group\_2 & -0.1649596 & -0.5540852 & 0.2241660 & 0.6695958\\
+\hline
+lung & group\_4 & group\_2 & 0.1178575 & -0.2986077 & 0.5343227 & 0.8724636\\
+\hline
+lung & group\_4 & group\_3 & 0.2828172 & -0.0955471 & 0.6611814 & 0.2037662\\
+\hline
+spleen & group\_2 & group\_1 & -0.5489921 & -1.0924674 & -0.0055168 & 0.0476326\\
+\hline
+spleen & group\_3 & group\_1 & -0.7868889 & -1.2575523 & -0.3162254 & 0.0018789\\
+\hline
+spleen & group\_3 & group\_2 & -0.2378968 & -0.7085602 & 0.2327667 & 0.4019569\\
+\hline
+\end{tabular}
+\end{table}
 
 As a last step, the code in the template writes a CSV file with the processed
 data. This file will be an input into a script that will format the data to

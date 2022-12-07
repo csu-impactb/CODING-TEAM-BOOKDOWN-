@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(readxl)
 library(tidyverse)
 library(ggbeeswarm)
+library(ggpubr)
+library(purrr)
 ```
 
 ```{r warning = FALSE, message = FALSE}
@@ -100,8 +102,40 @@ meta %>%
 ```
 
 
+\newpage
+
+```{r}
+tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
+  mutate(group = fct_relevel(groups, "group_1", "group_2", "group_3", "group_4")) %>%
+  ggplot(aes(x = groups, y = log10(CFUs_per_ml))) +
+    geom_quasirandom(color = "blue", alpha = 0.8) +
+  geom_boxplot(aes(group = groups), fill = NA, color = "grey", outlier.shape = NA)+
+  labs(title = paste0("CFUs in early infected mouse lung"), 
+       x = "Group", y = "log10(CFU/mL)")+
+  theme_minimal() +
+  stat_compare_means(label = "p.signif", method = "t.test", ref.group = "group_1") + 
+  facet_wrap(~ organ, ncol = 1) 
+
+tidy_lung_cfu_plot
+```
+
+\newpage
 
 
+```{r}
+cfu_stats <- tidy_cfu_meta_joined %>% 
+  group_by(organ) %>%
+  nest() %>%
+  mutate(aov_result = map(data, ~aov(log10(CFUs_per_ml) ~ groups, data = .x)),
+         tukey_result = map(aov_result, TukeyHSD),
+         tidy_tukey = map(tukey_result, broom::tidy)) %>%
+  unnest(tidy_tukey, .drop = TRUE) %>%
+  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+  select(-data, -aov_result, -tukey_result, -term, -null.value)
+
+cfu_stats %>% 
+  knitr::kable(caption = "ANOVA results comparing CFUs in each organ across the experimental groups")
+```
 
 ```{r}
 # Write out processed data into a CSV file
