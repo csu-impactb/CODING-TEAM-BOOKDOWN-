@@ -1134,7 +1134,8 @@ save it in the file directory where you saved the data you collected with the
 data collection template. You can then open RStudio and navigate so that you are
 working within this directory. You should also make sure that you have installed
 a few required packages on R on the computer you are using to run the report.
-These packages are: \ldots{} .
+These packages are: \texttt{tidyverse}, \texttt{readxl}, \texttt{ggbeeswarm}, \texttt{ggpubr}, \texttt{purrr},
+\texttt{knitr}, and \texttt{broom}.
 
 Within RStudio, open the report template file. There is one spot where you will
 need to change the code in the template file, so it will read in the data from
@@ -1150,6 +1151,16 @@ The report includes the following elements:
 \begin{itemize}
 \tightlist
 \item
+  Organ-specific summaries of the experiment, including the number of mice,
+  experimental groups, date counted, and dilutions used for each experiment
+\item
+  Metadata on the CFU collection process (e.g., percent of organ plated for
+  each organ, dilution factor)
+\item
+  Plot showing the distribution of CFUs by group in each organ
+\item
+  Table giving the results of an ANOVA analysis comparing log CFUs
+  across groups within each organ
 \end{itemize}
 
 You can download an example of a report created using this template by

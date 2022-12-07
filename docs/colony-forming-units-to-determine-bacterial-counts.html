@@ -209,7 +209,8 @@ save it in the file directory where you saved the data you collected with the
 data collection template. You can then open RStudio and navigate so that you are
 working within this directory. You should also make sure that you have installed
 a few required packages on R on the computer you are using to run the report.
-These packages are: … .</p>
+These packages are: <code>tidyverse</code>, <code>readxl</code>, <code>ggbeeswarm</code>, <code>ggpubr</code>, <code>purrr</code>,
+<code>knitr</code>, and <code>broom</code>.</p>
 <p>Within RStudio, open the report template file. There is one spot where you will
 need to change the code in the template file, so it will read in the data from
 the version of the template that you saved, which you may have renamed.
@@ -219,7 +220,13 @@ so that it is the file name of your data file.</p>
 create a report from the data file and the report template file.</p>
 <p>The report includes the following elements:</p>
 <ul>
-<li>
+<li>Organ-specific summaries of the experiment, including the number of mice,
+experimental groups, date counted, and dilutions used for each experiment</li>
+<li>Metadata on the CFU collection process (e.g., percent of organ plated for
+each organ, dilution factor)</li>
+<li>Plot showing the distribution of CFUs by group in each organ</li>
+<li>Table giving the results of an ANOVA analysis comparing log CFUs
+across groups within each organ</li>
 </ul>
 <p>You can download an example of a report created using this template by
 clicking <a href="https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx">here</a>.</p>
