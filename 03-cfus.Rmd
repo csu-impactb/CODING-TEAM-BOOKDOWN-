@@ -70,7 +70,13 @@ from both the lung and spleen, there would be three sheets in the file: one
 with the metadata, one with the plate counts for the lung, and one with the
 plate counts for the spleen. 
 
-The metadata sheet is used to record information about the overall process of
+The first sheet, which is the metadata sheet, is shown below: 
+
+```{r echo = FALSE, out.width="100%"}
+knitr::include_graphics("figures/cfu_template_metadata.png")
+```
+
+This metadata sheet is used to record information about the overall process of
 plating the data. Values from this sheet will be used in calculating the bacterial
 load in the original sample based on the CFU counts. This spreadsheet includes
 the following columns: 
@@ -82,13 +88,47 @@ for example, if you have rows in the metadata sheet for "lung" and "spleen",
 then you should have two other sheets in the file, one sheet named "lung" and 
 one named "spleen", which you'll use to store the plate counts for each of those
 organs.
-- `prop_resuspended`: In this column, give the proportion of that organ that 
+- `percentage_of_organ`: In this column, give the proportion of that organ that 
 was plated. For example, if you plated half the lung, then in the "lung" row
 of this spread sheet, you should put 0.5 in the `prop_resuspended` column. 
-- `total_resuspended_uL`: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads. 
-- `og_aliquot_uL`: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
-- `dilution_factor`: Amount of the original stock solution that is present in the total solution, after dilution(s)
-- `plated_uL`: Amount of suspension + diluent plated on section of solid agar 
+- `aliquot_ul`: 100 uL of the total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
+- `dilution_factor`: Amount of the original stock solution that is present in the 
+total solution, after dilution(s)
+- `total_resuspended_mL`: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 0.5 mL of PBS in a tube containing metal beads.
+- `volume_plated_ul`: Amount of suspension + diluent plated on section of solid agar 
+
+Following this first sheet in the file, you should have one sheet for each 
+organ. The organs that you record in these sheets should match up with the rows
+on the first, metadata sheet of the template. 
+
+Each of these organ-specific sheets should look like this: 
+
+```{r echo = FALSE, out.width="100%"}
+knitr::include_graphics("figures/cfu_organ_sheet_example.png")
+```
+
+Each of these organ-specific sheets of the template include the following columns: 
+
+- `count_date`: The date that the CFUs were counted. In some cases, the same plates
+may be counted at multiple dates. 
+- `who_plated`: An identifier for the researcher who plated the sample
+- `who_counted`: An identifier for the researcher who counted the plate on this 
+specific date
+- `groups`: The experimental group to which the mouse belonged to
+- `mouse`: An identifier for the unique mouse within the group (*note: as we 
+collect data from the new experiment, this can be a unique ID by mouse, based on 
+notch ID and cage number*)
+- `dil_0`, `dil_1`, `dil_2`, ...: The count at each dilution. You can add additional
+columns if there were more dilutions that are in the template or take away 
+dilution columns if there were fewer. However, all dilution columns should be 
+named consistently, with "dil_" followed by the dilution number (e.g., "0", "1", 
+"2"). If the CFUs were too numerous to count for a sample at a particular 
+dilution, put "TNTC" in that cell of the spreadsheet. 
+
+When you download the template, it will have example values filled out in blue.
+Use these to get an idea for how to record your own data. When you are ready 
+to record your own data, delete these example values and replace them with 
+data collected from your own experiment. 
 
 ### Processing collected data
 
