@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="4.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “metadata”) is used to record some metadata for the experiment, while the following sheets...">
+<meta name="description" content="4.0.1 Downloads The downloads for this chapter are: [Data collection template] for recording colony forming units counted on each plate or section of plate in the laboratory [Report template] to...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="4.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “metadata”) is used to record some metadata for the experiment, while the following sheets...">
+<meta property="og:description" content="4.0.1 Downloads The downloads for this chapter are: [Data collection template] for recording colony forming units counted on each plate or section of plate in the laboratory [Report template] to...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Colony forming units to determine bacterial counts | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="4.1 Data description The data are collected in a spreadsheet with multiple sheets. The first sheet (named “metadata”) is used to record some metadata for the experiment, while the following sheets...">
+<meta name="twitter:description" content="4.0.1 Downloads The downloads for this chapter are: [Data collection template] for recording colony forming units counted on each plate or section of plate in the laboratory [Report template] to...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -59,10 +59,64 @@
 <h1>
 <span class="header-section-number">4</span> Colony forming units to determine bacterial counts<a class="anchor" aria-label="anchor" href="#colony-forming-units-to-determine-bacterial-counts"><i class="fas fa-link"></i></a>
 </h1>
-<div id="data-description" class="section level2" number="4.1">
-<h2>
-<span class="header-section-number">4.1</span> Data description<a class="anchor" aria-label="anchor" href="#data-description"><i class="fas fa-link"></i></a>
-</h2>
+<div id="downloads-1" class="section level3" number="4.0.1">
+<h3>
+<span class="header-section-number">4.0.1</span> Downloads<a class="anchor" aria-label="anchor" href="#downloads-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>The downloads for this chapter are:</p>
+<ul>
+<li>[Data collection template] for recording colony forming units counted on each
+plate or section of plate in the laboratory</li>
+<li>[Report template] to process data collected with the data template (when you go to this link, go to the “File” bar in your browser’s menu bar, chose “Save As,” then save the file as “animal_weights.Rmd”)</li>
+<li>[Example output] from the report template</li>
+</ul>
+</div>
+<div id="overview-2" class="section level3" number="4.0.2">
+<h3>
+<span class="header-section-number">4.0.2</span> Overview<a class="anchor" aria-label="anchor" href="#overview-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the experiments, we will need to estimate the bacterial load of
+<em>Mycobacterium tuberculosis</em> in organs—including lungs and spleens—of
+animals from experiments. These measurements help us assess how well a vaccine
+has worked in comparison to controls.</p>
+<p>We will be estimating bacterial load in an animal organ using the plate count
+method with serial dilutions. Serial dilutions allow you to create a
+highly diluted sample without needing a massive amount of diluent: as you
+increase the dilution one step at a time, you can steadily bring the samples
+down to lower bacterial loads per volume. This method is common across
+laboratories that study tuberculosis drug efficacy as a method for estimating
+bacterial load in animal organs <span class="citation">(<a href="references.html#ref-franzblau2012comprehensive" role="doc-biblioref">Franzblau et al. 2012</a>)</span> and is a
+well-established method across microbiology in general, dating back to Koch in
+the late 1800s <span class="citation">(<a href="references.html#ref-wilson1922proportion" role="doc-biblioref">Wilson 1922</a>; <a href="references.html#ref-ben2014estimation" role="doc-biblioref">Ben-David and Davidson 2014</a>)</span>.</p>
+<p>With this method, we homogenize part of the organ, and then create several
+increasingly dilute samples. Each dilution is then spread on a plate with a
+medium in which <em>Mycobacterium tuberculosis</em> can grow and left to grow for
+several weeks at a temperature conducive to <em>Mycobacterium tuberculosis</em> growth.
+The idea is that individual bacteria from the original sample end up randomly
+spread across the surface of the plate, and any bacteria that are viable
+(able to reproduce) will form a new colony that, after a while, you’ll be able
+to see <span class="citation">(<a href="references.html#ref-wilson1922proportion" role="doc-biblioref">Wilson 1922</a>; <a href="references.html#ref-goldman2015practical" role="doc-biblioref">Goldman and Green 2015</a>)</span>. At the end of this
+incubation period, you can count the number of these colony-forming units
+(CFUs) on each plate.</p>
+<p>To count the number of CFUs, you need a “just right” dilution (and
+we often won’t know what this is until after plating) to have a countable
+plate. If you have too high of a dilution (i.e., one with very few viable
+bacteria), randomness will play a big role in the CFU count, and you’ll estimate
+the original with more variability, which isn’t ideal. If you have too low
+of a dilution (i.e., one with lots of viable bacteria), it will be difficult to
+identify separate colonies, and they may compete for resources. (The pattern
+you see when the dilution is too low (i.e., too concentrated with bacteria) is
+called a lawn—colonies merge together).</p>
+<p>Once you identify a good dilution for each sample, the CFU count from this
+dilution can be used to estimate the bacterial load in the animal’s organ. To
+translate from diluted concentration to original concentration, you do a
+back-calculation, incorporating both the number of colonies counted at that
+dilution and how dilute the sample was <span class="citation">(<a href="references.html#ref-ben2014estimation" role="doc-biblioref">Ben-David and Davidson 2014</a>; <a href="references.html#ref-goldman2015practical" role="doc-biblioref">Goldman and Green 2015</a>)</span>.</p>
+</div>
+<div id="template-description-1" class="section level3" number="4.0.3">
+<h3>
+<span class="header-section-number">4.0.3</span> Template description<a class="anchor" aria-label="anchor" href="#template-description-1"><i class="fas fa-link"></i></a>
+</h3>
 <p>The data are collected in a spreadsheet with multiple sheets. The first sheet
 (named “metadata”) is used to record some metadata for the experiment, while the
 following sheets are used to record CFUs counts from the plates used for samples
@@ -70,7 +124,9 @@ from each organ, with one sheet per organ. For example, if you plated data
 from both the lung and spleen, there would be three sheets in the file: one
 with the metadata, one with the plate counts for the lung, and one with the
 plate counts for the spleen.</p>
-<p>The metadata sheet is used to record information about the overall process of
+<p>The first sheet, which is the metadata sheet is shown below:</p>
+<div class="inline-figure"><img src="figures/cfu_template_metadata.png" width="100%"></div>
+<p>This metadata sheet is used to record information about the overall process of
 plating the data. Values from this sheet will be used in calculating the bacterial
 load in the original sample based on the CFU counts. This spreadsheet includes
 the following columns:</p>
@@ -84,22 +140,66 @@ then you should have two other sheets in the file, one sheet named “lung” an
 one named “spleen,” which you’ll use to store the plate counts for each of those
 organs.</li>
 <li>
-<code>prop_resuspended</code>: In this column, give the proportion of that organ that
+<code>percentage_of_organ</code>: In this column, give the proportion of that organ that
 was plated. For example, if you plated half the lung, then in the “lung” row
 of this spread sheet, you should put 0.5 in the <code>prop_resuspended</code> column.</li>
 <li>
-<code>total_resuspended_uL</code>: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads.</li>
+<code>aliquot_ul</code>: 100 uL of the total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.</li>
 <li>
-<code>og_aliquot_uL</code>: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.</li>
+<code>dilution_factor</code>: Amount of the original stock solution that is present in the
+total solution, after dilution(s)</li>
 <li>
-<code>dilution_factor</code>: Amount of the original stock solution that is present in the total solution, after dilution(s)</li>
+<code>total_resuspended_mL</code>: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 0.5 mL of PBS in a tube containing metal beads.</li>
 <li>
-<code>plated_uL</code>: Amount of suspension + diluent plated on section of solid agar</li>
+<code>volume_plated_ul</code>: Amount of suspension + diluent plated on section of solid agar</li>
 </ul>
+<p>Following this first sheet in the file, you should have one sheet for each
+organ. The organs that you record in these sheets should match up with the rows
+on the first, metadata sheet of the template.</p>
+<p>Each of these organ-specific sheets should look like this:</p>
+<div class="inline-figure"><img src="figures/cfu_organ_sheet_example.png" width="100%"></div>
+<p>Each of these organ-specific sheets of the template include the following columns:</p>
+<ul>
+<li>
+<code>count_date</code>: The date that the CFUs were counted. In some cases, the same plates
+may be counted at multiple dates.</li>
+<li>
+<code>who_plated</code>: An identifier for the researcher who plated the sample</li>
+<li>
+<code>who_counted</code>: An identifier for the researcher who counted the plate on this
+specific date</li>
+<li>
+<code>groups</code>: The experimental group to which the mouse belonged to</li>
+<li>
+<code>mouse</code>: An identifier for the unique mouse within the group (<em>note: as we
+collect data from the new experiment, this can be a unique ID by mouse, based on
+notch ID and cage number</em>)</li>
+<li>
+<code>dil_0</code>, <code>dil_1</code>, <code>dil_2</code>, …: The count at each dilution. You can add additional
+columns if there were more dilutions that are in the template or take away
+dilution columns if there were fewer. However, all dilution columns should be
+named consistently, with “dil_” followed by the dilution number (e.g., “0,” “1,”
+“2”). If the CFUs were too numerous to count for a sample at a particular
+dilution, put “TNTC” in that cell of the spreadsheet.</li>
+</ul>
+<p>When you download the template, it will have example values filled out in blue.
+Use these to get an idea for how to record your own data. When you are ready
+to record your own data, delete these example values and replace them with
+data collected from your own experiment.</p>
 </div>
-<div id="read-in-data" class="section level2" number="4.2">
+<div id="processing-collected-data-1" class="section level3" number="4.0.4">
+<h3>
+<span class="header-section-number">4.0.4</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data-1"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="details-of-processing-script-1" class="section level3" number="4.0.5">
+<h3>
+<span class="header-section-number">4.0.5</span> Details of processing script<a class="anchor" aria-label="anchor" href="#details-of-processing-script-1"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="read-in-data" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">4.2</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> Read in data<a class="anchor" aria-label="anchor" href="#read-in-data"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
@@ -187,19 +287,19 @@ of this spread sheet, you should put 0.5 in the <code>prop_resuspended</code> co
 ## 5 "\"February 21 2022\… BK         BK          group… A     lung         4 9    
 ## 6 "\"February 21 2022\… BK         BK          group… A     lung         5 4</code></pre>
 </div>
-<div id="example-one" class="section level2" number="4.3">
+<div id="example-one" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">4.3</span> Example one<a class="anchor" aria-label="anchor" href="#example-one"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> Example one<a class="anchor" aria-label="anchor" href="#example-one"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="exploratory-analysis-and-quality-checks" class="section level2" number="4.4">
+<div id="exploratory-analysis-and-quality-checks" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">4.4</span> Exploratory analysis and quality checks<a class="anchor" aria-label="anchor" href="#exploratory-analysis-and-quality-checks"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> Exploratory analysis and quality checks<a class="anchor" aria-label="anchor" href="#exploratory-analysis-and-quality-checks"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="exploratory-analysis" class="section level2" number="4.5">
+<div id="exploratory-analysis" class="section level2" number="4.4">
 <h2>
-<span class="header-section-number">4.5</span> Exploratory analysis<a class="anchor" aria-label="anchor" href="#exploratory-analysis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4</span> Exploratory analysis<a class="anchor" aria-label="anchor" href="#exploratory-analysis"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Dimensions of input data:</strong></p>
 <p>Based on the input data, data were collected for the following organ or
@@ -241,9 +341,9 @@ dilution level:</p>
 <p>Here is a plot that shows how the CFU counts were distributed by dilution
 level in the data:</p>
 </div>
-<div id="identify-a-good-dilution-for-each-sample" class="section level2" number="4.6">
+<div id="identify-a-good-dilution-for-each-sample" class="section level2" number="4.5">
 <h2>
-<span class="header-section-number">4.6</span> Identify a good dilution for each sample<a class="anchor" aria-label="anchor" href="#identify-a-good-dilution-for-each-sample"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5</span> Identify a good dilution for each sample<a class="anchor" aria-label="anchor" href="#identify-a-good-dilution-for-each-sample"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make all_data into tidy data and filter for CFUs between 10-75</span>
@@ -266,9 +366,9 @@ level in the data:</p>
 ## 5 "\"February 21 2022\… BK         BK          group… A     lung         2    92
 ## 6 "\"February 21 2022\… BK         BK          group… A     lung         4     7</code></pre>
 </div>
-<div id="calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution" class="section level2" number="4.7">
+<div id="calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution" class="section level2" number="4.6">
 <h2>
-<span class="header-section-number">4.7</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution<a class="anchor" aria-label="anchor" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.6</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution<a class="anchor" aria-label="anchor" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().</span>
@@ -295,9 +395,9 @@ level in the data:</p>
 ## 6 lung  "\"February 21 2022\… BK         BK          group… A            4     7
 ## # … with 1 more variable: CFUs_per_ml &lt;dbl&gt;</code></pre>
 </div>
-<div id="create-initial-report-information-for-these-data" class="section level2" number="4.8">
+<div id="create-initial-report-information-for-these-data" class="section level2" number="4.7">
 <h2>
-<span class="header-section-number">4.8</span> Create initial report information for these data<a class="anchor" aria-label="anchor" href="#create-initial-report-information-for-these-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.7</span> Create initial report information for these data<a class="anchor" aria-label="anchor" href="#create-initial-report-information-for-these-data"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tidy_lung_cfu_plot</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -316,11 +416,11 @@ level in the data:</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">tidy_lung_cfu_plot</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-26-1.png" width="672"></div>
 </div>
-<div id="sample-anova" class="section level2" number="4.9">
+<div id="sample-anova" class="section level2" number="4.8">
 <h2>
-<span class="header-section-number">4.9</span> Sample ANOVA<a class="anchor" aria-label="anchor" href="#sample-anova"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.8</span> Sample ANOVA<a class="anchor" aria-label="anchor" href="#sample-anova"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cfu_stats</span> <span class="op">&lt;-</span> <span class="va">tidy_cfu_meta_joined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -354,14 +454,14 @@ level in the data:</p>
 ## 8 spleen group_3   group_1     -7310   -13341.    -1279.      0.0178
 ## 9 spleen group_3   group_2      -745.   -6776.     5286.      0.943</code></pre>
 </div>
-<div id="save-processed-data-to-database" class="section level2" number="4.10">
+<div id="save-processed-data-to-database" class="section level2" number="4.9">
 <h2>
-<span class="header-section-number">4.10</span> Save processed data to database<a class="anchor" aria-label="anchor" href="#save-processed-data-to-database"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.9</span> Save processed data to database<a class="anchor" aria-label="anchor" href="#save-processed-data-to-database"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="example-two" class="section level2" number="4.11">
+<div id="example-two" class="section level2" number="4.10">
 <h2>
-<span class="header-section-number">4.11</span> Example two<a class="anchor" aria-label="anchor" href="#example-two"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.10</span> Example two<a class="anchor" aria-label="anchor" href="#example-two"><i class="fas fa-link"></i></a>
 </h2>
 
 </div>
@@ -372,18 +472,25 @@ level in the data:</p>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#colony-forming-units-to-determine-bacterial-counts"><span class="header-section-number">4</span> Colony forming units to determine bacterial counts</a></li>
-<li><a class="nav-link" href="#data-description"><span class="header-section-number">4.1</span> Data description</a></li>
-<li><a class="nav-link" href="#read-in-data"><span class="header-section-number">4.2</span> Read in data</a></li>
-<li><a class="nav-link" href="#example-one"><span class="header-section-number">4.3</span> Example one</a></li>
-<li><a class="nav-link" href="#exploratory-analysis-and-quality-checks"><span class="header-section-number">4.4</span> Exploratory analysis and quality checks</a></li>
-<li><a class="nav-link" href="#exploratory-analysis"><span class="header-section-number">4.5</span> Exploratory analysis</a></li>
-<li><a class="nav-link" href="#identify-a-good-dilution-for-each-sample"><span class="header-section-number">4.6</span> Identify a good dilution for each sample</a></li>
-<li><a class="nav-link" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><span class="header-section-number">4.7</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
-<li><a class="nav-link" href="#create-initial-report-information-for-these-data"><span class="header-section-number">4.8</span> Create initial report information for these data</a></li>
-<li><a class="nav-link" href="#sample-anova"><span class="header-section-number">4.9</span> Sample ANOVA</a></li>
-<li><a class="nav-link" href="#save-processed-data-to-database"><span class="header-section-number">4.10</span> Save processed data to database</a></li>
-<li><a class="nav-link" href="#example-two"><span class="header-section-number">4.11</span> Example two</a></li>
+<li>
+<a class="nav-link" href="#colony-forming-units-to-determine-bacterial-counts"><span class="header-section-number">4</span> Colony forming units to determine bacterial counts</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#downloads-1"><span class="header-section-number">4.0.1</span> Downloads</a></li>
+<li><a class="nav-link" href="#overview-2"><span class="header-section-number">4.0.2</span> Overview</a></li>
+<li><a class="nav-link" href="#template-description-1"><span class="header-section-number">4.0.3</span> Template description</a></li>
+<li><a class="nav-link" href="#processing-collected-data-1"><span class="header-section-number">4.0.4</span> Processing collected data</a></li>
+<li><a class="nav-link" href="#details-of-processing-script-1"><span class="header-section-number">4.0.5</span> Details of processing script</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#read-in-data"><span class="header-section-number">4.1</span> Read in data</a></li>
+<li><a class="nav-link" href="#example-one"><span class="header-section-number">4.2</span> Example one</a></li>
+<li><a class="nav-link" href="#exploratory-analysis-and-quality-checks"><span class="header-section-number">4.3</span> Exploratory analysis and quality checks</a></li>
+<li><a class="nav-link" href="#exploratory-analysis"><span class="header-section-number">4.4</span> Exploratory analysis</a></li>
+<li><a class="nav-link" href="#identify-a-good-dilution-for-each-sample"><span class="header-section-number">4.5</span> Identify a good dilution for each sample</a></li>
+<li><a class="nav-link" href="#calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution"><span class="header-section-number">4.6</span> Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution</a></li>
+<li><a class="nav-link" href="#create-initial-report-information-for-these-data"><span class="header-section-number">4.7</span> Create initial report information for these data</a></li>
+<li><a class="nav-link" href="#sample-anova"><span class="header-section-number">4.8</span> Sample ANOVA</a></li>
+<li><a class="nav-link" href="#save-processed-data-to-database"><span class="header-section-number">4.9</span> Save processed data to database</a></li>
+<li><a class="nav-link" href="#example-two"><span class="header-section-number">4.10</span> Example two</a></li>
 </ul>
 
       <div class="book-extra">

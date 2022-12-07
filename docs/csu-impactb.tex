@@ -394,9 +394,14 @@ the version of the template that you saved, which you may have renamed.
 In the YAML of the report template file, change the file path beside ``data:''
 so that it is the file name of your data file.
 
+\includegraphics[width=1\linewidth]{figures/changing_file_path_weights_report_template}
+
 Once you've made this change, you can use the ``Knit'' button in RStudio to
-create a report from the data file and the report template file. The
-report includes the following elements:
+create a report from the data file and the report template file.
+
+\includegraphics[width=1\linewidth]{figures/knit_button_for_weight_report}
+
+The report includes the following elements:
 
 \begin{itemize}
 \tightlist
@@ -419,7 +424,7 @@ report includes the following elements:
 \end{itemize}
 
 You can download an example of a report created using this template by
-clicking {[}here{]}.
+clicking \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx}{here}.
 
 When you knit to create the report, it will create a Word file in the
 same file directory where you put your data file and report template.
@@ -789,7 +794,7 @@ uses the \texttt{kable} function to output the results as a nicely formatted tab
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-12}Summary of experimental animals at the start of the experiment}
+\caption{\label{tab:unnamed-chunk-14}Summary of experimental animals at the start of the experiment}
 \centering
 \begin{tabular}[t]{r|l}
 \hline
@@ -831,7 +836,7 @@ help comparisons across plots.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-13-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-15-1.pdf}
 
 Next, the code creates boxplots that focus on differences in weights at the
 latest available timepoint. One boxplot is created for each experimental
@@ -853,7 +858,7 @@ points are colored based on sex, to help explore patterns by sex.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 The next piece of code shows how mouse weights vary by the person who was
 handling the animals at a certain time point. Different handlers may have small
@@ -875,7 +880,7 @@ check.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 The next piece of code creates a table with each of the animals that was still
 tracked at the last time point (if animals were sacrificed prior to the last
@@ -910,7 +915,7 @@ will show data for all animals.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-16}Individual data on weight changes in mice between current measurement and previous measurement.}
+\caption{\label{tab:unnamed-chunk-18}Individual data on weight changes in mice between current measurement and previous measurement.}
 \centering
 \begin{tabular}[t]{l|l|l|r|l}
 \hline
@@ -964,8 +969,69 @@ experiments, and ultimately from there into project-wide storage.
 \hypertarget{colony-forming-units-to-determine-bacterial-counts}{%
 \chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}}
 
-\hypertarget{data-description}{%
-\section{Data description}\label{data-description}}
+\hypertarget{downloads-1}{%
+\subsection{Downloads}\label{downloads-1}}
+
+The downloads for this chapter are:
+
+\begin{itemize}
+\tightlist
+\item
+  {[}Data collection template{]} for recording colony forming units counted on each
+  plate or section of plate in the laboratory
+\item
+  {[}Report template{]} to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
+\item
+  {[}Example output{]} from the report template
+\end{itemize}
+
+\hypertarget{overview-2}{%
+\subsection{Overview}\label{overview-2}}
+
+In the experiments, we will need to estimate the bacterial load of
+\emph{Mycobacterium tuberculosis} in organs---including lungs and spleens---of
+animals from experiments. These measurements help us assess how well a vaccine
+has worked in comparison to controls.
+
+We will be estimating bacterial load in an animal organ using the plate count
+method with serial dilutions. Serial dilutions allow you to create a
+highly diluted sample without needing a massive amount of diluent: as you
+increase the dilution one step at a time, you can steadily bring the samples
+down to lower bacterial loads per volume. This method is common across
+laboratories that study tuberculosis drug efficacy as a method for estimating
+bacterial load in animal organs \citep{franzblau2012comprehensive} and is a
+well-established method across microbiology in general, dating back to Koch in
+the late 1800s \citep{wilson1922proportion, ben2014estimation}.
+
+With this method, we homogenize part of the organ, and then create several
+increasingly dilute samples. Each dilution is then spread on a plate with a
+medium in which \emph{Mycobacterium tuberculosis} can grow and left to grow for
+several weeks at a temperature conducive to \emph{Mycobacterium tuberculosis} growth.
+The idea is that individual bacteria from the original sample end up randomly
+spread across the surface of the plate, and any bacteria that are viable
+(able to reproduce) will form a new colony that, after a while, you'll be able
+to see \citep{wilson1922proportion, goldman2015practical}. At the end of this
+incubation period, you can count the number of these colony-forming units
+(CFUs) on each plate.
+
+To count the number of CFUs, you need a ``just right'' dilution (and
+we often won't know what this is until after plating) to have a countable
+plate. If you have too high of a dilution (i.e., one with very few viable
+bacteria), randomness will play a big role in the CFU count, and you'll estimate
+the original with more variability, which isn't ideal. If you have too low
+of a dilution (i.e., one with lots of viable bacteria), it will be difficult to
+identify separate colonies, and they may compete for resources. (The pattern
+you see when the dilution is too low (i.e., too concentrated with bacteria) is
+called a lawn---colonies merge together).
+
+Once you identify a good dilution for each sample, the CFU count from this
+dilution can be used to estimate the bacterial load in the animal's organ. To
+translate from diluted concentration to original concentration, you do a
+back-calculation, incorporating both the number of colonies counted at that
+dilution and how dilute the sample was \citep{ben2014estimation, goldman2015practical}.
+
+\hypertarget{template-description-1}{%
+\subsection{Template description}\label{template-description-1}}
 
 The data are collected in a spreadsheet with multiple sheets. The first sheet
 (named ``metadata'') is used to record some metadata for the experiment, while the
@@ -975,7 +1041,11 @@ from both the lung and spleen, there would be three sheets in the file: one
 with the metadata, one with the plate counts for the lung, and one with the
 plate counts for the spleen.
 
-The metadata sheet is used to record information about the overall process of
+The first sheet, which is the metadata sheet is shown below:
+
+\includegraphics[width=1\linewidth]{figures/cfu_template_metadata}
+
+This metadata sheet is used to record information about the overall process of
 plating the data. Values from this sheet will be used in calculating the bacterial
 load in the original sample based on the CFU counts. This spreadsheet includes
 the following columns:
@@ -991,18 +1061,65 @@ the following columns:
   one named ``spleen'', which you'll use to store the plate counts for each of those
   organs.
 \item
-  \texttt{prop\_resuspended}: In this column, give the proportion of that organ that
+  \texttt{percentage\_of\_organ}: In this column, give the proportion of that organ that
   was plated. For example, if you plated half the lung, then in the ``lung'' row
   of this spread sheet, you should put 0.5 in the \texttt{prop\_resuspended} column.
 \item
-  \texttt{total\_resuspended\_uL}: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 500 uL of PBS in a tube containing metal beads.
+  \texttt{aliquot\_ul}: 100 uL of the total\_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
 \item
-  \texttt{og\_aliquot\_uL}: 100 uL of th total\_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
+  \texttt{dilution\_factor}: Amount of the original stock solution that is present in the
+  total solution, after dilution(s)
 \item
-  \texttt{dilution\_factor}: Amount of the original stock solution that is present in the total solution, after dilution(s)
+  \texttt{total\_resuspended\_mL}: This column contains an original volume of tissue homogenate. For example, raw lung tissue is homogenized in 0.5 mL of PBS in a tube containing metal beads.
 \item
-  \texttt{plated\_uL}: Amount of suspension + diluent plated on section of solid agar
+  \texttt{volume\_plated\_ul}: Amount of suspension + diluent plated on section of solid agar
 \end{itemize}
+
+Following this first sheet in the file, you should have one sheet for each
+organ. The organs that you record in these sheets should match up with the rows
+on the first, metadata sheet of the template.
+
+Each of these organ-specific sheets should look like this:
+
+\includegraphics[width=1\linewidth]{figures/cfu_organ_sheet_example}
+
+Each of these organ-specific sheets of the template include the following columns:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{count\_date}: The date that the CFUs were counted. In some cases, the same plates
+  may be counted at multiple dates.
+\item
+  \texttt{who\_plated}: An identifier for the researcher who plated the sample
+\item
+  \texttt{who\_counted}: An identifier for the researcher who counted the plate on this
+  specific date
+\item
+  \texttt{groups}: The experimental group to which the mouse belonged to
+\item
+  \texttt{mouse}: An identifier for the unique mouse within the group (\emph{note: as we
+  collect data from the new experiment, this can be a unique ID by mouse, based on
+  notch ID and cage number})
+\item
+  \texttt{dil\_0}, \texttt{dil\_1}, \texttt{dil\_2}, \ldots: The count at each dilution. You can add additional
+  columns if there were more dilutions that are in the template or take away
+  dilution columns if there were fewer. However, all dilution columns should be
+  named consistently, with ``dil\_'' followed by the dilution number (e.g., ``0'', ``1'',
+  ``2''). If the CFUs were too numerous to count for a sample at a particular
+  dilution, put ``TNTC'' in that cell of the spreadsheet.
+\end{itemize}
+
+When you download the template, it will have example values filled out in blue.
+Use these to get an idea for how to record your own data. When you are ready
+to record your own data, delete these example values and replace them with
+data collected from your own experiment.
+
+\hypertarget{processing-collected-data-1}{%
+\subsection{Processing collected data}\label{processing-collected-data-1}}
+
+\hypertarget{details-of-processing-script-1}{%
+\subsection{Details of processing script}\label{details-of-processing-script-1}}
 
 \hypertarget{read-in-data}{%
 \section{Read in data}\label{read-in-data}}
@@ -1273,7 +1390,7 @@ level in the data:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 \hypertarget{sample-anova}{%
 \section{Sample ANOVA}\label{sample-anova}}
@@ -1571,7 +1688,7 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1756,7 +1873,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -1957,7 +2074,7 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-43-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-47-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
@@ -2546,7 +2663,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]

@@ -229,9 +229,11 @@ need to change the code in the template file, so it will read in the data from
 the version of the template that you saved, which you may have renamed.
 In the YAML of the report template file, change the file path beside “data:”
 so that it is the file name of your data file.</p>
+<div class="inline-figure"><img src="figures/changing_file_path_weights_report_template.png" width="100%"></div>
 <p>Once you’ve made this change, you can use the “Knit” button in RStudio to
-create a report from the data file and the report template file. The
-report includes the following elements:</p>
+create a report from the data file and the report template file.</p>
+<div class="inline-figure"><img src="figures/knit_button_for_weight_report.png" width="100%"></div>
+<p>The report includes the following elements:</p>
 <ul>
 <li>Summary table of animals at the start of the experiment</li>
 <li>Time series plots of animal weights over the experiment, grouped by
@@ -246,7 +248,7 @@ is meant to help in identifying animals that may need to be euthanized for
 animal welfare reasons.</li>
 </ul>
 <p>You can download an example of a report created using this template by
-clicking [here].</p>
+clicking <a href="https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx">here</a>.</p>
 <p>When you knit to create the report, it will create a Word file in the
 same file directory where you put your data file and report template.
 It will also create and output a version of the data that has been
@@ -558,7 +560,7 @@ uses the <code>kable</code> function to output the results as a nicely formatted
                align <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"l"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:unnamed-chunk-12">Table 3.1: </span>Summary of experimental animals at the start of the experiment</caption>
+<span id="tab:unnamed-chunk-14">Table 3.1: </span>Summary of experimental animals at the start of the experiment</caption>
 <tbody>
 <tr class="odd">
 <td align="right">Species:</td>
@@ -600,7 +602,7 @@ help comparisons across plots.</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Animal weights over time by experiment group"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Date collected"</span>, 
        y <span class="op">=</span> <span class="st">"Weight (g)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-13-1.png" width="672"></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-15-1.png" width="672"></div>
 <p>Next, the code creates boxplots that focus on differences in weights at the
 latest available timepoint. One boxplot is created for each experimental
 group, and the points for individual mice are shown behind the boxplot, to
@@ -616,7 +618,7 @@ points are colored based on sex, to help explore patterns by sex.</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Animal weights at last collection by experimental group"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Experimental group"</span>, 
        y <span class="op">=</span> <span class="st">"Weight (g)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-16-1.png" width="672"></div>
 <p>The next piece of code shows how mouse weights vary by the person who was
 handling the animals at a certain time point. Different handlers may have small
 differences in how they handle and weight the mice. If there are noticable
@@ -632,7 +634,7 @@ check.</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Date collected"</span>, 
        y <span class="op">=</span> <span class="st">"Weight (g)"</span>,
        color <span class="op">=</span> <span class="st">"Person who\nhandled the\nanimal"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-15-1.png" width="672"></div>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
 <p>The next piece of code creates a table with each of the animals that was still
 tracked at the last time point (if animals were sacrificed prior to the last
 recorded time point, they would not be included here). This table focuses on the
@@ -661,7 +663,7 @@ will show data for all animals.</p>
                caption <span class="op">=</span> <span class="st">"Individual data on weight changes in mice between current measurement and previous measurement."</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:unnamed-chunk-16">Table 3.2: </span>Individual data on weight changes in mice between current measurement and previous measurement.</caption>
+<span id="tab:unnamed-chunk-18">Table 3.2: </span>Individual data on weight changes in mice between current measurement and previous measurement.</caption>
 <thead><tr class="header">
 <th align="left">Mouse</th>
 <th align="left">Experimental group</th>
