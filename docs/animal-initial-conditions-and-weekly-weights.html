@@ -249,14 +249,13 @@ animal welfare reasons.</li>
 </ul>
 <p>You can download an example of a report created using this template by
 clicking <a href="https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx">here</a>.</p>
-<p>When you knit to create the report, it will create a Word file in the
-same file directory where you put your data file and report template.
-It will also create and output a version of the data that has been
-processed (in the case of the weights data, this mainly involves
-tracking mice as they change cages, to link all weights that are from
-a single animal). This output fill will be named “…” and, like
-the report file, will be saved in the same file directory as the
-data file and the report template.</p>
+<p>When you knit to create the report, it will create a Word file in the same file
+directory where you put your data file and report template. It will also create
+and output a version of the data that has been processed (in the case of the
+weights data, this mainly involves tracking mice as they change cages, to link
+all weights that are from a single animal). This output fill will be named
+“mouse_weights_output.csv” and, like the report file, will be saved in the same
+file directory as the data file and the report template.</p>
 </div>
 <div id="details-of-processing-script" class="section level3" number="3.0.5">
 <h3>
@@ -785,7 +784,7 @@ add to a database where we are collecting and integrating data from all the CSU
 experiments, and ultimately from there into project-wide storage.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Write out processed data into a CSV file</span>
-<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">our_mouse_weights</span>, <span class="st">"example_mouse_output.csv"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">our_mouse_weights</span>, <span class="st">"mouse_weights_output.csv"</span><span class="op">)</span></code></pre></div>
 
 </div>
 </div>

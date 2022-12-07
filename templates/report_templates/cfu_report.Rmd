@@ -1,0 +1,110 @@
+---
+title: "Report on bacterial load in animal organs"
+output: word_document
+params:
+  data: ../../DATA/baa_cfu_sheet.xlsx
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r message = FALSE, warning = FALSE}
+# Load required packages
+library(readxl)
+library(tidyverse)
+library(ggbeeswarm)
+```
+
+```{r warning = FALSE, message = FALSE}
+# Create a list of all the sheets in the file. Exclude the metadata sheet 
+# to get a list of the organ-specific sheets
+sheet_names <- excel_sheets(params$data)
+organ_sheets <- sheet_names[sheet_names != "metadata"]
+
+# Loop through all the organ-specific sheets and read them in as an 
+# element in a list. Use pivoting to collect all the dilutions in a 
+# way that will let you bind across all organs, even if a different
+# set of dilutions were used for the different organs.
+merged_data <- list()
+for(i in 1:length(organ_sheets)){
+  
+  data <- read_excel(params$data, sheet = organ_sheets[i]) %>% 
+    mutate(organ = paste0(organ_sheets[i]))
+  
+  data <- data %>% 
+    #mutate(missing_col = NA) %>% 
+    mutate_if(is.double, as.numeric) %>% 
+    mutate_if(is.numeric, as.character) %>% 
+    pivot_longer(starts_with("dil_"), names_to = "dilution",
+                 values_to = "CFUs") %>% 
+    mutate(dilution = str_extract(dilution, "[0-9]+"),
+           dilution = as.numeric(dilution))
+    
+  merged_data[[i]] <- data
+}
+
+# Bind all the organ-specific datasets into a single large dataset
+all_data <- bind_rows(merged_data, .id = "column_label") %>% 
+    select(-column_label)
+
+## Identify appropriate dilutions and use CFUs at this dilution to estimate the
+## bacterial load in the sample
+
+# Pull out numeric dilution value and filter for dilutions with CFUs between 10-75
+tidy_cfu_data <- all_data %>%
+  mutate(dilution = str_extract(dilution, "[0-9]+"),
+         dilution = as.numeric(dilution)) %>%
+  filter((CFUs >= 5 & CFUs <= 95) | groups == "control") %>%
+  mutate(CFUs = as.numeric(CFUs)) 
+
+# Add in the metadata from the first sheet in the data collection 
+# template. Use this information to calculate CFU/ml for every 
+# qualifying replicate between 10-75 CFUs. 
+# Column binding by organ name to the metadata sheet via inner_join().
+meta <- read_excel(params$data, sheet = "metadata")
+
+tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
+  group_by(groups) %>% 
+  mutate(CFUs_per_ml = (CFUs * (dilution_factor^dilution) * 
+                          (total_resuspension_mL/volume_plated_ul) * 1000)) %>%
+  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  
+         CFUs, CFUs_per_ml) %>% 
+  ungroup()
+```
+
+
+# Summary of CFU analysis 
+
+```{r}
+tidy_cfu_meta_joined %>% 
+  group_by(organ) %>% 
+  summarize(`Experimental groups` = paste(unique(groups), collapse = ", "),
+            `Dates counted` = paste(unique(count_date), collapse = ", "), 
+            `Total mice` = length(unique(paste(groups, mouse))), 
+            `Dilutions considered` = paste(sort(unique(as.numeric(dilution))), 
+                              collapse = ", ")) %>% 
+  mutate_all(as.character) %>% 
+  pivot_longer(-organ) %>% 
+  mutate(name = paste0(name, ":")) %>% 
+  knitr::kable(col.align = "crl", 
+               caption = "Organ-specific summary of the experiment")
+```
+
+```{r}
+meta %>% 
+  knitr::kable(col.names = c("Organ", "Percent of organ plated", "Aliquot", 
+                            "Dilution factor", "Total resuspension", 
+                            "Volume plated"), 
+               caption = "Conditions of the CFU collection")
+```
+
+
+
+
+
+```{r}
+# Write out processed data into a CSV file
+write_csv(tidy_cfu_meta_joined, "cfu_output.csv")
+```
+

@@ -1,5 +1,7 @@
 tab:unnamed-chunk-14
 tab:unnamed-chunk-18
+tab:unnamed-chunk-30
+tab:unnamed-chunk-31
 fig:pressure
 overview
 about-the-project
@@ -17,16 +19,6 @@ overview-2
 template-description-1
 processing-collected-data-1
 details-of-processing-script-1
-read-in-data
-example-one
-exploratory-analysis-and-quality-checks
-exploratory-analysis
-identify-a-good-dilution-for-each-sample
-calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution
-create-initial-report-information-for-these-data
-sample-anova
-save-processed-data-to-database
-example-two
 enzyme-linked-immunosorbest-assay-elisa
 importance-of-elisa
 principle-of-elisa

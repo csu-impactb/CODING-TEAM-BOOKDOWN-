@@ -10,7 +10,7 @@ editor_options:
 
 The downloads for this chapter are: 
 
-- [Data collection template] for recording colony forming units counted on each 
+- [Data collection template](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx) for recording colony forming units counted on each 
 plate or section of plate in the laboratory
 - [Report template] to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
 - [Example output] from the report template
@@ -125,6 +125,7 @@ named consistently, with "dil_" followed by the dilution number (e.g., "0", "1",
 "2"). If the CFUs were too numerous to count for a sample at a particular 
 dilution, put "TNTC" in that cell of the spreadsheet. 
 
+You can download the template [here](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx).
 When you download the template, it will have example values filled out in blue.
 Use these to get an idea for how to record your own data. When you are ready 
 to record your own data, delete these example values and replace them with 
@@ -132,34 +133,101 @@ data collected from your own experiment.
 
 ### Processing collected data
 
+Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and 
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project. 
+
+The next section provides the details of the pipeline. It aims to explain the 
+code that processes the data and generates visualizations. You do not need to 
+run this code step-by-step, but instead can access a script with the full 
+code [here]. 
+
+To use this reporting template, you need to download it to your computer and
+save it in the file directory where you saved the data you collected with the
+data collection template. You can then open RStudio and navigate so that you are
+working within this directory. You should also make sure that you have installed
+a few required packages on R on the computer you are using to run the report.
+These packages are: ... .
+
+Within RStudio, open the report template file. There is one spot where you will
+need to change the code in the template file, so it will read in the data from
+the version of the template that you saved, which you may have renamed.
+In the YAML of the report template file, change the file path beside "data: "
+so that it is the file name of your data file.
+
+
+
+Once you've made this change, you can use the "Knit" button in RStudio to 
+create a report from the data file and the report template file. 
+
+The report includes the following elements:
+
+- 
+
+You can download an example of a report created using this template by 
+clicking [here].
+
+When you knit to create the report, it will create a Word file in the 
+same file directory where you put your data file and report template. 
+It will also create and output a version of the data that has been 
+processed (in the case of the weights data, this mainly involves 
+tracking mice as they change cages, to link all weights that are from 
+a single animal). This output fill will be named "cfu_output.csv" and, like 
+the report file, will be saved in the same file directory as the 
+data file and the report template. 
+
 ### Details of processing script
 
-## Read in data
+This section goes through the code within the report template. It 
+explains each part of the code in detail. You do not need to understand
+these details to use the report template. However, if you have questions
+about how the data are being processed, or how the outputs are created, 
+all those details are available in this section. 
+
+As a note, there are two places in the following code where there's a small
+change compared to the report template. In the report, you incorporate the path
+to the data file using the `data:` section in the YAML at the top of the
+document. In the following code, we've instead used the path of some example
+data within this book's file directory, so the code will run for this chapter as
+well.
+
+First, the workflow loads some additional R libraries. You may need to install 
+these on your local R session if you do not already have them installed.
 
 ```{r message = FALSE, warning = FALSE}
-
 library(readxl)
-library(dplyr)
 library(purrr)
-library(tidyr)
-library(stringr)
 library(tidyverse)
 library(gridExtra)
-library(ggplot2)
 library(ggpubr)
+```
 
-#Replace w/ path to CFU sheet
-path <- c("DATA/Copy of baa_cfu_sheet.xlsx")
+Next, the pipeline reads in the organ-specific data. To do this, it creates a 
+list of all of the sheets that are in the spreadsheet other than the metadata
+sheet. It then loops through each of these organ-specific sheets. It uses
+pivoting to convert all the dilution levels and values into two columns
+(a longer rather than wider format), so that the data from all the organs can
+be joined into a single large dataframe, even if a different number of dilutions
+were used for the different organs. 
 
-sheet_names <- excel_sheets(path)
-sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
+```{r}
+# Create a list of all the sheets in the file. Exclude the metadata sheet 
+# to get a list of the organ-specific sheets
+sheet_names <- excel_sheets("DATA/baa_cfu_sheet.xlsx")
+organ_sheets <- sheet_names[sheet_names != "metadata"]
 
+# Loop through all the organ-specific sheets and read them in as an 
+# element in a list. Use pivoting to collect all the dilutions in a 
+# way that will let you bind across all organs, even if a different
+# set of dilutions were used for the different organs.
 merged_data <- list()
-
-for(i in 1:length(sheet_names)){
+for(i in 1:length(organ_sheets)){
   
-  data <- read_excel(path, sheet = sheet_names[i]) %>% 
-    mutate(organ = paste0(sheet_names[i]))
+  data <- read_excel("DATA/baa_cfu_sheet.xlsx", 
+                     sheet = organ_sheets[i]) %>% 
+    mutate(organ = paste0(organ_sheets[i]))
   
   data <- data %>% 
     #mutate(missing_col = NA) %>% 
@@ -170,52 +238,111 @@ for(i in 1:length(sheet_names)){
     mutate(dilution = str_extract(dilution, "[0-9]+"),
            dilution = as.numeric(dilution))
     
-  
   merged_data[[i]] <- data
-  
-  
 }
-  
+
+# Bind all the organ-specific datasets into a single large dataset
 all_data <- bind_rows(merged_data, .id = "column_label") %>% 
     select(-column_label)
-  
-head(merged_data)
-head(all_data)
-  
 ```
-## Example one
 
-## Exploratory analysis and quality checks
-
-## Exploratory analysis
-
-**Dimensions of input data:**
-
-Based on the input data, data were collected for the following organ or 
-organs: 
-
-The following number of mice were included for each: 
-
-The following number of replicates were recorded at each count date for 
-each experimental group: 
-
-The following number of dilutions and dilution level were recorded for 
-each organ: 
-
-**People who plated and collected the data. Date or dates of counting:**
-
-Based on the input data, the plates included in these data were counted by 
-the following person or persons: 
-Based on the input data, the plates included in these data were counted on 
-the following date or dates: 
+At this stage, here is how the beginning of this dataset looks: 
 
 ```{r}
-all_data %>%
-  select(organ, who_plated, who_counted, count_date) %>%
-  distinct()
-
-head(all_data)
+all_data %>% 
+  slice(1:5)
 ```
+
+You can see that, rather than having separate columns for each dilution level
+on a single row for a sample, there are now multiple rows per sample, with the 
+CFUs at different dilutions given in a `CFUs` column, with the `dilution` column
+identifying which dilution level for each. 
+
+The next steps work through the data, identifying which dilution is an 
+appropriate one to use to count CFUs for each sample. 
+
+```{r}
+# Pull out numeric dilution value and filter for dilutions with CFUs between 10-75
+tidy_cfu_data <- all_data %>%
+  mutate(dilution = str_extract(dilution, "[0-9]+"),
+         dilution = as.numeric(dilution)) %>%
+  filter((CFUs >= 5 & CFUs <= 95) | groups == "control") %>%
+  mutate(CFUs = as.numeric(CFUs)) 
+```
+
+In the example data, this step has reduced the number observations to consider
+from over 450 to 60. 
+
+```{r}
+nrow(all_data)
+nrow(tidy_cfu_data)
+```
+
+If you look at the first few rows of the data before and after cleaning, you can 
+see that in particular it has removed a lot of "TNTC" values (as well as a lot 
+of 0 values, although that's harder to see in this sample of the data): 
+
+```{r}
+all_data %>% 
+  slice(1:5)
+
+tidy_cfu_data %>% 
+  slice(1:5)
+```
+
+Next, the code brings in the information from the metadata sheet, including data on 
+what percent of each organ was resuspended, the dilution factor, and so on. 
+It uses this information to take the CFU value at a given dilution and convert
+it to an estimate of CFUs per mL.
+
+```{r}
+# Calculate CFU/ml for every qualifying replicate between 10-75 CFUs. 
+# Column binding by organ name to the metadata sheet via inner_join().
+meta <- read_excel("DATA/baa_cfu_sheet.xlsx", sheet = "metadata")
+
+tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
+  mutate(CFUs_per_ml = (CFUs * (dilution_factor ^ dilution) * 
+                          (total_resuspension_mL / volume_plated_ul) * 1000)) %>%
+  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  
+         CFUs, CFUs_per_ml) 
+```
+
+```{r}
+head(tidy_cfu_meta_joined)
+```
+
+The rest of the report code is used to provide summaries, visualizations, and 
+analysis of these data. First, there is code to provide a summary of the number
+of mice, experimental groups, and some other details for each of the organs: 
+
+```{r}
+tidy_cfu_meta_joined %>% 
+  group_by(organ) %>% 
+  summarize(`Experimental groups` = paste(unique(groups), collapse = ", "),
+            `Dates counted` = paste(unique(count_date), collapse = ", "), 
+            `Total mice` = length(unique(paste(groups, mouse))), 
+            `Dilutions considered` = paste(sort(unique(as.numeric(dilution))), 
+                              collapse = ", ")) %>% 
+  mutate_all(as.character) %>% 
+  pivot_longer(-organ) %>% 
+  mutate(name = paste0(name, ":")) %>% 
+  knitr::kable(align = c("c", "r", "l"), 
+               caption = "Organ-specific summary of the experiment")
+```
+
+Next, the pipeline provides a table with the conditions of the CFU collection, 
+based on the collected metadata from the template:
+
+```{r}
+meta %>% 
+  knitr::kable(col.names = c("Organ", "Percent of organ plated", "Aliquot", 
+                            "Dilution factor", "Total resuspension", 
+                            "Volume plated"), 
+               caption = "Conditions of the CFU collection")
+```
+
+
+
 
 **Distribution of CFUs at each dilution:**
 
@@ -225,37 +352,9 @@ dilution level:
 Here is a plot that shows how the CFU counts were distributed by dilution
 level in the data: 
 
-## Identify a good dilution for each sample
-```{r}
-# Make all_data into tidy data and filter for CFUs between 10-75
-  
-tidy_cfu_data <- all_data %>%
-  mutate(dilution = str_extract(dilution, "[0-9]+"),
-         dilution = as.numeric(dilution)) %>%
-  filter((CFUs >= 5 & CFUs <= 95) | groups == "control") %>%
-  mutate(CFUs = as.numeric(CFUs)) 
 
 
-head(tidy_cfu_data)
-```
 
-## Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution
-```{r}
-# Calculating CFU/ml for every qualifying replicate between 10-75 CFUs. Column binding by organ name to the metadata sheet via inner_join().
-meta <- read_excel(path, sheet = "metadata")
-
-tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
-  group_by(groups) %>% 
-  mutate(CFUs_per_ml = (CFUs * (dilution_factor^dilution) * 
-                          (total_resuspension_mL/volume_plated_ul) * 1000)) %>%
-  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  
-         CFUs, CFUs_per_ml) %>% 
-  ungroup()
-
-head(tidy_cfu_meta_joined)
-```
-
-## Create initial report information for these data
 ```{r}
 tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
   filter(organ == "lung") %>%
@@ -276,7 +375,6 @@ tidy_lung_cfu_plot
 ```
 
 
-## Sample ANOVA
 ```{r}
 cfu_stats <- tidy_cfu_meta_joined %>% 
   group_by(organ) %>%
@@ -292,10 +390,17 @@ cfu_stats <- tidy_cfu_meta_joined %>%
 cfu_stats
 ```
 
-## Save processed data to database
+As a last step, the code in the template writes a CSV file with the processed
+data. This file will be an input into a script that will format the data to 
+add to a database where we are collecting and integrating data from all the CSU 
+experiments, and ultimately from there into project-wide storage. 
+
+```{r eval = FALSE}
+# Write out processed data into a CSV file
+write_csv(tidy_cfu_meta_joined, "cfu_output.csv")
+```
 
 
-## Example two
 
 
 

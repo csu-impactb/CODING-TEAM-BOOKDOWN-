@@ -426,14 +426,13 @@ The report includes the following elements:
 You can download an example of a report created using this template by
 clicking \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx}{here}.
 
-When you knit to create the report, it will create a Word file in the
-same file directory where you put your data file and report template.
-It will also create and output a version of the data that has been
-processed (in the case of the weights data, this mainly involves
-tracking mice as they change cages, to link all weights that are from
-a single animal). This output fill will be named ``\ldots{}'' and, like
-the report file, will be saved in the same file directory as the
-data file and the report template.
+When you knit to create the report, it will create a Word file in the same file
+directory where you put your data file and report template. It will also create
+and output a version of the data that has been processed (in the case of the
+weights data, this mainly involves tracking mice as they change cages, to link
+all weights that are from a single animal). This output fill will be named
+``mouse\_weights\_output.csv'' and, like the report file, will be saved in the same
+file directory as the data file and the report template.
 
 \hypertarget{details-of-processing-script}{%
 \subsection{Details of processing script}\label{details-of-processing-script}}
@@ -962,7 +961,7 @@ experiments, and ultimately from there into project-wide storage.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Write out processed data into a CSV file}
-\FunctionTok{write\_csv}\NormalTok{(our\_mouse\_weights, }\StringTok{"example\_mouse\_output.csv"}\NormalTok{)}
+\FunctionTok{write\_csv}\NormalTok{(our\_mouse\_weights, }\StringTok{"mouse\_weights\_output.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -977,7 +976,7 @@ The downloads for this chapter are:
 \begin{itemize}
 \tightlist
 \item
-  {[}Data collection template{]} for recording colony forming units counted on each
+  \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx}{Data collection template} for recording colony forming units counted on each
   plate or section of plate in the laboratory
 \item
   {[}Report template{]} to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
@@ -1041,7 +1040,7 @@ from both the lung and spleen, there would be three sheets in the file: one
 with the metadata, one with the plate counts for the lung, and one with the
 plate counts for the spleen.
 
-The first sheet, which is the metadata sheet is shown below:
+The first sheet, which is the metadata sheet, is shown below:
 
 \includegraphics[width=1\linewidth]{figures/cfu_template_metadata}
 
@@ -1110,6 +1109,7 @@ Each of these organ-specific sheets of the template include the following column
   dilution, put ``TNTC'' in that cell of the spreadsheet.
 \end{itemize}
 
+You can download the template \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/data_collection_templates/cfu_collection_template.xlsx}{here}.
 When you download the template, it will have example values filled out in blue.
 Use these to get an idea for how to record your own data. When you are ready
 to record your own data, delete these example values and replace them with
@@ -1118,36 +1118,106 @@ data collected from your own experiment.
 \hypertarget{processing-collected-data-1}{%
 \subsection{Processing collected data}\label{processing-collected-data-1}}
 
+Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project.
+
+The next section provides the details of the pipeline. It aims to explain the
+code that processes the data and generates visualizations. You do not need to
+run this code step-by-step, but instead can access a script with the full
+code {[}here{]}.
+
+To use this reporting template, you need to download it to your computer and
+save it in the file directory where you saved the data you collected with the
+data collection template. You can then open RStudio and navigate so that you are
+working within this directory. You should also make sure that you have installed
+a few required packages on R on the computer you are using to run the report.
+These packages are: \ldots{} .
+
+Within RStudio, open the report template file. There is one spot where you will
+need to change the code in the template file, so it will read in the data from
+the version of the template that you saved, which you may have renamed.
+In the YAML of the report template file, change the file path beside ``data:''
+so that it is the file name of your data file.
+
+Once you've made this change, you can use the ``Knit'' button in RStudio to
+create a report from the data file and the report template file.
+
+The report includes the following elements:
+
+\begin{itemize}
+\tightlist
+\item
+\end{itemize}
+
+You can download an example of a report created using this template by
+clicking {[}here{]}.
+
+When you knit to create the report, it will create a Word file in the
+same file directory where you put your data file and report template.
+It will also create and output a version of the data that has been
+processed (in the case of the weights data, this mainly involves
+tracking mice as they change cages, to link all weights that are from
+a single animal). This output fill will be named ``cfu\_output.csv'' and, like
+the report file, will be saved in the same file directory as the
+data file and the report template.
+
 \hypertarget{details-of-processing-script-1}{%
 \subsection{Details of processing script}\label{details-of-processing-script-1}}
 
-\hypertarget{read-in-data}{%
-\section{Read in data}\label{read-in-data}}
+This section goes through the code within the report template. It
+explains each part of the code in detail. You do not need to understand
+these details to use the report template. However, if you have questions
+about how the data are being processed, or how the outputs are created,
+all those details are available in this section.
+
+As a note, there are two places in the following code where there's a small
+change compared to the report template. In the report, you incorporate the path
+to the data file using the \texttt{data:} section in the YAML at the top of the
+document. In the following code, we've instead used the path of some example
+data within this book's file directory, so the code will run for this chapter as
+well.
+
+First, the workflow loads some additional R libraries. You may need to install
+these on your local R session if you do not already have them installed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(dplyr)}
 \FunctionTok{library}\NormalTok{(purrr)}
-\FunctionTok{library}\NormalTok{(tidyr)}
-\FunctionTok{library}\NormalTok{(stringr)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(gridExtra)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(ggpubr)}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{\#Replace w/ path to CFU sheet}
-\NormalTok{path }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"DATA/Copy of baa\_cfu\_sheet.xlsx"}\NormalTok{)}
+Next, the pipeline reads in the organ-specific data. To do this, it creates a
+list of all of the sheets that are in the spreadsheet other than the metadata
+sheet. It then loops through each of these organ-specific sheets. It uses
+pivoting to convert all the dilution levels and values into two columns
+(a longer rather than wider format), so that the data from all the organs can
+be joined into a single large dataframe, even if a different number of dilutions
+were used for the different organs.
 
-\NormalTok{sheet\_names }\OtherTok{\textless{}{-}} \FunctionTok{excel\_sheets}\NormalTok{(path)}
-\NormalTok{sheet\_names }\OtherTok{\textless{}{-}}\NormalTok{ sheet\_names[}\SpecialCharTok{!}\NormalTok{sheet\_names }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"metadata"}\NormalTok{)]}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a list of all the sheets in the file. Exclude the metadata sheet }
+\CommentTok{\# to get a list of the organ{-}specific sheets}
+\NormalTok{sheet\_names }\OtherTok{\textless{}{-}} \FunctionTok{excel\_sheets}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{)}
+\NormalTok{organ\_sheets }\OtherTok{\textless{}{-}}\NormalTok{ sheet\_names[sheet\_names }\SpecialCharTok{!=} \StringTok{"metadata"}\NormalTok{]}
 
+\CommentTok{\# Loop through all the organ{-}specific sheets and read them in as an }
+\CommentTok{\# element in a list. Use pivoting to collect all the dilutions in a }
+\CommentTok{\# way that will let you bind across all organs, even if a different}
+\CommentTok{\# set of dilutions were used for the different organs.}
 \NormalTok{merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
-
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(sheet\_names))\{}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(organ\_sheets))\{}
   
-\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(path, }\AttributeTok{sheet =}\NormalTok{ sheet\_names[i]) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{organ =} \FunctionTok{paste0}\NormalTok{(sheet\_names[i]))}
+\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{, }
+                     \AttributeTok{sheet =}\NormalTok{ organ\_sheets[i]) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{organ =} \FunctionTok{paste0}\NormalTok{(organ\_sheets[i]))}
   
 \NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} 
     \CommentTok{\#mutate(missing\_col = NA) \%\textgreater{}\% }
@@ -1158,163 +1228,108 @@ data collected from your own experiment.
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
            \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution))}
     
-  
 \NormalTok{  merged\_data[[i]] }\OtherTok{\textless{}{-}}\NormalTok{ data}
-  
-  
 \NormalTok{\}}
-  
+
+\CommentTok{\# Bind all the organ{-}specific datasets into a single large dataset}
 \NormalTok{all\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(merged\_data, }\AttributeTok{.id =} \StringTok{"column\_label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{column\_label)}
-  
-\FunctionTok{head}\NormalTok{(merged\_data)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [[1]]
-## # A tibble: 342 x 8
-##    count_date           who_plated who_counted groups mouse organ dilution CFUs 
-##    <chr>                <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-##  1 "\"February 21 2022~ BK         BK          group~ A     lung         0 TNTC 
-##  2 "\"February 21 2022~ BK         BK          group~ A     lung         1 TNTC 
-##  3 "\"February 21 2022~ BK         BK          group~ A     lung         2 TNTC 
-##  4 "\"February 21 2022~ BK         BK          group~ A     lung         3 53   
-##  5 "\"February 21 2022~ BK         BK          group~ A     lung         4 9    
-##  6 "\"February 21 2022~ BK         BK          group~ A     lung         5 4    
-##  7 "\"February 21 2022~ BK         BK          group~ A     lung         6 2    
-##  8 "\"February 21 2022~ BK         BK          group~ A     lung         7 1    
-##  9 "\"February 21 2022~ BK         BK          group~ A     lung         8 0    
-## 10 "\"February 21 2022~ BK         BK          group~ B     lung         0 TNTC 
-## # ... with 332 more rows
-## 
-## [[2]]
-## # A tibble: 112 x 8
-##    count_date          who_plated who_counted groups  mouse organ dilution CFUs 
-##    <chr>               <chr>      <chr>       <chr>   <chr> <chr>    <dbl> <chr>
-##  1 "\"April 25 2022\"" JR         JR          group_1 A     sple~        0 TNTC 
-##  2 "\"April 25 2022\"" JR         JR          group_1 A     sple~        1 TNTC 
-##  3 "\"April 25 2022\"" JR         JR          group_1 A     sple~        2 53   
-##  4 "\"April 25 2022\"" JR         JR          group_1 A     sple~        3 9    
-##  5 "\"April 25 2022\"" JR         JR          group_1 A     sple~        4 4    
-##  6 "\"April 25 2022\"" JR         JR          group_1 A     sple~        5 2    
-##  7 "\"April 25 2022\"" JR         JR          group_1 A     sple~        6 1    
-##  8 "\"April 25 2022\"" JR         JR          group_1 A     sple~        7 0    
-##  9 "\"April 25 2022\"" JR         JR          group_1 B     sple~        0 TNTC 
-## 10 "\"April 25 2022\"" JR         JR          group_1 B     sple~        1 TNTC 
-## # ... with 102 more rows
-\end{verbatim}
+At this stage, here is how the beginning of this dataset looks:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(all\_data)}
+\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 6 x 8
+## # A tibble: 5 x 8
 ##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
 ##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
 ## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
 ## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
 ## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
 ## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
+## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9
 \end{verbatim}
 
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
+You can see that, rather than having separate columns for each dilution level
+on a single row for a sample, there are now multiple rows per sample, with the
+CFUs at different dilutions given in a \texttt{CFUs} column, with the \texttt{dilution} column
+identifying which dilution level for each.
 
-\hypertarget{exploratory-analysis-and-quality-checks}{%
-\section{Exploratory analysis and quality checks}\label{exploratory-analysis-and-quality-checks}}
-
-\hypertarget{exploratory-analysis}{%
-\section{Exploratory analysis}\label{exploratory-analysis}}
-
-\textbf{Dimensions of input data:}
-
-Based on the input data, data were collected for the following organ or
-organs:
-
-The following number of mice were included for each:
-
-The following number of replicates were recorded at each count date for
-each experimental group:
-
-The following number of dilutions and dilution level were recorded for
-each organ:
-
-\textbf{People who plated and collected the data. Date or dates of counting:}
-
-Based on the input data, the plates included in these data were counted by
-the following person or persons:
-Based on the input data, the plates included in these data were counted on
-the following date or dates:
+The next steps work through the data, identifying which dilution is an
+appropriate one to use to count CFUs for each sample.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(organ, who\_plated, who\_counted, count\_date) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 3 x 4
-##   organ  who_plated who_counted count_date            
-##   <chr>  <chr>      <chr>       <chr>                 
-## 1 lung   BK         BK          "\"February 21 2022\""
-## 2 lung   BK         BK          "\"April 18 2022\""   
-## 3 spleen JR         JR          "\"April 25 2022\""
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(all\_data)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
-## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
-## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9    
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         5 4
-\end{verbatim}
-
-\textbf{Distribution of CFUs at each dilution:}
-
-Here's a plot that shows how many plates were too numerous to count at each
-dilution level:
-
-Here is a plot that shows how the CFU counts were distributed by dilution
-level in the data:
-
-\hypertarget{identify-a-good-dilution-for-each-sample}{%
-\section{Identify a good dilution for each sample}\label{identify-a-good-dilution-for-each-sample}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Make all\_data into tidy data and filter for CFUs between 10{-}75}
-  
+\CommentTok{\# Pull out numeric dilution value and filter for dilutions with CFUs between 10{-}75}
 \NormalTok{tidy\_cfu\_data }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
          \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{((CFUs }\SpecialCharTok{\textgreater{}=} \DecValTok{5} \SpecialCharTok{\&}\NormalTok{ CFUs }\SpecialCharTok{\textless{}=} \DecValTok{95}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ groups }\SpecialCharTok{==} \StringTok{"control"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs =} \FunctionTok{as.numeric}\NormalTok{(CFUs)) }
+\end{Highlighting}
+\end{Shaded}
 
+In the example data, this step has reduced the number observations to consider
+from over 450 to 60.
 
-\FunctionTok{head}\NormalTok{(tidy\_cfu\_data)}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(all\_data)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 6 x 8
+## [1] 454
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(tidy\_cfu\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 60
+\end{verbatim}
+
+If you look at the first few rows of the data before and after cleaning, you can
+see that in particular it has removed a lot of ``TNTC'' values (as well as a lot
+of 0 values, although that's harder to see in this sample of the data):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 8
+##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
+##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
+## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
+## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
+## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
+## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
+## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_cfu\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 8
 ##   count_date            who_plated who_counted groups mouse organ dilution  CFUs
 ##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <dbl>
 ## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         3    53
@@ -1322,24 +1337,24 @@ level in the data:
 ## 3 "\"February 21 2022\~ BK         BK          group~ C     lung         5     8
 ## 4 "\"February 21 2022\~ BK         BK          group~ D     lung         3    53
 ## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         2    92
-## 6 "\"February 21 2022\~ BK         BK          group~ A     lung         4     7
 \end{verbatim}
 
-\hypertarget{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}{%
-\section{Calculate CFUs from best dilution/Estimate bacterial load for each sample based on good dilution}\label{calculate-cfus-from-best-dilutionestimate-bacterial-load-for-each-sample-based-on-good-dilution}}
+Next, the code brings in the information from the metadata sheet, including data on
+what percent of each organ was resuspended, the dilution factor, and so on.
+It uses this information to take the CFU value at a given dilution and convert
+it to an estimate of CFUs per mL.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Calculating CFU/ml for every qualifying replicate between 10{-}75 CFUs. Column binding by organ name to the metadata sheet via inner\_join().}
-\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(path, }\AttributeTok{sheet =} \StringTok{"metadata"}\NormalTok{)}
+\CommentTok{\# Calculate CFU/ml for every qualifying replicate between 10{-}75 CFUs. }
+\CommentTok{\# Column binding by organ name to the metadata sheet via inner\_join().}
+\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"metadata"}\NormalTok{)}
 
 \NormalTok{tidy\_cfu\_meta\_joined }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(meta, tidy\_cfu\_data) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(groups) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor}\SpecialCharTok{\^{}}\NormalTok{dilution) }\SpecialCharTok{*} 
-\NormalTok{                          (total\_resuspension\_mL}\SpecialCharTok{/}\NormalTok{volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor }\SpecialCharTok{\^{}}\NormalTok{ dilution) }\SpecialCharTok{*} 
+\NormalTok{                          (total\_resuspension\_mL }\SpecialCharTok{/}\NormalTok{ volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(organ, count\_date, who\_plated, who\_counted, groups,  mouse, dilution,  }
-\NormalTok{         CFUs, CFUs\_per\_ml) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ungroup}\NormalTok{()}
+\NormalTok{         CFUs, CFUs\_per\_ml) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -1366,8 +1381,89 @@ level in the data:
 ## # ... with 1 more variable: CFUs_per_ml <dbl>
 \end{verbatim}
 
-\hypertarget{create-initial-report-information-for-these-data}{%
-\section{Create initial report information for these data}\label{create-initial-report-information-for-these-data}}
+The rest of the report code is used to provide summaries, visualizations, and
+analysis of these data. First, there is code to provide a summary of the number
+of mice, experimental groups, and some other details for each of the organs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(organ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Experimental groups}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(groups), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{),}
+            \StringTok{\textasciigrave{}}\AttributeTok{Dates counted}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(count\_date), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{), }
+            \StringTok{\textasciigrave{}}\AttributeTok{Total mice}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(}\FunctionTok{paste}\NormalTok{(groups, mouse))), }
+            \StringTok{\textasciigrave{}}\AttributeTok{Dilutions considered}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(dilution))), }
+                              \AttributeTok{collapse =} \StringTok{", "}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_all}\NormalTok{(as.character) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{organ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{paste0}\NormalTok{(name, }\StringTok{":"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{align =} \FunctionTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{, }\StringTok{"r"}\NormalTok{, }\StringTok{"l"}\NormalTok{), }
+               \AttributeTok{caption =} \StringTok{"Organ{-}specific summary of the experiment"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-30}Organ-specific summary of the experiment}
+\centering
+\begin{tabular}[t]{c|r|l}
+\hline
+organ & name & value\\
+\hline
+lung & Experimental groups: & group\_1, group\_2, group\_3, group\_4\\
+\hline
+lung & Dates counted: & "February 21 2022", "April 18 2022"\\
+\hline
+lung & Total mice: & 19\\
+\hline
+lung & Dilutions considered: & 2, 3, 4, 5, 6\\
+\hline
+spleen & Experimental groups: & group\_1, group\_2, group\_3\\
+\hline
+spleen & Dates counted: & "April 25 2022"\\
+\hline
+spleen & Total mice: & 10\\
+\hline
+spleen & Dilutions considered: & 1, 2, 3, 4\\
+\hline
+\end{tabular}
+\end{table}
+
+Next, the pipeline provides a table with the conditions of the CFU collection,
+based on the collected metadata from the template:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meta }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Organ"}\NormalTok{, }\StringTok{"Percent of organ plated"}\NormalTok{, }\StringTok{"Aliquot"}\NormalTok{, }
+                            \StringTok{"Dilution factor"}\NormalTok{, }\StringTok{"Total resuspension"}\NormalTok{, }
+                            \StringTok{"Volume plated"}\NormalTok{), }
+               \AttributeTok{caption =} \StringTok{"Conditions of the CFU collection"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-31}Conditions of the CFU collection}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+Organ & Percent of organ plated & Aliquot & Dilution factor & Total resuspension & Volume plated\\
+\hline
+lung & 33 & 100 & 5 & 0.5 & 100\\
+\hline
+spleen & 50 & 100 & 5 & 0.5 & 125\\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Distribution of CFUs at each dilution:}
+
+Here's a plot that shows how many plates were too numerous to count at each
+dilution level:
+
+Here is a plot that shows how the CFU counts were distributed by dilution
+level in the data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1390,10 +1486,7 @@ level in the data:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-26-1.pdf}
-
-\hypertarget{sample-anova}{%
-\section{Sample ANOVA}\label{sample-anova}}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1440,11 +1533,17 @@ level in the data:
 ## 9 spleen group_3   group_2      -745.   -6776.     5286.      0.943
 \end{verbatim}
 
-\hypertarget{save-processed-data-to-database}{%
-\section{Save processed data to database}\label{save-processed-data-to-database}}
+As a last step, the code in the template writes a CSV file with the processed
+data. This file will be an input into a script that will format the data to
+add to a database where we are collecting and integrating data from all the CSU
+experiments, and ultimately from there into project-wide storage.
 
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write out processed data into a CSV file}
+\FunctionTok{write\_csv}\NormalTok{(tidy\_cfu\_meta\_joined, }\StringTok{"cfu\_output.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{enzyme-linked-immunosorbest-assay-elisa}{%
 \chapter{Enzyme-linked immunosorbest assay (ELISA)}\label{enzyme-linked-immunosorbest-assay-elisa}}
@@ -1688,7 +1787,7 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1873,7 +1972,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -2074,7 +2173,7 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
@@ -2663,7 +2762,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
