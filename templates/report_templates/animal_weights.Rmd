@@ -184,6 +184,7 @@ This section gives some information on the experimental animals both
 at the start of the experiment and over the course of the experiment. 
 
 ```{r}
+# Create a table that summarizes the animals at the start of the experiment
 mouse_initial %>% 
   summarize(Species = paste(unique(species), collapse = ", "), 
             `Total animals` = n(), 
@@ -208,6 +209,7 @@ This section provides summaries of mouse weights over the course of the
 experiment. 
 
 ```{r}
+# Create a plot of mouse weights over time
 our_mouse_weights %>% 
   ggplot(aes(x = date_collected, y = weight, 
              group = mouse_id, color = sex)) + 
@@ -221,6 +223,7 @@ our_mouse_weights %>%
 \newpage
 
 ```{r}
+# Plot animal weight boxplots for the latest time point 
 our_mouse_weights %>% 
   filter(date_collected == last(date_collected)) %>% 
   ggplot(aes(x = group, y = weight)) + 
@@ -234,6 +237,7 @@ our_mouse_weights %>%
 \newpage
 
 ```{r}
+# Plot animal weights by animal handler
 our_mouse_weights %>% 
   ggplot(aes(x = date_collected, y = weight, color = who_collected)) + 
   geom_point() + 
@@ -241,12 +245,12 @@ our_mouse_weights %>%
   labs(x = "Date collected", 
        y = "Weight (g)",
        color = "Person who\nhandled the\nanimal")
-
 ```
 
 \newpage
 
 ```{r}
+# Create table of animal weight changes since previous time point
 our_mouse_weights %>% 
   select(date_collected, weight, group, mouse_label, sex) %>% 
   group_by(mouse_label) %>% 
@@ -262,4 +266,8 @@ our_mouse_weights %>%
                caption = "Individual data on weight changes in mice between current measurement and previous measurement.")
 ```
 
+```{r}
+# Write out processed data into a CSV file
+write_csv(our_mouse_weights, "example_mouse_output.csv")
+```
 

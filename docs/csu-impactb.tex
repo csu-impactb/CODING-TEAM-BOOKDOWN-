@@ -201,68 +201,6 @@ Metadata for an experiment:
   \texttt{experimental\_groups}
 \end{itemize}
 
-\hypertarget{initial-mouse-characteristics}{%
-\chapter{Initial mouse characteristics}\label{initial-mouse-characteristics}}
-
-At the start of each experiment with a mouse model, we record several measurements
-or characteristics of each mouse. We record these measurements along with an identifier
-for each mouse (for example, based on tags or ear notches), so that we can later
-link the initial characteristics of each mouse with later measurements on the same
-mouse.
-
-The values that we initially record for each mouse include:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{group}: An identifier for the experimental group to which the mouse
-  is assigned (e.g., ``Control'', ``Group 1'')
-\item
-  \texttt{group\_detail}: A longer description of the mouse's treatment group
-  (e.g., ``Vaccinated with vaccine candidate A at 4 and 8 weeks'')
-\item
-  \texttt{notch\_id}: The ear notch pattern of the mouse (e.g., ``0'' for no notch,
-  ``1R'' for one notch in the right ear)
-\item
-  \texttt{mouse\_number}: A number that corresponds with the mouse's ear notch patter;
-  together with the mouse's group number, this provides
-  a unique identifier for each mouse in the experiment
-\item
-  \texttt{cage\_number}: The number of the cage to which the mouse is first assigned.
-  This may change over the course of the experiment, as mice might be removed from
-  a cage due to fighting, etc. Any of these later changes of cage will be
-  recorded {[}where{]}
-\item
-  \texttt{sex}: Whether the mouse is male (``m'') or female (``f'')
-\item
-  \texttt{age}: Age
-\item
-  \texttt{strain}: The strain of the mouse (e.g., ``C57BL/6J'' for Black 6, ``C3HeB/FeJ'' for
-  Kramnik)
-\end{itemize}
-
-We have created a spreadsheet template that can be used to record these data,
-which you can download by clicking \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/DATA/mice_id_sheet.xlsx}{here}. This template currently includes
-example data (colored in blue to help you remember that it's only there as an
-example). To Use this template, take a look at the example data, then delete it
-and replace with the real data for your experiment.
-
-Here is an example of how the first rows of this template might look once it's
-filled out:
-
-\includegraphics[width=1\linewidth]{figures/initial_data_template_example}
-
-This template should be used at the
-initial time when mice are brought into the experiment. The file format is an
-Excel file, so you can use it by saving it to your computer and then opening and
-recording data with Excel. Later code in this chapter will read in a file in
-this template format to provide basic summaries of the data. Later code will
-read in these files to record the data in a project-wide database, which will
-allow us to integrate it with other data collected over the course of the
-experiment.
-
-{[}Rules for naming the file. Include experiment name / study ID?{]}
-
 \hypertarget{animal-initial-conditions-and-weekly-weights}{%
 \chapter{Animal initial conditions and weekly weights}\label{animal-initial-conditions-and-weekly-weights}}
 
@@ -419,18 +357,79 @@ For the second and later sheets, you will record:
 Once data are collected, the file can be run through an R workflow. This workflow
 will convert the data into a format that is easier to work with for data analysis
 and visualization. It will also produce a report on the data in the spreadsheet, and
-ultimately it will also write relevant results into a global database for the
-experiment.
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project.
 
-This section provides the details of that pipeline. It aims to explain the
+The next section provides the details of the pipeline. It aims to explain the
 code that processes the data and generates visualizations. You do not need to
 run this code step-by-step, but instead can access a script with the full
-code by clicking {[}here{]}.
+code \href{https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/animal_weights.Rmd}{here}.
 
-The first step in the workflow is to read in the data from the spreadsheet.
-As long as the data are collected following the template that was described
-earlier, this code should be able to read it in correctly and create a
-master dataset with the data from all sheets of the spreadsheet.
+To use this reporting template, you need to download it to your computer and
+save it in the file directory where you saved the data you collected with the
+data collection template. You can then open RStudio and navigate so that you are
+working within this directory. You should also make sure that you have installed
+a few required packages on R on the computer you are using to run the report.
+These packages are: \texttt{tidyverse}, \texttt{purrr}, \texttt{lubridate}, \texttt{readxl}, \texttt{knitr}, and
+\texttt{ggbeeswarm}.
+
+Within RStudio, open the report template file. There is one spot where you will
+need to change the code in the template file, so it will read in the data from
+the version of the template that you saved, which you may have renamed.
+In the YAML of the report template file, change the file path beside ``data:''
+so that it is the file name of your data file.
+
+Once you've made this change, you can use the ``Knit'' button in RStudio to
+create a report from the data file and the report template file. The
+report includes the following elements:
+
+\begin{itemize}
+\tightlist
+\item
+  Summary table of animals at the start of the experiment
+\item
+  Time series plots of animal weights over the experiment, grouped by
+  experimental group
+\item
+  Boxplots of the distribution of animal weights within each experimental
+  group at the last available time point
+\item
+  Plot of measured weight, identified by the person who was handling the
+  animal, to help determine if there are consistent differences by handler
+\item
+  Table of all the animals in the experiment at the last measured time point,
+  ordered by their weight change since the previous measurement. This table
+  is meant to help in identifying animals that may need to be euthanized for
+  animal welfare reasons.
+\end{itemize}
+
+You can download an example of a report created using this template by
+clicking {[}here{]}.
+
+When you knit to create the report, it will create a Word file in the
+same file directory where you put your data file and report template.
+It will also create and output a version of the data that has been
+processed (in the case of the weights data, this mainly involves
+tracking mice as they change cages, to link all weights that are from
+a single animal). This output fill will be named ``\ldots{}'' and, like
+the report file, will be saved in the same file directory as the
+data file and the report template.
+
+\hypertarget{details-of-processing-script}{%
+\subsection{Details of processing script}\label{details-of-processing-script}}
+
+This section goes through the code within the report template. It
+explains each part of the code in detail. You do not need to understand
+these details to use the report template. However, if you have questions
+about how the data are being processed, or how the outputs are created,
+all those details are available in this section.
+
+As a note, there are two places in the following code where there's a small
+change compared to the report template. In the report, you incorporate the path
+to the data file using the \texttt{data:} section in the YAML at the top of the
+document. In the following code, we've instead used the path of some example
+data within this book's file directory, so the code will run for this chapter as
+well.
 
 First, the workflow loads some additional R libraries. You may need to install
 these on your local R session if you do not already have them installed.
@@ -439,18 +438,62 @@ these on your local R session if you do not already have them installed.
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(readxl)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(ggbeeswarm)}
 \end{Highlighting}
 \end{Shaded}
 
-Next, it uses a custom function to read in data from the spreadsheet. This
-function (\texttt{read\_mouse\_weights}) creates a list of all of the sheets in the
-spreadsheet, so it can be sure to read in all collected data. It creates
-a list with each of the sheets with weekly weight measures, so it can
-read in each sheet in that list. Next, it reads in both the first sheet
-(with the initial mouse measures), as well as all the weight sheets.
+These packages bring in some useful functions that are not available in the
+base installation of R. They are all open source. To cite any of them, you
+can use the \texttt{citation} function. For example, to get the information you would
+need to cite the \texttt{readxl} package, in R you can run:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{citation}\NormalTok{(}\StringTok{"readxl"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'readxl' in publications use:
+## 
+##   Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R
+##   package version 1.3.1. https://CRAN.R-project.org/package=readxl
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {readxl: Read Excel Files},
+##     author = {Hadley Wickham and Jennifer Bryan},
+##     year = {2019},
+##     note = {R package version 1.3.1},
+##     url = {https://CRAN.R-project.org/package=readxl},
+##   }
+\end{verbatim}
+
+Next, the code in the report template creates a few custom functions to
+help process the data from the data collection template. The first of these
+functions checks the data collection template to identify all the timepoints
+that were collected and then reads each in, ultimately joining data from
+all time points into one large dataset.
+
+The data collection template requires you to use a new sheet in the spreadsheet
+for each weight collection time point, with a first sheet that records
+initial information about the animals. If you only take weights at three
+time points, there would only be three time point sheets in the final file.
+Conversely, if you collect weight data at twenty time points, there would be
+twenty sheets in the final file. The first function, called ``, reads the data file, checks
+to find all the weight recording sheets, whether it's three or twenty, and then
+reads the data in from all the sheets and binds them together into a single
+dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Function to read in mouse weights. This takes a filepath to an Excel sheet}
+\DocumentationTok{\#\# that follows the template of the animal weight collection template. It }
+\DocumentationTok{\#\# identifies all the sheets in that file and reads in all the ones that }
+\DocumentationTok{\#\# measure weekly weights. It returns one large dataframe with all of the }
+\DocumentationTok{\#\# measured weights. }
 \NormalTok{read\_mouse\_weights }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(filepath) \{}
   
   \CommentTok{\# getting info about all excel sheets}
@@ -473,35 +516,45 @@ read in each sheet in that list. Next, it reads in both the first sheet
 
   \FunctionTok{return}\NormalTok{(mouse\_weights)}
 \NormalTok{\}}
-
-\CommentTok{\# Use function to read in mouse weights from the sheet}
-\CommentTok{\# (we\textquotesingle{}ll read in the initial information later)}
-\NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}} \FunctionTok{read\_mouse\_weights}\NormalTok{(}\AttributeTok{filepath =} \StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-The next part of the processing is needed to track each mouse throughout the study.
-Some mice are moved from one cage to another. Often, this might be because the mice
-are fighting or otherwise show signs that they'd do better if separated. The
-researchers in the wet lab record the mouse information based on the cage the mouse
-is in at the start of the day that the measurement is taken, and they also record
-if the mouse is moved to a new cage, specifically that new cage number. This code
-is using that information to create a unique ID for each mouse as it moves to
-different cages over the course of the study.
+The remaining functions are all functions to help track a mouse over the
+experiment even if it changes cages. In processing this data, the key challenge
+is to track a single mouse over the experiment. The mice are identified by a
+pattern of notches in their ears. However, there are a limited number of notches
+that can be distinguished, so the notch information does not distinctly identify
+every mouse in the study, just every mouse within a certain cage. By knowing
+both an ear notch ID and a cage number, you can distinctly identify each mouse
+in the study.
+
+However, mice are moved from one cage to another in some cases during a study.
+If mice within a cage are fighting, or if they are showing signs of
+excessive grooming, these can be reasons to move a mouse to a new cage once
+the experiment has started. The cage moves need to be resolved when
+processing the data so that each mouse can be tracked even as they move.
+
+In the data collection template, we have created a design that aims to include
+information about cage moves, but to do so in a way that is as simple as
+possible for the person who is recording the data. The weights are recorded for
+each time point in a separate sheet of the data collection template. On the
+sheet for a time point, there are also columns to give the mouse's cage at the
+start of that data collection time point, as well as the cage the mouse was
+moved to, if it was moved. The report template code then uses this information
+to create a unique ID for each mouse (one that is constant across the
+experiment), and then attach it to the mouse's measurements even as the mouse is
+moved from one cage to another. The following two functions both help with
+this process:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Add a unique mouse ID. For right now, add it only for the first time point.}
-\NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}}\NormalTok{ our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{n}\NormalTok{(), }
-         \AttributeTok{mouse\_id =} \FunctionTok{ifelse}\NormalTok{(date\_collected }\SpecialCharTok{==}
-                                    \FunctionTok{first}\NormalTok{(date\_collected), }
-\NormalTok{                                  mouse\_id, }
-                                  \ConstantTok{NA}\NormalTok{))}
-
 \CommentTok{\# Function to get the next cage number based on the }
 \CommentTok{\# existing cage number and notch ID. If the mouse does not}
-\CommentTok{\# switch cages again, the output is a vector of length 0}
+\CommentTok{\# switch cages again, the output is a vector of length 0. }
+\CommentTok{\# This takes the dataframe and existing identifiers (notch id and}
+\CommentTok{\# existing cage number) as inputs. It returns the next cage}
+\CommentTok{\# that the mouse was moved to. If the mouse has not moved}
+\CommentTok{\# from the existing case, the output has length 0.}
 \NormalTok{get\_next\_cage }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(existing\_cage\_number, notch\_id, }
                           \AttributeTok{df =}\NormalTok{ our\_mouse\_weights)\{}
 \NormalTok{  next\_cage }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
@@ -514,7 +567,11 @@ different cages over the course of the study.
 \NormalTok{\}}
 
 \CommentTok{\# Function to get the full list of cages for each individual }
-\CommentTok{\# mouse, over the course of all data collected to date}
+\CommentTok{\# mouse, over the course of all data collected to date. This }
+\CommentTok{\# inputs the starting identifiers of the mouse (starting cage ID }
+\CommentTok{\# and notch ID). It then works through any cage changes to create}
+\CommentTok{\# a list for that mouse of all cages it was put in over the }
+\CommentTok{\# course of the experiment. }
 \NormalTok{get\_mouse\_cages }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mouse\_starting\_cage, mouse\_notch\_id, }
                             \AttributeTok{df =}\NormalTok{ our\_mouse\_weights)\{}
 \NormalTok{  mouse\_cage\_list }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_starting\_cage}
@@ -534,6 +591,43 @@ different cages over the course of the study.
   
   \FunctionTok{return}\NormalTok{(mouse\_cage\_list)}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Next, the report template code gets to the workflow itself, where it uses
+both these custom functions and other R code to process the data and then
+to provide summaries and visualizations of the data.
+
+The first step in the workflow is to read in the data from the spreadsheet.
+As long as the data are collected following the template that was described
+earlier, this code should be able to read it in correctly and create a
+master dataset with the data from all sheets of the spreadsheet. This step
+of the pipeline uses one of the custom functions that was defined at the start
+of the report template code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read in the mouse weights from the Excel template. This creates one large}
+\CommentTok{\# dataframe with the weights from all the timepoints. }
+\NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}} \FunctionTok{read\_mouse\_weights}\NormalTok{(}\AttributeTok{filepath =}
+                                          \StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, the code runs through a number of steps to create a unique ID for
+each mouse and then apply that ID to each time point, even if a mouse
+changes cages.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add a unique mouse ID for the first time point. This will become each mouse\textquotesingle{}s}
+\CommentTok{\# unique ID across all measured timepoints.}
+\NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}}\NormalTok{ our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_id =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{n}\NormalTok{(), }
+         \AttributeTok{mouse\_id =} \FunctionTok{ifelse}\NormalTok{(date\_collected }\SpecialCharTok{==}
+                                    \FunctionTok{first}\NormalTok{(date\_collected), }
+\NormalTok{                                  mouse\_id, }
+                                  \ConstantTok{NA}\NormalTok{))}
 
 \CommentTok{\# Create a dataframe that lists all mice at the first time point, }
 \CommentTok{\# as well as a list of all the cages they have been in over the}
@@ -572,37 +666,29 @@ different cages over the course of the study.
 \NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}}\NormalTok{ our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mouse\_label =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Cage:"}\NormalTok{, latest\_cage, }
                              \StringTok{"Notch:"}\NormalTok{, notch\_id))}
-
-\NormalTok{our\_mouse\_weights}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 980 x 12
-##    who_collected date_collected notch_id weight unit  existing_cage_number
-##    <chr>         <date>         <chr>     <dbl> <chr> <chr>               
-##  1 Taru          2022-05-26     0          18.4 g     22003               
-##  2 Taru          2022-05-26     1R         17.2 g     22003               
-##  3 Taru          2022-05-26     1L         17   g     22003               
-##  4 Taru          2022-05-26     1R1L       18.8 g     22003               
-##  5 Taru          2022-05-26     0          18.4 g     22004               
-##  6 Taru          2022-05-26     1R         17.7 g     22004               
-##  7 Taru          2022-05-26     1L         20.2 g     22004               
-##  8 Taru          2022-05-26     1R1L       17.1 g     22004               
-##  9 Taru          2022-05-26     0          17.6 g     22005               
-## 10 Taru          2022-05-26     1R         20   g     22005               
-## # ... with 970 more rows, and 6 more variables: new_cage_number <chr>,
-## #   group <chr>, notes <chr>, mouse_id <int>, latest_cage <chr>,
-## #   mouse_label <chr>
-\end{verbatim}
+Ultimately, this creates both a unique ID for each mouse (in a column of the
+dataframe called \texttt{mouse\_id}), as well as creates a unique label that can be used
+in plots and tables (given in the \texttt{mouse\_label} column). The unique ID is set at
+the beginning of the study for each mouse and remains the same throughout the
+study. The label, on the other hand, is based on the mouse's ear notch pattern
+and the most recent cage it was recorded to be in. We made this choice for a
+labeling identifier, because it will help the researchers to quickly identify a
+mouse in the study based on it's current, rather than starting, cage.
 
-Now that the weekly weights are processed, the pipeline will read in and add the
-information that was calculated in the first sheet of the spreadsheet. This
-information is constant information for each mouse, like their sex, species, and
-experimental group.
+The next part of the code reads in the initial data that were recorded for each
+animal in the experiment. The code then pulls in information from the processed
+weights dataset to match these initial data with each animals unique ID.
+Ultimately, these starting data are incorporated into the large dataset of mouse
+weights, creating a single large dataset to work with (\texttt{our\_mouse\_weights}) that
+includes all the information that was recorded in the data collection template.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Read in the data from the original file with the initial animal }
+\CommentTok{\# characteristics}
 \NormalTok{mouse\_initial }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/body\_weights\_measurement.xlsx"}\NormalTok{, }
                                       \AttributeTok{sheet =} \DecValTok{1}\NormalTok{, }
                                       \AttributeTok{col\_types =} \FunctionTok{c}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\CommentTok{\# notch\_id}
@@ -615,57 +701,495 @@ experimental group.
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dob =}\NormalTok{ lubridate}\SpecialCharTok{::}\FunctionTok{mdy}\NormalTok{(dob), }
          \AttributeTok{sex =}\NormalTok{ forcats}\SpecialCharTok{::}\FunctionTok{as\_factor}\NormalTok{(sex))}
 
+\CommentTok{\# Figure out the starting cage for each mouse, so they can be incorporated}
+\CommentTok{\# with the initial data so we can get the mouse ID that was added for the }
+\CommentTok{\# starting time point}
 \NormalTok{mouse\_ids }\OtherTok{\textless{}{-}}\NormalTok{ our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(date\_collected }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(date\_collected)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{select}\NormalTok{(notch\_id, existing\_cage\_number, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{rename}\NormalTok{(}\AttributeTok{starting\_cage\_number =}\NormalTok{ existing\_cage\_number)}
 
+\CommentTok{\# Merge in the mouse IDs with the dataframe of initial mouse characteristics}
 \NormalTok{mouse\_initial }\OtherTok{\textless{}{-}}\NormalTok{ mouse\_initial }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{left\_join}\NormalTok{(mouse\_ids, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"notch\_id"}\NormalTok{, }\StringTok{"starting\_cage\_number"}\NormalTok{))}
 
+\CommentTok{\# Join the initial data with the weekly weights data into one large dataset}
 \NormalTok{our\_mouse\_weights }\OtherTok{\textless{}{-}}\NormalTok{ our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{left\_join}\NormalTok{(mouse\_initial, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"mouse\_id"}\NormalTok{, }\StringTok{"notch\_id"}\NormalTok{, }\StringTok{"group"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
+At this point, the first few rows of this large dataset look like this:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Explore this data a bit}
+\NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 16
+##   who_collected date_collected notch_id weight unit  existing_cage_number
+##   <chr>         <date>         <chr>     <dbl> <chr> <chr>               
+## 1 Taru          2022-05-26     0          18.4 g     22003               
+## 2 Taru          2022-05-26     1R         17.2 g     22003               
+## 3 Taru          2022-05-26     1L         17   g     22003               
+## 4 Taru          2022-05-26     1R1L       18.8 g     22003               
+## 5 Taru          2022-05-26     0          18.4 g     22004               
+## # ... with 10 more variables: new_cage_number <chr>, group <chr>, notes <chr>,
+## #   mouse_id <int>, latest_cage <chr>, mouse_label <chr>,
+## #   starting_cage_number <chr>, dob <date>, species <chr>, sex <fct>
+\end{verbatim}
+
+The rest of the code in the report template will create summaries and graphs of the
+data. First, there is some code that provides summaries of the research animals at
+the start of the experiment. It uses the \texttt{mouse\_initial} dataset (which pulled
+in data from the first sheet of the data collection template). It uses a
+\texttt{summarize} call to summarize details from this sheet of data, including the
+species of the animal, the total number of animals, how many were males versus
+females, and which experimental groups were included. It uses some additional
+code to format the data so the resulting table will be clearer, and then
+uses the \texttt{kable} function to output the results as a nicely formatted table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a table that summarizes the animals at the start of the experiment}
+\NormalTok{mouse\_initial }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Species =} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(species), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{), }
+            \StringTok{\textasciigrave{}}\AttributeTok{Total animals}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{n}\NormalTok{(), }
+            \StringTok{\textasciigrave{}}\AttributeTok{Sex distribution}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{"male: "}\NormalTok{, }\FunctionTok{sum}\NormalTok{(sex }\SpecialCharTok{==} \StringTok{"m"}\NormalTok{), }
+                                      \StringTok{", female: "}\NormalTok{, }\FunctionTok{sum}\NormalTok{(sex }\SpecialCharTok{==} \StringTok{"f"}\NormalTok{)),}
+            \StringTok{\textasciigrave{}}\AttributeTok{Experimental groups}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(group), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{),}
+            \StringTok{\textasciigrave{}}\AttributeTok{N. of starting cages}\StringTok{\textasciigrave{}} \OtherTok{=}
+              \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(starting\_cage\_number))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate\_all}\NormalTok{(as.character) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{paste0}\NormalTok{(name, }\StringTok{":"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{""}\NormalTok{, }\StringTok{""}\NormalTok{), }
+               \AttributeTok{caption =} \StringTok{"Summary of experimental animals at the start of the experiment"}\NormalTok{, }
+               \AttributeTok{align =} \FunctionTok{c}\NormalTok{(}\StringTok{"r"}\NormalTok{, }\StringTok{"l"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-12}Summary of experimental animals at the start of the experiment}
+\centering
+\begin{tabular}[t]{r|l}
+\hline
+ & \\
+\hline
+Species: & C57BL/6\\
+\hline
+Total animals: & 140\\
+\hline
+Sex distribution: & male: 60, female: 80\\
+\hline
+Experimental groups: & bcg, bcg+id93, saline, saline+id93, saline+noMtb\\
+\hline
+N. of starting cages: & 34\\
+\hline
+\end{tabular}
+\end{table}
+
+The next piece of code creates a time series of mouse weights over time. The points
+for each mouse are connected to create a line, so it's easy to see both variation
+across mice at a single time point and variation in a single mouse over the study.
+The lines are colored to distinguish male from female mouse (and there is a clear
+difference in average weights in the two groups). The plot is faceted so that the
+time series for mice in each experimental group are shown in different small
+``facets'' of the plot, but with the same axis ranges used on each small plot to
+help comparisons across plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a plot of mouse weights over time}
 \NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date\_collected, }\AttributeTok{y =}\NormalTok{ weight, }
              \AttributeTok{group =}\NormalTok{ mouse\_id, }\AttributeTok{color =}\NormalTok{ sex)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ group)}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ group) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Animal weights over time by experiment group"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Date collected"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Weight (g)"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+Next, the code creates boxplots that focus on differences in weights at the
+latest available timepoint. One boxplot is created for each experimental
+group, and the points for individual mice are shown behind the boxplot, to
+provide a better idea of the pattern of variation in individual mice. These
+points are colored based on sex, to help explore patterns by sex.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date\_collected, }\AttributeTok{y =}\NormalTok{ weight, }\AttributeTok{color =}\NormalTok{ who\_collected)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-9-2.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(ggbeeswarm)}
+\CommentTok{\# Plot animal weight boxplots for the latest time point }
 \NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(date\_collected }\SpecialCharTok{==} \FunctionTok{last}\NormalTok{(date\_collected)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ group, }\AttributeTok{y =}\NormalTok{ weight)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_beeswarm}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ sex)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{color =} \StringTok{"dodgerblue"}\NormalTok{)}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{color =} \StringTok{"dodgerblue"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Animal weights at last collection by experimental group"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Experimental group"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Weight (g)"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-9-3.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+The next piece of code shows how mouse weights vary by the person who was
+handling the animals at a certain time point. Different handlers may have small
+differences in how they handle and weight the mice. If there are noticable
+differences in the measured weights, this is something that could be corrected
+through statisical modeling in later analysis, so we included it as a potential
+check.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{write\_csv}\NormalTok{(our\_mouse\_weights, }\StringTok{"DATA/example\_mouse\_output.csv"}\NormalTok{)}
+\CommentTok{\# Plot animal weights by animal handler}
+\NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date\_collected, }\AttributeTok{y =}\NormalTok{ weight, }\AttributeTok{color =}\NormalTok{ who\_collected)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Animal weights by animal handler"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Date collected"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Weight (g)"}\NormalTok{,}
+       \AttributeTok{color =} \StringTok{"Person who}\SpecialCharTok{\textbackslash{}n}\StringTok{handled the}\SpecialCharTok{\textbackslash{}n}\StringTok{animal"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+The next piece of code creates a table with each of the animals that was still
+tracked at the last time point (if animals were sacrificed prior to the last
+recorded time point, they would not be included here). This table focuses on the
+weight change since the previous measured time point. It is ordered by the change
+in weight, from the largest decrease to the largest increase. It is meant as an
+aide in identifying mice that are showing signs of suffering and may need to be
+considered for being euthanized. The animals are labeled in this table by their
+most recent cage location, so it will be easier to find them if necessary.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create table of animal weight changes since previous time point}
+\NormalTok{our\_mouse\_weights }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(date\_collected, weight, group, mouse\_label, sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(mouse\_label) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{weight\_change =}\NormalTok{ (weight }\SpecialCharTok{{-}} \FunctionTok{lag}\NormalTok{(weight)) }\SpecialCharTok{/} \FunctionTok{lag}\NormalTok{(weight)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(date\_collected }\SpecialCharTok{==} \FunctionTok{last}\NormalTok{(date\_collected)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{formatted\_weight\_change =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{formatC}\NormalTok{(weight\_change }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }
+                                                  \AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{format =} \StringTok{"f"}\NormalTok{), }\StringTok{"\%"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(weight\_change) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(mouse\_label, group, sex, weight, formatted\_weight\_change) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Mouse"}\NormalTok{, }\StringTok{"Experimental group"}\NormalTok{, }\StringTok{"Sex"}\NormalTok{, }
+                             \StringTok{"Weight (g)"}\NormalTok{, }\StringTok{"Weight change since last measure"}\NormalTok{), }
+               \AttributeTok{caption =} \StringTok{"Individual data on weight changes in mice between current measurement and previous measurement."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-16}Individual data on weight changes in mice between current measurement and previous measurement.}
+\centering
+\begin{tabular}[t]{l|l|l|r|l}
+\hline
+Mouse & Experimental group & Sex & Weight (g) & Weight change since last measure\\
+\hline
+Cage: 22021 Notch: 1R & bcg & m & 25.20 & -10.4\%\\
+\hline
+Cage: 22017 Notch: 1R & saline & f & 23.13 & -4.1\%\\
+\hline
+Cage: 22015 Notch: 1L & bcg & f & 23.18 & -3.1\%\\
+\hline
+Cage: 22476 Notch: 1R1L & saline+noMtb & f & 20.54 & -2.8\%\\
+\hline
+Cage: 22014 Notch: 1L & saline+id93 & f & 21.47 & -2.8\%\\
+\hline
+Cage: 22014 Notch: 0 & saline+id93 & f & 21.40 & -2.7\%\\
+\hline
+Cage: 22006 Notch: 1R1L & bcg+id93 & f & 21.02 & -2.4\%\\
+\hline
+Cage: 22015 Notch: 0 & bcg & f & 20.06 & -1.0\%\\
+\hline
+Cage: 22004 Notch: 1R & bcg & f & 21.42 & -1.0\%\\
+\hline
+Cage: 22006 Notch: 0 & bcg+id93 & f & 18.67 & -0.7\%\\
+\hline
+Cage: 22476 Notch: 0 & saline+noMtb & f & 19.42 & -0.6\%\\
+\hline
+Cage: 22016 Notch: 1R1L & bcg+id93 & f & 23.13 & -0.5\%\\
+\hline
+Cage: 22012 Notch: 1R & saline+id93 & f & 22.44 & -0.4\%\\
+\hline
+Cage: 22015 Notch: 2L & bcg & f & 20.56 & -0.3\%\\
+\hline
+Cage: 22013B Notch: 1L & saline+id93 & f & 20.46 & -0.2\%\\
+\hline
+Cage: 22009A Notch: 0 & saline & f & 22.50 & -0.1\%\\
+\hline
+Cage: 22029 Notch: 0 & saline+id93 & m & 29.12 & 0.3\%\\
+\hline
+Cage: 22017 Notch: 1L & saline & f & 21.72 & 0.6\%\\
+\hline
+Cage: 22022 Notch: 1R & bcg+id93 & m & 25.90 & 0.6\%\\
+\hline
+Cage: 22016 Notch: 2L & bcg+id93 & f & 22.37 & 0.7\%\\
+\hline
+Cage: 22004 Notch: 1R1L & bcg & f & 20.91 & 0.8\%\\
+\hline
+Cage: 22477 Notch: 1L & saline+noMtb & m & 30.92 & 1.0\%\\
+\hline
+Cage: 22013A Notch: 0 & saline+id93 & f & 20.04 & 1.1\%\\
+\hline
+Cage: 22007A Notch: 0 & bcg+id93 & f & 20.42 & 1.1\%\\
+\hline
+Cage: 22474 Notch: 0 & saline+noMtb & f & 21.93 & 1.2\%\\
+\hline
+Cage: 22476 Notch: 1R & saline+noMtb & f & 23.14 & 1.3\%\\
+\hline
+Cage: 22476 Notch: 1L & saline+noMtb & f & 19.78 & 1.4\%\\
+\hline
+Cage: 22477 Notch: 1R & saline+noMtb & m & 30.15 & 1.4\%\\
+\hline
+Cage: 22004 Notch: 0 & bcg & f & 22.20 & 1.5\%\\
+\hline
+Cage: 22012A Notch: 1L & saline+id93 & f & 21.10 & 1.5\%\\
+\hline
+Cage: 22025 Notch: 0 & saline & m & 29.54 & 1.6\%\\
+\hline
+Cage: 22006 Notch: 1R & bcg+id93 & f & 18.72 & 1.6\%\\
+\hline
+Cage: 22005 Notch: 1R & bcg & f & 24.25 & 1.8\%\\
+\hline
+Cage: 22011 Notch: 0 & saline & f & 23.02 & 1.8\%\\
+\hline
+Cage: 22028 Notch: 1L & saline+id93 & m & 28.20 & 1.9\%\\
+\hline
+Cage: 22474 Notch: 1R & saline+noMtb & f & 25.57 & 2.0\%\\
+\hline
+Cage: 22011 Notch: 1R1L & saline & f & 21.04 & 2.1\%\\
+\hline
+Cage: 22020 Notch: 1R1L & bcg & m & 31.00 & 2.1\%\\
+\hline
+Cage: 22022 Notch: 1R1L & bcg+id93 & m & 28.65 & 2.2\%\\
+\hline
+Cage: 22474 Notch: 1R1L & saline+noMtb & f & 22.42 & 2.2\%\\
+\hline
+Cage: 22018 Notch: 1L & saline+id93 & f & 19.16 & 2.4\%\\
+\hline
+Cage: 22029 Notch: 1R & saline+id93 & m & 29.50 & 2.4\%\\
+\hline
+Cage: 22478 Notch: 1R & saline+noMtb & m & 28.21 & 2.4\%\\
+\hline
+Cage: 22475 Notch: 1R & saline+noMtb & f & 22.35 & 2.5\%\\
+\hline
+Cage: 22029 Notch: 1L & saline+id93 & m & 28.63 & 2.6\%\\
+\hline
+Cage: 22030 Notch: 0 & saline+id93 & m & 29.36 & 2.6\%\\
+\hline
+Cage: 22019 Notch: 1R & bcg & m & 27.07 & 2.7\%\\
+\hline
+Cage: 22008 Notch: 0 & bcg+id93 & f & 19.80 & 2.8\%\\
+\hline
+Cage: 22478 Notch: 0 & saline+noMtb & m & 28.53 & 2.8\%\\
+\hline
+Cage: 22019 Notch: 0 & bcg & m & 29.57 & 2.8\%\\
+\hline
+Cage: 22013C Notch: 1R1L & saline+id93 & f & 21.28 & 2.8\%\\
+\hline
+Cage: 22479 Notch: 1L & saline+noMtb & m & 28.91 & 2.8\%\\
+\hline
+Cage: 22017 Notch: 1R1L & saline & f & 23.10 & 2.8\%\\
+\hline
+Cage: 22020 Notch: 1L & bcg & m & 28.18 & 2.9\%\\
+\hline
+Cage: 22021 Notch: 0 & bcg & m & 28.95 & 3.1\%\\
+\hline
+Cage: 22028 Notch: 1R & saline+id93 & m & 29.92 & 3.1\%\\
+\hline
+Cage: 22003 Notch: 1R & bcg & f & 20.23 & 3.1\%\\
+\hline
+Cage: 22004 Notch: 1L & bcg & f & 24.01 & 3.2\%\\
+\hline
+Cage: 22007 Notch: 1R1L & bcg+id93 & f & 21.08 & 3.2\%\\
+\hline
+Cage: 22017 Notch: 0 & saline & f & 22.25 & 3.2\%\\
+\hline
+Cage: 22016 Notch: 1L & bcg+id93 & f & 22.85 & 3.2\%\\
+\hline
+Cage: 22029 Notch: 1R1L & saline+id93 & m & 29.09 & 3.2\%\\
+\hline
+Cage: 22010 Notch: 1R1L & saline & f & 23.24 & 3.2\%\\
+\hline
+Cage: 22030 Notch: 1R1L & saline+id93 & m & 27.80 & 3.3\%\\
+\hline
+Cage: 22007 Notch: 1R & bcg+id93 & f & 22.24 & 3.3\%\\
+\hline
+Cage: 22011 Notch: 1L & saline & f & 23.49 & 3.3\%\\
+\hline
+Cage: 22025 Notch: 1R & saline & m & 26.55 & 3.3\%\\
+\hline
+Cage: 22027 Notch: 1R1L & saline & m & 26.30 & 3.5\%\\
+\hline
+Cage: 22024 Notch: 1R & bcg+id93 & m & 31.37 & 3.5\%\\
+\hline
+Cage: 22479 Notch: 1R1L & saline+noMtb & m & 30.93 & 3.5\%\\
+\hline
+Cage: 22020 Notch: 1R & bcg & m & 25.86 & 3.6\%\\
+\hline
+Cage: 22005 Notch: 1L & bcg & f & 22.01 & 3.6\%\\
+\hline
+Cage: 22024 Notch: 0 & bcg+id93 & m & 30.35 & 3.7\%\\
+\hline
+Cage: 22026 Notch: 1R & saline & m & 29.40 & 3.7\%\\
+\hline
+Cage: 22477 Notch: 0 & saline+noMtb & m & 30.41 & 3.8\%\\
+\hline
+Cage: 22030 Notch: 1R & saline+id93 & m & 33.13 & 3.8\%\\
+\hline
+Cage: 22018 Notch: 2R & saline+id93 & f & 19.94 & 3.8\%\\
+\hline
+Cage: 22007 Notch: 1L & bcg+id93 & f & 18.48 & 3.8\%\\
+\hline
+Cage: 22023 Notch: 0 & bcg+id93 & m & 25.46 & 3.8\%\\
+\hline
+Cage: 22021 Notch: 1L & bcg & m & 28.83 & 3.9\%\\
+\hline
+Cage: 22027 Notch: 0 & saline & m & 25.85 & 4.0\%\\
+\hline
+Cage: 22024 Notch: 1L & bcg+id93 & m & 26.37 & 4.1\%\\
+\hline
+Cage: 22012 Notch: 1R1L & saline+id93 & f & 22.80 & 4.2\%\\
+\hline
+Cage: 22028 Notch: 0 & saline+id93 & m & 27.79 & 4.2\%\\
+\hline
+Cage: 22030 Notch: 1L & saline+id93 & m & 29.23 & 4.2\%\\
+\hline
+Cage: 22475 Notch: 1L & saline+noMtb & f & 22.92 & 4.3\%\\
+\hline
+Cage: 22020 Notch: 0 & bcg & m & 29.65 & 4.3\%\\
+\hline
+Cage: 22017 Notch: 2L & saline & f & 24.53 & 4.3\%\\
+\hline
+Cage: 22477 Notch: 1R1L & saline+noMtb & m & 31.00 & 4.3\%\\
+\hline
+Cage: 22009 Notch: 1R1L & saline & f & 20.18 & 4.5\%\\
+\hline
+Cage: 22014 Notch: 1R & saline+id93 & f & 21.25 & 4.5\%\\
+\hline
+Cage: 22014 Notch: 1R1L & saline+id93 & f & 22.30 & 4.5\%\\
+\hline
+Cage: 22479 Notch: 0 & saline+noMtb & m & 29.65 & 4.5\%\\
+\hline
+Cage: 22478 Notch: 1R1L & saline+noMtb & m & 31.71 & 4.5\%\\
+\hline
+Cage: 22018 Notch: 0 & saline+id93 & f & 22.65 & 4.5\%\\
+\hline
+Cage: 22026 Notch: 0 & saline & m & 29.50 & 4.6\%\\
+\hline
+Cage: 22022 Notch: 0 & bcg+id93 & m & 27.30 & 4.9\%\\
+\hline
+Cage: 22019 Notch: 1R1L & bcg & m & 28.30 & 4.9\%\\
+\hline
+Cage: 22008 Notch: 1L & bcg+id93 & f & 21.52 & 5.1\%\\
+\hline
+Cage: 22479 Notch: 1R & saline+noMtb & m & 30.92 & 5.1\%\\
+\hline
+Cage: 22003 Notch: 0 & bcg & f & 23.14 & 5.2\%\\
+\hline
+Cage: 22005 Notch: 0 & bcg & f & 23.52 & 5.2\%\\
+\hline
+Cage: 22026 Notch: 1R1L & saline & m & 29.80 & 5.2\%\\
+\hline
+Cage: 22478 Notch: 1L & saline+noMtb & m & 30.34 & 5.2\%\\
+\hline
+Cage: 22026 Notch: 1L & saline & m & 29.28 & 5.2\%\\
+\hline
+Cage: 22009 Notch: 1R & saline & f & 21.85 & 5.3\%\\
+\hline
+Cage: 22024 Notch: 1R1L & bcg+id93 & m & 31.11 & 5.4\%\\
+\hline
+Cage: 22475 Notch: 0 & saline+noMtb & f & 22.00 & 5.5\%\\
+\hline
+Cage: 22006 Notch: 1L & bcg+id93 & f & 23.42 & 5.5\%\\
+\hline
+Cage: 22023 Notch: 1R & bcg+id93 & m & 29.27 & 5.7\%\\
+\hline
+Cage: 22016 Notch: 0 & bcg+id93 & f & 22.94 & 5.7\%\\
+\hline
+Cage: 22025 Notch: 1L & saline & m & 30.71 & 5.8\%\\
+\hline
+Cage: 22015 Notch: 1R1L & bcg & f & 21.34 & 5.9\%\\
+\hline
+Cage: 22010 Notch: 1L & saline & f & 21.75 & 5.9\%\\
+\hline
+Cage: 22008 Notch: 1R1L & bcg+id93 & f & 22.07 & 6.1\%\\
+\hline
+Cage: 22025 Notch: 1R1L & saline & m & 27.45 & 6.1\%\\
+\hline
+Cage: 22018 Notch: 1R1L & saline+id93 & f & 20.15 & 6.3\%\\
+\hline
+Cage: 22023 Notch: 1L & bcg+id93 & m & 29.21 & 6.3\%\\
+\hline
+Cage: 22012 Notch: 0 & saline+id93 & f & 22.71 & 6.4\%\\
+\hline
+Cage: 22028 Notch: 1R1L & saline+id93 & m & 30.22 & 6.6\%\\
+\hline
+Cage: 22475 Notch: 1R1L & saline+noMtb & f & 21.76 & 6.6\%\\
+\hline
+Cage: 22022 Notch: 1L & bcg+id93 & m & 30.77 & 6.9\%\\
+\hline
+Cage: 22027 Notch: 1R & saline & m & 29.12 & 7.0\%\\
+\hline
+Cage: 22008 Notch: 1R & bcg+id93 & f & 20.25 & 7.1\%\\
+\hline
+Cage: 22010 Notch: 1R & saline & f & 22.74 & 7.3\%\\
+\hline
+Cage: 22019 Notch: 1L & bcg & m & 33.57 & 7.4\%\\
+\hline
+Cage: 22018 Notch: 1R & saline+id93 & f & 21.63 & 7.4\%\\
+\hline
+Cage: 22005 Notch: 1R1L & bcg & f & 26.56 & 7.6\%\\
+\hline
+Cage: 22480 Notch: 1L & saline & f & 26.30 & 7.7\%\\
+\hline
+Cage: 22011 Notch: 1R & saline & f & 19.84 & 7.8\%\\
+\hline
+Cage: 22023 Notch: 1R1L & bcg+id93 & m & 26.36 & 8.0\%\\
+\hline
+Cage: 22016 Notch: 1R & bcg+id93 & f & 22.47 & 8.1\%\\
+\hline
+Cage: 22003 Notch: 1R1L & bcg & f & 22.66 & 8.2\%\\
+\hline
+Cage: 22474 Notch: 1L & saline+noMtb & f & 22.50 & 8.2\%\\
+\hline
+Cage: 22010 Notch: 0 & saline & f & 24.44 & 8.2\%\\
+\hline
+Cage: 22027 Notch: 1L & saline & m & 27.50 & 8.5\%\\
+\hline
+Cage: 22015 Notch: 1R & bcg & f & 22.96 & 10.4\%\\
+\hline
+Cage: 22013 Notch: 1R & saline+id93 & f & 25.57 & 11.1\%\\
+\hline
+Cage: 22003 Notch: 1L & bcg & f & 23.45 & 11.3\%\\
+\hline
+Cage: 22021 Notch: 1R1L & bcg & m & 28.89 & 19.5\%\\
+\hline
+\end{tabular}
+\end{table}
+
+As a last step, the code in the template writes a CSV file with the processed
+data. This file will be an input into a script that will format the data to
+add to a database where we are collecting and integrating data from all the CSU
+experiments, and ultimately from there into project-wide storage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write out processed data into a CSV file}
+\FunctionTok{write\_csv}\NormalTok{(our\_mouse\_weights, }\StringTok{"example\_mouse\_output.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -981,7 +1505,7 @@ level in the data:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-22-1.pdf}
 
 \hypertarget{sample-anova}{%
 \section{Sample ANOVA}\label{sample-anova}}
@@ -1279,7 +1803,7 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1464,7 +1988,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -1665,7 +2189,7 @@ b = 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
@@ -2254,7 +2778,7 @@ This example data set is from an innate response study whcih investigated the im
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
