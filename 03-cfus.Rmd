@@ -6,7 +6,61 @@ editor_options:
 
 # Colony forming units to determine bacterial counts 
 
-## Data description
+### Downloads
+
+The downloads for this chapter are: 
+
+- [Data collection template] for recording colony forming units counted on each 
+plate or section of plate in the laboratory
+- [Report template] to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
+- [Example output] from the report template
+
+### Overview
+
+In the experiments, we will need to estimate the bacterial load of
+*Mycobacterium tuberculosis* in organs---including lungs and spleens---of
+animals from experiments. These measurements help us assess how well a vaccine
+has worked in comparison to controls.
+
+We will be estimating bacterial load in an animal organ using the plate count
+method with serial dilutions. Serial dilutions allow you to create a
+highly diluted sample without needing a massive amount of diluent: as you
+increase the dilution one step at a time, you can steadily bring the samples
+down to lower bacterial loads per volume. This method is common across
+laboratories that study tuberculosis drug efficacy as a method for estimating
+bacterial load in animal organs [@franzblau2012comprehensive] and is a
+well-established method across microbiology in general, dating back to Koch in
+the late 1800s [@wilson1922proportion; @ben2014estimation].
+
+With this method, we homogenize part of the organ, and then create several
+increasingly dilute samples. Each dilution is then spread on a plate with a
+medium in which *Mycobacterium tuberculosis* can grow and left to grow for
+several weeks at a temperature conducive to *Mycobacterium tuberculosis* growth.
+The idea is that individual bacteria from the original sample end up randomly
+spread across the surface of the plate, and any bacteria that are viable
+(able to reproduce) will form a new colony that, after a while, you'll be able
+to see [@wilson1922proportion; @goldman2015practical]. At the end of this
+incubation period, you can count the number of these colony-forming units
+(CFUs) on each plate.
+
+To count the number of CFUs, you need a "just right" dilution (and 
+we often won't know what this is until after plating) to have a countable
+plate. If you have too high of a dilution (i.e., one with very few viable
+bacteria), randomness will play a big role in the CFU count, and you'll estimate
+the original with more variability, which isn't ideal. If you have too low
+of a dilution (i.e., one with lots of viable bacteria), it will be difficult to
+identify separate colonies, and they may compete for resources. (The pattern
+you see when the dilution is too low (i.e., too concentrated with bacteria) is
+called a lawn---colonies merge together).
+
+Once you identify a good dilution for each sample, the CFU count from this
+dilution can be used to estimate the bacterial load in the animal's organ. To
+translate from diluted concentration to original concentration, you do a
+back-calculation, incorporating both the number of colonies counted at that
+dilution and how dilute the sample was [@ben2014estimation;
+@goldman2015practical].
+
+### Template description
 
 The data are collected in a spreadsheet with multiple sheets. The first sheet
 (named "metadata") is used to record some metadata for the experiment, while the 
@@ -35,6 +89,10 @@ of this spread sheet, you should put 0.5 in the `prop_resuspended` column.
 - `og_aliquot_uL`: 100 uL of th total_resuspended slurry would be considered an original aliquot and is used to peform serial dilutions.
 - `dilution_factor`: Amount of the original stock solution that is present in the total solution, after dilution(s)
 - `plated_uL`: Amount of suspension + diluent plated on section of solid agar 
+
+### Processing collected data
+
+### Details of processing script
 
 ## Read in data
 
