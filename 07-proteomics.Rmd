@@ -6,8 +6,132 @@ editor_options:
 
 # Proteomics
 
+### Downloads
+
+The downloads for this chapter are: 
+
+- Data collection format (pre-defined by the assay equipment and software run 
+prior on [software] for most of the pre-processing)
+- Report template to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
+- Example output from the report template
+
+### Overview
+
+Proteomics allows us to measure which proteins are in each sample, as well
+as how much of specific proteins are in each sample. This information is 
+very important, as proteins play such a critical role in immunological 
+processes. For example, ... [cytokines? receptors? enzymes? others?].
+Proteins perform critical processes in the body, including catalzying 
+reactions (enzymes), providing structure (...), and sending signals across 
+cells (...). They have such a critical role in health and disease that
+most drug targets are proteins [ref]. 
+
+> "Protein molecules, rather than DNA or RNA, carry out most cellular functions.
+The direct measurement of protein levels and activity within the cell is
+therefore the best determinant of overall cell function."
+[@lakhani2001microarray]
+
+Other assays can also help in determining protein activity. For example, 
+transcriptomics measure messenger RNA in a sample. Since these messenger 
+RNA are key to building proteins, based on the expression of genes in the
+cell, these transcriptomics can be helpful in understanding which proteins
+are being created in certain cells or samples. However, transcriptomics 
+does not provide a direct measure of protein content, and its results
+are not perfectly correlated with protein content. This is because ...
+Proteomics directly measures the proteins in the sample, and so provides
+a more direct picture of these "machines" in the sample. 
+
+Proteomics is a bulk, rather than single-cell assay [always true?]. In other
+words, it will provide estimates of the protein composition of a sample, but for
+the sample as a whole. The final aim of proteomics will often be to compare
+the protein composition of different samples. For example, you might 
+identify which proteins are present in samples from treated animals versus
+control animals, or you may compare whether the amount of a certain 
+protein is higher in diseased versus healthy animals (in fact, this kind
+of analysis might be used to identify proteins that can serve as a 
+biomarker of that disease). 
+
+The analysis process for proteomics is quite complex, but it's helpful 
+to understand when trying to interpret the data. In the assays that we 
+use, the proteins are measured using a mass spectrometer, coupled with 
+a liquid chromatography column [@steen2004abc].
+
+Before the sample proteins are sent through this equipment, they are broken down
+into peptides, which are shorter chains of amino acids. A peptide can be
+measured in terms of its number of residues (another name for amino acids, in
+the context of their role as monomers in protein sequences), and typically you
+aim for peptides with about 20 residues for sending through the equipment
+[@steen2004abc]. [Why not send the whole protein through?] There are some
+proteins that could not be sent through the mass spectrometer, or if they were
+would not produce meaningful results, because of characteristics like stability
+or solubility of that particular protein and how it interacts with the
+equipment's set-up [@steen2004abc].
+
+> "After protein purification, the first step is to convert proteins to a set of
+peptides using a sequence-specific protease. Even though mass spectrometers can
+measure the mass of intact proteins, there are a number of reasons why peptides,
+and not proteins, are analysed in proteomics. Proteins can be difficult to
+handle and might not all be soluble under the same conditions... In addition,
+the sensitivity of the mass spectrometer for proteins is much lower than for
+peptides, and the protein may be processed and modified such that the
+combinatorial effect makes determining the masses of the numerous resulting
+isoforms impossible. ... Most importantly, if the purpose is to identify the
+protein, sequence information is needed and the mass spectrometer is most
+efficient at obtaining sequence information from peptides that are up to ~20
+residues long, rather than whole proteins. Nevertheless, with very specialized
+equipment, it is becoming possible to derive partial sequence information from
+intact proteins, which can then be used for identification purposes or the
+analysis of protein modifications in an approach called 'top-down' protein
+sequencing." [@steen2004abc]
+
+> "Digesting the protein into a set of peptides also means that the
+physico-chemical properties of the protein, such as solubility and 'stickiness',
+become irrelevant. As long as the protein generates a sequence of peptides, at
+least some of them can be sequenced by the mass spectrometer, even if the
+protein itself would have been unstable or insoluble under the conditions used."
+[@steen2004abc]
+
+To break the proteins down into peptides, we use proteases, which are enzymes
+that break down proteins at certain spots. [How does this work?]
+
+These peptides are then sent through the equipment. The first part of the
+process sends them through a liquid chromatography column. The purpose of
+this column is to separate the peptides, and in a meaningful way, before
+they are sent through the mass spectrometer. By separating them, you 
+can get some added information to help determine their identity based on 
+how long it takes them to get through the equipment (retention time). 
+Often, the column will be designed to separate them by hydrophobicity, 
+so that a peptide is retained longer or moves through the column more
+quickly based on its affinity for water. The information about how 
+quickly the peptide moved through this column will be recorded as the 
+"retention time" in the LC/MS read-out data, and will provide a clue to 
+help in identifying which peptide is represented by a certain part of the 
+read-out data. 
+
+Once the peptide has passed through the liquid chromatography column, 
+it goes through the mass spectrometer. As it enters, it is ionized
+[definition]. The chamber [?] of the mass spectrometer employs 
+differences in electrical charge to help identify the ion fragments
+of the peptide. [More on this] This equipment gives an output in terms
+of the intensity [?] recorded at specific mass-to-charge ratios.
+
+This process involves breaking down the original sample into small 
+components (proteins are broken into peptides, and then those are 
+broken into ion fragments). The data preprocessing for the resulting
+data, therefore, involves a lot of work in putting things back 
+together---in other words, identifying the ion fragments and then 
+trying to determine the original peptides and then proteins that 
+they came from. 
+
+### Data format description
+
 For proteomics data, we will be getting data that have already been collected and 
-pre-processed by another part of the team. The following shows an example of the 
+pre-processed by another part of the team. 
+
+[More about how these data were pre-processed. Software: Skyline]
+
+
+The following shows an example of the 
 type of data we will get as an input:
 
 ```{r}
@@ -36,7 +160,7 @@ that is being measured (?)
 - `RatioLightToHeavy`: 
 - `DotProductLightToHeavy`: 
 
-[More about how these data were pre-processed. Softwarei: Skyline]
+
 
 Here are all the unique replicates in this file: 
 
@@ -79,3 +203,60 @@ prot_a %>%
 - MtbH37Rv|Rv3418c|GroES
 - MtbH37Rv|Rv3248c|SahH
 - MtbH37Rv|Rv2031c|hspX
+
+### Processing collected data
+
+Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and 
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project. 
+
+The next section provides the details of the pipeline. It aims to explain the 
+code that processes the data and generates visualizations. You do not need to 
+run this code step-by-step, but instead can access a script with the full 
+code [here]. 
+
+To use this reporting template, you need to download it to your computer and
+save it in the file directory where you saved the data you collected with the
+data collection template. You can then open RStudio and navigate so that you are
+working within this directory. You should also make sure that you have installed
+a few required packages on R on the computer you are using to run the report.
+These packages are: `tidyverse`, ... .
+
+Within RStudio, open the report template file. There is one spot where you will
+need to change the code in the template file, so it will read in the data from
+the version of the template that you saved, which you may have renamed.
+In the YAML of the report template file, change the file path beside "data: "
+so that it is the file name of your data file.
+
+Once you've made this change, you can use the "Knit" button in RStudio to 
+create a report from the data file and the report template file. 
+
+The report includes the following elements:
+
+- [Element 1]
+- [Element 2]
+- ...
+
+You can download an example of a report created using this template by 
+clicking [here].
+
+When you knit to create the report, it will create a Word file in the 
+same file directory where you put your data file and report template. 
+It will also create and output a version of the data that has been 
+processed (in the case of the weights data, this mainly involves 
+tracking mice as they change cages, to link all weights that are from 
+a single animal). This output fill will be named "..." and, like 
+the report file, will be saved in the same file directory as the 
+data file and the report template. 
+
+### Details of processing script
+
+This section goes through the code within the report template. It 
+explains each part of the code in detail. You do not need to understand
+these details to use the report template. However, if you have questions
+about how the data are being processed, or how the outputs are created, 
+all those details are available in this section. 
+
+...
