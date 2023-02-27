@@ -68,3 +68,9 @@ making-the-data-tidy-for-plotting
 boxplot
 pathology
 proteomics
+downloads-2
+overview-3
+data-format-description
+processing-collected-data-2
+details-of-processing-script-2
+single-cell-rna-seq

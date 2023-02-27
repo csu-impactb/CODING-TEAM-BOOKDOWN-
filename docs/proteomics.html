@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Proteomics | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<meta name="description" content="8.0.1 Downloads The downloads for this chapter are: Data collection format Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Proteomics | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<meta property="og:description" content="8.0.1 Downloads The downloads for this chapter are: Data collection format Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 8 Proteomics | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="For proteomics data, we will be getting data that have already been collected and pre-processed by another part of the team. The following shows an example of the type of data we will get as an...">
+<meta name="twitter:description" content="8.0.1 Downloads The downloads for this chapter are: Data collection format Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -47,6 +47,7 @@
 <li><a class="" href="flow-cytometry.html"><span class="header-section-number">6</span> Flow cytometry</a></li>
 <li><a class="" href="pathology.html"><span class="header-section-number">7</span> Pathology</a></li>
 <li><a class="active" href="proteomics.html"><span class="header-section-number">8</span> Proteomics</a></li>
+<li><a class="" href="single-cell-rna-seq.html"><span class="header-section-number">9</span> Single-cell RNA-seq</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -59,8 +60,130 @@
 <h1>
 <span class="header-section-number">8</span> Proteomics<a class="anchor" aria-label="anchor" href="#proteomics"><i class="fas fa-link"></i></a>
 </h1>
+<div id="downloads-2" class="section level3" number="8.0.1">
+<h3>
+<span class="header-section-number">8.0.1</span> Downloads<a class="anchor" aria-label="anchor" href="#downloads-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>The downloads for this chapter are:</p>
+<ul>
+<li>Data collection format</li>
+<li>Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your browser’s menu bar, chose “Save As,” then save the file as “animal_weights.Rmd”)</li>
+<li>Example output from the report template</li>
+</ul>
+</div>
+<div id="overview-3" class="section level3" number="8.0.2">
+<h3>
+<span class="header-section-number">8.0.2</span> Overview<a class="anchor" aria-label="anchor" href="#overview-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>Proteomics allows us to measure which proteins are in each sample, as well
+as how much of specific proteins are in each sample. This information is
+very important, as proteins play such a critical role in immunological
+processes. For example, … [cytokines? receptors? enzymes? others?].
+Proteins perform critical processes in the body, including catalzying
+reactions (enzymes), providing structure (…), and sending signals across
+cells (…). They have such a critical role in health and disease that
+most drug targets are proteins [ref].</p>
+<blockquote>
+<p>“Protein molecules, rather than DNA or RNA, carry out most cellular functions.
+The direct measurement of protein levels and activity within the cell is
+therefore the best determinant of overall cell function.”
+<span class="citation">(<a href="references.html#ref-lakhani2001microarray" role="doc-biblioref">Lakhani and Ashworth 2001</a>)</span></p>
+</blockquote>
+<p>Other assays can also help in determining protein activity. For example,
+transcriptomics measure messenger RNA in a sample. Since these messenger
+RNA are key to building proteins, based on the expression of genes in the
+cell, these transcriptomics can be helpful in understanding which proteins
+are being created in certain cells or samples. However, transcriptomics
+does not provide a direct measure of protein content, and its results
+are not perfectly correlated with protein content. This is because …
+Proteomics directly measures the proteins in the sample, and so provides
+a more direct picture of these “machines” in the sample.</p>
+<p>Proteomics is a bulk, rather than single-cell assay [always true?]. In other
+words, it will provide estimates of the protein composition of a sample, but for
+the sample as a whole. The final aim of proteomics will often be to compare
+the protein composition of different samples. For example, you might
+identify which proteins are present in samples from treated animals versus
+control animals, or you may compare whether the amount of a certain
+protein is higher in diseased versus healthy animals (in fact, this kind
+of analysis might be used to identify proteins that can serve as a
+biomarker of that disease).</p>
+<p>The analysis process for proteomics is quite complex, but it’s helpful
+to understand when trying to interpret the data. In the assays that we
+use, the proteins are measured using a mass spectrometer, coupled with
+a liquid chromatography column <span class="citation">(<a href="references.html#ref-steen2004abc" role="doc-biblioref">Steen and Mann 2004</a>)</span>.</p>
+<p>Before the sample proteins are sent through this equipment, they are broken down
+into peptides, which are shorter chains of amino acids. A peptide can be
+measured in terms of its number of residues (another name for amino acids, in
+the context of their role as monomers in protein sequences), and typically you
+aim for peptides with about 20 residues for sending through the equipment
+<span class="citation">(<a href="references.html#ref-steen2004abc" role="doc-biblioref">Steen and Mann 2004</a>)</span>. [Why not send the whole protein through?] There are some
+proteins that could not be sent through the mass spectrometer, or if they were
+would not produce meaningful results, because of characteristics like stability
+or solubility of that particular protein and how it interacts with the
+equipment’s set-up <span class="citation">(<a href="references.html#ref-steen2004abc" role="doc-biblioref">Steen and Mann 2004</a>)</span>.</p>
+<blockquote>
+<p>“After protein purification, the first step is to convert proteins to a set of
+peptides using a sequence-specific protease. Even though mass spectrometers can
+measure the mass of intact proteins, there are a number of reasons why peptides,
+and not proteins, are analysed in proteomics. Proteins can be difficult to
+handle and might not all be soluble under the same conditions… In addition,
+the sensitivity of the mass spectrometer for proteins is much lower than for
+peptides, and the protein may be processed and modified such that the
+combinatorial effect makes determining the masses of the numerous resulting
+isoforms impossible. … Most importantly, if the purpose is to identify the
+protein, sequence information is needed and the mass spectrometer is most
+efficient at obtaining sequence information from peptides that are up to ~20
+residues long, rather than whole proteins. Nevertheless, with very specialized
+equipment, it is becoming possible to derive partial sequence information from
+intact proteins, which can then be used for identification purposes or the
+analysis of protein modifications in an approach called ‘top-down’ protein
+sequencing.” <span class="citation">(<a href="references.html#ref-steen2004abc" role="doc-biblioref">Steen and Mann 2004</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>“Digesting the protein into a set of peptides also means that the
+physico-chemical properties of the protein, such as solubility and ‘stickiness,’
+become irrelevant. As long as the protein generates a sequence of peptides, at
+least some of them can be sequenced by the mass spectrometer, even if the
+protein itself would have been unstable or insoluble under the conditions used.”
+<span class="citation">(<a href="references.html#ref-steen2004abc" role="doc-biblioref">Steen and Mann 2004</a>)</span></p>
+</blockquote>
+<p>To break the proteins down into peptides, we use proteases, which are enzymes
+that break down proteins at certain spots. [How does this work?]</p>
+<p>These peptides are then sent through the equipment. The first part of the
+process sends them through a liquid chromatography column. The purpose of
+this column is to separate the peptides, and in a meaningful way, before
+they are sent through the mass spectrometer. By separating them, you
+can get some added information to help determine their identity based on
+how long it takes them to get through the equipment (retention time).
+Often, the column will be designed to separate them by hydrophobicity,
+so that a peptide is retained longer or moves through the column more
+quickly based on its affinity for water. The information about how
+quickly the peptide moved through this column will be recorded as the
+“retention time” in the LC/MS read-out data, and will provide a clue to
+help in identifying which peptide is represented by a certain part of the
+read-out data.</p>
+<p>Once the peptide has passed through the liquid chromatography column,
+it goes through the mass spectrometer. As it enters, it is ionized
+[definition]. The chamber [?] of the mass spectrometer employs
+differences in electrical charge to help identify the ion fragments
+of the peptide. [More on this] This equipment gives an output in terms
+of the intensity [?] recorded at specific mass-to-charge ratios.</p>
+<p>This process involves breaking down the original sample into small
+components (proteins are broken into peptides, and then those are
+broken into ion fragments). The data preprocessing for the resulting
+data, therefore, involves a lot of work in putting things back
+together—in other words, identifying the ion fragments and then
+trying to determine the original peptides and then proteins that
+they came from.</p>
+</div>
+<div id="data-format-description" class="section level3" number="8.0.3">
+<h3>
+<span class="header-section-number">8.0.3</span> Data format description<a class="anchor" aria-label="anchor" href="#data-format-description"><i class="fas fa-link"></i></a>
+</h3>
 <p>For proteomics data, we will be getting data that have already been collected and
-pre-processed by another part of the team. The following shows an example of the
+pre-processed by another part of the team.</p>
+<p>[More about how these data were pre-processed. Software: Skyline]</p>
+<p>The following shows an example of the
 type of data we will get as an input:</p>
 <div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
@@ -125,7 +248,6 @@ that is being measured (?)</li>
 <li>
 <code>DotProductLightToHeavy</code>:</li>
 </ul>
-<p>[More about how these data were pre-processed. Softwarei: Skyline]</p>
 <p>Here are all the unique replicates in this file:</p>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">prot_a</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -198,12 +320,76 @@ treatment group information:</p>
 <li>MtbH37Rv|Rv2031c|hspX</li>
 </ul>
 </div>
+<div id="processing-collected-data-2" class="section level3" number="8.0.4">
+<h3>
+<span class="header-section-number">8.0.4</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Once data are collected, the file can be run through an R workflow. This workflow
+will convert the data into a format that is easier to work with for data analysis
+and visualization. It will also produce a report on the data in the spreadsheet, and
+ultimately it will also write relevant results in a format that can be used
+to populate a global database for all experiments in the project.</p>
+<p>The next section provides the details of the pipeline. It aims to explain the
+code that processes the data and generates visualizations. You do not need to
+run this code step-by-step, but instead can access a script with the full
+code [here].</p>
+<p>To use this reporting template, you need to download it to your computer and
+save it in the file directory where you saved the data you collected with the
+data collection template. You can then open RStudio and navigate so that you are
+working within this directory. You should also make sure that you have installed
+a few required packages on R on the computer you are using to run the report.
+These packages are: <code>tidyverse</code>, … .</p>
+<p>Within RStudio, open the report template file. There is one spot where you will
+need to change the code in the template file, so it will read in the data from
+the version of the template that you saved, which you may have renamed.
+In the YAML of the report template file, change the file path beside “data:”
+so that it is the file name of your data file.</p>
+<p>Once you’ve made this change, you can use the “Knit” button in RStudio to
+create a report from the data file and the report template file.</p>
+<p>The report includes the following elements:</p>
+<ul>
+<li>[Element 1]</li>
+<li>[Element 2]</li>
+<li>…</li>
+</ul>
+<p>You can download an example of a report created using this template by
+clicking [here].</p>
+<p>When you knit to create the report, it will create a Word file in the
+same file directory where you put your data file and report template.
+It will also create and output a version of the data that has been
+processed (in the case of the weights data, this mainly involves
+tracking mice as they change cages, to link all weights that are from
+a single animal). This output fill will be named “…” and, like
+the report file, will be saved in the same file directory as the
+data file and the report template.</p>
+</div>
+<div id="details-of-processing-script-2" class="section level3" number="8.0.5">
+<h3>
+<span class="header-section-number">8.0.5</span> Details of processing script<a class="anchor" aria-label="anchor" href="#details-of-processing-script-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>This section goes through the code within the report template. It
+explains each part of the code in detail. You do not need to understand
+these details to use the report template. However, if you have questions
+about how the data are being processed, or how the outputs are created,
+all those details are available in this section.</p>
+<p>…</p>
+
+</div>
+</div>
   <div class="chapter-nav">
 <div class="prev"><a href="pathology.html"><span class="header-section-number">7</span> Pathology</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="next"><a href="single-cell-rna-seq.html"><span class="header-section-number">9</span> Single-cell RNA-seq</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#proteomics"><span class="header-section-number">8</span> Proteomics</a></li></ul>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#proteomics"><span class="header-section-number">8</span> Proteomics</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#downloads-2"><span class="header-section-number">8.0.1</span> Downloads</a></li>
+<li><a class="nav-link" href="#overview-3"><span class="header-section-number">8.0.2</span> Overview</a></li>
+<li><a class="nav-link" href="#data-format-description"><span class="header-section-number">8.0.3</span> Data format description</a></li>
+<li><a class="nav-link" href="#processing-collected-data-2"><span class="header-section-number">8.0.4</span> Processing collected data</a></li>
+<li><a class="nav-link" href="#details-of-processing-script-2"><span class="header-section-number">8.0.5</span> Details of processing script</a></li>
+</ul>
+</li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -219,7 +405,7 @@ treatment group information:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2022-12-07.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2023-01-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
