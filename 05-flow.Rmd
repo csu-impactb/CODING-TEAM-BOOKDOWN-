@@ -10,6 +10,48 @@ Flow cytometry data can be quantified in many different ways and with different 
 
 This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.
 
+----------------------------------------------------------------------------------
+
+Immune cells are very diverse, and the make-up of immune cells within a sample
+can provide important insights on immune processes based on measures of this
+composition. Immune cells can be categorized into large groups (e.g., T cells, B
+cells, macrophages, dendritic cells). They can also be characterized into
+different populations within these large groups, based on things like activation
+and differentiation [?] within the group [?] [@maecker2012standardizing] (e.g.,
+T cells can be divided into naive T cells versus memory T cells, helper T cells
+versus cytotoxic T cells, [others] [?]). This process of characterizing the
+immune cells in a sample is called immunophenotyping.
+
+To make these classifications, flow cytometry uses a pretty clever mix of 
+physics and biology. First, it starts by leveraging the biological knowledge
+that antibodies can have a very specific affinity for a certain protein. 
+This means that you can find a set of antibodies that will target and 
+stick specifically to certain proteins. 
+
+Flow cytometry starts by creating a panel of up to [x] protein markers, focusing
+on proteins that can help in identifying a specific cell type. Typically, the 
+panel will include several proteins that are "CD" proteins (the "CD" stands for
+cluster of differentiation or classification determinant). These are proteins
+that show up on the surface of immune cells, with specific CD proteins common 
+to only certain types of cells, making their presence or absence helpful in 
+classifying cells. 
+
+Two of the most common CDs to include on a panel are CD3, CD4, and CD8. T cells have
+CD3 on their surface, so a marker for CD3 can be used to distinguish T cells
+from other types of white blood cells, including granulocytes, monocytes, and
+B cells. Among T cells, the helper T cells have the CD4 protein on their surface, 
+while the cytotoxic T cells have the CD8 protein on their surface, so the CD4 
+and CD8 markers can help in refining a T cell into a more specific type. 
+
+In flow cytometry, you can characterize immune cells into populations based on
+proteins on the cell surface and inside the cell, as well as cell size and
+granularity [@maecker2012standardizing, @barnett2008cd4]. For example,
+macrophages can be distinguished from T cells and B cells based on ... [size?
+granularity?], which T cells and B cells can be distinguished from each other
+based on whether the cell has the [surface protein? CD3?], and helper T cells
+versus cytotoxic T cells can be distinguished from each other based on whether
+the cell has the [surface protein CD8? CD4?].
+
 ## Loading packages
 
 ```{r}

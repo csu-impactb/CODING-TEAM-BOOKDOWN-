@@ -129,6 +129,41 @@ proteins. This means that you may be able to identify clusters of cells
 of the same type that are discovered *de novo* in that experiment, in 
 addition to cell populations that were anticipated in the sample.
 
+---------------------------------------------------------------------
+
+The gene expression within single cells is now studied through a process of
+single cell RNA-seq, which leverages biological process, like use of the enzyme?
+reverse transcriptase and PCR?, as well as complex computer algorithms to [put
+things back together?].
+
+Single cell RNA-seq aims to characterize the messenger RNA levels within 
+each cell of a sample, as this provides a measure of the expression of 
+specific genes within the cell---when a gene is expressed, its 
+information is copied into messenger RNA, which carries the information 
+to [other parts of the cell] where it can be used to create the protein
+associated with that gene. Different types of cells will express different
+genes, and cells will express different genes under different conditions, 
+so information about gene expression can be used both to classify cells
+by cell type and to characterize the activity of cells under different 
+conditions. [Information on transcripts rather than genes?]
+
+To measure levels of messenger RNA within each cell of a sample, sc-RNA-seq
+leverages a fairly involved set of steps that leverage advanced biological and
+computational ideas. First, the cells in the sample are lysed (essentially,
+broken open) to access their contents. The content of messenger RNA in any
+specific cell is small [@brennecke2013accounting], and so a process is conducted
+to amplify that content so it can be measured. This involves first transcribing
+the information in each messenger RNA to cDNA [complementary DNA?], which can
+then be amplified using [PCR] [@haque2017practical]. The transcription uses the
+enzyme reverse transcriptase [@haque2017practical], which [clever leveraging of
+an existing biological process...]. In the course of this transcriptions, unique
+molecular identifiers (UMIs) can be added to the transcription primers to
+identify each initial mRNA molecule and the cell from which the mRNA came [?]
+[@haque2017practical]. PCR leverages ... [also using biological processes]. Once
+the cDNA are amplified, the information encoded in them can be extracted using
+next-generation sequencing [@haque2017practical] and analysis of the resulting
+raw sequencing data, which leverages [advanced algorithms?].
+
 ### Data format description
 
 ### Processing collected data
