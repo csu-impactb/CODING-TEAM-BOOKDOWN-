@@ -252,11 +252,43 @@ ggplot(test_pop_assumption1, aes(x = group, y = percentage_of_LIVE, color = sex)
   theme_bw() +
   labs(x = "Sex", y = "CD4+ Effector TCells (% of Live)", color = "Sex") +
   ggtitle("Dotplot Distribution of Cell Types by Sex and Day")
+```
 
+CHECKING EQUAL VARIANCES
+```{r}
 
+# leveneTest to test for variances
 
 #how to check if i need to do one factor or two factor anova
+# we are using vaccine and day which are already two factors. looks like we might be able to combine sexes to increase n
+
+# Perform two-way ANOVA with interaction to assess variances
+anova_result <- aov(percentage_of_LIVE ~ group, data = tidy_Df1)
+
+# Check the assumption of equal variances using Levene's test
+levene_test <- leveneTest(anova_result, center = mean)
+summary(levene_test)
+
 ```
+
+```{r}
+library(afex)
+library(performance)
+# install.packages("afex")
+# install.packages("performance")
+
+data(tidy_Df1, package = "afex")
+
+o1 <- aov_ez("group", "percentage_of_LIVE", obk.long, 
+             between = c("group", "percentage_of_LIVE"))
+
+
+
+https://cran.r-project.org/web/packages/afex/vignettes/assumptions_of_ANOVAs.html
+
+https://statsandr.com/blog/kruskal-wallis-test-nonparametric-version-anova/#assumptions
+```
+
 
 
 WORKING ON STATS June 1, 2023
