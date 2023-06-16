@@ -54,7 +54,7 @@ the cell has the [surface protein CD8? CD4?].
 
 ## Loading packages
 
-```{r}
+```{r, warning=FALSE, echo=FALSE, message = FALSE}
 library(readxl)
 library(ggplot2)
 library(RColorBrewer)
@@ -72,161 +72,442 @@ library(ggpubr)
 library(grDevices)
 library(rstatix)
 library(writexl)
+library(purrr)
+library(kableExtra)
+library(ggbeeswarm)
+library(multcomp)
+library(DescTools)
+library(car)
+library(exactRankTests)
+library(readr)
 
 ```
-
-## panel information
-
-```{r}
-# antibody_panel <- read_excel
-```
+MULTI CSV SHEETS MALE FEMALE
 
 ## Loading data
 
 ```{r}
-Df <- read_excel("DATA/innate_normalizedto45.xlsx", sheet = "CD3CD11b No Day 14")
+# Read in all CSV files
+files <- list.files(path = "DATA/flow data", pattern = "*.csv", full.names = TRUE)
 
-marker_legend <- read_excel("DATA/marker legend.xlsx")
+dfs <- lapply(files, function(file) {
+  # Read the CSV file and clean up column names
+  df <- read_csv(file)
+    df <- df %>%
+    dplyr::select(-matches("Parent")) %>%
+    rename_all(~ str_remove(., "Leukocytes/Single Cells/LIVE/")) %>%
+    rename_all(funs(str_replace(., "\\|.+", ""))) %>%
+    dplyr::select(-matches("Leukocytes")) %>%
+    rename("Sample" = colnames(.)[1]) %>%
+    mutate(Sample = str_replace_all(Sample, "\\b[A-Za-z][0-9]+\\b", "")) %>%
+    rename_all(funs(str_replace_all(., ",", ""))) %>%
+    rename_all(funs(str_replace_all(., "/", " "))) %>%
+    rename_all(funs(str_replace_all(., "\\\\", " ")))  %>%
+    rename_all(~ stringr::str_replace_all(., "Q\\d+\\:", "")) %>%
+  # Removing logical vectors, not sure why its adding these
+    dplyr::select(where(~ !any(is.logical(.)) | is.numeric(.))) %>%
+  # Remove last two rows of SD and Mean
+  slice(1:(n() - 2))
+  # Extract the sex from the file name
+  sex <- ifelse(grepl("female", file), "female", "male")
+  df <- df %>% mutate(sex = sex)
+  # Move the sex column to the second position
+  df <- df %>% relocate(sex, .after = 1)
+  # Extract the day from the file name
+  day <- str_extract(file, "(?<=Day\\s)\\d+")
+  df <- df %>% mutate(day = as.character(day))
+  # Move the day column to the third position
+  df <- df %>% relocate(day, .after = 2)
+  
+  return(df)
+})
 
-# Remove Freq of Parent columns
-Df1 <- Df %>% 
-  select(-matches("Parent"))
-# Remove "Leukocytes/LIVE/Single Cells/" from col names
-names(Df1) <- str_remove(names(Df1), "Leukocytes/LIVE/Single Cells/")
+# Combine all data frames into one dataframe
+Df1 <- bind_rows(dfs)
+Df1
 
-Df1 <- Df1 %>%
-  rename_all(funs(str_replace(., "\\|.+", "")))# Remove "|Freq of..." from col names
+#str(dfs)
+#tail(Df1)
 
-Df1 <- Df1 %>%
-  rename_all(funs(str_replace_all(., "\\/Q[:digit:]+\\:", ""))) %>%
-  rename_all(funs(str_replace(., "\\/", " "))) %>%
-  rename_all(funs(str_replace(., "\\,", " "))) %>%
-  rename_all(funs(str_replace(., "\\ \\,", " ")))
+# Check for NA values in Df1
+na_counts <- colSums(is.na(Df1))
 
-# str_extract_all(names(Df1), "[:alpha:]+[:digit:]+[\\+\\-]")
+# Print the column names with NA counts
+print(na_counts)
+
+```
+MULTIDAY SHEETS FOR EXCEL
+```{r}
+# # Read in all sheets from the Excel file MULTIDAY
+# sheets <- excel_sheets("/Volumes/cvmbs/RSTOR-HenaO_lab/SolaVAX-TB/SolaVax Prime/Day 3/Myeloid Lung D3 populations.xlsx")
 # 
+# dfs <- lapply(sheets, function(sheet) {
+# # Read in the sheet and clean up column names
+#   df <- read_excel("/Volumes/cvmbs/RSTOR-HenaO_lab/SolaVAX-TB/SolaVax Prime/Day 3/Myeloid Lung D3 populations.xlsx", sheet = sheet) %>%
+#     dplyr::select(-matches("Parent")) %>%
+#     rename_all(~ str_remove(., "Leukocytes/Single Cells/LIVE/")) %>%
+#     rename_all(funs(str_replace(., "\\|.+", ""))) %>%
+#     dplyr::select(-matches("Leukocytes")) %>%
+#     dplyr::select(-2) %>%
+#     rename("Sample" = "Sample:") %>%
+#     mutate(Sample = str_replace_all(Sample, "\\b[A-Za-z][0-9]+\\b", "")) %>%
+#     rename_all(funs(str_replace_all(., "\\/Q[[:digit:]]+\\:", ""))) %>%
+#     rename_all(funs(str_replace_all(., ",", ""))) %>%
+#     rename_all(funs(str_replace_all(., "/", " "))) %>%
+#     rename_all(funs(str_replace_all(., "\\\\", " ")))
 # 
+# # Add the Day column
+#   day <- str_extract(sheet, "(?<=Day\\s)\\d+")
+#   df <- df %>% mutate(Day = as.character(day))
 # 
+# # Move the Day column to the second position
+#   df <- df %>% relocate(Day, .after = 1)
 # 
+#   return(df)
+# })
 # 
-# 
-# marker_select <- function(col_title) {
-#   marker_df <- str_detect(names(DATA1), "[\\+\\-]") 
-#   return(marker_df)
-# }
+# # Combine all sheets into one data frame
+# Df1 <- bind_rows(dfs)
+# Df1
 
 ```
 
-## Making the data tidy for plotting
+SINGLE SHEETS Loading data
+```{r eval=FALSE, include=FALSE}
+# Df<- read_csv("/Users/pablo/Desktop/IMPAcTB/male.csv")
+# 
+# # Remove Freq of Parent columns
+# Df1 <- Df %>%
+#   dplyr::select(-matches("Parent"))
+# # Remove "Leukocytes/LIVE/Single Cells/" from col names
+# names(Df1) <- str_remove(names(Df1), "Leukocytes/Single Cells/LIVE/")
+# 
+# Df1 <- Df1 %>%
+#   rename_all(funs(str_replace(., "\\|.+", "")))# Remove "|Freq of..." from col names
+# 
+# 
+# Df1 <- Df1 %>%
+#   dplyr::select(-matches("Leukocytes")) %>%
+#   dplyr::select(-2)
+# 
+# # Remove the colon from the column name
+# names(Df1)[names(Df1) == "Sample:"] <- "Sample"
+# 
+# # Rename the column values by removing the first two letters and numbers
+# Df1 <- Df1 %>%
+#   mutate(Sample = str_replace_all(Sample, "\\b[A-Za-z][0-9]+\\b", ""))
+# 
+# 
+# Df1 <- Df1 %>%
+#    rename_all(funs(str_replace_all(., ",", ""))) %>%
+#    rename_all(funs(str_replace_all(., "/", " "))) %>%
+#    rename_all(funs(str_replace_all(., "\\\\", " ")))  %>%
+#   rename_all(~ stringr::str_replace_all(., "Q\\d+\\:", "")) 
+# 
+# Df1 <- Df1 %>% slice(1:(n() - 2))
+# 
+# 
+# #Not needed for this 
+# # Df1 <- Df1 %>%
+# #   mutate(Day = 1)
+```
 
 
+MAKING DATA TIDY FOR PLOTTING
 ```{r}
-tidy_Df1 <- pivot_longer(data = Df1, cols =  starts_with("CD45+"), names_to = "cell_types", values_to = "percentage_of_CD45") 
+tidy_Df1 <- pivot_longer(data = Df1, cols =  starts_with("CD3"), names_to = "cell_types", values_to = "percentage_of_LIVE")
 
 tidy_Df1 <- tidy_Df1 %>%
-  separate(col = "SAMPLE", into = c("day", "replicate"))
+  separate(col = "Sample", into = c("group", "mouse_ID"), sep = "_") %>%
+  mutate(mouse_ID = str_replace(mouse_ID, ".fcs", ""))
 
+#Trim extra spaces
+tidy_Df1$cell_types <- str_replace_all(tidy_Df1$cell_types, "\\s+", " ")
+tidy_Df1$cell_types <- str_trim(tidy_Df1$cell_types)
 
-tidy_Df1 %>%
-  select(cell_types) %>%
-  unique()
+tidy_Df1
 
-tidy_Df1 <- tidy_Df1 %>%
-  filter(percentage_of_CD45 > 0.005)
+str(tidy_Df1)
 
-head(tidy_Df1, n=10)
+tidy_Df1$group <- str_replace_all(tidy_Df1$group, "-", " ")
 ```
 
+CHECK FIRST ASSUMPTION IN KRUSKAL (Independent obervations)
 ```{r}
-# Select CD3 & CD11b populations and create new data frames 
- 
-CD3pos_CD11bneg <- tidy_Df1 %>%
-  filter(str_detect(cell_types, "CD3\\+ + CD11b\\-")) 
+# We want to plot one population and facet by day, fill by sex
 
-CD3neg_CD11bpos <- tidy_Df1 %>%
-  filter(str_detect(cell_types, "CD3\\- + CD11b\\+")) 
+# Get unique values in "cell_types" column to check for spelling
+unique(tidy_Df1$cell_types)
+# I am choosing "CD3+ CD4+ CD62L- CD44+"
 
-CD3neg_CD11bneg <- tidy_Df1 %>%
-  filter(str_detect(cell_types, "CD3\\- + CD11b\\-"))
+test_pop_assumption1 <- tidy_Df1 %>% 
+  dplyr::filter(cell_types == "CD3+ CD4+ CD62L- CD44+")
+
+#plot
+ggplot(test_pop_assumption1, aes(x = group, y = percentage_of_LIVE, color = sex)) +
+  geom_dotplot(binaxis = "y", stackdir = "center", fill = "white", dotsize = 0.5) +
+  facet_wrap(~ day, ncol = 1) +
+  theme_bw() +
+  labs(x = "Sex", y = "CD4+ Effector TCells (% of Live)", color = "Sex") +
+  ggtitle("Dotplot Distribution of Cell Types by Sex and Day")
+
+
+
+#how to check if i need to do one factor or two factor anova
+```
+
+
+WORKING ON STATS June 1, 2023
+```{r}
+# library(emmeans)
+# library(car)
+# library(DescTools)
+# library(stats)
+# 
+# 
+# tidy_Df2 <- tidy_Df1 %>% 
+#   dplyr::filter(cell_types == " CD3-  CD11B+ ")
+# 
+# 
+# str(tidy_Df2)
+# 
+# CD3CD11b_LM<- lm(percentage_of_LIVE ~ group, data = tidy_Df2)
+# 
+# plot(CD3CD11b_LM)
+# 
+# 
+# library(tidyverse)
+# library(dplyr)
+# library(kableExtra)
+# 
+# sumstats<-tidy_Df2%>%group_by(group)%>%summarise(n=n(),mean=mean(percentage_of_LIVE,na.rm=TRUE),sd=sd(percentage_of_LIVE,na.rm=TRUE),sem=sd(percentage_of_LIVE,na.rm=TRUE)/sqrt(n),min=min(percentage_of_LIVE,na.rm=TRUE),max=max(percentage_of_LIVE,na.rm=TRUE))
+# 
+# 
+# kable(sumstats,digits=2)%>%kable_styling(full_width = F)
+# 
+# sumstats
+# 
+# #Krsukal check then do tukey or duns test for multiple comparispons need multcomp 
+# 
+# library(car)
+# library(emmeans)
+# library(DescTools)
+# library(car)
+# library(emmeans)
+# library(DescTools)
+# 
+# ANOVA <- Anova(lm(percentage_of_LIVE~group, data = tidy_Df2),type='II')
+# 
+# ANOVA
+# 
+# 
+# ANOVA.emm <- emmeans(CD3CD11b_LM,~ group)
+# 
+# pairs(ANOVA.emm,adjust="tukey",type="response")
+# 
+# 
+# bartlett.test(percentage_of_LIVE ~ group, data = tidy_Df2)
+```
+
+EXPLORATORY ANALYSIS
+```{r fig.height=20, fig.width=10}
+
+# Running Stats and Selecting Significant Cell Type Differences for Gated Cells TukeyHSD
+cell_stats <- tidy_Df1 %>%
+   group_by(cell_types) %>%
+  nest() %>%
+  mutate(aov_result = map(data, ~aov(percentage_of_LIVE ~ group, data = .x)),
+         tukey_result = map(aov_result, TukeyHSD),
+         tidy_tukey = map(tukey_result, broom::tidy)) %>%
+  unnest(tidy_tukey, .drop = TRUE) %>%
+  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+  dplyr::select(-data, -aov_result, -tukey_result, -term, -null.value) %>%
+  filter(adj.p.value <= 0.05)
+
+
+# Join Dataframes Based on Significance and Cell Types
+common_cell_types <- intersect(tidy_Df1$cell_types, cell_stats$cell_types)
+tidy_Df1_filtered <- tidy_Df1 %>%
+  filter(cell_types %in% common_cell_types)
+
+joined_df <- left_join(tidy_Df1_filtered, cell_stats, by = "cell_types")
+
+unique(joined_df$group)
+
+
 
 ```
 
 
-## boxplot
-```{r, fig.width = 5, fig.height= 20}
-CD3pos_CD11bneg_bar_plot <- CD3pos_CD11bneg %>%
-mutate(day = fct_relevel(day,
-            "CNT", "D3", "D7",
-            "D28")) %>%
-  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
-  stat_boxplot( aes(day, percentage_of_CD45), 
-    geom='errorbar', linetype=1, width=0.5)+  
-  geom_boxplot(aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
-  theme_bw() + 
-  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
-        axis.title.x = element_text(size = 20, face = "bold"), 
-        axis.title.y = element_text(size = 20, face = "bold"), 
-        legend.text = element_text(size = 20), 
-        legend.title = element_text(size = 20), 
-        plot.title = element_text(color="black", size=30, face="bold")) + 
-  labs (y="Percentage of CD45", x = "Day") + 
-  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
-  ggtitle("Changes in immune cell populations (lung) CD3+ CD11b-") +
-  stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = "CNT")
+PLOT POPULATIONS
+```{r fig.height=10, fig.width=20}
+# Get the Dark2 palette
+my_palette <- brewer.pal(n = 8, name = "Dark2")
+
+# Choose specific colors from the palette
+my_colors <- c(my_palette[1], my_palette[3], my_palette[5], my_palette[8], my_palette[2])
 
 
+# Multiday Plot
+joined_df$group <- factor(joined_df$group, levels = c("Saline", "BCG", "BCG BCG", "IN Inulin", "IM CPG"))
 
-CD3neg_CD11bpos_bar_plot <- CD3neg_CD11bpos %>%
-mutate(day = fct_relevel(day, 
-            "CNT", "D3", "D7", 
-            "D28")) %>%
-  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
-  stat_boxplot( aes(day, percentage_of_CD45), 
-    geom='errorbar', linetype=1, width=0.5)+  
-  geom_boxplot( aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
-  theme_bw() + 
-  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
-        axis.title.x = element_text(size = 20, face = "bold"), 
-        axis.title.y = element_text(size = 20, face = "bold"), 
-        legend.text = element_text(size = 20), 
-        legend.title = element_text(size = 20), 
-        plot.title = element_text(color="black", size=30, face="bold")) + 
-  labs (y="Percentage of CD45", x = "Day") + 
-  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
-  ggtitle("Changes in immune cell populations (lung) CD3- CD11b+") +
-  stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = "CNT")
-
-
-
-CD3neg_CD11bneg_bar_plot <- CD3neg_CD11bneg %>%
-mutate(day = fct_relevel(day, 
-            "CNT", "D3", "D7", 
-            "D28")) %>%
-  ggplot(aes(x = day, y = percentage_of_CD45, fill= day)) +
-  stat_boxplot( aes(day, percentage_of_CD45), 
-    geom='errorbar', linetype=1, width=0.5)+  
-  geom_boxplot( aes(day, percentage_of_CD45)) + 
-  facet_wrap(~cell_types, scale = "free_y", labeller = label_wrap_gen(width=15), ncol = 5, nrow = 20) + 
-  theme_bw() + 
-  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20), 
-        axis.title.x = element_text(size = 20, face = "bold"), 
-        axis.title.y = element_text(size = 20, face = "bold"), 
-        legend.text = element_text(size = 20), 
-        legend.title = element_text(size = 20), 
-        plot.title = element_text(color="black", size=30, face="bold")) + 
-  labs (y="Percentage of CD45", x = "Day") + 
-  theme(strip.text = element_text(size=12, face = "bold")) + theme(legend.position="bottom") +
-  ggtitle("Changes in immune cell populations (lung) CD3- CD11b-") +
-  stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = "CNT")
-
-CD3pos_CD11bneg_bar_plot
-# CD3neg_CD11bpos_bar_plot
-# CD3neg_CD11bneg_bar_plot
+ggplot(joined_df, aes(x = group, y = percentage_of_LIVE, fill = group)) +
+  geom_boxplot(aes(x = group, y = percentage_of_LIVE),
+               geom = 'errorbar', linetype = 1, width = .5, alpha = 0.5) + 
+  geom_point(show.legend = FALSE)+
+ theme_bw() + 
+  theme(axis.text.x = element_text(size = 50, angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 50),
+        axis.title.x = element_text(size = 50, face = "bold"),
+        axis.title.y = element_text(size = 50, face = "bold"),
+        legend.text = element_text(size = 50),
+        legend.title = element_text(size = 50),
+        plot.title = element_text(color="black", size=60, face="bold")) +
+  labs(x = "Vaccine", y = "Percentage of Live Leukocytes", color = "Group")+
+  guides(shape = "none") +
+  theme(strip.text = element_text(size=45, face = "bold")) + 
+  theme(legend.position="right") +
+  ggtitle("SolaVax TB Comprehensive Panel BAL Day 30") +
+  facet_wrap(~reorder(cell_types, -percentage_of_LIVE), 
+             scales = "free_y", labeller = label_wrap_gen(width=20), 
+             ncol = 4, nrow = 50, strip.position = "top") +
+  labs(fill = "Vaccine") 
 
 ```
 
+WORKING ON THIS 
+```{r}
+#+
+   #scale_fill_manual(values = my_colors)
+
+# Adding p-values from tukeyHSD Dataframe 
+# p + geom_text(data = joined_df %>%ast 
+#                 group_by(contrast1, contrast2) %>%
+#               aes(label = paste0("p = ", round(adj.p.value, 4)),
+#                   y = percentage_of_CD45 + 0.001),
+#               size = 6.5, hjust = "center", vjust = 20) 
+
+
+# Adding p-values from tukeyHSD Dataframe 
+# Interest_Plots <- p1 + geom_text(data = cell_types_of_interest %>%
+#                 group_by(cell_types) %>%
+#                 slice_max(percentage_of_CD45),
+#               aes(label = paste0("p = ", round(adj.p.value, 4)),
+#                   y = percentage_of_CD45 + 0.001),
+#               size = 6.5, hjust = "center", vjust = 20) +
+#   scale_fill_manual(values = my_colors)
+#   
+# Interest_Plots
+```
+
+Saving plots to PDF
+```{r}
+# #save to pdf
+# pdf(file = "/Volumes/cvmbs/RSTOR-HenaO_lab/Pablo/SOLOVAX TB/SolovaxTB immunogenicity day 14/Unmixed/FlowJo/CD45_Final_Lung_Plots.pdf",   # The directory you want to save the file in
+#    width = 25, # The width of the plot in inches
+#    height = 35) # The height of the plot in inches
+# plot(CD45_Final_Lung_Plots)
+# dev.off()
+```
+
+
+Looking at specific populations
+```{r fig.height=2, fig.width=3}
+
+#Finding correct spelling and punctuation of cell_types EXAMPLE
+
+tidy_Df1$cell_types [23]
+
+#Showing Neutrophil Populations
+
+CD11b_Mac <- tidy_Df1 %>% 
+  filter(cell_types == "CD45 Ly6G- CD64- CD11c-  CD11b+ ")
+
+Ly6G_df <- tidy_Df1 %>% 
+  filter(cell_types == "CD45 Ly6G+ ")
+
+Ly6G_stats <- Ly6G_df %>%
+   group_by(cell_types) %>%
+  nest() %>%
+  mutate(aov_result = map(data, ~aov(percentage_of_CD45 ~ group, data = .x)),
+         tukey_result = map(aov_result, TukeyHSD),
+         tidy_tukey = map(tukey_result, broom::tidy)) %>%
+  unnest(tidy_tukey, .drop = TRUE) %>%
+  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+  dplyr::select(-data, -aov_result, -tukey_result, -term, -null.value)
+
+common_cell_types <- intersect(Ly6G_df$cell_types, Ly6G_stats$cell_types)
+Ly6G_df_filtered <- Ly6G_df %>%
+  filter(cell_types %in% common_cell_types)
+
+Ly6G_joined_df <- left_join(Ly6G_df_filtered, Ly6G_stats, by = "cell_types")
+
+
+ggplot(Ly6G_joined_df, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
+  geom_boxplot() + 
+  geom_beeswarm() + 
+  facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=20), ncol = 6, nrow = 50) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 8),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        plot.title = element_text(color="black", size=10, face="bold")) +
+  labs(x = "Group", y = "Percentage of Live Leukocytes") +
+  theme(strip.text = element_text(size=8, face = "bold")) + theme(legend.position="right") +
+  ggtitle("Neutrophil Response 14 Days Post Vaccination
+C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
+  geom_text(data = Ly6G_joined_df %>% 
+                group_by(cell_types) %>% 
+                slice_max(percentage_of_CD45),
+              aes(label = paste0("p = ", round(adj.p.value, 4)), 
+                  y = percentage_of_CD45 + 0.01), 
+              size = 3, hjust = "right") +
+  scale_fill_manual(values = my_colors)
+```
+
+
+```{r fig.height=10, fig.width=15}
+# Checking for correct spelling 
+unique(joined_df$cell_types)
+
+# New DF with cell types of interest (will always change)
+cell_types_of_interest <- joined_df %>%
+  filter(cell_types %in% c("CD45 Ly6G- CD64- CD11c-  CD11b- Ly6C- ", 
+                           "CD45 Ly6G- CD64+ ", 
+                           "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ ", 
+                           "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ CD26-  CD88- ", 
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b- ", 
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- ",
+                           "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- SiglecF+  CD206+ ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- CD86+  MHCII+ ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
+                           "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
+                           "CD45 Ly6G- CD64+ CD11c-  CD11b+ Ly6C+ CD86+  MHCII+ ",
+                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- SiglecF-  CD206- "))
+
+
+# Plot again
+p1 <- ggplot(cell_types_of_interest, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
+  geom_boxplot() + 
+  geom_beeswarm(groupOnX = FALSE) + 
+  facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=30), ncol = 5, nrow = 50) +
+  theme_bw() + 
+  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 30, face = "bold"),
+        axis.title.y = element_text(size = 30, face = "bold"),
+        legend.text = element_text(size = 30),
+        legend.title = element_text(size = 30),
+        plot.title = element_text(color="black", size=30, face="bold")) +
+  labs(x = "Group", y = "Percentage of Live Leukocytes") +
+  theme(strip.text = element_text(size=18, face = "bold")) + theme(legend.position="right") +
+  ggtitle("SolaVax TB Myeloid Response 14 Days Post Vaccination in C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
+   facet_wrap(~reorder(cell_types, -percentage_of_CD45), 
+             scales = "free_y", labeller = label_wrap_gen(width=20), 
+             ncol = 5, nrow = 50, strip.position = "top")
+
+```
