@@ -119,6 +119,7 @@ Df1 <- Df1 %>%
 
 ## Making the data tidy for plotting
 
+
 ```{r}
 tidy_Df1 <- pivot_longer(data = Df1, cols =  starts_with("CD45+"), names_to = "cell_types", values_to = "percentage_of_CD45") 
 
