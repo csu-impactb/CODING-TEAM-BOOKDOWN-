@@ -234,7 +234,7 @@ str(tidy_Df1)
 tidy_Df1$group <- str_replace_all(tidy_Df1$group, "-", " ")
 ```
 
-CHECK FIRST ASSUMPTION IN KRUSKAL (Independent obervations)
+CHECK FIRST ASSUMPTION IN STATS (Independent obervations)
 ```{r}
 # We want to plot one population and facet by day, fill by sex
 
@@ -254,41 +254,24 @@ ggplot(test_pop_assumption1, aes(x = group, y = percentage_of_LIVE, color = sex)
   ggtitle("Dotplot Distribution of Cell Types by Sex and Day")
 ```
 
-CHECKING EQUAL VARIANCES
+CHECKING EQUAL VARIANCES OF POPULATION OF INTEREST 
 ```{r}
 
-# leveneTest to test for variances
+# leveneTest to test for variances we are doing 
 
 #how to check if i need to do one factor or two factor anova
 # we are using vaccine and day which are already two factors. looks like we might be able to combine sexes to increase n
 
 # Perform two-way ANOVA with interaction to assess variances
-anova_result <- aov(percentage_of_LIVE ~ group, data = tidy_Df1)
+anova_result <- aov(percentage_of_LIVE ~ group*day, data = test_pop_assumption1)
 
 # Check the assumption of equal variances using Levene's test
-levene_test <- leveneTest(anova_result, center = mean)
-summary(levene_test)
+leveneTest(anova_result, center = mean)
 
+
+# Check the assumption of equal variances using bartlett.test
+bartlett.test(percentage_of_LIVE ~ interaction(group, day), data = test_pop_assumption1)
 ```
-
-```{r}
-library(afex)
-library(performance)
-# install.packages("afex")
-# install.packages("performance")
-
-data(tidy_Df1, package = "afex")
-
-o1 <- aov_ez("group", "percentage_of_LIVE", obk.long, 
-             between = c("group", "percentage_of_LIVE"))
-
-
-
-https://cran.r-project.org/web/packages/afex/vignettes/assumptions_of_ANOVAs.html
-
-https://statsandr.com/blog/kruskal-wallis-test-nonparametric-version-anova/#assumptions
-```
-
 
 
 WORKING ON STATS June 1, 2023
@@ -447,100 +430,100 @@ Saving plots to PDF
 Looking at specific populations
 ```{r fig.height=2, fig.width=3}
 
-#Finding correct spelling and punctuation of cell_types EXAMPLE
-
-tidy_Df1$cell_types [23]
-
-#Showing Neutrophil Populations
-
-CD11b_Mac <- tidy_Df1 %>% 
-  filter(cell_types == "CD45 Ly6G- CD64- CD11c-  CD11b+ ")
-
-Ly6G_df <- tidy_Df1 %>% 
-  filter(cell_types == "CD45 Ly6G+ ")
-
-Ly6G_stats <- Ly6G_df %>%
-   group_by(cell_types) %>%
-  nest() %>%
-  mutate(aov_result = map(data, ~aov(percentage_of_CD45 ~ group, data = .x)),
-         tukey_result = map(aov_result, TukeyHSD),
-         tidy_tukey = map(tukey_result, broom::tidy)) %>%
-  unnest(tidy_tukey, .drop = TRUE) %>%
-  separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
-  dplyr::select(-data, -aov_result, -tukey_result, -term, -null.value)
-
-common_cell_types <- intersect(Ly6G_df$cell_types, Ly6G_stats$cell_types)
-Ly6G_df_filtered <- Ly6G_df %>%
-  filter(cell_types %in% common_cell_types)
-
-Ly6G_joined_df <- left_join(Ly6G_df_filtered, Ly6G_stats, by = "cell_types")
-
-
-ggplot(Ly6G_joined_df, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
-  geom_boxplot() + 
-  geom_beeswarm() + 
-  facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=20), ncol = 6, nrow = 50) +
-  theme_bw() +
-  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 8),
-        axis.title.x = element_text(size = 10, face = "bold"),
-        axis.title.y = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10),
-        legend.title = element_text(size = 10),
-        plot.title = element_text(color="black", size=10, face="bold")) +
-  labs(x = "Group", y = "Percentage of Live Leukocytes") +
-  theme(strip.text = element_text(size=8, face = "bold")) + theme(legend.position="right") +
-  ggtitle("Neutrophil Response 14 Days Post Vaccination
-C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
-  geom_text(data = Ly6G_joined_df %>% 
-                group_by(cell_types) %>% 
-                slice_max(percentage_of_CD45),
-              aes(label = paste0("p = ", round(adj.p.value, 4)), 
-                  y = percentage_of_CD45 + 0.01), 
-              size = 3, hjust = "right") +
-  scale_fill_manual(values = my_colors)
+# #Finding correct spelling and punctuation of cell_types EXAMPLE
+# 
+# tidy_Df1$cell_types [23]
+# 
+# #Showing Neutrophil Populations
+# 
+# CD11b_Mac <- tidy_Df1 %>% 
+#   filter(cell_types == "CD45 Ly6G- CD64- CD11c-  CD11b+ ")
+# 
+# Ly6G_df <- tidy_Df1 %>% 
+#   filter(cell_types == "CD45 Ly6G+ ")
+# 
+# Ly6G_stats <- Ly6G_df %>%
+#    group_by(cell_types) %>%
+#   nest() %>%
+#   mutate(aov_result = map(data, ~aov(percentage_of_CD45 ~ group, data = .x)),
+#          tukey_result = map(aov_result, TukeyHSD),
+#          tidy_tukey = map(tukey_result, broom::tidy)) %>%
+#   unnest(tidy_tukey, .drop = TRUE) %>%
+#   separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
+#   dplyr::select(-data, -aov_result, -tukey_result, -term, -null.value)
+# 
+# common_cell_types <- intersect(Ly6G_df$cell_types, Ly6G_stats$cell_types)
+# Ly6G_df_filtered <- Ly6G_df %>%
+#   filter(cell_types %in% common_cell_types)
+# 
+# Ly6G_joined_df <- left_join(Ly6G_df_filtered, Ly6G_stats, by = "cell_types")
+# 
+# 
+# ggplot(Ly6G_joined_df, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
+#   geom_boxplot() + 
+#   geom_beeswarm() + 
+#   facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=20), ncol = 6, nrow = 50) +
+#   theme_bw() +
+#   theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 8),
+#         axis.title.x = element_text(size = 10, face = "bold"),
+#         axis.title.y = element_text(size = 10, face = "bold"),
+#         legend.text = element_text(size = 10),
+#         legend.title = element_text(size = 10),
+#         plot.title = element_text(color="black", size=10, face="bold")) +
+#   labs(x = "Group", y = "Percentage of Live Leukocytes") +
+#   theme(strip.text = element_text(size=8, face = "bold")) + theme(legend.position="right") +
+#   ggtitle("Neutrophil Response 14 Days Post Vaccination
+# C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
+#   geom_text(data = Ly6G_joined_df %>% 
+#                 group_by(cell_types) %>% 
+#                 slice_max(percentage_of_CD45),
+#               aes(label = paste0("p = ", round(adj.p.value, 4)), 
+#                   y = percentage_of_CD45 + 0.01), 
+#               size = 3, hjust = "right") +
+#   scale_fill_manual(values = my_colors)
 ```
 
 
 ```{r fig.height=10, fig.width=15}
 # Checking for correct spelling 
-unique(joined_df$cell_types)
-
-# New DF with cell types of interest (will always change)
-cell_types_of_interest <- joined_df %>%
-  filter(cell_types %in% c("CD45 Ly6G- CD64- CD11c-  CD11b- Ly6C- ", 
-                           "CD45 Ly6G- CD64+ ", 
-                           "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ ", 
-                           "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ CD26-  CD88- ", 
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b- ", 
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- ",
-                           "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- SiglecF+  CD206+ ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- CD86+  MHCII+ ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
-                           "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
-                           "CD45 Ly6G- CD64+ CD11c-  CD11b+ Ly6C+ CD86+  MHCII+ ",
-                           "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- SiglecF-  CD206- "))
+# unique(joined_df$cell_types)
+# 
+# # New DF with cell types of interest (will always change)
+# cell_types_of_interest <- joined_df %>%
+#   filter(cell_types %in% c("CD45 Ly6G- CD64- CD11c-  CD11b- Ly6C- ", 
+#                            "CD45 Ly6G- CD64+ ", 
+#                            "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ ", 
+#                            "CD45 Ly6G- CD64- CD11c-  CD11b+ Ly6C+ CD26-  CD88- ", 
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b- ", 
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b+ ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- ",
+#                            "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b- Ly6C- SiglecF+  CD206+ ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- CD86+  MHCII+ ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
+#                            "CD45 Ly6G- CD64- CD11c+  CD11b+ Ly6C+ CD86+  MHCII+ ",
+#                            "CD45 Ly6G- CD64+ CD11c-  CD11b+ Ly6C+ CD86+  MHCII+ ",
+#                            "CD45 Ly6G- CD64+ CD11c+  CD11b+ Ly6C- SiglecF-  CD206- "))
 
 
 # Plot again
-p1 <- ggplot(cell_types_of_interest, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
-  geom_boxplot() + 
-  geom_beeswarm(groupOnX = FALSE) + 
-  facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=30), ncol = 5, nrow = 50) +
-  theme_bw() + 
-  theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20),
-        axis.title.x = element_text(size = 30, face = "bold"),
-        axis.title.y = element_text(size = 30, face = "bold"),
-        legend.text = element_text(size = 30),
-        legend.title = element_text(size = 30),
-        plot.title = element_text(color="black", size=30, face="bold")) +
-  labs(x = "Group", y = "Percentage of Live Leukocytes") +
-  theme(strip.text = element_text(size=18, face = "bold")) + theme(legend.position="right") +
-  ggtitle("SolaVax TB Myeloid Response 14 Days Post Vaccination in C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
-   facet_wrap(~reorder(cell_types, -percentage_of_CD45), 
-             scales = "free_y", labeller = label_wrap_gen(width=20), 
-             ncol = 5, nrow = 50, strip.position = "top")
+# p1 <- ggplot(cell_types_of_interest, aes(x = group, y = percentage_of_CD45, fill = group, alpha=0.5)) +
+#   geom_boxplot() + 
+#   geom_beeswarm(groupOnX = FALSE) + 
+#   facet_wrap(~cell_types, scales = "free_y", labeller = label_wrap_gen(width=30), ncol = 5, nrow = 50) +
+#   theme_bw() + 
+#   theme(axis.text.x = element_blank(), axis.text.y = element_text(size = 20),
+#         axis.title.x = element_text(size = 30, face = "bold"),
+#         axis.title.y = element_text(size = 30, face = "bold"),
+#         legend.text = element_text(size = 30),
+#         legend.title = element_text(size = 30),
+#         plot.title = element_text(color="black", size=30, face="bold")) +
+#   labs(x = "Group", y = "Percentage of Live Leukocytes") +
+#   theme(strip.text = element_text(size=18, face = "bold")) + theme(legend.position="right") +
+#   ggtitle("SolaVax TB Myeloid Response 14 Days Post Vaccination in C57Bl/6 mice (Immunogenicty Study-Non-Infected)") +
+#    facet_wrap(~reorder(cell_types, -percentage_of_CD45), 
+#              scales = "free_y", labeller = label_wrap_gen(width=20), 
+#              ncol = 5, nrow = 50, strip.position = "top")
 
 ```
