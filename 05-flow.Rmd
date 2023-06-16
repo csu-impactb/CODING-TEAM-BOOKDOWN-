@@ -224,6 +224,8 @@ tidy_Df1 <- tidy_Df1 %>%
 #Trim extra spaces
 tidy_Df1$cell_types <- str_replace_all(tidy_Df1$cell_types, "\\s+", " ")
 tidy_Df1$cell_types <- str_trim(tidy_Df1$cell_types)
+tidy_Df1$group <- str_replace_all(tidy_Df1$group, "\\s+", " ")
+tidy_Df1$group <- str_trim(tidy_Df1$group)
 
 tidy_Df1
 
@@ -349,12 +351,11 @@ my_colors <- c(my_palette[1], my_palette[3], my_palette[5], my_palette[8], my_pa
 
 
 # Multiday Plot
-joined_df$group <- factor(joined_df$group, levels = c("Saline", "BCG", "BCG BCG", "IN Inulin", "IM CPG"))
+joined_df$group <- factor(joined_df$group, levels = c("Saline", "BCG", "ID93", "BCG+ID93"))
 
 ggplot(joined_df, aes(x = group, y = percentage_of_LIVE, fill = group)) +
-  geom_boxplot(aes(x = group, y = percentage_of_LIVE),
-               geom = 'errorbar', linetype = 1, width = .5, alpha = 0.5) + 
-  geom_point(show.legend = FALSE)+
+geom_boxplot(aes(x = group, y = percentage_of_LIVE), linetype = 1, width = .5, alpha = 0.5) + 
+geom_point(show.legend = FALSE)+
  theme_bw() + 
   theme(axis.text.x = element_text(size = 50, angle = 45, hjust = 1),
         axis.text.y = element_text(size = 50),
@@ -367,7 +368,7 @@ ggplot(joined_df, aes(x = group, y = percentage_of_LIVE, fill = group)) +
   guides(shape = "none") +
   theme(strip.text = element_text(size=45, face = "bold")) + 
   theme(legend.position="right") +
-  ggtitle("SolaVax TB Comprehensive Panel BAL Day 30") +
+ggtitle("SolaVax TB Comprehensive Panel BAL Day 30") +
   facet_wrap(~reorder(cell_types, -percentage_of_LIVE), 
              scales = "free_y", labeller = label_wrap_gen(width=20), 
              ncol = 4, nrow = 50, strip.position = "top") +
