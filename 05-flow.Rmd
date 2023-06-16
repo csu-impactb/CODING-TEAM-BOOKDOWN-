@@ -312,7 +312,7 @@ WORKING ON STATS June 1, 2023
 ```
 
 EXPLORATORY ANALYSIS
-```{r fig.height=20, fig.width=10}
+```{r}
 
 # Running Stats and Selecting Significant Cell Type Differences for Gated Cells TukeyHSD
 cell_stats <- tidy_Df1 %>%
@@ -342,7 +342,7 @@ unique(joined_df$group)
 
 
 PLOT POPULATIONS
-```{r fig.height=10, fig.width=20}
+```{r}
 # Get the Dark2 palette
 my_palette <- brewer.pal(n = 8, name = "Dark2")
 
@@ -357,19 +357,19 @@ ggplot(joined_df, aes(x = group, y = percentage_of_LIVE, fill = group)) +
 geom_boxplot(aes(x = group, y = percentage_of_LIVE), linetype = 1, width = .5, alpha = 0.5) + 
 geom_point(show.legend = FALSE)+
  theme_bw() + 
-  theme(axis.text.x = element_text(size = 50, angle = 45, hjust = 1),
-        axis.text.y = element_text(size = 50),
-        axis.title.x = element_text(size = 50, face = "bold"),
-        axis.title.y = element_text(size = 50, face = "bold"),
-        legend.text = element_text(size = 50),
-        legend.title = element_text(size = 50),
-        plot.title = element_text(color="black", size=60, face="bold")) +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 10),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        plot.title = element_text(color="black", size=10, face="bold")) +
   labs(x = "Vaccine", y = "Percentage of Live Leukocytes", color = "Group")+
   guides(shape = "none") +
-  theme(strip.text = element_text(size=45, face = "bold")) + 
+  theme(strip.text = element_text(size=8, face = "bold")) + 
   theme(legend.position="right") +
-ggtitle("SolaVax TB Comprehensive Panel BAL Day 30") +
-  facet_wrap(~reorder(cell_types, -percentage_of_LIVE), 
+ggtitle("IMPAcTB Males Females Combined ") +
+  facet_wrap(~reorder(cell_types, -percentage_of_LIVE) + day, 
              scales = "free_y", labeller = label_wrap_gen(width=20), 
              ncol = 4, nrow = 50, strip.position = "top") +
   labs(fill = "Vaccine") 
