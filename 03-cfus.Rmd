@@ -1,8 +1,13 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
+
+```{r global options, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE, error = FALSE, message = FALSE, warning = FALSE)
+```
+
 
 # Colony forming units to determine bacterial counts 
 
@@ -202,12 +207,18 @@ well.
 First, the workflow loads some additional R libraries. You may need to install 
 these on your local R session if you do not already have them installed.
 
-```{r message = FALSE, warning = FALSE}
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(readxl)
+library(dplyr)
 library(purrr)
+library(tidyr)
+library(stringr)
 library(tidyverse)
 library(gridExtra)
+library(ggplot2)
 library(ggpubr)
+library(ggbeeswarm)
 ```
 
 Next, the pipeline reads in the organ-specific data. To do this, it creates a 
@@ -219,44 +230,77 @@ be joined into a single large dataframe, even if a different number of dilutions
 were used for the different organs. 
 
 ```{r}
-# Create a list of all the sheets in the file. Exclude the metadata sheet 
-# to get a list of the organ-specific sheets
-sheet_names <- excel_sheets("DATA/baa_cfu_sheet.xlsx")
-organ_sheets <- sheet_names[sheet_names != "metadata"]
+# Set the path to the Excel file containing the data
+path <- c("DATA/IMPACTB_CFU_Op1_AllDays_Lung.xlsx")
 
-# Loop through all the organ-specific sheets and read them in as an 
-# element in a list. Use pivoting to collect all the dilutions in a 
-# way that will let you bind across all organs, even if a different
-# set of dilutions were used for the different organs.
+# Read the sheet names from the Excel file
+sheet_names <- excel_sheets(path)
+# Exclude the sheet named "metadata" from the list of sheet names
+sheet_names <- sheet_names[!sheet_names %in% c("metadata")]
+
+# Initialize an empty list to store data from each sheet
 merged_data <- list()
-for(i in 1:length(organ_sheets)){
-  
-  data <- read_excel("DATA/baa_cfu_sheet.xlsx", 
-                     sheet = organ_sheets[i]) %>% 
-    mutate(organ = paste0(organ_sheets[i]))
-  
+
+# Loop through each sheet name
+for(i in 1:length(sheet_names)){
+  # Read the data from the current sheet
+  data <- read_excel(path, sheet = sheet_names[i]) %>% 
+    # Add a new column 'organ' with the sheet name
+    mutate(organ = paste0(sheet_names[i]))
   data <- data %>% 
-    #mutate(missing_col = NA) %>% 
+    # Convert all columns of type double to numeric
     mutate_if(is.double, as.numeric) %>% 
+    # Convert all numeric columns to character
     mutate_if(is.numeric, as.character) %>% 
+    # Pivot longer the columns that start with "dil_"
     pivot_longer(starts_with("dil_"), names_to = "dilution",
                  values_to = "CFUs") %>% 
+    # Extract numerical part from the 'dilution' column and convert it to numeric
     mutate(dilution = str_extract(dilution, "[0-9]+"),
            dilution = as.numeric(dilution))
-    
+
+  # Add the processed data to the merged_data list
   merged_data[[i]] <- data
 }
 
-# Bind all the organ-specific datasets into a single large dataset
+# Combine all the data from the list into a single data frame
 all_data <- bind_rows(merged_data, .id = "column_label") %>% 
-    select(-column_label)
+    # Remove the 'column_label' column
+    dplyr::select(-column_label)
+
+# Display the first few rows of the merged_data list
+head(merged_data)
+# Display the first few rows of the all_data data frame
+head(all_data)
 ```
 
-At this stage, here is how the beginning of this dataset looks: 
+At this stage...
 
 ```{r}
-all_data %>% 
-  slice(1:5)
+# Select unique rows based on specific columns and display them
+distinct_info <- all_data %>%
+  dplyr::select(organ, who_plated, who_counted, count_date) %>%
+  distinct()
+
+# Display the distinct information
+print(distinct_info)
+
+# Filter out rows where CFUs is equal to "TNTC" (Too Numerous To Count)
+all_data <- all_data %>%
+  filter(CFUs != "TNTC")
+
+# Set the levels for the 'group' factor to ensure a specific order
+all_data$group <- factor(all_data$group, levels = c("Saline", "BCG", "ID93", "BCG+ID93"))
+
+# Recode the 'group' column to rename certain factor levels
+all_data <- all_data %>%
+  mutate(group = recode(group,
+                         "ID93" = "ID93-GLA-SE",
+                         "BCG+ID93" = "BCG+ID93-GLA-SE"))
+
+# Display the first few rows of the updated all_data data frame
+head(all_data)
+
 ```
 
 You can see that, rather than having separate columns for each dilution level
@@ -268,16 +312,29 @@ The next steps work through the data, identifying which dilution is an
 appropriate one to use to count CFUs for each sample. 
 
 ```{r}
-# Pull out numeric dilution value and filter for dilutions with CFUs between 10-75
+# Process and tidy the CFU data
 tidy_cfu_data <- all_data %>%
+  # Extract the numerical part of the 'dilution' column and convert to numeric
   mutate(dilution = str_extract(dilution, "[0-9]+"),
          dilution = as.numeric(dilution)) %>%
-  filter((CFUs >= 5 & CFUs <= 95) | groups == "control") %>%
-  mutate(CFUs = as.numeric(CFUs)) 
+  # Convert the 'CFUs' column to numeric
+  mutate(CFUs = as.numeric(CFUs)) %>%
+  # Filter rows where 'CFUs' is between 1 and 100 (inclusive)
+  filter(CFUs >= 1, CFUs <= 100) %>%
+  # Group the data by 'group', 'mouse', 'organ', 'sex', and 'day'
+  group_by(group, mouse, organ, sex, day) %>%
+  # Within each group, select the row with the minimum dilution where CFUs are between 1 and 100
+  slice(which.min(ifelse(CFUs >= 1 & CFUs <= 100, dilution, Inf))) %>%
+  # Ungroup the data to return to the original data structure
+  ungroup()
+
+# Display the processed and tidied CFU data
+tidy_cfu_data
+
 ```
 
 In the example data, this step has reduced the number observations to consider
-from over 450 to 60. 
+from over 1406 to 171. 
 
 ```{r}
 nrow(all_data)
@@ -302,19 +359,33 @@ It uses this information to take the CFU value at a given dilution and convert
 it to an estimate of CFUs per mL.
 
 ```{r}
-# Calculate CFU/ml for every qualifying replicate between 10-75 CFUs. 
-# Column binding by organ name to the metadata sheet via inner_join().
-meta <- read_excel("DATA/baa_cfu_sheet.xlsx", sheet = "metadata")
+# Read the metadata sheet from the Excel file
+meta <- read_excel(path, sheet = "metadata")
 
-tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
-  mutate(CFUs_per_ml = (CFUs * (dilution_factor ^ dilution) * 
-                          (total_resuspension_mL / volume_plated_ul) * 1000)) %>%
-  select(organ, count_date, who_plated, who_counted, groups,  mouse, dilution,  
-         CFUs, CFUs_per_ml) 
+# Join the metadata with the tidy CFU data
+lungoption1tidy_cfu_meta_joined <- inner_join(meta, tidy_cfu_data) %>%
+  # Group the data by 'group'
+  group_by(group) %>%
+  # Calculate 'CFUs_whole' based on the formula provided
+  mutate(CFUs_whole = ((CFUs * dilution_factor^dilution / volume_plated_ml) * total_resuspension_mL) / .50) %>%
+  # Select specific columns for the final dataset
+  dplyr::select(organ, count_date, day, who_plated, who_counted, group, sex, mouse, dilution, 
+                CFUs, CFUs_whole) %>%
+  # Ungroup the data to return to the original data structure
+  ungroup()
+
+# Display the joined and processed data
+lungoption1tidy_cfu_meta_joined
+
+# Write the final dataset to a CSV file
+write.csv(lungoption1tidy_cfu_meta_joined, "lungoption1tidy_cfu_meta_joined.csv", row.names = FALSE)
+
+# Display the final dataset
+lungoption1tidy_cfu_meta_joined
 ```
 
 ```{r}
-head(tidy_cfu_meta_joined)
+head(lungoption1tidy_cfu_meta_joined)
 ```
 
 The rest of the report code is used to provide summaries, visualizations, and 
@@ -322,18 +393,20 @@ analysis of these data. First, there is code to provide a summary of the number
 of mice, experimental groups, and some other details for each of the organs: 
 
 ```{r}
-tidy_cfu_meta_joined %>% 
+lungoption1tidy_cfu_meta_joined %>% 
   group_by(organ) %>% 
-  summarize(`Experimental groups` = paste(unique(groups), collapse = ", "),
-            `Dates counted` = paste(unique(count_date), collapse = ", "), 
-            `Total mice` = length(unique(paste(groups, mouse))), 
-            `Dilutions considered` = paste(sort(unique(as.numeric(dilution))), 
-                              collapse = ", ")) %>% 
+  summarize(
+    `Experimental groups` = paste(unique(group), collapse = ", "),
+    `Dates counted` = paste(unique(count_date), collapse = ", "), 
+    `Total mice` = length(unique(paste(group, mouse))), 
+    `Dilutions considered` = paste(sort(unique(as.numeric(dilution))), collapse = ", ")
+  ) %>% 
   mutate_all(as.character) %>% 
   pivot_longer(-organ) %>% 
   mutate(name = paste0(name, ":")) %>% 
   knitr::kable(align = c("c", "r", "l"), 
                caption = "Organ-specific summary of the experiment")
+
 ```
 
 Next, the pipeline provides a table with the conditions of the CFU collection, 
@@ -341,38 +414,65 @@ based on the collected metadata from the template:
 
 ```{r}
 meta %>% 
-  knitr::kable(col.names = c("Organ", "Percent of organ plated", "Aliquot", 
-                            "Dilution factor", "Total resuspension", 
-                            "Volume plated"), 
+  knitr::kable(col.names = c("Organ", "Percent of Organ Plated",
+                            "Dilution Factor", "Total resuspension mL", 
+                            "Volume Plated mL"), 
                caption = "Conditions of the CFU collection")
 ```
 
 Next, the pipeline creates a plot showing the distribution of CFUs by 
 experimental group in each of the organs:
 
-```{r}
-tidy_lung_cfu_plot <- tidy_cfu_meta_joined %>%
-  mutate(group = fct_relevel(groups, "group_1", "group_2", "group_3", "group_4")) %>%
-  ggplot(aes(x = groups, y = log10(CFUs_per_ml))) +
+```{r fig.height=5, fig.width=5}
+lungoption1tidy_cfu_meta_joined %>%
+  ggplot(aes(x = group, y = log10(CFUs_whole))) +
     geom_quasirandom(color = "blue", alpha = 0.8) +
-  geom_boxplot(aes(group = groups), fill = NA, color = "grey", outlier.shape = NA)+
+  geom_boxplot(aes(group = group), fill = NA, color = "grey", outlier.shape = NA)+
   labs(title = paste0("CFUs in early infected mouse lung"), 
        x = "Group", y = "log10(CFU/mL)")+
   theme_minimal() +
   stat_compare_means(label = "p.signif", method = "t.test", ref.group = "group_1") + 
-  facet_wrap(~ organ, ncol = 1)
-
-tidy_lung_cfu_plot
+  facet_wrap(~ organ + sex, ncol = 1)
 ```
+
+```{r}
+
+ggplot(lungoption1tidy_cfu_meta_joined, aes(x = day, y = log10(CFUs_whole), fill = group, color = group)) +
+geom_point(size = 5, shape = 21, alpha = 0.8, na.rm = T, colour = "black", 
+           cex = 1.5, position = position_dodge(width = .75)) + 
+  geom_boxplot(aes(fill = group), alpha = 0.3) + 
+  facet_wrap(~ organ + sex, ncol = 1) + 
+  scale_fill_manual(values = c("red2", "olivedrab3", "green4",  "deepskyblue")) + 
+  scale_color_manual(values = c("red2", "olivedrab3", "green4",  "deepskyblue")) +
+  theme_bw() + 
+  theme(
+        #axis.text.x = element_blank(), # Remove X-axis names
+        axis.title.x = element_blank(),   
+        axis.text.x = element_text(size = 12),
+        #axis.title.x = element_text(size = 12, face = "bold"),
+        #axis.text.y = element_blank(), # Remove axis names
+        #axis.title.y = element_blank(), 
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 12, face = "bold"),
+        legend.text = element_text(size = 10), 
+        legend.title = element_text(size = 10), 
+        legend.key.size = unit(1, 'cm'), 
+        plot.title = element_text(color="black", size=16, face="bold")) + 
+  theme(strip.text = element_text(size=16, face = "bold")) +
+  labs (y="Log10 CFU") +
+  ggtitle("Option 1 CFU") +
+  ylim(2, 7)
+```
+
 
 Next, the pipeline runs an ANOVA analysis on the data. This is conducted after
 transforming the CFUs with a log-10 transform. 
 
 ```{r warning = FALSE, message = FALSE}
-cfu_stats <- tidy_cfu_meta_joined %>% 
+cfu_stats <- lungoption1tidy_cfu_meta_joined %>% 
   group_by(organ) %>%
   nest() %>%
-  mutate(aov_result = map(data, ~aov(log10(CFUs_per_ml) ~ groups, data = .x)),
+  mutate(aov_result = map(data, ~aov(log10(CFUs_whole) ~ group, data = .x)),
          tukey_result = map(aov_result, TukeyHSD),
          tidy_tukey = map(tukey_result, broom::tidy)) %>%
   unnest(tidy_tukey, .drop = TRUE) %>%
@@ -382,6 +482,106 @@ cfu_stats <- tidy_cfu_meta_joined %>%
 cfu_stats %>% 
   knitr::kable(caption = "ANOVA results comparing CFUs in each organ across the experimental groups")
 ```
+```{r}
+# Filter data for day 14
+df_day_14 <- lungoption1tidy_cfu_meta_joined %>% 
+              filter(day == 14)
+
+# Separate by sex for day 14
+df_day_14_male <- df_day_14 %>% 
+                  filter(sex == "male")
+
+df_day_14_female <- df_day_14 %>% 
+                    filter(sex == "female")
+
+# Filter data for day 56
+df_day_56 <- lungoption1tidy_cfu_meta_joined %>% 
+              filter(day == 56)
+
+# Separate by sex for day 56
+df_day_56_male <- df_day_56 %>% 
+                  filter(sex == "male")
+
+df_day_56_female <- df_day_56 %>% 
+                    filter(sex == "female")
+
+# Filter data for day 90
+df_day_90 <- lungoption1tidy_cfu_meta_joined %>% 
+              filter(day == 90)
+
+# Separate by sex for day 90
+df_day_90_male <- df_day_90 %>% 
+                  filter(sex == "male")
+
+df_day_90_female <- df_day_90 %>% 
+                    filter(sex == "female")
+```
+
+```{r}
+# Day+sex T.test
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_14_male, subset = group %in% c("BCG", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_14_male, subset = group %in% c("ID93-GLA-SE", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_14_male, subset = group %in% c("BCG+ID93-GLA-SE", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+```
+
+
+```{r}
+# Day T.test
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_56, subset = group %in% c("BCG", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_56, subset = group %in% c("ID93-GLA-SE", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+
+# Perform t-test between treatment and saline groups
+t_test_result <- t.test(log10(CFUs_whole) ~ group, data = df_day_56, subset = group %in% c("BCG+ID93-GLA-SE", "Saline"))
+
+# Extract p-value from t-test result
+p_value_t_test <- t_test_result$p.value
+
+# Print the p-value
+print(p_value_t_test)
+
+```
+
+
 
 As a last step, the code in the template writes a CSV file with the processed
 data. This file will be an input into a script that will format the data to 
@@ -390,7 +590,7 @@ experiments, and ultimately from there into project-wide storage.
 
 ```{r eval = FALSE}
 # Write out processed data into a CSV file
-write_csv(tidy_cfu_meta_joined, "cfu_output.csv")
+write_csv(lungoption1tidy_cfu_meta_joined, "cfu_output.csv")
 ```
 
 
