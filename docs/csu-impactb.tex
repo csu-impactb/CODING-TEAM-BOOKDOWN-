@@ -4,14 +4,17 @@
 %
 \documentclass[
 ]{book}
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2024-06-21}
+
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +85,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -117,15 +120,25 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
-
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2023-01-31}
 
 \begin{document}
 \maketitle
@@ -473,19 +486,18 @@ need to cite the \texttt{readxl} package, in R you can run:
 \end{Shaded}
 
 \begin{verbatim}
-## 
 ## To cite package 'readxl' in publications use:
 ## 
-##   Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R
-##   package version 1.3.1. https://CRAN.R-project.org/package=readxl
+##   Wickham H, Bryan J (2023). _readxl: Read Excel Files_. R package
+##   version 1.4.3, <https://CRAN.R-project.org/package=readxl>.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
 ##   @Manual{,
 ##     title = {readxl: Read Excel Files},
 ##     author = {Hadley Wickham and Jennifer Bryan},
-##     year = {2019},
-##     note = {R package version 1.3.1},
+##     year = {2023},
+##     note = {R package version 1.4.3},
 ##     url = {https://CRAN.R-project.org/package=readxl},
 ##   }
 \end{verbatim}
@@ -756,7 +768,7 @@ At this point, the first few rows of this large dataset look like this:
 ## 3 Taru          2022-05-26     1L         17   g     22003               
 ## 4 Taru          2022-05-26     1R1L       18.8 g     22003               
 ## 5 Taru          2022-05-26     0          18.4 g     22004               
-## # ... with 10 more variables: new_cage_number <chr>, group <chr>, notes <chr>,
+## # i 10 more variables: new_cage_number <chr>, group <chr>, notes <chr>,
 ## #   mouse_id <int>, latest_cage <chr>, mouse_label <chr>,
 ## #   starting_cage_number <chr>, dob <date>, species <chr>, sex <fct>
 \end{verbatim}
@@ -984,8 +996,8 @@ The downloads for this chapter are:
   \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx}{Example output} from the report template
 \end{itemize}
 
-\hypertarget{overview-2}{%
-\subsection{Overview}\label{overview-2}}
+\hypertarget{overview-test}{%
+\subsection{Overview TEST}\label{overview-test}}
 
 In the experiments, we will need to estimate the bacterial load of
 \emph{Mycobacterium tuberculosis} in organs---including lungs and spleens---of
@@ -1194,16 +1206,6 @@ well.
 First, the workflow loads some additional R libraries. You may need to install
 these on your local R session if you do not already have them installed.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(purrr)}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(gridExtra)}
-\FunctionTok{library}\NormalTok{(ggpubr)}
-\end{Highlighting}
-\end{Shaded}
-
 Next, the pipeline reads in the organ-specific data. To do this, it creates a
 list of all of the sheets that are in the spreadsheet other than the metadata
 sheet. It then loops through each of these organ-specific sheets. It uses
@@ -1212,60 +1214,78 @@ pivoting to convert all the dilution levels and values into two columns
 be joined into a single large dataframe, even if a different number of dilutions
 were used for the different organs.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Create a list of all the sheets in the file. Exclude the metadata sheet }
-\CommentTok{\# to get a list of the organ{-}specific sheets}
-\NormalTok{sheet\_names }\OtherTok{\textless{}{-}} \FunctionTok{excel\_sheets}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{)}
-\NormalTok{organ\_sheets }\OtherTok{\textless{}{-}}\NormalTok{ sheet\_names[sheet\_names }\SpecialCharTok{!=} \StringTok{"metadata"}\NormalTok{]}
-
-\CommentTok{\# Loop through all the organ{-}specific sheets and read them in as an }
-\CommentTok{\# element in a list. Use pivoting to collect all the dilutions in a }
-\CommentTok{\# way that will let you bind across all organs, even if a different}
-\CommentTok{\# set of dilutions were used for the different organs.}
-\NormalTok{merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(organ\_sheets))\{}
-  
-\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{, }
-                     \AttributeTok{sheet =}\NormalTok{ organ\_sheets[i]) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{organ =} \FunctionTok{paste0}\NormalTok{(organ\_sheets[i]))}
-  
-\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} 
-    \CommentTok{\#mutate(missing\_col = NA) \%\textgreater{}\% }
-    \FunctionTok{mutate\_if}\NormalTok{(is.double, as.numeric) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate\_if}\NormalTok{(is.numeric, as.character) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"dil\_"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"dilution"}\NormalTok{,}
-                 \AttributeTok{values\_to =} \StringTok{"CFUs"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
-           \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution))}
-    
-\NormalTok{  merged\_data[[i]] }\OtherTok{\textless{}{-}}\NormalTok{ data}
-\NormalTok{\}}
-
-\CommentTok{\# Bind all the organ{-}specific datasets into a single large dataset}
-\NormalTok{all\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(merged\_data, }\AttributeTok{.id =} \StringTok{"column\_label"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{column\_label)}
-\end{Highlighting}
-\end{Shaded}
-
-At this stage, here is how the beginning of this dataset looks:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## [[1]]
+## # A tibble: 880 x 10
+##    count_date      who_plated who_counted group mouse day   sex   organ dilution
+##    <chr>           <chr>      <chr>       <chr> <chr> <chr> <chr> <chr>    <dbl>
+##  1 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         0
+##  2 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         1
+##  3 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         2
+##  4 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         3
+##  5 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         4
+##  6 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         5
+##  7 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         6
+##  8 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         7
+##  9 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         8
+## 10 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ lung         9
+## # i 870 more rows
+## # i 1 more variable: CFUs <chr>
+## 
+## [[2]]
+## # A tibble: 870 x 10
+##    count_date      who_plated who_counted group mouse day   sex   organ dilution
+##    <chr>           <chr>      <chr>       <chr> <chr> <chr> <chr> <chr>    <dbl>
+##  1 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        0
+##  2 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        1
+##  3 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        2
+##  4 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        3
+##  5 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        4
+##  6 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        5
+##  7 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        6
+##  8 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        7
+##  9 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        8
+## 10 "\"Dec 28 2023~ FL         FL          BCG   1     14    fema~ sple~        9
+## # i 860 more rows
+## # i 1 more variable: CFUs <chr>
+\end{verbatim}
 
 \begin{verbatim}
-## # A tibble: 5 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
-## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
-## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9
+## # A tibble: 6 x 10
+##   count_date who_plated who_counted group mouse day   sex   organ dilution CFUs 
+##   <chr>      <chr>      <chr>       <chr> <chr> <chr> <chr> <chr>    <dbl> <chr>
+## 1 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         0 TNTC 
+## 2 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         1 TNTC 
+## 3 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         2 52   
+## 4 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         3 10   
+## 5 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         4 0    
+## 6 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         5 0
+\end{verbatim}
+
+At this stage\ldots{}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   organ  who_plated who_counted count_date       
+##   <chr>  <chr>      <chr>       <chr>            
+## 1 lung   FL         FL          "\"Dec 28 2023\""
+## 2 lung   FL         FL          "\"Feb 28 2023\""
+## 3 lung   FL         FL          "\"Mar 22 24\""  
+## 4 spleen FL         FL          "\"Dec 28 2023\""
+## 5 spleen FL         FL          "\"Feb 28 2023\""
+## 6 spleen FL         FL          "\"Mar 22 24\""
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 6 x 10
+##   count_date who_plated who_counted group mouse day   sex   organ dilution CFUs 
+##   <chr>      <chr>      <chr>       <fct> <chr> <chr> <chr> <chr>    <dbl> <chr>
+## 1 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         2 52   
+## 2 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         3 10   
+## 3 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         4 0    
+## 4 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         5 0    
+## 5 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         6 0    
+## 6 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         7 0
 \end{verbatim}
 
 You can see that, rather than having separate columns for each dilution level
@@ -1276,78 +1296,59 @@ identifying which dilution level for each.
 The next steps work through the data, identifying which dilution is an
 appropriate one to use to count CFUs for each sample.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Pull out numeric dilution value and filter for dilutions with CFUs between 10{-}75}
-\NormalTok{tidy\_cfu\_data }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"[0{-}9]+"}\NormalTok{),}
-         \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{((CFUs }\SpecialCharTok{\textgreater{}=} \DecValTok{5} \SpecialCharTok{\&}\NormalTok{ CFUs }\SpecialCharTok{\textless{}=} \DecValTok{95}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ groups }\SpecialCharTok{==} \StringTok{"control"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs =} \FunctionTok{as.numeric}\NormalTok{(CFUs)) }
-\end{Highlighting}
-\end{Shaded}
-
-In the example data, this step has reduced the number observations to consider
-from over 450 to 60.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{nrow}\NormalTok{(all\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## [1] 454
+## # A tibble: 171 x 10
+##    count_date      who_plated who_counted group mouse day   sex   organ dilution
+##    <chr>           <chr>      <chr>       <fct> <chr> <chr> <chr> <chr>    <dbl>
+##  1 "\"Dec 28 2023~ FL         FL          Sali~ 1     14    fema~ lung         2
+##  2 "\"Feb 28 2023~ FL         FL          Sali~ 1     56    fema~ lung         2
+##  3 "\"Mar 22 24\"" FL         FL          Sali~ 1     90    fema~ lung         3
+##  4 "\"Dec 28 2023~ FL         FL          Sali~ 1     14    male  lung         3
+##  5 "\"Feb 28 2023~ FL         FL          Sali~ 1     56    male  lung         2
+##  6 "\"Mar 22 24\"" FL         FL          Sali~ 1     90    male  lung         3
+##  7 "\"Dec 28 2023~ FL         FL          Sali~ 1     14    fema~ sple~        0
+##  8 "\"Feb 28 2023~ FL         FL          Sali~ 1     56    fema~ sple~        2
+##  9 "\"Mar 22 24\"" FL         FL          Sali~ 1     90    fema~ sple~        2
+## 10 "\"Dec 28 2023~ FL         FL          Sali~ 1     14    male  sple~        1
+## # i 161 more rows
+## # i 1 more variable: CFUs <dbl>
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{nrow}\NormalTok{(tidy\_cfu\_data)}
-\end{Highlighting}
-\end{Shaded}
+In the example data, this step has reduced the number observations to consider
+from over 1406 to 171.
 
 \begin{verbatim}
-## [1] 60
+## [1] 1406
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 171
 \end{verbatim}
 
 If you look at the first few rows of the data before and after cleaning, you can
 see that in particular it has removed a lot of ``TNTC'' values (as well as a lot
 of 0 values, although that's harder to see in this sample of the data):
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{all\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## # A tibble: 5 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution CFUs 
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <chr>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         0 TNTC 
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         1 TNTC 
-## 3 "\"February 21 2022\~ BK         BK          group~ A     lung         2 TNTC 
-## 4 "\"February 21 2022\~ BK         BK          group~ A     lung         3 53   
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         4 9
+## # A tibble: 5 x 10
+##   count_date who_plated who_counted group mouse day   sex   organ dilution CFUs 
+##   <chr>      <chr>      <chr>       <fct> <chr> <chr> <chr> <chr>    <dbl> <chr>
+## 1 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         2 52   
+## 2 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         3 10   
+## 3 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         4 0    
+## 4 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         5 0    
+## 5 "\"Dec 28~ FL         FL          BCG   1     14    fema~ lung         6 0
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_cfu\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## # A tibble: 5 x 8
-##   count_date            who_plated who_counted groups mouse organ dilution  CFUs
-##   <chr>                 <chr>      <chr>       <chr>  <chr> <chr>    <dbl> <dbl>
-## 1 "\"February 21 2022\~ BK         BK          group~ A     lung         3    53
-## 2 "\"February 21 2022\~ BK         BK          group~ A     lung         4     9
-## 3 "\"February 21 2022\~ BK         BK          group~ C     lung         5     8
-## 4 "\"February 21 2022\~ BK         BK          group~ D     lung         3    53
-## 5 "\"February 21 2022\~ BK         BK          group~ A     lung         2    92
+## # A tibble: 5 x 10
+##   count_date who_plated who_counted group mouse day   sex   organ dilution  CFUs
+##   <chr>      <chr>      <chr>       <fct> <chr> <chr> <chr> <chr>    <dbl> <dbl>
+## 1 "\"Dec 28~ FL         FL          Sali~ 1     14    fema~ lung         2    61
+## 2 "\"Feb 28~ FL         FL          Sali~ 1     56    fema~ lung         2    55
+## 3 "\"Mar 22~ FL         FL          Sali~ 1     90    fema~ lung         3     4
+## 4 "\"Dec 28~ FL         FL          Sali~ 1     14    male  lung         3    41
+## 5 "\"Feb 28~ FL         FL          Sali~ 1     56    male  lung         2    85
 \end{verbatim}
 
 Next, the code brings in the information from the metadata sheet, including data on
@@ -1355,63 +1356,58 @@ what percent of each organ was resuspended, the dilution factor, and so on.
 It uses this information to take the CFU value at a given dilution and convert
 it to an estimate of CFUs per mL.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Calculate CFU/ml for every qualifying replicate between 10{-}75 CFUs. }
-\CommentTok{\# Column binding by organ name to the metadata sheet via inner\_join().}
-\NormalTok{meta }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/baa\_cfu\_sheet.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"metadata"}\NormalTok{)}
-
-\NormalTok{tidy\_cfu\_meta\_joined }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(meta, tidy\_cfu\_data) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CFUs\_per\_ml =}\NormalTok{ (CFUs }\SpecialCharTok{*}\NormalTok{ (dilution\_factor }\SpecialCharTok{\^{}}\NormalTok{ dilution) }\SpecialCharTok{*} 
-\NormalTok{                          (total\_resuspension\_mL }\SpecialCharTok{/}\NormalTok{ volume\_plated\_ul) }\SpecialCharTok{*} \DecValTok{1000}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(organ, count\_date, who\_plated, who\_counted, groups,  mouse, dilution,  }
-\NormalTok{         CFUs, CFUs\_per\_ml) }
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## Joining, by = "organ"
+## # A tibble: 171 x 11
+##    organ count_date      day   who_plated who_counted group sex   mouse dilution
+##    <chr> <chr>           <chr> <chr>      <chr>       <fct> <chr> <chr>    <dbl>
+##  1 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ fema~ 1            2
+##  2 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ fema~ 1            2
+##  3 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ fema~ 1            3
+##  4 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ male  1            3
+##  5 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ male  1            2
+##  6 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ male  1            3
+##  7 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ fema~ 2            3
+##  8 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ fema~ 2            2
+##  9 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ fema~ 2            3
+## 10 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ male  2            3
+## # i 161 more rows
+## # i 2 more variables: CFUs <dbl>, CFUs_whole <dbl>
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(tidy\_cfu\_meta\_joined)}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## # A tibble: 171 x 11
+##    organ count_date      day   who_plated who_counted group sex   mouse dilution
+##    <chr> <chr>           <chr> <chr>      <chr>       <fct> <chr> <chr>    <dbl>
+##  1 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ fema~ 1            2
+##  2 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ fema~ 1            2
+##  3 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ fema~ 1            3
+##  4 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ male  1            3
+##  5 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ male  1            2
+##  6 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ male  1            3
+##  7 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ fema~ 2            3
+##  8 lung  "\"Feb 28 2023~ 56    FL         FL          Sali~ fema~ 2            2
+##  9 lung  "\"Mar 22 24\"" 90    FL         FL          Sali~ fema~ 2            3
+## 10 lung  "\"Dec 28 2023~ 14    FL         FL          Sali~ male  2            3
+## # i 161 more rows
+## # i 2 more variables: CFUs <dbl>, CFUs_whole <dbl>
+\end{verbatim}
 
 \begin{verbatim}
-## # A tibble: 6 x 9
-##   organ count_date            who_plated who_counted groups mouse dilution  CFUs
-##   <chr> <chr>                 <chr>      <chr>       <chr>  <chr>    <dbl> <dbl>
-## 1 lung  "\"February 21 2022\~ BK         BK          group~ A            3    53
-## 2 lung  "\"February 21 2022\~ BK         BK          group~ A            4     9
-## 3 lung  "\"February 21 2022\~ BK         BK          group~ C            5     8
-## 4 lung  "\"February 21 2022\~ BK         BK          group~ D            3    53
-## 5 lung  "\"February 21 2022\~ BK         BK          group~ A            2    92
-## 6 lung  "\"February 21 2022\~ BK         BK          group~ A            4     7
-## # ... with 1 more variable: CFUs_per_ml <dbl>
+## # A tibble: 6 x 11
+##   organ count_date day   who_plated who_counted group sex   mouse dilution  CFUs
+##   <chr> <chr>      <chr> <chr>      <chr>       <fct> <chr> <chr>    <dbl> <dbl>
+## 1 lung  "\"Dec 28~ 14    FL         FL          Sali~ fema~ 1            2    61
+## 2 lung  "\"Feb 28~ 56    FL         FL          Sali~ fema~ 1            2    55
+## 3 lung  "\"Mar 22~ 90    FL         FL          Sali~ fema~ 1            3     4
+## 4 lung  "\"Dec 28~ 14    FL         FL          Sali~ male  1            3    41
+## 5 lung  "\"Feb 28~ 56    FL         FL          Sali~ male  1            2    85
+## 6 lung  "\"Mar 22~ 90    FL         FL          Sali~ male  1            3     9
+## # i 1 more variable: CFUs_whole <dbl>
 \end{verbatim}
 
 The rest of the report code is used to provide summaries, visualizations, and
 analysis of these data. First, there is code to provide a summary of the number
 of mice, experimental groups, and some other details for each of the organs:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(organ) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarize}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Experimental groups}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(groups), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{),}
-            \StringTok{\textasciigrave{}}\AttributeTok{Dates counted}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{unique}\NormalTok{(count\_date), }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{), }
-            \StringTok{\textasciigrave{}}\AttributeTok{Total mice}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(}\FunctionTok{paste}\NormalTok{(groups, mouse))), }
-            \StringTok{\textasciigrave{}}\AttributeTok{Dilutions considered}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(dilution))), }
-                              \AttributeTok{collapse =} \StringTok{", "}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate\_all}\NormalTok{(as.character) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{organ) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{paste0}\NormalTok{(name, }\StringTok{":"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{align =} \FunctionTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{, }\StringTok{"r"}\NormalTok{, }\StringTok{"l"}\NormalTok{), }
-               \AttributeTok{caption =} \StringTok{"Organ{-}specific summary of the experiment"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{table}
 
@@ -1421,21 +1417,21 @@ of mice, experimental groups, and some other details for each of the organs:
 \hline
 organ & name & value\\
 \hline
-lung & Experimental groups: & group\_1, group\_2, group\_3, group\_4\\
+lung & Experimental groups: & Saline, BCG, ID93-GLA-SE, BCG+ID93-GLA-SE\\
 \hline
-lung & Dates counted: & "February 21 2022", "April 18 2022"\\
+lung & Dates counted: & "Dec 28 2023", "Feb 28 2023", "Mar 22 24"\\
 \hline
-lung & Total mice: & 19\\
+lung & Total mice: & 17\\
 \hline
-lung & Dilutions considered: & 2, 3, 4, 5, 6\\
+lung & Dilutions considered: & 2, 3, 4, 5\\
 \hline
-spleen & Experimental groups: & group\_1, group\_2, group\_3\\
+spleen & Experimental groups: & Saline, BCG, ID93-GLA-SE, BCG+ID93-GLA-SE\\
 \hline
-spleen & Dates counted: & "April 25 2022"\\
+spleen & Dates counted: & "Dec 28 2023", "Feb 28 2023", "Mar 22 24"\\
 \hline
-spleen & Total mice: & 10\\
+spleen & Total mice: & 17\\
 \hline
-spleen & Dilutions considered: & 1, 2, 3, 4\\
+spleen & Dilutions considered: & 0, 1, 2, 3\\
 \hline
 \end{tabular}
 \end{table}
@@ -1443,27 +1439,17 @@ spleen & Dilutions considered: & 1, 2, 3, 4\\
 Next, the pipeline provides a table with the conditions of the CFU collection,
 based on the collected metadata from the template:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{meta }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Organ"}\NormalTok{, }\StringTok{"Percent of organ plated"}\NormalTok{, }\StringTok{"Aliquot"}\NormalTok{, }
-                            \StringTok{"Dilution factor"}\NormalTok{, }\StringTok{"Total resuspension"}\NormalTok{, }
-                            \StringTok{"Volume plated"}\NormalTok{), }
-               \AttributeTok{caption =} \StringTok{"Conditions of the CFU collection"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{table}
 
 \caption{\label{tab:unnamed-chunk-31}Conditions of the CFU collection}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r}
+\begin{tabular}[t]{l|r|r|r|r}
 \hline
-Organ & Percent of organ plated & Aliquot & Dilution factor & Total resuspension & Volume plated\\
+Organ & Percent of Organ Plated & Dilution Factor & Total resuspension mL & Volume Plated mL\\
 \hline
-lung & 33 & 100 & 5 & 0.5 & 100\\
+lung & 33 & 10 & 1.5 & 0.1\\
 \hline
-spleen & 50 & 100 & 5 & 0.5 & 125\\
+spleen & 50 & 10 & 1.5 & 0.1\\
 \hline
 \end{tabular}
 \end{table}
@@ -1471,85 +1457,76 @@ spleen & 50 & 100 & 5 & 0.5 & 125\\
 Next, the pipeline creates a plot showing the distribution of CFUs by
 experimental group in each of the organs:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_lung\_cfu\_plot }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{group =} \FunctionTok{fct\_relevel}\NormalTok{(groups, }\StringTok{"group\_1"}\NormalTok{, }\StringTok{"group\_2"}\NormalTok{, }\StringTok{"group\_3"}\NormalTok{, }\StringTok{"group\_4"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ groups, }\AttributeTok{y =} \FunctionTok{log10}\NormalTok{(CFUs\_per\_ml))) }\SpecialCharTok{+}
-    \FunctionTok{geom\_quasirandom}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ groups), }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey"}\NormalTok{, }\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"CFUs in early infected mouse lung"}\NormalTok{), }
-       \AttributeTok{x =} \StringTok{"Group"}\NormalTok{, }\AttributeTok{y =} \StringTok{"log10(CFU/mL)"}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{, }\AttributeTok{ref.group =} \StringTok{"group\_1"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ organ, }\AttributeTok{ncol =} \DecValTok{1}\NormalTok{)}
-
-\NormalTok{tidy\_lung\_cfu\_plot}
-\end{Highlighting}
-\end{Shaded}
-
 \includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 Next, the pipeline runs an ANOVA analysis on the data. This is conducted after
 transforming the CFUs with a log-10 transform.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{cfu\_stats }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_cfu\_meta\_joined }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(organ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{aov\_result =} \FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{aov}\NormalTok{(}\FunctionTok{log10}\NormalTok{(CFUs\_per\_ml) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ groups, }\AttributeTok{data =}\NormalTok{ .x)),}
-         \AttributeTok{tukey\_result =} \FunctionTok{map}\NormalTok{(aov\_result, TukeyHSD),}
-         \AttributeTok{tidy\_tukey =} \FunctionTok{map}\NormalTok{(tukey\_result, broom}\SpecialCharTok{::}\NormalTok{tidy)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{unnest}\NormalTok{(tidy\_tukey, }\AttributeTok{.drop =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{separate}\NormalTok{(contrast, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"contrast1"}\NormalTok{, }\StringTok{"contrast2"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{data, }\SpecialCharTok{{-}}\NormalTok{aov\_result, }\SpecialCharTok{{-}}\NormalTok{tukey\_result, }\SpecialCharTok{{-}}\NormalTok{term, }\SpecialCharTok{{-}}\NormalTok{null.value)}
-
-\NormalTok{cfu\_stats }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"ANOVA results comparing CFUs in each organ across the experimental groups"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-33}ANOVA results comparing CFUs in each organ across the experimental groups}
+\caption{\label{tab:unnamed-chunk-34}ANOVA results comparing CFUs in each organ across the experimental groups}
 \centering
 \begin{tabular}[t]{l|l|l|r|r|r|r}
 \hline
 organ & contrast1 & contrast2 & estimate & conf.low & conf.high & adj.p.value\\
 \hline
-lung & group\_2 & group\_1 & -0.6937802 & -1.1459033 & -0.2416571 & 0.0010456\\
+lung & BCG & Saline & -0.2368058 & -0.5832132 & 0.1096016 & 0.2844430\\
 \hline
-lung & group\_3 & group\_1 & -0.8587398 & -1.2760306 & -0.4414491 & 0.0000131\\
+lung & ID93 & GLA & 0.0407358 & -0.2933692 & 0.3748408 & 0.9886291\\
 \hline
-lung & group\_4 & group\_1 & -0.5759227 & -1.0188178 & -0.1330275 & 0.0063696\\
+lung & BCG+ID93 & GLA & -0.2381384 & -0.5760187 & 0.0997419 & 0.2587702\\
 \hline
-lung & group\_3 & group\_2 & -0.1649596 & -0.5540852 & 0.2241660 & 0.6695958\\
+lung & ID93 & GLA & 0.2775416 & -0.0688658 & 0.6239490 & 0.1614924\\
 \hline
-lung & group\_4 & group\_2 & 0.1178575 & -0.2986077 & 0.5343227 & 0.8724636\\
+lung & BCG+ID93 & GLA & -0.0013326 & -0.3513826 & 0.3487175 & 0.9999996\\
 \hline
-lung & group\_4 & group\_3 & 0.2828172 & -0.0955471 & 0.6611814 & 0.2037662\\
+lung & BCG+ID93 & GLA & -0.2788742 & -0.6167545 & 0.0590061 & 0.1420190\\
 \hline
-spleen & group\_2 & group\_1 & -0.5489921 & -1.0924674 & -0.0055168 & 0.0476326\\
+spleen & BCG & Saline & -0.2738479 & -1.0919602 & 0.5442645 & 0.8159594\\
 \hline
-spleen & group\_3 & group\_1 & -0.7868889 & -1.2575523 & -0.3162254 & 0.0018789\\
+spleen & ID93 & GLA & -0.0292823 & -0.8276782 & 0.7691136 & 0.9996778\\
 \hline
-spleen & group\_3 & group\_2 & -0.2378968 & -0.7085602 & 0.2327667 & 0.4019569\\
+spleen & BCG+ID93 & GLA & -0.4036624 & -1.2329754 & 0.4256505 & 0.5798709\\
+\hline
+spleen & ID93 & GLA & 0.2445656 & -0.5735467 & 1.0626780 & 0.8612381\\
+\hline
+spleen & BCG+ID93 & GLA & -0.1298145 & -0.9781256 & 0.7184965 & 0.9779295\\
+\hline
+spleen & BCG+ID93 & GLA & -0.3743802 & -1.2036931 & 0.4549328 & 0.6381738\\
 \hline
 \end{tabular}
 \end{table}
+
+\begin{verbatim}
+## [1] 0.6506753
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.8720107
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.3555729
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.01680341
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.2140449
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.0267285
+\end{verbatim}
 
 As a last step, the code in the template writes a CSV file with the processed
 data. This file will be an input into a script that will format the data to
 add to a database where we are collecting and integrating data from all the CSU
 experiments, and ultimately from there into project-wide storage.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Write out processed data into a CSV file}
-\FunctionTok{write\_csv}\NormalTok{(tidy\_cfu\_meta\_joined, }\StringTok{"cfu\_output.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{enzyme-linked-immunosorbest-assay-elisa}{%
 \chapter{Enzyme-linked immunosorbest assay (ELISA)}\label{enzyme-linked-immunosorbest-assay-elisa}}
@@ -1592,17 +1569,6 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 
 \hypertarget{loading-libraries}{%
 \subsection{Loading libraries}\label{loading-libraries}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(minpack.lm)}
-\FunctionTok{library}\NormalTok{(broom)}
-\FunctionTok{library}\NormalTok{(purrr)}
-\FunctionTok{library}\NormalTok{(ggbeeswarm)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{elisa-data-analysis}{%
 \section{ELISA data analysis}\label{elisa-data-analysis}}
@@ -1655,40 +1621,10 @@ We have presented an example below where we have performed a 8-10 point serial d
 
 This information comes from the 2018 study conducted by Hartman et al.~Hartman et al.~analyzed the ELISA data in their study utilizing fitted sigmoid analysis, end point titer, and absorbance summation. We utilized this information to determine whether our formulas and calculations provide the same outcomes and values as theirs.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/example\_elisa\_data.xlsx"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{tidying-the-data}{%
 \subsubsection{Tidying the data}\label{tidying-the-data}}
 
 We next performed tidying the data and make it in a format so that we can plot a sigmoid curve with that.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Divide dilution column into two seoparate columns}
-
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_example\_data, }
-                               \AttributeTok{col =} \StringTok{"dilution"}\NormalTok{, }
-                               \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }\StringTok{"denominator"}\NormalTok{), }
-                               \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
-
-\CommentTok{\# Convert the tabke from character to numeric}
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
-
-
-\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{dilution }\OtherTok{\textless{}{-}} 
-\NormalTok{  elisa\_example\_data}\SpecialCharTok{$}\NormalTok{numerator}\SpecialCharTok{/}\NormalTok{elisa\_example\_data}\SpecialCharTok{$}\NormalTok{denominator  }
-
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_dilution =} \FunctionTok{log}\NormalTok{(dilution, }\AttributeTok{base =} \DecValTok{3}\NormalTok{))}
-
-\FunctionTok{head}\NormalTok{(elisa\_example\_data)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 5
@@ -1708,22 +1644,6 @@ We next performed tidying the data and make it in a format so that we can plot a
 We next created the curve fitting model function by using nlsLM function from ``minpack.lm'' package.
 The purpose of nlslm is to minimize the sum square of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. In the early 1960s, the Levenberg-Marquardt algorithm was developed to address nonlinear least squares problems. Through a series of well-chosen updates to model parameter values, Levenberg-Marquardt algorithm lower the sum of the squares of the errors between the model function and the data points.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}} 
-\NormalTok{                 ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
-\AttributeTok{data =}\NormalTok{ elisa\_example\_data, }
-\AttributeTok{start =} \FunctionTok{list}\NormalTok{ (}\AttributeTok{a =} \DecValTok{4}\NormalTok{, }\AttributeTok{d=} \DecValTok{0}\NormalTok{, }\AttributeTok{c =} \SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\AttributeTok{b =} \DecValTok{1}\NormalTok{))}
-
-\CommentTok{\# a = maximum absorbance}
-\CommentTok{\# d = minimum absobance}
-\CommentTok{\# c = point of maximum growth }
-\CommentTok{\# b = slope at c}
-
-\NormalTok{mod\_1}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
@@ -1735,12 +1655,6 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 ## Number of iterations to convergence: 9 
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(mod\_1)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## 
@@ -1764,36 +1678,10 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 \hypertarget{apply-the-function-to-the-data}{%
 \subsubsection{Apply the function to the data}\label{apply-the-function-to-the-data}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_params }\OtherTok{\textless{}{-}}\NormalTok{ mod\_1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{tidy}\NormalTok{() }
-
-\NormalTok{a }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"a"}\NormalTok{]}
-\NormalTok{b }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"b"}\NormalTok{]}
-\NormalTok{c }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"c"}\NormalTok{]}
-\NormalTok{d }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_params}\SpecialCharTok{$}\NormalTok{estimate[tidy\_params}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"d"}\NormalTok{]}
-
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted =} \FunctionTok{predict}\NormalTok{(mod\_1))}
-
-\NormalTok{elisa\_example\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted =} \FunctionTok{predict}\NormalTok{(mod\_1))}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{plot-the-sigmoid-curve-with-fitted-sigmoid-model}{%
 \subsubsection{Plot the sigmoid curve with fitted sigmoid model}\label{plot-the-sigmoid-curve-with-fitted-sigmoid-model}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_example\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{fitted), }\AttributeTok{color =} \StringTok{"dodgerblue"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-44-1.pdf}
 
 \hypertarget{endpoint-titer-method}{%
 \section{2. Endpoint titer method}\label{endpoint-titer-method}}
@@ -1803,24 +1691,10 @@ The endpoint titer approach chooses an absorbance value just above the backgroun
 \hypertarget{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}{%
 \subsection{Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.}\label{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ c }\SpecialCharTok{*}\NormalTok{ (((a }\SpecialCharTok{{-}}\NormalTok{ d) }\SpecialCharTok{/}\NormalTok{ (}\FloatTok{0.2} \SpecialCharTok{{-}}\NormalTok{ d)) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\^{}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ b)}
-
-\FunctionTok{summary}\NormalTok{(endpoint\_titer)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  -8.113  -8.113  -8.113  -8.113  -8.113  -8.113
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{endpoint\_titer}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## [1] -8.113285
@@ -1837,15 +1711,6 @@ The endpoint titer approach chooses an absorbance value just above the backgroun
 
 In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{AS }\OtherTok{=} \FloatTok{0.04} \SpecialCharTok{+} \FloatTok{0.04} \SpecialCharTok{+} \FloatTok{0.05} \SpecialCharTok{+} \FloatTok{0.05} \SpecialCharTok{+} \FloatTok{0.06} \SpecialCharTok{+} 
-  \FloatTok{0.1} \SpecialCharTok{+} \FloatTok{0.22} \SpecialCharTok{+} \FloatTok{0.51} \SpecialCharTok{+} \FloatTok{1.1} \SpecialCharTok{+} \FloatTok{2.34} \SpecialCharTok{+} \FloatTok{3.73} \SpecialCharTok{+} \FloatTok{4.0}
-
-\NormalTok{AS}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## [1] 12.24
 \end{verbatim}
@@ -1858,25 +1723,8 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \hypertarget{read-in-the-data-1}{%
 \subsubsection{Read in the data}\label{read-in-the-data-1}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_data\_serial\_dilution.xlsx"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{tidy-the-data}{%
 \subsubsection{Tidy the data}\label{tidy-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_data, }
-                           \AttributeTok{cols =} \StringTok{"Mouse\_1"}\SpecialCharTok{:}\StringTok{"Mouse\_5"}\NormalTok{, }
-                           \AttributeTok{names\_to =} \StringTok{"mouse\_id"}\NormalTok{, }
-                           \AttributeTok{values\_to =} \StringTok{"absorbance"}\NormalTok{)}
-
-\FunctionTok{head}\NormalTok{(elisa\_data)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -1890,31 +1738,6 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 ## 6 Group 1 1/100    Mouse_1         3.9
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# separate dilution column and convert it to log2}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_data, }
-                       \AttributeTok{col =} \StringTok{"Dilution"}\NormalTok{, }
-                       \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"numerator"}\NormalTok{, }
-                                \StringTok{"denomenator"}\NormalTok{), }
-                       \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{)}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{transform}\NormalTok{(}\AttributeTok{numerator =} \FunctionTok{as.numeric}\NormalTok{(numerator),}
-            \AttributeTok{denomenator =} \FunctionTok{as.numeric}\NormalTok{(denomenator))}
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} 
-\NormalTok{           elisa\_data}\SpecialCharTok{$}\NormalTok{numerator}\SpecialCharTok{/}\NormalTok{elisa\_data}\SpecialCharTok{$}\NormalTok{denomenator) }
-
-\NormalTok{elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_dilution =} \FunctionTok{log2}\NormalTok{(dilution))}
-
-\FunctionTok{head}\NormalTok{(elisa\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ##    Groups numerator denomenator mouse_id absorbance dilution log_dilution
 ## 1 Group 1         1          50  Mouse_1        4.1     0.02    -5.643856
@@ -1927,30 +1750,6 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 
 \hypertarget{converting-data-into-dataframe}{%
 \paragraph{converting data into dataframe}\label{converting-data-into-dataframe}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_df }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(Groups, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{log\_dilution =}\NormalTok{ log\_dilution, }
-            \AttributeTok{absorbance =}\NormalTok{ absorbance)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## `summarise()` has grouped output by 'Groups', 'mouse_id'. You can override using
-## the `.groups` argument.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_nested }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(Groups, mouse\_id) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{nest}\NormalTok{()}
-
-\FunctionTok{head}\NormalTok{(elisa\_data\_nested)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 3
@@ -1968,17 +1767,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 \hypertarget{plot-the-curves-to-evaluate-the-a-d-c-and-b}{%
 \paragraph{plot the curves to evaluate the a, d, c, and b}\label{plot-the-curves-to-evaluate-the-a-d-c-and-b}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ log\_dilution, }\AttributeTok{y =}\NormalTok{ absorbance)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(Groups }\SpecialCharTok{\textasciitilde{}}\NormalTok{ mouse\_id)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Based on the curve, the values are:
 
@@ -1990,32 +1779,8 @@ b = 1
 \hypertarget{creating-a-function-for-fitting-model}{%
 \subsection{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fitted\_model\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df\_elisa, }
-\NormalTok{                               start\_a, start\_d, }
-\NormalTok{                               start\_c, start\_b) \{}
-\NormalTok{  mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}} 
-\NormalTok{                   ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
-\AttributeTok{data =}\NormalTok{ df\_elisa,}
-\AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{a =}\NormalTok{ start\_a, }\AttributeTok{d =}\NormalTok{ start\_d, }\AttributeTok{c =}\NormalTok{ start\_c, }\AttributeTok{b =}\NormalTok{ start\_b))}
-  \FunctionTok{return}\NormalTok{(mod\_1)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{fitting-the-model-into-the-dataset}{%
 \subsubsection{Fitting the model into the dataset}\label{fitting-the-model-into-the-dataset}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{fitted\_model\_elisa}\NormalTok{(elisa\_data\_nested}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]], }
-                   \AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }
-                   \AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }
-                   \AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }
-                   \AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## Nonlinear regression model
@@ -2031,20 +1796,6 @@ b = 1
 
 \hypertarget{apply-the-fitted-model-function-to-the-whole-dataframe}{%
 \subsubsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_fitted\_data }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_nested }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data =} 
-\NormalTok{           purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}} 
-                        \FunctionTok{fitted\_model\_elisa}\NormalTok{(.x,}\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }
-                                              \AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }
-                                              \AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }
-                                              \AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)))}
-
-\FunctionTok{head}\NormalTok{(elisa\_fitted\_data)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -2062,21 +1813,6 @@ b = 1
 \hypertarget{take-out-the-summary-of-the-data}{%
 \subsubsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_fitted\_data\_summary }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_fitted\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{elisa\_fitted\_data\_summary =} 
-\NormalTok{           purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, broom}\SpecialCharTok{::}\NormalTok{glance))}
-
-\NormalTok{unnested }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_fitted\_data\_summary }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{unnest}\NormalTok{(elisa\_fitted\_data\_summary) }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Groups, mouse\_id, fitted\_data)}
-
-\NormalTok{unnested}\SpecialCharTok{$}\NormalTok{fitted\_data[[}\DecValTok{1}\NormalTok{]]}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## Nonlinear regression model
 ##   model: absorbance ~ ((a - d)/(1 + (log_dilution/c)^b)) + d
@@ -2092,53 +1828,11 @@ b = 1
 \hypertarget{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}{%
 \section{Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer}\label{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Fitted model function}
-\NormalTok{fitted\_model\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df\_elisa, }
-\NormalTok{                               start\_a, }
-\NormalTok{                               start\_d, }
-\NormalTok{                               start\_c, }
-\NormalTok{                               start\_b) \{}
-\NormalTok{  mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{nlsLM}\NormalTok{(absorbance }\SpecialCharTok{\textasciitilde{}} 
-\NormalTok{                   ((a}\SpecialCharTok{{-}}\NormalTok{d)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(log\_dilution}\SpecialCharTok{/}\NormalTok{c)}\SpecialCharTok{\^{}}\NormalTok{b)) }\SpecialCharTok{+}\NormalTok{ d,}
-\AttributeTok{data =}\NormalTok{ df\_elisa,}
-\AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{a =}\NormalTok{ start\_a, }\AttributeTok{d =}\NormalTok{ start\_d, }\AttributeTok{c =}\NormalTok{ start\_c, }\AttributeTok{b =}\NormalTok{ start\_b))}
-  \FunctionTok{return}\NormalTok{(mod\_1)}
-\NormalTok{\}}
-
-\CommentTok{\# Endpoint titer function}
-
-\NormalTok{endpoint\_titer\_elisa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fitted\_data, back\_value) \{}
-\NormalTok{  tidy\_fitted }\OtherTok{\textless{}{-}}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(fitted\_data)}
-\NormalTok{  est\_a }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"a"}\NormalTok{]}
-\NormalTok{  est\_b }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"b"}\NormalTok{]}
-\NormalTok{  est\_c }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"c"}\NormalTok{]}
-\NormalTok{  est\_d }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_fitted}\SpecialCharTok{$}\NormalTok{estimate[tidy\_fitted}\SpecialCharTok{$}\NormalTok{term }\SpecialCharTok{==} \StringTok{"d"}\NormalTok{]}
-\NormalTok{  endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ est\_c }\SpecialCharTok{*}\NormalTok{ (((est\_a }\SpecialCharTok{{-}}\NormalTok{ est\_d) }\SpecialCharTok{/}\NormalTok{ (back\_value }\SpecialCharTok{{-}}\NormalTok{ est\_d)) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\^{}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ est\_b)}
-  \FunctionTok{return}\NormalTok{(endpoint\_titer)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}{%
 \subsubsection{Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation}\label{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}}
 
 \hypertarget{run-fitted-model-on-the-data}{%
 \paragraph{Run fitted model on the data}\label{run-fitted-model-on-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_with\_fit\_model }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_nested }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted\_data =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(data, }
-                                  \SpecialCharTok{\textasciitilde{}} \FunctionTok{fitted\_model\_elisa}\NormalTok{(.x, }\AttributeTok{start\_a =} \DecValTok{4}\NormalTok{, }
-                                                          \AttributeTok{start\_d =} \DecValTok{0}\NormalTok{, }
-                                                          \AttributeTok{start\_c =} \SpecialCharTok{{-}}\DecValTok{8}\NormalTok{, }
-                                                          \AttributeTok{start\_b =} \DecValTok{1}\NormalTok{)))}
-
-\FunctionTok{head}\NormalTok{(elisa\_data\_with\_fit\_model)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -2156,50 +1850,20 @@ b = 1
 \hypertarget{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}{%
 \paragraph{Taking output of the fitted model function and into endpoint titer function}\label{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_with\_endpoint\_titer }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_data\_with\_fit\_model }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{endpoint\_data =} 
-\NormalTok{           purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(fitted\_data, }
-                      \SpecialCharTok{\textasciitilde{}} \FunctionTok{endpoint\_titer\_elisa}\NormalTok{(.x, }\AttributeTok{back\_value =} \FloatTok{0.2}\NormalTok{)))}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{plot-the-endpoint-titer-data-for-the-two-groups}{%
 \subsubsection{Plot the endpoint titer data for the two groups}\label{plot-the-endpoint-titer-data-for-the-two-groups}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_with\_endpoint\_titer}\SpecialCharTok{$}\NormalTok{endpoint\_data}\OtherTok{=}
-  \FunctionTok{as.numeric}\NormalTok{(elisa\_data\_with\_endpoint\_titer}\SpecialCharTok{$}\NormalTok{endpoint\_data)}
-
-\NormalTok{elisa\_data\_with\_endpoint\_titer }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Groups, }\AttributeTok{y =}\NormalTok{ endpoint\_data, }\AttributeTok{color =}\NormalTok{ Groups)) }\SpecialCharTok{+}
- \FunctionTok{geom\_beeswarm}\NormalTok{(}\AttributeTok{cex =} \DecValTok{3}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 \hypertarget{perform-statistical-analysis-on-the-data}{%
 \subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_data\_stats }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(endpoint\_data }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Groups, }
-                           \AttributeTok{data =}\NormalTok{ elisa\_data\_with\_endpoint\_titer)}
-
-\NormalTok{elisa\_data\_stats }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{tidy}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 1 x 10
 ##   estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high
 ##      <dbl>     <dbl>     <dbl>     <dbl>      <dbl>     <dbl>    <dbl>     <dbl>
 ## 1   -0.800     -14.0     -13.2     -18.8 0.00000268      5.63   -0.906    -0.695
-## # ... with 2 more variables: method <chr>, alternative <chr>
+## # i 2 more variables: method <chr>, alternative <chr>
 \end{verbatim}
 
 \hypertarget{statistical-data-analysis-for-more-than-two-groups}{%
@@ -2214,30 +1878,6 @@ We read ELISA plate in a 96 well plate using a plate reader. The plate reader ge
 \subsubsection{Read in the first dataset}\label{read-in-the-first-dataset}}
 
 Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_raw\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }
-                             \AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }
-                             \AttributeTok{range =} \StringTok{"B2:M9"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(elisa\_raw\_data)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 12
@@ -2256,48 +1896,6 @@ Below is the example ELISA data that has came straight out of the plate reader. 
 
 It is important to clean the data and arrange it in a format on which we can apply formulas and functions.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Convert all columns to numeric}
-
-\NormalTok{elisa\_raw\_data\_numeric }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.numeric)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-
-## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# pivot longer the data}
-
-\NormalTok{elisa\_raw\_data\_tidy }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_raw\_data\_numeric, }\AttributeTok{cols =} \StringTok{"...1"}\SpecialCharTok{:}\StringTok{"...12"}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"well\_id"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"od\_450nm"}\NormalTok{)}
-
-\CommentTok{\# remove "..." from the first column}
-
-\NormalTok{elisa\_raw\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace}\NormalTok{(elisa\_raw\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id, }\StringTok{"..."}\NormalTok{, }\StringTok{""}\NormalTok{)}
-
-\CommentTok{\# Add new column to the data\_frame}
-
-\NormalTok{elisa\_raw\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data\_tidy }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{rep}\NormalTok{(LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\AttributeTok{each =} \DecValTok{12}\NormalTok{))}
-
-\NormalTok{elisa\_raw\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_raw\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{well\_id =} \FunctionTok{paste0}\NormalTok{(name, well\_id)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{name)}
-
-\FunctionTok{head}\NormalTok{(elisa\_raw\_data\_tidy\_new)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 6 x 2
 ##   well_id od_450nm
@@ -2315,30 +1913,6 @@ It is important to clean the data and arrange it in a format on which we can app
 
 The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{elisa\_label\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/elisa\_s1\_07{-}25{-}20.xlsx"}\NormalTok{, }
-                               \AttributeTok{sheet =} \StringTok{"S1"}\NormalTok{, }\AttributeTok{col\_names =} \ConstantTok{FALSE}\NormalTok{,  }
-                               \AttributeTok{range =} \StringTok{"Q2:AB9"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## New names:
-## * `` -> ...1
-## * `` -> ...2
-## * `` -> ...3
-## * `` -> ...4
-## * `` -> ...5
-## * ...
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(elisa\_label\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 6 x 12
 ##   ...1        ...2   ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10 ...11 ...12
@@ -2353,32 +1927,6 @@ The second dataset contains the information such as groups, mouse id, and diluti
 
 \hypertarget{tidy-dataset-2}{%
 \subsubsection{Tidy dataset-2}\label{tidy-dataset-2}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# pivot longer the data}
-
-\NormalTok{elisa\_label\_data\_tidy }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ elisa\_label\_data, }
-                                      \AttributeTok{cols =} \StringTok{"...1"}\SpecialCharTok{:}\StringTok{"...12"}\NormalTok{, }
-                                      \AttributeTok{names\_to =} \StringTok{"well\_id"}\NormalTok{, }
-                                      \AttributeTok{values\_to =} \StringTok{"information"}\NormalTok{)}
-
-\CommentTok{\# remove "..." from the first column}
-
-\NormalTok{elisa\_label\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace}\NormalTok{(elisa\_label\_data\_tidy}\SpecialCharTok{$}\NormalTok{well\_id, }\StringTok{"..."}\NormalTok{, }\StringTok{""}\NormalTok{)}
-
-\CommentTok{\# Add new column to the data\_frame}
-
-\NormalTok{elisa\_label\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_label\_data\_tidy }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{name =} \FunctionTok{rep}\NormalTok{(LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\AttributeTok{each =} \DecValTok{12}\NormalTok{))}
-
-\NormalTok{elisa\_label\_data\_tidy\_new }\OtherTok{\textless{}{-}}\NormalTok{ elisa\_label\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{well\_id =} \FunctionTok{paste0}\NormalTok{(name, well\_id)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{name)}
-
-\FunctionTok{head}\NormalTok{(elisa\_label\_data\_tidy\_new)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 2
@@ -2397,17 +1945,6 @@ The second dataset contains the information such as groups, mouse id, and diluti
 
 To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Merge the two datasets}
-
-\NormalTok{elisa\_data }\OtherTok{=}\NormalTok{ elisa\_raw\_data\_tidy\_new }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{inner\_join}\NormalTok{(elisa\_label\_data\_tidy\_new,}
-                                                    \AttributeTok{by=}\StringTok{"well\_id"}\NormalTok{)}
-
-\FunctionTok{head}\NormalTok{(elisa\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 6 x 3
 ##   well_id od_450nm information  
@@ -2420,26 +1957,6 @@ To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we m
 ## 6 A6         0.122 1A-1 (1/6250
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\#\# Separate the information table into sample ID and dilution columns}
-
-\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}} \FunctionTok{separate}\NormalTok{(elisa\_data, }\AttributeTok{col =} \StringTok{"information"}\NormalTok{, }
-                            \AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"sample\_id"}\NormalTok{, }\StringTok{"dilution"}\NormalTok{),}
-                            \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{("}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [1, 2].
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(tidy\_elisa\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 6 x 4
 ##   well_id od_450nm sample_id   dilution
@@ -2451,20 +1968,6 @@ To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we m
 ## 5 A5         0.061 "1A-1 "     1/1250  
 ## 6 A6         0.122 "1A-1 "     1/6250
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{dilution =} \FunctionTok{str\_extract}\NormalTok{(dilution, }\StringTok{"(/)[0{-}9]+"}\NormalTok{),}
-         \AttributeTok{dilution =} \FunctionTok{str\_replace}\NormalTok{(dilution, }\StringTok{"/"}\NormalTok{, }\StringTok{""}\NormalTok{),}
-         \AttributeTok{dilution =} \FunctionTok{as.numeric}\NormalTok{(dilution))}
-
-\NormalTok{tidy\_elisa\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_elisa\_data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(well\_id, sample\_id, dilution, od\_450nm)}
-
-\FunctionTok{head}\NormalTok{(tidy\_elisa\_data)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -2485,297 +1988,201 @@ Flow cytometry data can be quantified in many different ways and with different 
 
 This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Immune cells are very diverse, and the make-up of immune cells within a sample
+can provide important insights on immune processes based on measures of this
+composition. Immune cells can be categorized into large groups (e.g., T cells, B
+cells, macrophages, dendritic cells). They can also be characterized into
+different populations within these large groups, based on things like activation
+and differentiation {[}?{]} within the group {[}?{]} \citep{maecker2012standardizing} (e.g.,
+T cells can be divided into naive T cells versus memory T cells, helper T cells
+versus cytotoxic T cells, {[}others{]} {[}?{]}). This process of characterizing the
+immune cells in a sample is called immunophenotyping.
+
+To make these classifications, flow cytometry uses a pretty clever mix of
+physics and biology. First, it starts by leveraging the biological knowledge
+that antibodies can have a very specific affinity for a certain protein.
+This means that you can find a set of antibodies that will target and
+stick specifically to certain proteins.
+
+Flow cytometry starts by creating a panel of up to {[}x{]} protein markers, focusing
+on proteins that can help in identifying a specific cell type. Typically, the
+panel will include several proteins that are ``CD'' proteins (the ``CD'' stands for
+cluster of differentiation or classification determinant). These are proteins
+that show up on the surface of immune cells, with specific CD proteins common
+to only certain types of cells, making their presence or absence helpful in
+classifying cells.
+
+Two of the most common CDs to include on a panel are CD3, CD4, and CD8. T cells have
+CD3 on their surface, so a marker for CD3 can be used to distinguish T cells
+from other types of white blood cells, including granulocytes, monocytes, and
+B cells. Among T cells, the helper T cells have the CD4 protein on their surface,
+while the cytotoxic T cells have the CD8 protein on their surface, so the CD4
+and CD8 markers can help in refining a T cell into a more specific type.
+
+In flow cytometry, you can characterize immune cells into populations based on
+proteins on the cell surface and inside the cell, as well as cell size and
+granularity \citep[\citet{barnett2008cd4}]{maecker2012standardizing}. For example,
+macrophages can be distinguished from T cells and B cells based on \ldots{} {[}size?
+granularity?{]}, which T cells and B cells can be distinguished from each other
+based on whether the cell has the {[}surface protein? CD3?{]}, and helper T cells
+versus cytotoxic T cells can be distinguished from each other based on whether
+the cell has the {[}surface protein CD8? CD4?{]}.
+
 \hypertarget{loading-packages}{%
 \section{Loading packages}\label{loading-packages}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{library}\NormalTok{(RColorBrewer)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(scales)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Attaching package: 'scales'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:purrr':
-## 
-##     discard
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:readr':
-## 
-##     col_factor
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(stringr)}
-\FunctionTok{library}\NormalTok{(tidyr)}
-\FunctionTok{library}\NormalTok{(knitr)}
-\FunctionTok{library}\NormalTok{(forcats)}
-\FunctionTok{library}\NormalTok{(broom)}
-\FunctionTok{library}\NormalTok{(ggfortify)}
-\FunctionTok{library}\NormalTok{(stats)}
-\FunctionTok{library}\NormalTok{(ggpubr)}
-\FunctionTok{library}\NormalTok{(grDevices)}
-\FunctionTok{library}\NormalTok{(rstatix)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Attaching package: 'rstatix'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:stats':
-## 
-##     filter
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(writexl)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{panel-information}{%
-\section{panel information}\label{panel-information}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# antibody\_panel \textless{}{-} read\_excel}
-\end{Highlighting}
-\end{Shaded}
+MULTI CSV SHEETS MALE FEMALE
 
 \hypertarget{loading-data}{%
 \section{Loading data}\label{loading-data}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Df }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/innate\_normalizedto45.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"CD3CD11b No Day 14"}\NormalTok{)}
-
-\NormalTok{marker\_legend }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"DATA/marker legend.xlsx"}\NormalTok{)}
-
-\CommentTok{\# Remove Freq of Parent columns}
-\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{matches}\NormalTok{(}\StringTok{"Parent"}\NormalTok{))}
-\CommentTok{\# Remove "Leukocytes/LIVE/Single Cells/" from col names}
-\FunctionTok{names}\NormalTok{(Df1) }\OtherTok{\textless{}{-}} \FunctionTok{str\_remove}\NormalTok{(}\FunctionTok{names}\NormalTok{(Df1), }\StringTok{"Leukocytes/LIVE/Single Cells/"}\NormalTok{)}
-
-\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{|.+"}\NormalTok{, }\StringTok{""}\NormalTok{)))}\CommentTok{\# Remove "|Freq of..." from col names}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## Warning: `funs()` was deprecated in dplyr 0.8.0.
-## Please use a list of either functions or lambdas: 
-## 
-##   # Simple named list: 
-##   list(mean = mean, median = median)
-## 
-##   # Auto named with `tibble::lst()`: 
-##   tibble::lst(mean, median)
-## 
-##   # Using lambdas
-##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+## # A tibble: 64 x 30
+##    Sample          sex    day   `CD3+ ` `CD3+ CD4+ ` `CD3+ CD4+  CD62L-  CD44+ `
+##    <chr>           <chr>  <chr>   <dbl>        <dbl>                       <dbl>
+##  1 " Saline_1.fcs" female 14       30          14.1                         5.19
+##  2 " Saline_2.fcs" female 14       29.5        12.4                         2.47
+##  3 " Saline_3.fcs" female 14       26.7        12.6                         4.86
+##  4 " Saline_4.fcs" female 14       17.2         7.2                         3   
+##  5 " BCG_1.fcs"    female 14       43.2        24.9                        14.8 
+##  6 " BCG_2.fcs"    female 14       11.7         6.42                        1.45
+##  7 " BCG_3.fcs"    female 14       24.1        13.5                         4.59
+##  8 " BCG_4.fcs"    female 14       41.2        24                          10.2 
+##  9 " ID93_1.fcs"   female 14       38.9        24.2                        11.9 
+## 10 " ID93_2.fcs"   female 14       34.2        18.9                        10.1 
+## # i 54 more rows
+## # i 24 more variables: `CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1+ ` <dbl>,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1+ ` <dbl>,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1- ` <dbl>,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1- ` <dbl>,
+## #   `CD3+ CD4+  CD62L+  CD44+ ` <dbl>, `CD3+ CD4+  CD62L+  CD44- ` <dbl>,
+## #   `CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1+ ` <dbl>, ...
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Df1 }\OtherTok{\textless{}{-}}\NormalTok{ Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace\_all}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/Q[:digit:]+}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{:"}\NormalTok{, }\StringTok{""}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{/"}\NormalTok{, }\StringTok{" "}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{" "}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_all}\NormalTok{(}\FunctionTok{funs}\NormalTok{(}\FunctionTok{str\_replace}\NormalTok{(., }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ }\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{" "}\NormalTok{)))}
-
-\CommentTok{\# str\_extract\_all(names(Df1), "[:alpha:]+[:digit:]+[\textbackslash{}\textbackslash{}+\textbackslash{}\textbackslash{}{-}]")}
-\CommentTok{\# }
-\CommentTok{\# }
-\CommentTok{\# }
-\CommentTok{\# }
-\CommentTok{\# }
-\CommentTok{\# }
-\CommentTok{\# marker\_select \textless{}{-} function(col\_title) \{}
-\CommentTok{\#   marker\_df \textless{}{-} str\_detect(names(DATA1), "[\textbackslash{}\textbackslash{}+\textbackslash{}\textbackslash{}{-}]") }
-\CommentTok{\#   return(marker\_df)}
-\CommentTok{\# \}}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{making-the-data-tidy-for-plotting}{%
-\section{Making the data tidy for plotting}\label{making-the-data-tidy-for-plotting}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Df1, }\AttributeTok{cols =}  \FunctionTok{starts\_with}\NormalTok{(}\StringTok{"CD45+"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"cell\_types"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"percentage\_of\_CD45"}\NormalTok{) }
-
-\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{separate}\NormalTok{(}\AttributeTok{col =} \StringTok{"SAMPLE"}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"day"}\NormalTok{, }\StringTok{"replicate"}\NormalTok{))}
-
-
-\NormalTok{tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(cell\_types) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{unique}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
-## # A tibble: 128 x 1
-##    cell_types                          
-##    <chr>                               
-##  1 "CD45+ "                            
-##  2 "CD45+ CD3-   CD11b+ "              
-##  3 "CD45+ CD3-   CD11b+ CD25+ "        
-##  4 "CD45+ CD3-   CD11b+ CD103+ "       
-##  5 "CD45+ CD3-   CD11b+ gamma_delta "  
-##  6 "CD45+ CD3-   CD11b+ NKp46+ "       
-##  7 "CD45+ CD3-   CD11b+ CD11c+  CD64- "
-##  8 "CD45+ CD3-   CD11b+ CD11c-  CD64- "
-##  9 "CD45+ CD3-   CD11b+ CD86-  CD64+ " 
-## 10 "CD45+ CD3-   CD11b+ CD86+  CD64+ " 
-## # ... with 118 more rows
+##                                  Sample                                     sex 
+##                                       0                                       0 
+##                                     day                                   CD3+  
+##                                       0                                       0 
+##                              CD3+ CD4+                CD3+ CD4+  CD62L-  CD44+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1+  CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1-  CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1-  
+##                                       0                                       0 
+##               CD3+ CD4+  CD62L+  CD44+                CD3+ CD4+  CD62L+  CD44-  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1+  CD3+ CD4+  CD62L+  CD44-  PD1+  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L+  CD44-  PD1+  KLRG1-  CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1-  
+##                                       0                                       0 
+##               CD3+ CD4+  CD62L-  CD44-                               CD3+ CD8+  
+##                                       0                                       0 
+##               CD3+ CD8+  CD62L-  CD44+  CD3+ CD8+  CD62L-  CD44+  PD1-  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L-  CD44+  PD1+  KLRG1+  CD3+ CD8+  CD62L-  CD44+  PD1+  KLRG1-  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L-  CD44+  PD1-  KLRG1-                CD3+ CD8+  CD62L+  CD44+  
+##                                       0                                       0 
+##               CD3+ CD8+  CD62L+  CD44-  CD3+ CD8+  CD62L+  CD44-  PD1-  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L+  CD44-  PD1+  KLRG1+  CD3+ CD8+  CD62L+  CD44-  PD1+  KLRG1-  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L+  CD44-  PD1-  KLRG1-                CD3+ CD8+  CD62L-  CD44-  
+##                                       0                                       0
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidy\_Df1 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(percentage\_of\_CD45 }\SpecialCharTok{\textgreater{}} \FloatTok{0.005}\NormalTok{)}
+MULTIDAY SHEETS FOR EXCEL
 
-\FunctionTok{head}\NormalTok{(tidy\_Df1, }\AttributeTok{n=}\DecValTok{10}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+SINGLE SHEETS Loading data
+
+MAKING DATA TIDY FOR PLOTTING
 
 \begin{verbatim}
-## # A tibble: 10 x 4
-##    day   replicate cell_types                           percentage_of_CD45
-##    <chr> <chr>     <chr>                                             <dbl>
-##  1 CNT   1         "CD45+ "                                          82.9 
-##  2 CNT   1         "CD45+ CD3-   CD11b+ "                            29.3 
-##  3 CNT   1         "CD45+ CD3-   CD11b+ CD25+ "                       0.88
-##  4 CNT   1         "CD45+ CD3-   CD11b+ CD103+ "                      0.75
-##  5 CNT   1         "CD45+ CD3-   CD11b+ gamma_delta "                 4.77
-##  6 CNT   1         "CD45+ CD3-   CD11b+ NKp46+ "                      7.3 
-##  7 CNT   1         "CD45+ CD3-   CD11b+ CD11c+  CD64- "               3.65
-##  8 CNT   1         "CD45+ CD3-   CD11b+ CD11c-  CD64- "              24.3 
-##  9 CNT   1         "CD45+ CD3-   CD11b+ CD86-  CD64+ "                0.43
-## 10 CNT   1         "CD45+ CD3-   CD11b+ CD86+  CD64+ "                0.85
+## # A tibble: 1,728 x 6
+##    group  mouse_ID sex    day   cell_types                    percentage_of_LIVE
+##    <chr>  <chr>    <chr>  <chr> <chr>                                      <dbl>
+##  1 Saline 1        female 14    CD3+                                    30      
+##  2 Saline 1        female 14    CD3+ CD4+                               14.1    
+##  3 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+                   5.19   
+##  4 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1- ~            0.42   
+##  5 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1+ ~            0.24   
+##  6 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1+ ~            1.87   
+##  7 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1- ~            2.66   
+##  8 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44+                   0.72   
+##  9 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44-                   3.9    
+## 10 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44- PD1- ~            0.00482
+## # i 1,718 more rows
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Select CD3 \& CD11b populations and create new data frames }
- 
-\NormalTok{CD3pos\_CD11bneg }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+ + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}"}\NormalTok{)) }
+\begin{verbatim}
+## tibble [1,728 x 6] (S3: tbl_df/tbl/data.frame)
+##  $ group             : chr [1:1728] "Saline" "Saline" "Saline" "Saline" ...
+##  $ mouse_ID          : chr [1:1728] "1" "1" "1" "1" ...
+##  $ sex               : chr [1:1728] "female" "female" "female" "female" ...
+##  $ day               : chr [1:1728] "14" "14" "14" "14" ...
+##  $ cell_types        : chr [1:1728] "CD3+" "CD3+ CD4+" "CD3+ CD4+ CD62L- CD44+" "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1+" ...
+##  $ percentage_of_LIVE: num [1:1728] 30 14.1 5.19 0.42 0.24 1.87 2.66 0.72 3.9 0.00482 ...
+\end{verbatim}
 
-\NormalTok{CD3neg\_CD11bpos }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-} + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{+"}\NormalTok{)) }
+CHECK FIRST ASSUMPTION IN STATS (Independent obervations)
 
-\NormalTok{CD3neg\_CD11bneg }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_Df1 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(cell\_types, }\StringTok{"CD3}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-} + CD11b}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{{-}"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+##  [1] "CD3+"                               "CD3+ CD4+"                         
+##  [3] "CD3+ CD4+ CD62L- CD44+"             "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1+"
+##  [5] "CD3+ CD4+ CD62L- CD44+ PD1+ KLRG1+" "CD3+ CD4+ CD62L- CD44+ PD1+ KLRG1-"
+##  [7] "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1-" "CD3+ CD4+ CD62L+ CD44+"            
+##  [9] "CD3+ CD4+ CD62L+ CD44-"             "CD3+ CD4+ CD62L+ CD44- PD1- KLRG1+"
+## [11] "CD3+ CD4+ CD62L+ CD44- PD1+ KLRG1+" "CD3+ CD4+ CD62L+ CD44- PD1+ KLRG1-"
+## [13] "CD3+ CD4+ CD62L+ CD44- PD1- KLRG1-" "CD3+ CD4+ CD62L- CD44-"            
+## [15] "CD3+ CD8+"                          "CD3+ CD8+ CD62L- CD44+"            
+## [17] "CD3+ CD8+ CD62L- CD44+ PD1- KLRG1+" "CD3+ CD8+ CD62L- CD44+ PD1+ KLRG1+"
+## [19] "CD3+ CD8+ CD62L- CD44+ PD1+ KLRG1-" "CD3+ CD8+ CD62L- CD44+ PD1- KLRG1-"
+## [21] "CD3+ CD8+ CD62L+ CD44+"             "CD3+ CD8+ CD62L+ CD44-"            
+## [23] "CD3+ CD8+ CD62L+ CD44- PD1- KLRG1+" "CD3+ CD8+ CD62L+ CD44- PD1+ KLRG1+"
+## [25] "CD3+ CD8+ CD62L+ CD44- PD1+ KLRG1-" "CD3+ CD8+ CD62L+ CD44- PD1- KLRG1-"
+## [27] "CD3+ CD8+ CD62L- CD44-"
+\end{verbatim}
 
-\hypertarget{boxplot}{%
-\section{boxplot}\label{boxplot}}
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-71-1.pdf}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{CD3pos\_CD11bneg\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3pos\_CD11bneg }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day,}
-            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{,}
-            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
-    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{5}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3+ CD11b{-}"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
-                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+CHECKING EQUAL VARIANCES OF POPULATION OF INTEREST
 
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = mean)
+##       Df F value    Pr(>F)    
+## group  7  8.3438 6.034e-07 ***
+##       56                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
 
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  percentage_of_LIVE by interaction(group, day)
+## Bartlett's K-squared = 36.214, df = 7, p-value = 6.605e-06
+\end{verbatim}
 
-\NormalTok{CD3neg\_CD11bpos\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3neg\_CD11bpos }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day, }
-            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{, }
-            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
-    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
-  \FunctionTok{geom\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{5}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3{-} CD11b+"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
-                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+WORKING ON STATS June 1, 2023
 
+EXPLORATORY ANALYSIS
 
+\begin{verbatim}
+## [1] "Saline"   "BCG"      "ID93"     "BCG+ID93"
+\end{verbatim}
 
-\NormalTok{CD3neg\_CD11bneg\_bar\_plot }\OtherTok{\textless{}{-}}\NormalTok{ CD3neg\_CD11bneg }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{mutate}\NormalTok{(}\AttributeTok{day =} \FunctionTok{fct\_relevel}\NormalTok{(day, }
-            \StringTok{"CNT"}\NormalTok{, }\StringTok{"D3"}\NormalTok{, }\StringTok{"D7"}\NormalTok{, }
-            \StringTok{"D28"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ percentage\_of\_CD45, }\AttributeTok{fill=}\NormalTok{ day)) }\SpecialCharTok{+}
-  \FunctionTok{stat\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45), }
-    \AttributeTok{geom=}\StringTok{\textquotesingle{}errorbar\textquotesingle{}}\NormalTok{, }\AttributeTok{linetype=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}  
-  \FunctionTok{geom\_boxplot}\NormalTok{( }\FunctionTok{aes}\NormalTok{(day, percentage\_of\_CD45)) }\SpecialCharTok{+} 
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cell\_types, }\AttributeTok{scale =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{labeller =} \FunctionTok{label\_wrap\_gen}\NormalTok{(}\AttributeTok{width=}\DecValTok{15}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{5}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{), }
-        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{), }
-        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{size=}\DecValTok{30}\NormalTok{, }\AttributeTok{face=}\StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{y=}\StringTok{"Percentage of CD45"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Day"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Changes in immune cell populations (lung) CD3{-} CD11b{-}"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{stat\_compare\_means}\NormalTok{(}\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{, }\AttributeTok{method =} \StringTok{"t.test"}\NormalTok{,}
-                     \AttributeTok{ref.group =} \StringTok{"CNT"}\NormalTok{)}
+PLOT POPULATIONS
+\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-75-1.pdf}
 
-\NormalTok{CD3pos\_CD11bneg\_bar\_plot}
-\end{Highlighting}
-\end{Shaded}
+WORKING ON THIS
 
-\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-67-1.pdf}
+Saving plots to PDF
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# CD3neg\_CD11bpos\_bar\_plot}
-\CommentTok{\# CD3neg\_CD11bneg\_bar\_plot}
-\end{Highlighting}
-\end{Shaded}
+Looking at specific populations
 
 \hypertarget{pathology}{%
 \chapter{Pathology}\label{pathology}}
@@ -2791,15 +2198,16 @@ The downloads for this chapter are:
 \begin{itemize}
 \tightlist
 \item
-  Data collection format
+  Data collection format (pre-defined by the assay equipment and software run
+  prior on {[}software{]} for most of the pre-processing)
 \item
   Report template to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
 \item
   Example output from the report template
 \end{itemize}
 
-\hypertarget{overview-3}{%
-\subsection{Overview}\label{overview-3}}
+\hypertarget{overview-2}{%
+\subsection{Overview}\label{overview-2}}
 
 Proteomics allows us to measure which proteins are in each sample, as well
 as how much of specific proteins are in each sample. This information is
@@ -2913,6 +2321,69 @@ together---in other words, identifying the ion fragments and then
 trying to determine the original peptides and then proteins that
 they came from.
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+In proteomics assays that leverage mass spectrometry, the proteins in the
+sample are broken down into smaller components (peptides), and it is these
+peptides rather than the original proteins that are measured in the
+mass spectrometer \citep{steen2004abc}. The proteins are broken down into
+peptides of about 20 residues (amino acids) each using protease, and this
+is done because the peptides can be measured more easily and efficiently
+than full proteins \citep{steen2004abc}. However, this also means that the
+information will need to be put back together at the end. Once the different
+peptides are identified and quantified, it's necessary to figure out which
+protein each originally came from in order to give a picture of the protein
+composition of the original sample.
+
+This step links the data output from the equipment with specific proteins, to
+use the read-out to characterize the protein make-up of the original sample.
+This protein make-up is the scientifically interesting result, as it can help
+the scientist answer questions about the biological processes at play under the
+conditions which the sample represents. However, translating the equipment
+read-out in this way requires several steps that incorporate scientific
+principles. For example, one piece of the read-out that can help in linking data
+to a protein is the retention time of each measure. The sample is sent through a
+liquid chromatography column before it is vaporized in the mass spectrometer.
+This LC column is designed to separate components of a sample based on their
+physical characteristics, often using hydrophobicity as the characteristics to
+separate on. The LC column is designed so that, for example, components that are
+extremely hydrophobic will pass through very quickly, while those that are
+extremely hydrophillic will be retained on the column longer, and so will have a
+longer retention time. Knowing the set-up of the column, as well as knowing the
+hydrophillic / hydrophobic characteristics of different peptides, means that the
+retention time can be used as a clue in helping to identify which peptide a
+given measure from the mass spectrometer represent. To leverage this at the
+scale of many peptides in several or many samples, it's necessary to have tools
+that can incorporate this in a way that's more efficient than using the clue
+by hand to try to identify peptides. Often, preprocessing software will
+incorporate many of the algorithms like this that are necessary to translate
+read-outs from a piece of laboratory equipment into something that is
+scientifically meaningful.
+
+\begin{quote}
+``The peptides that are generated by protein digestion are not introduced to the
+mass spectrometer all at once. Instead, they are injected onto a microscale
+capillary high-performance liquid chromatography (HPLC) column that is
+directly coupled to, or is `on-line' with, the mass spectrometer. The peptides are
+eluted from these columns using a solvent gradient of increasing organic content,
+so that the peptide species elute in order of their hydrophobicity.'' \citep{steen2004abc}
+\end{quote}
+
+\begin{quote}
+``At the beginning of the 1990s, researchers realized that the
+peptide-sequencing problem could be converted to a database-matching problem,
+which would be much simpler to solve. The reason database searching is easier
+than de novo sequencing is that only an infinitesimal fraction of the possible
+peptide amino-acid sequences actually occur in nature. A peptide-fragmentation
+spectrum might therefore not contain sufficient information to unambiguously
+derive the complete amino-acid sequence, but it might still have sufficient
+information to match it uniquely to a peptide sequence in the database on the
+basis of the observed and expected fragment ions. There are several different
+algorithms that are used to search sequence databases with tandem MS-spectra
+data, and they have names such as PeptideSearch, Sequest, Mascot, Sonar ms/ms,
+and ProteinProspector.'' \citep{steen2004abc}
+\end{quote}
+
 \hypertarget{data-format-description}{%
 \subsection{Data format description}\label{data-format-description}}
 
@@ -2924,51 +2395,26 @@ pre-processed by another part of the team.
 The following shows an example of the
 type of data we will get as an input:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
-
-\NormalTok{prot\_a }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"DATA/Transition Results\_CCTSI\_A.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Rows: 3393 Columns: 18
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr  (7): Peptide, Protein, Replicate, Fragment Ion, Ratio Dot Product, Tota...
-## dbl (11): Precursor Mz, Precursor Charge, Product Mz, Product Charge, Retent...
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prot\_a}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 3,393 x 18
-##    Peptide     Protein Replicate   `Precursor Mz` `Precursor Char~` `Product Mz`
-##    <chr>       <chr>   <chr>                <dbl>             <dbl>        <dbl>
-##  1 QELDEISTNIR Cfp10   091322_LT1            659.                 2        1061.
-##  2 QELDEISTNIR Cfp10   091322_LT2            659.                 2        1061.
-##  3 QELDEISTNIR Cfp10   091322_LT3            659.                 2        1061.
-##  4 QELDEISTNIR Cfp10   091322_LT4            659.                 2        1061.
-##  5 QELDEISTNIR Cfp10   091322_LT5            659.                 2        1061.
-##  6 QELDEISTNIR Cfp10   091322_LT6            659.                 2        1061.
-##  7 QELDEISTNIR Cfp10   091322_LT7            659.                 2        1061.
-##  8 QELDEISTNIR Cfp10   091322_LT8            659.                 2        1061.
-##  9 QELDEISTNIR Cfp10   091322_LT10           659.                 2        1061.
-## 10 QELDEISTNIR Cfp10   091322_LT11           659.                 2        1061.
-## # ... with 3,383 more rows, and 12 more variables: `Product Charge` <dbl>,
-## #   `Fragment Ion` <chr>, `Retention Time` <dbl>, Area <dbl>, Background <dbl>,
-## #   `Peak Rank` <dbl>, `Ratio Dot Product` <chr>,
-## #   `Total Area Normalized` <chr>, `Total Area Ratio` <chr>,
-## #   `Library Dot Product` <dbl>, RatioLightToHeavy <dbl>,
-## #   DotProductLightToHeavy <dbl>
+##    Peptide     Protein Replicate  `Precursor Mz` `Precursor Charge` `Product Mz`
+##    <chr>       <chr>   <chr>               <dbl>              <dbl>        <dbl>
+##  1 QELDEISTNIR Cfp10   091322_LT1           659.                  2        1061.
+##  2 QELDEISTNIR Cfp10   091322_LT2           659.                  2        1061.
+##  3 QELDEISTNIR Cfp10   091322_LT3           659.                  2        1061.
+##  4 QELDEISTNIR Cfp10   091322_LT4           659.                  2        1061.
+##  5 QELDEISTNIR Cfp10   091322_LT5           659.                  2        1061.
+##  6 QELDEISTNIR Cfp10   091322_LT6           659.                  2        1061.
+##  7 QELDEISTNIR Cfp10   091322_LT7           659.                  2        1061.
+##  8 QELDEISTNIR Cfp10   091322_LT8           659.                  2        1061.
+##  9 QELDEISTNIR Cfp10   091322_LT~           659.                  2        1061.
+## 10 QELDEISTNIR Cfp10   091322_LT~           659.                  2        1061.
+## # i 3,383 more rows
+## # i 12 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
+## #   `Retention Time` <dbl>, Area <dbl>, Background <dbl>, `Peak Rank` <dbl>,
+## #   `Ratio Dot Product` <chr>, `Total Area Normalized` <chr>,
+## #   `Total Area Ratio` <chr>, `Library Dot Product` <dbl>,
+## #   RatioLightToHeavy <dbl>, DotProductLightToHeavy <dbl>
 \end{verbatim}
 
 These data include the following columns:
@@ -3007,14 +2453,6 @@ These data include the following columns:
 
 Here are all the unique replicates in this file:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pull}\NormalTok{(Replicate) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unique}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ##  [1] "091322_LT1"  "091322_LT2"  "091322_LT3"  "091322_LT4"  "091322_LT5" 
 ##  [6] "091322_LT6"  "091322_LT7"  "091322_LT8"  "091322_LT10" "091322_LT11"
@@ -3030,18 +2468,6 @@ The three groups in this data are labeled with ``LT'', ``H'', and ``TB'' somewhe
 the identifier. We can create a new column in the dataset that pulls out this
 treatment group information:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prot\_a }\OtherTok{\textless{}{-}}\NormalTok{ prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{treatment\_group =} \FunctionTok{str\_extract}\NormalTok{(Replicate, }\StringTok{"[A{-}Z]+"}\NormalTok{)) }
-
-\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(Peptide }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Peptide)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(treatment\_group) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{count}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## # A tibble: 3 x 2
 ## # Groups:   treatment_group [3]
@@ -3051,14 +2477,6 @@ treatment group information:
 ## 2 LT                130
 ## 3 TB                120
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(Peptide }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Peptide) }\SpecialCharTok{\&} 
-\NormalTok{           Replicate }\SpecialCharTok{==} \FunctionTok{first}\NormalTok{(Replicate))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 10 x 19
@@ -3074,21 +2492,13 @@ treatment group information:
 ##  8 QELDEISTNIR Cfp10   091322_LT1           664.                  2         713.
 ##  9 QELDEISTNIR Cfp10   091322_LT1           664.                  2         600.
 ## 10 QELDEISTNIR Cfp10   091322_LT1           664.                  2         513.
-## # ... with 13 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
+## # i 13 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
 ## #   `Retention Time` <dbl>, Area <dbl>, Background <dbl>, `Peak Rank` <dbl>,
 ## #   `Ratio Dot Product` <chr>, `Total Area Normalized` <chr>,
 ## #   `Total Area Ratio` <chr>, `Library Dot Product` <dbl>,
 ## #   RatioLightToHeavy <dbl>, DotProductLightToHeavy <dbl>,
 ## #   treatment_group <chr>
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prot\_a }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pull}\NormalTok{(Protein) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{unique}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{verbatim}
 ## [1] "Cfp10"                  "acpM"                   "Ag85A"                 
@@ -3183,6 +2593,294 @@ all those details are available in this section.
 
 \hypertarget{single-cell-rna-seq}{%
 \chapter{Single-cell RNA-seq}\label{single-cell-rna-seq}}
+
+\hypertarget{downloads-3}{%
+\subsection{Downloads}\label{downloads-3}}
+
+The downloads for this chapter are:
+
+\begin{itemize}
+\tightlist
+\item
+  Data collection format (pre-defined by the assay equipment)
+\item
+  Report template to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
+\item
+  Example output from the report template
+\end{itemize}
+
+\hypertarget{overview-3}{%
+\subsection{Overview}\label{overview-3}}
+
+Single-cell RNA-seq belongs to an area of assays called transcriptomics,
+which aim to measure the presence and level of messenger RNA from different
+genes in a sample. These types of assays help in understanding biological
+processes because they capture a snapshot of gene expression. Genes within
+a cell, when expressed, will create new protein products through a process
+of transcription and translation, with messenger RNA serving to transfer the
+genetic instructions for the protein product from the DNA to where it can
+be made into the associated protein. The level of mRNA from a gene isn't
+a perfect measure of how much of its associated protein is available in the
+cell, as proteins can degrade and be secreted at different rates, all of
+which contribute to the amount of protein present within the cell. However,
+it can help it identifying the proteins that the cell is in the process of
+making at the moment of sample collection, which is both correlated to
+some degree with protein composition in the cell and also is indicative of
+actions the cell might be taking in response to stimuli and environmental
+conditions.
+
+\begin{quote}
+``Single-cell transcriptomics relies on the reverse transcription of RNA to
+complementary DNA and subsequent amplification by PCR or in vitro transcription
+before deep sequencing---procedures prone to losses or biases. The biases are
+exaggerated by the need for very high amplification from the small amounts of
+RNA found in an individual cell. Although technical noise confounds precise
+measurements of low-abundance transcripts, modern protocols have progressed to
+the point that single-cell measurements are rich in biological information.''
+\citep{sandberg2014entering}
+\end{quote}
+
+Until recently, transcriptomics assays primarily were conducted at a
+bulk resolution, capturing the gene expression levels on average across the
+cells in the sample. Recently, methods have been developed to capture
+gene expression for each cell in the sample, an assay called single-cell
+RNA-sequencing (scRNA-seq). This assay provides an estimate of the expression
+of each of a set of genes (often a very large set) for each cell in the
+original sample. Thus, like flow cytometry, it provides insights at the
+level of each cell, and as a result, the data collected will include many
+of {[}thousands?{]} of observations, rather than a single observation per
+sample.
+
+\begin{quote}
+``Our notion of transcriptomes has been forged mainly by population-level
+observations that have been the mainstream in biology over the last two decades.
+We are used to thinking about differences in expression in terms of graded or
+subtle fold changes when comparing data across entire tissues or conditions. But
+the actual differences between cells may be far larger. Subsets of cells may
+experience dramatic changes that are averaged out or diluted by the presence of
+a large number of nonresponsive cells. In fact, it was shown over 60 years ago
+that inductive cues often result in all-or-none responses in single cells but
+these responses are observed as a gradual increase when quantified across the
+population1. It is clear that assessing gene expression in single cells is
+critical to better understand cellular behaviors and compositions in developing,
+adult and pathological tissues. To this end, a long-standing goal has been to
+enable genome-wide RNA profiling, or transcriptomics, in single cells2,3. Only
+recently has the technology matured so that biologically meaningful differences
+can be robustly detected with single-cell RNA-seq. \ldots{} Widespread adoption of
+these techniques will have a major impact on our understanding and appreciation
+of cellular states, the nature of transcription and gene regulation, and our
+ability to characterize pathological states in disease.'' \citep{sandberg2014entering}
+\end{quote}
+
+This information is helpful in identifying molecular processes at work in the
+cells in the sample. Further, it can be used to classify each cell in the
+sample by cell type. To understand how, it's helpful to think about how
+the different types of cells in a multicellular organism differ. Every cell
+in an organism has the same genetic code, outside the potential for a few
+random variations in DNA from mutations to that cell or its ancestors
+(e.g., mutation to a cell from exposure to radiation). What makes cells
+different types---some nerve cells, some muscle cells, some lung tissue
+cells, some immune cells, and so on---is not their genetics, but how the
+genes in that genetic code are expressed. Some genes will be regularly
+expressed in cells of one type but turned off in cells of another type,
+while other genes might express across multiple cell types, but at different
+levels. A few genes are expressed in common across all types of cells
+(for example, housekeeping genes, which help \ldots), but there is enough
+variation in gene expression across cell types that a profile of this
+gene expression can be used to group cells in a sample into different
+types of cells.
+
+\begin{quote}
+``For example, a recurrent theme in single-cell transcriptome studies is that
+cells reliably group by their cell type or state when subjected to unsupervised
+clustering7,8,9,10. Gene expression associated with cell identity or
+developmental stages thus has a stronger signal than technical noise or
+biological variability related to dynamic processes such as phase of the cell
+cycle. Moreover, the power to detect meaningful biological differences from
+single-cell data is demonstrated by the identification of hundreds to thousands
+of genes with differences in abundances between cell types7,9.''
+\citep{sandberg2014entering}
+\end{quote}
+
+\begin{quote}
+``The measurement of gene expression in single cells will revolutionize our
+understanding of gene regulation and resolve many longstanding debates in
+biology. Cells cluster by cell type or developmental state when grouped
+according to their expression profiles7,8,9,10. Thus, expression-based
+clustering allows for the unbiased reconstruction or `reverse engineering' of
+cell types in any population or tissue after sequencing enough individual cells
+(Fig. 1). If the sampling of cells is extensive and sufficiently free from
+biases, such clustering can reveal all cell types present, including new ones.
+All cells in a cluster can also be used to derive robust cell-type expression
+profiles, again in a data-driven manner and without previous knowledge of which
+marker genes define a tissue or cell type. Single-cell profiling of RNAs is
+therefore the first method that could lay a foundation for a quantitative,
+data-driven classification of cell types.'' \citep{sandberg2014entering}
+\end{quote}
+
+This is one key thing that can be done using scRNA-seq. There are other
+methods that can identify and count cells of different types, providing
+a profile of the composition of cells in a sample. For example, flow
+cytometry is often used to characterize immune cell composition in a
+sample. However, to do so, flow cytometry tags and measures certain
+proteins on each cell's surface or interior, and rather than measuring
+every protein, this is limited to a set of proteins specified in a
+predefined panel of proteins. This panel is limited in the number of
+proteins it can include, because only so many different fluourescent
+tags can be independently distinguished. With scRNA-seq, you can measure
+the expression levels of orders of magnitude {[}maybe one order?{]} more
+proteins. This means that you may be able to identify clusters of cells
+of the same type that are discovered \emph{de novo} in that experiment, in
+addition to cell populations that were anticipated in the sample.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+The gene expression within single cells is now studied through a process of
+single cell RNA-seq, which leverages biological process, like use of the enzyme?
+reverse transcriptase and PCR?, as well as complex computer algorithms to {[}put
+things back together?{]}.
+
+Single cell RNA-seq aims to characterize the messenger RNA levels within
+each cell of a sample, as this provides a measure of the expression of
+specific genes within the cell---when a gene is expressed, its
+information is copied into messenger RNA, which carries the information
+to {[}other parts of the cell{]} where it can be used to create the protein
+associated with that gene. Different types of cells will express different
+genes, and cells will express different genes under different conditions,
+so information about gene expression can be used both to classify cells
+by cell type and to characterize the activity of cells under different
+conditions. {[}Information on transcripts rather than genes?{]}
+
+To measure levels of messenger RNA within each cell of a sample, sc-RNA-seq
+leverages a fairly involved set of steps that leverage advanced biological and
+computational ideas. First, the cells in the sample are lysed (essentially,
+broken open) to access their contents. The content of messenger RNA in any
+specific cell is small \citep{brennecke2013accounting}, and so a process is conducted
+to amplify that content so it can be measured. This involves first transcribing
+the information in each messenger RNA to cDNA {[}complementary DNA?{]}, which can
+then be amplified using {[}PCR{]} \citep{haque2017practical}. The transcription uses the
+enzyme reverse transcriptase \citep{haque2017practical}, which {[}clever leveraging of
+an existing biological process\ldots{]}. In the course of this transcriptions, unique
+molecular identifiers (UMIs) can be added to the transcription primers to
+identify each initial mRNA molecule and the cell from which the mRNA came {[}?{]}
+\citep{haque2017practical}. PCR leverages \ldots{} {[}also using biological processes{]}. Once
+the cDNA are amplified, the information encoded in them can be extracted using
+next-generation sequencing \citep{haque2017practical} and analysis of the resulting
+raw sequencing data, which leverages {[}advanced algorithms?{]}.
+
+\hypertarget{data-format-description-1}{%
+\subsection{Data format description}\label{data-format-description-1}}
+
+\hypertarget{processing-collected-data-3}{%
+\subsection{Processing collected data}\label{processing-collected-data-3}}
+
+\hypertarget{details-of-processing-script-3}{%
+\subsection{Details of processing script}\label{details-of-processing-script-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Process the raw sequencing data and ``demultiplex'' the data
+\item
+  Quality control---identify and remove low quality cells and some transcripts
+\end{enumerate}
+
+\begin{quote}
+``Before analysing the single-cell gene expression data, we must ensure that
+all cellular barcode data correspond to viable cells. Cell QC is commonly
+performed based on three QC covariates: the number of counts per barcode (count
+depth), the number of genes per barcode, and the fraction of counts from
+mitochondrial genes per barcode (Ilicic et al, 2016; Griffiths et al, 2018). The
+distributions of these QC covariates are examined for outlier peaks that are
+filtered out by thresholding (Fig 2). These outlier barcodes can correspond to
+dying cells, cells whose membranes are broken, or doublets. For example,
+barcodes with a low count depth, few detected genes, and a high fraction of
+mitochondrial counts are indicative of cells whose cytoplasmic mRNA has leaked
+out through a broken membrane, and thus, only mRNA located in the mitochondria
+is still conserved (Fig 2). In contrast, cells with unexpectedly high counts and
+a large number of detected genes may represent doublets. Thus, high-count depth
+thresholds are commonly used to filter out potential doublets. Three recent
+doublet detection tools offer more elegant and potentially better solutions
+(DoubletDecon: preprint: DePasquale et al, 2018; Scrublet: Wolock et al, 2019;
+Doublet Finder: McGinnis et al, 2018).'' \citep{luecken2019current}
+\end{quote}
+
+\begin{quote}
+``In addition to checking the integrity of cells, QC steps must also be
+performed at the level of transcripts. Raw count matrices often include over
+20,000 genes. This number can be drastically reduced by filtering out genes that
+are not expressed in more than a few cells and are thus not informative of the
+cellular heterogeneity. A guideline to setting this threshold is to use the
+minimum cell cluster size that is of interest and leaving some leeway for
+dropout effects. For example, filtering out genes expressed in fewer than 20
+cells may make it diffi- cult to detect cell clusters with fewer than 20 cells.
+For datasets with high dropout rates, this threshold may also complicate the
+detection of larger clusters. The choice of threshold should scale with the
+number of cells in the dataset and the intended downstream analysis.''
+\citep{luecken2019current}
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Normalization
+\end{enumerate}
+
+\begin{quote}
+``Each count in a count matrix represents the successful capture, reverse
+transcription and sequencing of a molecule of cellular mRNA (Box 1). Count
+depths for identical cells can differ due to the variability inherent in each of
+these steps. Thus, when gene expres- sion is compared between cells based on
+count data, any difference may have arisen solely due to sampling effects.
+Normalization addresses this issue by e.g.~scaling count data to obtain correct
+rela- tive gene expression abundances between cells.'' \citep{luecken2019current}
+\end{quote}
+
+\begin{quote}
+``In the same way that cellular count data can be normalized to make them
+comparable between cells, gene counts can be scaled to improve comparisons
+between genes. Gene normalization constitutes scaling gene counts to have zero
+mean and unit variance (z scores). \ldots{} There is currently no consensus on
+whether or not to perform normalization over genes. While the popular Seurat
+tutorials (Butler et al, 2018) generally apply gene scaling, the authors of the
+Slingshot method opt against scaling over genes in their tutorial (Street et al,
+2018). The preference between the two choices revolves around whether all
+genes should be weighted equally for downstream analysis, or whether the
+magnitude of expression of a gene is an informative proxy for the importance of
+the gene. In order to retain as much biological information as possible from the
+data, we opt to refrain from scaling over genes in this tutorial.''
+\citep{luecken2019current}
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Transformation
+\end{enumerate}
+
+\begin{quote}
+``After normalization, data matrices are typically log(x+1)-transformed. This
+transformation has three important effects. Firstly, distances between
+log-transformed expression values represent log fold changes, which are the
+canonical way to measure changes in expression. Secondly, log transformation
+mitigates (but does not remove) the mean--variance relationship in single-cell
+data (Bren- necke et al, 2013). Finally, log transformation reduces the skew-
+ness of the data to approximate the assumption of many downstream analysis tools
+that the data are normally distributed. While scRNA-seq data are not in fact
+log-normally distributed (Vieth et al, 2017), these three effects make the log
+transformation a crude, but useful tool. This usefulness is highlighted by down-
+stream applications for differential expression testing (Finak et al, 2015;
+Ritchie et al, 2015) or batch correction (Johnson et al, 2006; Buttner et al,
+2019) that use log transformation for these purposes. It should however be noted
+that log transformation of normalized data can introduce spurious differential
+expression effects into the data (preprint: Lun, 2018). This effect is
+particularly pronounced when normalization size factor distributions differ
+strongly between tested groups.'' \citep{luecken2019current}
+\end{quote}
 
   \bibliography{book.bib,packages.bib}
 

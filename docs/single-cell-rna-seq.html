@@ -6,18 +6,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
+<meta property="og:description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="A comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -60,14 +85,283 @@
 <h1>
 <span class="header-section-number">9</span> Single-cell RNA-seq<a class="anchor" aria-label="anchor" href="#single-cell-rna-seq"><i class="fas fa-link"></i></a>
 </h1>
+<div id="downloads-3" class="section level3" number="9.0.1">
+<h3>
+<span class="header-section-number">9.0.1</span> Downloads<a class="anchor" aria-label="anchor" href="#downloads-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>The downloads for this chapter are:</p>
+<ul>
+<li>Data collection format (pre-defined by the assay equipment)</li>
+<li>Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your browser’s menu bar, chose “Save As,” then save the file as “animal_weights.Rmd”)</li>
+<li>Example output from the report template</li>
+</ul>
+</div>
+<div id="overview-3" class="section level3" number="9.0.2">
+<h3>
+<span class="header-section-number">9.0.2</span> Overview<a class="anchor" aria-label="anchor" href="#overview-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>Single-cell RNA-seq belongs to an area of assays called transcriptomics,
+which aim to measure the presence and level of messenger RNA from different
+genes in a sample. These types of assays help in understanding biological
+processes because they capture a snapshot of gene expression. Genes within
+a cell, when expressed, will create new protein products through a process
+of transcription and translation, with messenger RNA serving to transfer the
+genetic instructions for the protein product from the DNA to where it can
+be made into the associated protein. The level of mRNA from a gene isn’t
+a perfect measure of how much of its associated protein is available in the
+cell, as proteins can degrade and be secreted at different rates, all of
+which contribute to the amount of protein present within the cell. However,
+it can help it identifying the proteins that the cell is in the process of
+making at the moment of sample collection, which is both correlated to
+some degree with protein composition in the cell and also is indicative of
+actions the cell might be taking in response to stimuli and environmental
+conditions.</p>
+<blockquote>
+<p>“Single-cell transcriptomics relies on the reverse transcription of RNA to
+complementary DNA and subsequent amplification by PCR or in vitro transcription
+before deep sequencing—procedures prone to losses or biases. The biases are
+exaggerated by the need for very high amplification from the small amounts of
+RNA found in an individual cell. Although technical noise confounds precise
+measurements of low-abundance transcripts, modern protocols have progressed to
+the point that single-cell measurements are rich in biological information.”
+<span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+</blockquote>
+<p>Until recently, transcriptomics assays primarily were conducted at a
+bulk resolution, capturing the gene expression levels on average across the
+cells in the sample. Recently, methods have been developed to capture
+gene expression for each cell in the sample, an assay called single-cell
+RNA-sequencing (scRNA-seq). This assay provides an estimate of the expression
+of each of a set of genes (often a very large set) for each cell in the
+original sample. Thus, like flow cytometry, it provides insights at the
+level of each cell, and as a result, the data collected will include many
+of [thousands?] of observations, rather than a single observation per
+sample.</p>
+<blockquote>
+<p>“Our notion of transcriptomes has been forged mainly by population-level
+observations that have been the mainstream in biology over the last two decades.
+We are used to thinking about differences in expression in terms of graded or
+subtle fold changes when comparing data across entire tissues or conditions. But
+the actual differences between cells may be far larger. Subsets of cells may
+experience dramatic changes that are averaged out or diluted by the presence of
+a large number of nonresponsive cells. In fact, it was shown over 60 years ago
+that inductive cues often result in all-or-none responses in single cells but
+these responses are observed as a gradual increase when quantified across the
+population1. It is clear that assessing gene expression in single cells is
+critical to better understand cellular behaviors and compositions in developing,
+adult and pathological tissues. To this end, a long-standing goal has been to
+enable genome-wide RNA profiling, or transcriptomics, in single cells2,3. Only
+recently has the technology matured so that biologically meaningful differences
+can be robustly detected with single-cell RNA-seq. … Widespread adoption of
+these techniques will have a major impact on our understanding and appreciation
+of cellular states, the nature of transcription and gene regulation, and our
+ability to characterize pathological states in disease.” <span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+</blockquote>
+<p>This information is helpful in identifying molecular processes at work in the
+cells in the sample. Further, it can be used to classify each cell in the
+sample by cell type. To understand how, it’s helpful to think about how
+the different types of cells in a multicellular organism differ. Every cell
+in an organism has the same genetic code, outside the potential for a few
+random variations in DNA from mutations to that cell or its ancestors
+(e.g., mutation to a cell from exposure to radiation). What makes cells
+different types—some nerve cells, some muscle cells, some lung tissue
+cells, some immune cells, and so on—is not their genetics, but how the
+genes in that genetic code are expressed. Some genes will be regularly
+expressed in cells of one type but turned off in cells of another type,
+while other genes might express across multiple cell types, but at different
+levels. A few genes are expressed in common across all types of cells
+(for example, housekeeping genes, which help …), but there is enough
+variation in gene expression across cell types that a profile of this
+gene expression can be used to group cells in a sample into different
+types of cells.</p>
+<blockquote>
+<p>“For example, a recurrent theme in single-cell transcriptome studies is that
+cells reliably group by their cell type or state when subjected to unsupervised
+clustering7,8,9,10. Gene expression associated with cell identity or
+developmental stages thus has a stronger signal than technical noise or
+biological variability related to dynamic processes such as phase of the cell
+cycle. Moreover, the power to detect meaningful biological differences from
+single-cell data is demonstrated by the identification of hundreds to thousands
+of genes with differences in abundances between cell types7,9.”
+<span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>“The measurement of gene expression in single cells will revolutionize our
+understanding of gene regulation and resolve many longstanding debates in
+biology. Cells cluster by cell type or developmental state when grouped
+according to their expression profiles7,8,9,10. Thus, expression-based
+clustering allows for the unbiased reconstruction or ‘reverse engineering’ of
+cell types in any population or tissue after sequencing enough individual cells
+(Fig. 1). If the sampling of cells is extensive and sufficiently free from
+biases, such clustering can reveal all cell types present, including new ones.
+All cells in a cluster can also be used to derive robust cell-type expression
+profiles, again in a data-driven manner and without previous knowledge of which
+marker genes define a tissue or cell type. Single-cell profiling of RNAs is
+therefore the first method that could lay a foundation for a quantitative,
+data-driven classification of cell types.” <span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+</blockquote>
+<p>This is one key thing that can be done using scRNA-seq. There are other
+methods that can identify and count cells of different types, providing
+a profile of the composition of cells in a sample. For example, flow
+cytometry is often used to characterize immune cell composition in a
+sample. However, to do so, flow cytometry tags and measures certain
+proteins on each cell’s surface or interior, and rather than measuring
+every protein, this is limited to a set of proteins specified in a
+predefined panel of proteins. This panel is limited in the number of
+proteins it can include, because only so many different fluourescent
+tags can be independently distinguished. With scRNA-seq, you can measure
+the expression levels of orders of magnitude [maybe one order?] more
+proteins. This means that you may be able to identify clusters of cells
+of the same type that are discovered <em>de novo</em> in that experiment, in
+addition to cell populations that were anticipated in the sample.</p>
+<hr>
+<p>The gene expression within single cells is now studied through a process of
+single cell RNA-seq, which leverages biological process, like use of the enzyme?
+reverse transcriptase and PCR?, as well as complex computer algorithms to [put
+things back together?].</p>
+<p>Single cell RNA-seq aims to characterize the messenger RNA levels within
+each cell of a sample, as this provides a measure of the expression of
+specific genes within the cell—when a gene is expressed, its
+information is copied into messenger RNA, which carries the information
+to [other parts of the cell] where it can be used to create the protein
+associated with that gene. Different types of cells will express different
+genes, and cells will express different genes under different conditions,
+so information about gene expression can be used both to classify cells
+by cell type and to characterize the activity of cells under different
+conditions. [Information on transcripts rather than genes?]</p>
+<p>To measure levels of messenger RNA within each cell of a sample, sc-RNA-seq
+leverages a fairly involved set of steps that leverage advanced biological and
+computational ideas. First, the cells in the sample are lysed (essentially,
+broken open) to access their contents. The content of messenger RNA in any
+specific cell is small <span class="citation">(<a href="references.html#ref-brennecke2013accounting" role="doc-biblioref">Brennecke et al. 2013</a>)</span>, and so a process is conducted
+to amplify that content so it can be measured. This involves first transcribing
+the information in each messenger RNA to cDNA [complementary DNA?], which can
+then be amplified using [PCR] <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>. The transcription uses the
+enzyme reverse transcriptase <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>, which [clever leveraging of
+an existing biological process…]. In the course of this transcriptions, unique
+molecular identifiers (UMIs) can be added to the transcription primers to
+identify each initial mRNA molecule and the cell from which the mRNA came [?]
+<span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>. PCR leverages … [also using biological processes]. Once
+the cDNA are amplified, the information encoded in them can be extracted using
+next-generation sequencing <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span> and analysis of the resulting
+raw sequencing data, which leverages [advanced algorithms?].</p>
+</div>
+<div id="data-format-description-1" class="section level3" number="9.0.3">
+<h3>
+<span class="header-section-number">9.0.3</span> Data format description<a class="anchor" aria-label="anchor" href="#data-format-description-1"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="processing-collected-data-3" class="section level3" number="9.0.4">
+<h3>
+<span class="header-section-number">9.0.4</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data-3"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="details-of-processing-script-3" class="section level3" number="9.0.5">
+<h3>
+<span class="header-section-number">9.0.5</span> Details of processing script<a class="anchor" aria-label="anchor" href="#details-of-processing-script-3"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Process the raw sequencing data and “demultiplex” the data</p></li>
+<li><p>Quality control—identify and remove low quality cells and some transcripts</p></li>
+</ol>
+<blockquote>
+<p>“Before analysing the single-cell gene expression data, we must ensure that
+all cellular barcode data correspond to viable cells. Cell QC is commonly
+performed based on three QC covariates: the number of counts per barcode (count
+depth), the number of genes per barcode, and the fraction of counts from
+mitochondrial genes per barcode (Ilicic et al, 2016; Griffiths et al, 2018). The
+distributions of these QC covariates are examined for outlier peaks that are
+filtered out by thresholding (Fig 2). These outlier barcodes can correspond to
+dying cells, cells whose membranes are broken, or doublets. For example,
+barcodes with a low count depth, few detected genes, and a high fraction of
+mitochondrial counts are indicative of cells whose cytoplasmic mRNA has leaked
+out through a broken membrane, and thus, only mRNA located in the mitochondria
+is still conserved (Fig 2). In contrast, cells with unexpectedly high counts and
+a large number of detected genes may represent doublets. Thus, high-count depth
+thresholds are commonly used to filter out potential doublets. Three recent
+doublet detection tools offer more elegant and potentially better solutions
+(DoubletDecon: preprint: DePasquale et al, 2018; Scrublet: Wolock et al, 2019;
+Doublet Finder: McGinnis et al, 2018).” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>“In addition to checking the integrity of cells, QC steps must also be
+performed at the level of transcripts. Raw count matrices often include over
+20,000 genes. This number can be drastically reduced by filtering out genes that
+are not expressed in more than a few cells and are thus not informative of the
+cellular heterogeneity. A guideline to setting this threshold is to use the
+minimum cell cluster size that is of interest and leaving some leeway for
+dropout effects. For example, filtering out genes expressed in fewer than 20
+cells may make it diffi- cult to detect cell clusters with fewer than 20 cells.
+For datasets with high dropout rates, this threshold may also complicate the
+detection of larger clusters. The choice of threshold should scale with the
+number of cells in the dataset and the intended downstream analysis.”
+<span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Normalization</li>
+</ol>
+<blockquote>
+<p>“Each count in a count matrix represents the successful capture, reverse
+transcription and sequencing of a molecule of cellular mRNA (Box 1). Count
+depths for identical cells can differ due to the variability inherent in each of
+these steps. Thus, when gene expres- sion is compared between cells based on
+count data, any difference may have arisen solely due to sampling effects.
+Normalization addresses this issue by e.g. scaling count data to obtain correct
+rela- tive gene expression abundances between cells.” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>“In the same way that cellular count data can be normalized to make them
+comparable between cells, gene counts can be scaled to improve comparisons
+between genes. Gene normalization constitutes scaling gene counts to have zero
+mean and unit variance (z scores). … There is currently no consensus on
+whether or not to perform normalization over genes. While the popular Seurat
+tutorials (Butler et al, 2018) generally apply gene scaling, the authors of the
+Slingshot method opt against scaling over genes in their tutorial (Street et al,
+2018). The preference between the two choices revolves around whether all
+genes should be weighted equally for downstream analysis, or whether the
+magnitude of expression of a gene is an informative proxy for the importance of
+the gene. In order to retain as much biological information as possible from the
+data, we opt to refrain from scaling over genes in this tutorial.”
+<span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>Transformation</li>
+</ol>
+<blockquote>
+<p>“After normalization, data matrices are typically log(x+1)-transformed. This
+transformation has three important effects. Firstly, distances between
+log-transformed expression values represent log fold changes, which are the
+canonical way to measure changes in expression. Secondly, log transformation
+mitigates (but does not remove) the mean–variance relationship in single-cell
+data (Bren- necke et al, 2013). Finally, log transformation reduces the skew-
+ness of the data to approximate the assumption of many downstream analysis tools
+that the data are normally distributed. While scRNA-seq data are not in fact
+log-normally distributed (Vieth et al, 2017), these three effects make the log
+transformation a crude, but useful tool. This usefulness is highlighted by down-
+stream applications for differential expression testing (Finak et al, 2015;
+Ritchie et al, 2015) or batch correction (Johnson et al, 2006; Buttner et al,
+2019) that use log transformation for these purposes. It should however be noted
+that log transformation of normalized data can introduce spurious differential
+expression effects into the data (preprint: Lun, 2018). This effect is
+particularly pronounced when normalization size factor distributions differ
+strongly between tested groups.” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+</blockquote>
 
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="proteomics.html"><span class="header-section-number">8</span> Proteomics</a></div>
 <div class="next"><a href="references.html">References</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#single-cell-rna-seq"><span class="header-section-number">9</span> Single-cell RNA-seq</a></li></ul>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#single-cell-rna-seq"><span class="header-section-number">9</span> Single-cell RNA-seq</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#downloads-3"><span class="header-section-number">9.0.1</span> Downloads</a></li>
+<li><a class="nav-link" href="#overview-3"><span class="header-section-number">9.0.2</span> Overview</a></li>
+<li><a class="nav-link" href="#data-format-description-1"><span class="header-section-number">9.0.3</span> Data format description</a></li>
+<li><a class="nav-link" href="#processing-collected-data-3"><span class="header-section-number">9.0.4</span> Processing collected data</a></li>
+<li><a class="nav-link" href="#details-of-processing-script-3"><span class="header-section-number">9.0.5</span> Details of processing script</a></li>
+</ul>
+</li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -83,7 +377,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2023-01-31.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2024-06-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

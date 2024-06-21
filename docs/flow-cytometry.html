@@ -7,17 +7,42 @@
 <title>Chapter 6 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
 <meta name="description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Flow cytometry | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta name="twitter:description" content="Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -62,238 +87,163 @@
 </h1>
 <p>Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a <code>.csv</code> file. This <code>.csv</code> file is the primary input for this R pipeline which aims to output box plots for each gated cell population.</p>
 <p>This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.</p>
+<hr>
+<p>Immune cells are very diverse, and the make-up of immune cells within a sample
+can provide important insights on immune processes based on measures of this
+composition. Immune cells can be categorized into large groups (e.g., T cells, B
+cells, macrophages, dendritic cells). They can also be characterized into
+different populations within these large groups, based on things like activation
+and differentiation [?] within the group [?] <span class="citation">(<a href="references.html#ref-maecker2012standardizing" role="doc-biblioref">Maecker, McCoy, and Nussenblatt 2012</a>)</span> (e.g.,
+T cells can be divided into naive T cells versus memory T cells, helper T cells
+versus cytotoxic T cells, [others] [?]). This process of characterizing the
+immune cells in a sample is called immunophenotyping.</p>
+<p>To make these classifications, flow cytometry uses a pretty clever mix of
+physics and biology. First, it starts by leveraging the biological knowledge
+that antibodies can have a very specific affinity for a certain protein.
+This means that you can find a set of antibodies that will target and
+stick specifically to certain proteins.</p>
+<p>Flow cytometry starts by creating a panel of up to [x] protein markers, focusing
+on proteins that can help in identifying a specific cell type. Typically, the
+panel will include several proteins that are “CD” proteins (the “CD” stands for
+cluster of differentiation or classification determinant). These are proteins
+that show up on the surface of immune cells, with specific CD proteins common
+to only certain types of cells, making their presence or absence helpful in
+classifying cells.</p>
+<p>Two of the most common CDs to include on a panel are CD3, CD4, and CD8. T cells have
+CD3 on their surface, so a marker for CD3 can be used to distinguish T cells
+from other types of white blood cells, including granulocytes, monocytes, and
+B cells. Among T cells, the helper T cells have the CD4 protein on their surface,
+while the cytotoxic T cells have the CD8 protein on their surface, so the CD4
+and CD8 markers can help in refining a T cell into a more specific type.</p>
+<p>In flow cytometry, you can characterize immune cells into populations based on
+proteins on the cell surface and inside the cell, as well as cell size and
+granularity <span class="citation"><a href="references.html#ref-barnett2008cd4" role="doc-biblioref">Barnett et al.</a> (<a href="references.html#ref-barnett2008cd4" role="doc-biblioref">2008</a>)</span>. For example,
+macrophages can be distinguished from T cells and B cells based on … [size?
+granularity?], which T cells and B cells can be distinguished from each other
+based on whether the cell has the [surface protein? CD3?], and helper T cells
+versus cytotoxic T cells can be distinguished from each other based on whether
+the cell has the [surface protein CD8? CD4?].</p>
 <div id="loading-packages" class="section level2" number="6.1">
 <h2>
 <span class="header-section-number">6.1</span> Loading packages<a class="anchor" aria-label="anchor" href="#loading-packages"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></code></pre></div>
+<p>MULTI CSV SHEETS MALE FEMALE</p>
+</div>
+<div id="loading-data" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Loading data<a class="anchor" aria-label="anchor" href="#loading-data"><i class="fas fa-link"></i></a>
+</h2>
+<pre><code>## # A tibble: 64 × 30
+##    Sample          sex    day   `CD3+ ` `CD3+ CD4+ ` `CD3+ CD4+  CD62L-  CD44+ `
+##    &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;                       &lt;dbl&gt;
+##  1 " Saline_1.fcs" female 14       30          14.1                         5.19
+##  2 " Saline_2.fcs" female 14       29.5        12.4                         2.47
+##  3 " Saline_3.fcs" female 14       26.7        12.6                         4.86
+##  4 " Saline_4.fcs" female 14       17.2         7.2                         3   
+##  5 " BCG_1.fcs"    female 14       43.2        24.9                        14.8 
+##  6 " BCG_2.fcs"    female 14       11.7         6.42                        1.45
+##  7 " BCG_3.fcs"    female 14       24.1        13.5                         4.59
+##  8 " BCG_4.fcs"    female 14       41.2        24                          10.2 
+##  9 " ID93_1.fcs"   female 14       38.9        24.2                        11.9 
+## 10 " ID93_2.fcs"   female 14       34.2        18.9                        10.1 
+## # ℹ 54 more rows
+## # ℹ 24 more variables: `CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1+ ` &lt;dbl&gt;,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1+ ` &lt;dbl&gt;,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1- ` &lt;dbl&gt;,
+## #   `CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1- ` &lt;dbl&gt;,
+## #   `CD3+ CD4+  CD62L+  CD44+ ` &lt;dbl&gt;, `CD3+ CD4+  CD62L+  CD44- ` &lt;dbl&gt;,
+## #   `CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1+ ` &lt;dbl&gt;, …</code></pre>
+<pre><code>##                                  Sample                                     sex 
+##                                       0                                       0 
+##                                     day                                   CD3+  
+##                                       0                                       0 
+##                              CD3+ CD4+                CD3+ CD4+  CD62L-  CD44+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1+  CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L-  CD44+  PD1+  KLRG1-  CD3+ CD4+  CD62L-  CD44+  PD1-  KLRG1-  
+##                                       0                                       0 
+##               CD3+ CD4+  CD62L+  CD44+                CD3+ CD4+  CD62L+  CD44-  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1+  CD3+ CD4+  CD62L+  CD44-  PD1+  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD4+  CD62L+  CD44-  PD1+  KLRG1-  CD3+ CD4+  CD62L+  CD44-  PD1-  KLRG1-  
+##                                       0                                       0 
+##               CD3+ CD4+  CD62L-  CD44-                               CD3+ CD8+  
+##                                       0                                       0 
+##               CD3+ CD8+  CD62L-  CD44+  CD3+ CD8+  CD62L-  CD44+  PD1-  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L-  CD44+  PD1+  KLRG1+  CD3+ CD8+  CD62L-  CD44+  PD1+  KLRG1-  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L-  CD44+  PD1-  KLRG1-                CD3+ CD8+  CD62L+  CD44+  
+##                                       0                                       0 
+##               CD3+ CD8+  CD62L+  CD44-  CD3+ CD8+  CD62L+  CD44-  PD1-  KLRG1+  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L+  CD44-  PD1+  KLRG1+  CD3+ CD8+  CD62L+  CD44-  PD1+  KLRG1-  
+##                                       0                                       0 
+## CD3+ CD8+  CD62L+  CD44-  PD1-  KLRG1-                CD3+ CD8+  CD62L-  CD44-  
+##                                       0                                       0</code></pre>
+<p>MULTIDAY SHEETS FOR EXCEL</p>
+<p>SINGLE SHEETS Loading data</p>
+<p>MAKING DATA TIDY FOR PLOTTING</p>
+<pre><code>## # A tibble: 1,728 × 6
+##    group  mouse_ID sex    day   cell_types                    percentage_of_LIVE
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;                                      &lt;dbl&gt;
+##  1 Saline 1        female 14    CD3+                                    30      
+##  2 Saline 1        female 14    CD3+ CD4+                               14.1    
+##  3 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+                   5.19   
+##  4 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1- …            0.42   
+##  5 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1+ …            0.24   
+##  6 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1+ …            1.87   
+##  7 Saline 1        female 14    CD3+ CD4+ CD62L- CD44+ PD1- …            2.66   
+##  8 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44+                   0.72   
+##  9 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44-                   3.9    
+## 10 Saline 1        female 14    CD3+ CD4+ CD62L+ CD44- PD1- …            0.00482
+## # ℹ 1,718 more rows</code></pre>
+<pre><code>## tibble [1,728 × 6] (S3: tbl_df/tbl/data.frame)
+##  $ group             : chr [1:1728] "Saline" "Saline" "Saline" "Saline" ...
+##  $ mouse_ID          : chr [1:1728] "1" "1" "1" "1" ...
+##  $ sex               : chr [1:1728] "female" "female" "female" "female" ...
+##  $ day               : chr [1:1728] "14" "14" "14" "14" ...
+##  $ cell_types        : chr [1:1728] "CD3+" "CD3+ CD4+" "CD3+ CD4+ CD62L- CD44+" "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1+" ...
+##  $ percentage_of_LIVE: num [1:1728] 30 14.1 5.19 0.42 0.24 1.87 2.66 0.72 3.9 0.00482 ...</code></pre>
+<p>CHECK FIRST ASSUMPTION IN STATS (Independent obervations)</p>
+<pre><code>##  [1] "CD3+"                               "CD3+ CD4+"                         
+##  [3] "CD3+ CD4+ CD62L- CD44+"             "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1+"
+##  [5] "CD3+ CD4+ CD62L- CD44+ PD1+ KLRG1+" "CD3+ CD4+ CD62L- CD44+ PD1+ KLRG1-"
+##  [7] "CD3+ CD4+ CD62L- CD44+ PD1- KLRG1-" "CD3+ CD4+ CD62L+ CD44+"            
+##  [9] "CD3+ CD4+ CD62L+ CD44-"             "CD3+ CD4+ CD62L+ CD44- PD1- KLRG1+"
+## [11] "CD3+ CD4+ CD62L+ CD44- PD1+ KLRG1+" "CD3+ CD4+ CD62L+ CD44- PD1+ KLRG1-"
+## [13] "CD3+ CD4+ CD62L+ CD44- PD1- KLRG1-" "CD3+ CD4+ CD62L- CD44-"            
+## [15] "CD3+ CD8+"                          "CD3+ CD8+ CD62L- CD44+"            
+## [17] "CD3+ CD8+ CD62L- CD44+ PD1- KLRG1+" "CD3+ CD8+ CD62L- CD44+ PD1+ KLRG1+"
+## [19] "CD3+ CD8+ CD62L- CD44+ PD1+ KLRG1-" "CD3+ CD8+ CD62L- CD44+ PD1- KLRG1-"
+## [21] "CD3+ CD8+ CD62L+ CD44+"             "CD3+ CD8+ CD62L+ CD44-"            
+## [23] "CD3+ CD8+ CD62L+ CD44- PD1- KLRG1+" "CD3+ CD8+ CD62L+ CD44- PD1+ KLRG1+"
+## [25] "CD3+ CD8+ CD62L+ CD44- PD1+ KLRG1-" "CD3+ CD8+ CD62L+ CD44- PD1- KLRG1-"
+## [27] "CD3+ CD8+ CD62L- CD44-"</code></pre>
+<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-71-1.png" width="672"></div>
+<p>CHECKING EQUAL VARIANCES OF POPULATION OF INTEREST</p>
+<pre><code>## Levene's Test for Homogeneity of Variance (center = mean)
+##       Df F value    Pr(&gt;F)    
+## group  7  8.3438 6.034e-07 ***
+##       56                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>## 
-## Attaching package: 'scales'</code></pre>
-<pre><code>## The following object is masked from 'package:purrr':
+##  Bartlett test of homogeneity of variances
 ## 
-##     discard</code></pre>
-<pre><code>## The following object is masked from 'package:readr':
-## 
-##     col_factor</code></pre>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org">forcats</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sinhrks/ggfortify">ggfortify</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">grDevices</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/rstatix/">rstatix</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: 'rstatix'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     filter</code></pre>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/writexl/">writexl</a></span><span class="op">)</span></code></pre></div>
+## data:  percentage_of_LIVE by interaction(group, day)
+## Bartlett's K-squared = 36.214, df = 7, p-value = 6.605e-06</code></pre>
+<p>WORKING ON STATS June 1, 2023</p>
+<p>EXPLORATORY ANALYSIS</p>
+<pre><code>## [1] "Saline"   "BCG"      "ID93"     "BCG+ID93"</code></pre>
+<div class="inline-figure">PLOT POPULATIONS
+<img src="csu-impactb_files/figure-html/unnamed-chunk-75-1.png" width="672">
 </div>
-<div id="panel-information" class="section level2" number="6.2">
-<h2>
-<span class="header-section-number">6.2</span> panel information<a class="anchor" aria-label="anchor" href="#panel-information"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># antibody_panel &lt;- read_excel</span></code></pre></div>
-</div>
-<div id="loading-data" class="section level2" number="6.3">
-<h2>
-<span class="header-section-number">6.3</span> Loading data<a class="anchor" aria-label="anchor" href="#loading-data"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/innate_normalizedto45.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"CD3CD11b No Day 14"</span><span class="op">)</span>
-
-<span class="va">marker_legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"DATA/marker legend.xlsx"</span><span class="op">)</span>
-
-<span class="co"># Remove Freq of Parent columns</span>
-<span class="va">Df1</span> <span class="op">&lt;-</span> <span class="va">Df</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"Parent"</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># Remove "Leukocytes/LIVE/Single Cells/" from col names</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">Df1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">Df1</span><span class="op">)</span>, <span class="st">"Leukocytes/LIVE/Single Cells/"</span><span class="op">)</span>
-
-<span class="va">Df1</span> <span class="op">&lt;-</span> <span class="va">Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\|.+"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co"># Remove "|Freq of..." from col names</span></code></pre></div>
-<pre><code>## Warning: `funs()` was deprecated in dplyr 0.8.0.
-## Please use a list of either functions or lambdas: 
-## 
-##   # Simple named list: 
-##   list(mean = mean, median = median)
-## 
-##   # Auto named with `tibble::lst()`: 
-##   tibble::lst(mean, median)
-## 
-##   # Using lambdas
-##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Df1</span> <span class="op">&lt;-</span> <span class="va">Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\/Q[:digit:]+\\:"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\/"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\,"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"\\ \\,"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># str_extract_all(names(Df1), "[:alpha:]+[:digit:]+[\\+\\-]")</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># marker_select &lt;- function(col_title) {</span>
-<span class="co">#   marker_df &lt;- str_detect(names(DATA1), "[\\+\\-]") </span>
-<span class="co">#   return(marker_df)</span>
-<span class="co"># }</span></code></pre></div>
-</div>
-<div id="making-the-data-tidy-for-plotting" class="section level2" number="6.4">
-<h2>
-<span class="header-section-number">6.4</span> Making the data tidy for plotting<a class="anchor" aria-label="anchor" href="#making-the-data-tidy-for-plotting"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Df1</span>, cols <span class="op">=</span>  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"CD45+"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"cell_types"</span>, values_to <span class="op">=</span> <span class="st">"percentage_of_CD45"</span><span class="op">)</span> 
-
-<span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"SAMPLE"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"day"</span>, <span class="st">"replicate"</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">cell_types</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 128 × 1
-##    cell_types                          
-##    &lt;chr&gt;                               
-##  1 "CD45+ "                            
-##  2 "CD45+ CD3-   CD11b+ "              
-##  3 "CD45+ CD3-   CD11b+ CD25+ "        
-##  4 "CD45+ CD3-   CD11b+ CD103+ "       
-##  5 "CD45+ CD3-   CD11b+ gamma_delta "  
-##  6 "CD45+ CD3-   CD11b+ NKp46+ "       
-##  7 "CD45+ CD3-   CD11b+ CD11c+  CD64- "
-##  8 "CD45+ CD3-   CD11b+ CD11c-  CD64- "
-##  9 "CD45+ CD3-   CD11b+ CD86-  CD64+ " 
-## 10 "CD45+ CD3-   CD11b+ CD86+  CD64+ " 
-## # … with 118 more rows</code></pre>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidy_Df1</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">percentage_of_CD45</span> <span class="op">&gt;</span> <span class="fl">0.005</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tidy_Df1</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 10 × 4
-##    day   replicate cell_types                           percentage_of_CD45
-##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;                                             &lt;dbl&gt;
-##  1 CNT   1         "CD45+ "                                          82.9 
-##  2 CNT   1         "CD45+ CD3-   CD11b+ "                            29.3 
-##  3 CNT   1         "CD45+ CD3-   CD11b+ CD25+ "                       0.88
-##  4 CNT   1         "CD45+ CD3-   CD11b+ CD103+ "                      0.75
-##  5 CNT   1         "CD45+ CD3-   CD11b+ gamma_delta "                 4.77
-##  6 CNT   1         "CD45+ CD3-   CD11b+ NKp46+ "                      7.3 
-##  7 CNT   1         "CD45+ CD3-   CD11b+ CD11c+  CD64- "               3.65
-##  8 CNT   1         "CD45+ CD3-   CD11b+ CD11c-  CD64- "              24.3 
-##  9 CNT   1         "CD45+ CD3-   CD11b+ CD86-  CD64+ "                0.43
-## 10 CNT   1         "CD45+ CD3-   CD11b+ CD86+  CD64+ "                0.85</code></pre>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Select CD3 &amp; CD11b populations and create new data frames </span>
- 
-<span class="va">CD3pos_CD11bneg</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">cell_types</span>, <span class="st">"CD3\\+ + CD11b\\-"</span><span class="op">)</span><span class="op">)</span> 
-
-<span class="va">CD3neg_CD11bpos</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">cell_types</span>, <span class="st">"CD3\\- + CD11b\\+"</span><span class="op">)</span><span class="op">)</span> 
-
-<span class="va">CD3neg_CD11bneg</span> <span class="op">&lt;-</span> <span class="va">tidy_Df1</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">cell_types</span>, <span class="st">"CD3\\- + CD11b\\-"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="boxplot" class="section level2" number="6.5">
-<h2>
-<span class="header-section-number">6.5</span> boxplot<a class="anchor" aria-label="anchor" href="#boxplot"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">CD3pos_CD11bneg_bar_plot</span> <span class="op">&lt;-</span> <span class="va">CD3pos_CD11bneg</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">day</span>,
-            <span class="st">"CNT"</span>, <span class="st">"D3"</span>, <span class="st">"D7"</span>,
-            <span class="st">"D28"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">day</span>, y <span class="op">=</span> <span class="va">percentage_of_CD45</span>, fill<span class="op">=</span> <span class="va">day</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">stat_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span>, 
-    geom<span class="op">=</span><span class="st">'errorbar'</span>, linetype<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>  
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">cell_types</span>, scale <span class="op">=</span> <span class="st">"free_y"</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html">label_wrap_gen</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">15</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="fl">30</span>, face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span> <span class="op">(</span>y<span class="op">=</span><span class="st">"Percentage of CD45"</span>, x <span class="op">=</span> <span class="st">"Day"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Changes in immune cell populations (lung) CD3+ CD11b-"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html">stat_compare_means</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"p.signif"</span>, method <span class="op">=</span> <span class="st">"t.test"</span>,
-                     ref.group <span class="op">=</span> <span class="st">"CNT"</span><span class="op">)</span>
-
-
-
-<span class="va">CD3neg_CD11bpos_bar_plot</span> <span class="op">&lt;-</span> <span class="va">CD3neg_CD11bpos</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">day</span>, 
-            <span class="st">"CNT"</span>, <span class="st">"D3"</span>, <span class="st">"D7"</span>, 
-            <span class="st">"D28"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">day</span>, y <span class="op">=</span> <span class="va">percentage_of_CD45</span>, fill<span class="op">=</span> <span class="va">day</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">stat_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span>, 
-    geom<span class="op">=</span><span class="st">'errorbar'</span>, linetype<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>  
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">cell_types</span>, scale <span class="op">=</span> <span class="st">"free_y"</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html">label_wrap_gen</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">15</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="fl">30</span>, face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span> <span class="op">(</span>y<span class="op">=</span><span class="st">"Percentage of CD45"</span>, x <span class="op">=</span> <span class="st">"Day"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Changes in immune cell populations (lung) CD3- CD11b+"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html">stat_compare_means</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"p.signif"</span>, method <span class="op">=</span> <span class="st">"t.test"</span>,
-                     ref.group <span class="op">=</span> <span class="st">"CNT"</span><span class="op">)</span>
-
-
-
-<span class="va">CD3neg_CD11bneg_bar_plot</span> <span class="op">&lt;-</span> <span class="va">CD3neg_CD11bneg</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">day</span>, 
-            <span class="st">"CNT"</span>, <span class="st">"D3"</span>, <span class="st">"D7"</span>, 
-            <span class="st">"D28"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">day</span>, y <span class="op">=</span> <span class="va">percentage_of_CD45</span>, fill<span class="op">=</span> <span class="va">day</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">stat_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span>, 
-    geom<span class="op">=</span><span class="st">'errorbar'</span>, linetype<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>  
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">percentage_of_CD45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">cell_types</span>, scale <span class="op">=</span> <span class="st">"free_y"</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html">label_wrap_gen</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">15</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">5</span>, nrow <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>, 
-        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, 
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="fl">30</span>, face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span> <span class="op">(</span>y<span class="op">=</span><span class="st">"Percentage of CD45"</span>, x <span class="op">=</span> <span class="st">"Day"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Changes in immune cell populations (lung) CD3- CD11b-"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_compare_means.html">stat_compare_means</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"p.signif"</span>, method <span class="op">=</span> <span class="st">"t.test"</span>,
-                     ref.group <span class="op">=</span> <span class="st">"CNT"</span><span class="op">)</span>
-
-<span class="va">CD3pos_CD11bneg_bar_plot</span></code></pre></div>
-<div class="inline-figure"><img src="csu-impactb_files/figure-html/unnamed-chunk-67-1.png" width="480"></div>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># CD3neg_CD11bpos_bar_plot</span>
-<span class="co"># CD3neg_CD11bneg_bar_plot</span></code></pre></div>
+<p>WORKING ON THIS</p>
+<p>Saving plots to PDF</p>
+<p>Looking at specific populations</p>
 
 </div>
 </div>
@@ -305,10 +255,7 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#flow-cytometry"><span class="header-section-number">6</span> Flow cytometry</a></li>
 <li><a class="nav-link" href="#loading-packages"><span class="header-section-number">6.1</span> Loading packages</a></li>
-<li><a class="nav-link" href="#panel-information"><span class="header-section-number">6.2</span> panel information</a></li>
-<li><a class="nav-link" href="#loading-data"><span class="header-section-number">6.3</span> Loading data</a></li>
-<li><a class="nav-link" href="#making-the-data-tidy-for-plotting"><span class="header-section-number">6.4</span> Making the data tidy for plotting</a></li>
-<li><a class="nav-link" href="#boxplot"><span class="header-section-number">6.5</span> boxplot</a></li>
+<li><a class="nav-link" href="#loading-data"><span class="header-section-number">6.2</span> Loading data</a></li>
 </ul>
 
       <div class="book-extra">
@@ -325,7 +272,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2023-01-31.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2024-06-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
