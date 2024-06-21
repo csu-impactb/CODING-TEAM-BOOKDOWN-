@@ -295,8 +295,9 @@ all_data <- all_data %>%
 all_data$group <- factor(all_data$group, levels = c("Saline", "BCG", "ID93", "BCG+ID93"))
 
 # Recode the 'group' column to rename certain factor levels
+
 all_data <- all_data %>%
-  mutate(group = recode(group,
+  dplyr::mutate(group = dplyr::recode(group,
                          "ID93" = "ID93-GLA-SE",
                          "BCG+ID93" = "BCG+ID93-GLA-SE"))
 
@@ -470,8 +471,19 @@ geom_point(size = 5, shape = 21, alpha = 0.8, na.rm = T, colour = "black",
 Next, the pipeline runs an ANOVA analysis on the data. This is conducted after
 transforming the CFUs with a log-10 transform. 
 
+
 ```{r warning = FALSE, message = FALSE}
-cfu_stats <- lungoption1tidy_cfu_meta_joined %>% 
+
+# Cannot find reg expression to easily account for "-" in BCG+ID93-GLA-SE-ID93-GLA-SE comparison. Removing hyphens for comparisons.
+lungoption1tidy_cfu_meta_joined <- lungoption1tidy_cfu_meta_joined %>%
+  dplyr::mutate(group = dplyr::recode(group,
+                         "ID93-GLA-SE" = "ID93 GLA SE",
+                         "BCG+ID93-GLA-SE" = "BCG+ID93 GLA SE"))
+
+
+
+
+ cfu_stats <- lungoption1tidy_cfu_meta_joined %>% 
   group_by(organ) %>%
   nest() %>%
   mutate(aov_result = map(data, ~aov(log10(CFUs_whole) ~ group, data = .x)),
@@ -479,12 +491,21 @@ cfu_stats <- lungoption1tidy_cfu_meta_joined %>%
          tidy_tukey = map(tukey_result, broom::tidy)) %>%
   unnest(tidy_tukey, .drop = TRUE) %>%
   separate(contrast, into = c("contrast1", "contrast2"), sep = "-") %>%
-  select(-data, -aov_result, -tukey_result, -term, -null.value)
+  dplyr::select(-data, -aov_result, -tukey_result, -term, -null.value)
 
-cfu_stats %>% 
+ cfu_stats %>% 
   knitr::kable(caption = "ANOVA results comparing CFUs in each organ across the experimental groups")
 ```
+
 ```{r}
+
+lungoption1tidy_cfu_meta_joined <- lungoption1tidy_cfu_meta_joined %>%
+  dplyr::mutate(group = dplyr::recode(group,
+                         "ID93 GLA SE" = "ID93-GLA-SE",
+                         "BCG+ID93 GLA SE" = "BCG+ID93-GLA-SE"))
+
+
+
 # Filter data for day 14
 df_day_14 <- lungoption1tidy_cfu_meta_joined %>% 
               filter(day == 14)
