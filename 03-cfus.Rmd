@@ -20,7 +20,7 @@ plate or section of plate in the laboratory
 - [Report template](https://raw.githubusercontent.com/csu-impactb/CODING-TEAM-BOOKDOWN-/main/templates/report_templates/cfu_report.Rmd) to process data collected with the data template (when you go to this link, go to the "File" bar in your browser's menu bar, chose "Save As", then save the file as "animal_weights.Rmd")
 - [Example output](https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx) from the report template
 
-### Overview TEST
+### Overview 
 
 In the experiments, we will need to estimate the bacterial load of
 *Mycobacterium tuberculosis* in organs---including lungs and spleens---of
