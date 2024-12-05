@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
+<title>Chapter 7 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis</title>
 <meta name="author" content="Colorado State University Coding Team">
-<meta name="description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
-<meta name="generator" content="bookdown 0.39 with bs4_book()">
-<meta property="og:title" content="Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="description" content="7.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta property="og:title" content="Chapter 7 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
 <meta property="og:type" content="book">
-<meta property="og:description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
+<meta property="og:description" content="7.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 9 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
-<meta name="twitter:description" content="9.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
+<meta name="twitter:title" content="Chapter 7 Single-cell RNA-seq | ImpactTB/BAA: Standard Operating Procedures for Data Analysis">
+<meta name="twitter:description" content="7.0.1 Downloads The downloads for this chapter are: Data collection format (pre-defined by the assay equipment) Report template to process data collected with the data template (when you go to...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -26,6 +26,7 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
+          margin-bottom: 0em;
         }
     .hanging div.csl-entry {
       margin-left:2em;
@@ -65,14 +66,12 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Overview</a></li>
-<li><a class="" href="experimental-metadata.html"><span class="header-section-number">2</span> Experimental metadata</a></li>
-<li><a class="" href="animal-initial-conditions-and-weekly-weights.html"><span class="header-section-number">3</span> Animal initial conditions and weekly weights</a></li>
-<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">4</span> Colony forming units to determine bacterial counts</a></li>
-<li><a class="" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">5</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
-<li><a class="" href="flow-cytometry.html"><span class="header-section-number">6</span> Flow cytometry</a></li>
-<li><a class="" href="pathology.html"><span class="header-section-number">7</span> Pathology</a></li>
-<li><a class="" href="proteomics.html"><span class="header-section-number">8</span> Proteomics</a></li>
-<li><a class="active" href="single-cell-rna-seq.html"><span class="header-section-number">9</span> Single-cell RNA-seq</a></li>
+<li><a class="" href="animal-initial-conditions-and-weekly-weights.html"><span class="header-section-number">2</span> Animal initial conditions and weekly weights</a></li>
+<li><a class="" href="colony-forming-units-to-determine-bacterial-counts.html"><span class="header-section-number">3</span> Colony forming units to determine bacterial counts</a></li>
+<li><a class="" href="enzyme-linked-immunosorbest-assay-elisa.html"><span class="header-section-number">4</span> Enzyme-linked immunosorbest assay (ELISA)</a></li>
+<li><a class="" href="flow-cytometry.html"><span class="header-section-number">5</span> Flow cytometry</a></li>
+<li><a class="" href="pathology.html"><span class="header-section-number">6</span> Pathology</a></li>
+<li><a class="active" href="single-cell-rna-seq.html"><span class="header-section-number">7</span> Single-cell RNA-seq</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -81,24 +80,24 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="single-cell-rna-seq" class="section level1" number="9">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="single-cell-rna-seq" class="section level1" number="7">
 <h1>
-<span class="header-section-number">9</span> Single-cell RNA-seq<a class="anchor" aria-label="anchor" href="#single-cell-rna-seq"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7</span> Single-cell RNA-seq<a class="anchor" aria-label="anchor" href="#single-cell-rna-seq"><i class="fas fa-link"></i></a>
 </h1>
-<div id="downloads-3" class="section level3" number="9.0.1">
+<div id="downloads-2" class="section level3" number="7.0.1">
 <h3>
-<span class="header-section-number">9.0.1</span> Downloads<a class="anchor" aria-label="anchor" href="#downloads-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.0.1</span> Downloads<a class="anchor" aria-label="anchor" href="#downloads-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>The downloads for this chapter are:</p>
 <ul>
 <li>Data collection format (pre-defined by the assay equipment)</li>
-<li>Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your browser’s menu bar, chose “Save As,” then save the file as “animal_weights.Rmd”)</li>
+<li>Report template to process data collected with the data template (when you go to this link, go to the “File” bar in your browser’s menu bar, chose “Save As”, then save the file as “animal_weights.Rmd”)</li>
 <li>Example output from the report template</li>
 </ul>
 </div>
-<div id="overview-3" class="section level3" number="9.0.2">
+<div id="overview-2" class="section level3" number="7.0.2">
 <h3>
-<span class="header-section-number">9.0.2</span> Overview<a class="anchor" aria-label="anchor" href="#overview-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.0.2</span> Overview<a class="anchor" aria-label="anchor" href="#overview-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Single-cell RNA-seq belongs to an area of assays called transcriptomics,
 which aim to measure the presence and level of messenger RNA from different
@@ -124,7 +123,7 @@ exaggerated by the need for very high amplification from the small amounts of
 RNA found in an individual cell. Although technical noise confounds precise
 measurements of low-abundance transcripts, modern protocols have progressed to
 the point that single-cell measurements are rich in biological information.”
-<span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+<span class="citation">(<a href="references.html#ref-sandberg2014entering">Sandberg 2014</a>)</span></p>
 </blockquote>
 <p>Until recently, transcriptomics assays primarily were conducted at a
 bulk resolution, capturing the gene expression levels on average across the
@@ -154,7 +153,7 @@ recently has the technology matured so that biologically meaningful differences
 can be robustly detected with single-cell RNA-seq. … Widespread adoption of
 these techniques will have a major impact on our understanding and appreciation
 of cellular states, the nature of transcription and gene regulation, and our
-ability to characterize pathological states in disease.” <span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+ability to characterize pathological states in disease.” <span class="citation">(<a href="references.html#ref-sandberg2014entering">Sandberg 2014</a>)</span></p>
 </blockquote>
 <p>This information is helpful in identifying molecular processes at work in the
 cells in the sample. Further, it can be used to classify each cell in the
@@ -182,7 +181,7 @@ biological variability related to dynamic processes such as phase of the cell
 cycle. Moreover, the power to detect meaningful biological differences from
 single-cell data is demonstrated by the identification of hundreds to thousands
 of genes with differences in abundances between cell types7,9.”
-<span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+<span class="citation">(<a href="references.html#ref-sandberg2014entering">Sandberg 2014</a>)</span></p>
 </blockquote>
 <blockquote>
 <p>“The measurement of gene expression in single cells will revolutionize our
@@ -197,7 +196,7 @@ All cells in a cluster can also be used to derive robust cell-type expression
 profiles, again in a data-driven manner and without previous knowledge of which
 marker genes define a tissue or cell type. Single-cell profiling of RNAs is
 therefore the first method that could lay a foundation for a quantitative,
-data-driven classification of cell types.” <span class="citation">(<a href="references.html#ref-sandberg2014entering" role="doc-biblioref">Sandberg 2014</a>)</span></p>
+data-driven classification of cell types.” <span class="citation">(<a href="references.html#ref-sandberg2014entering">Sandberg 2014</a>)</span></p>
 </blockquote>
 <p>This is one key thing that can be done using scRNA-seq. There are other
 methods that can identify and count cells of different types, providing
@@ -232,32 +231,32 @@ conditions. [Information on transcripts rather than genes?]</p>
 leverages a fairly involved set of steps that leverage advanced biological and
 computational ideas. First, the cells in the sample are lysed (essentially,
 broken open) to access their contents. The content of messenger RNA in any
-specific cell is small <span class="citation">(<a href="references.html#ref-brennecke2013accounting" role="doc-biblioref">Brennecke et al. 2013</a>)</span>, and so a process is conducted
+specific cell is small <span class="citation">(<a href="references.html#ref-brennecke2013accounting">Brennecke et al. 2013</a>)</span>, and so a process is conducted
 to amplify that content so it can be measured. This involves first transcribing
 the information in each messenger RNA to cDNA [complementary DNA?], which can
-then be amplified using [PCR] <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>. The transcription uses the
-enzyme reverse transcriptase <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>, which [clever leveraging of
+then be amplified using [PCR] <span class="citation">(<a href="references.html#ref-haque2017practical">Haque et al. 2017</a>)</span>. The transcription uses the
+enzyme reverse transcriptase <span class="citation">(<a href="references.html#ref-haque2017practical">Haque et al. 2017</a>)</span>, which [clever leveraging of
 an existing biological process…]. In the course of this transcriptions, unique
 molecular identifiers (UMIs) can be added to the transcription primers to
 identify each initial mRNA molecule and the cell from which the mRNA came [?]
-<span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span>. PCR leverages … [also using biological processes]. Once
+<span class="citation">(<a href="references.html#ref-haque2017practical">Haque et al. 2017</a>)</span>. PCR leverages … [also using biological processes]. Once
 the cDNA are amplified, the information encoded in them can be extracted using
-next-generation sequencing <span class="citation">(<a href="references.html#ref-haque2017practical" role="doc-biblioref">Haque et al. 2017</a>)</span> and analysis of the resulting
+next-generation sequencing <span class="citation">(<a href="references.html#ref-haque2017practical">Haque et al. 2017</a>)</span> and analysis of the resulting
 raw sequencing data, which leverages [advanced algorithms?].</p>
 </div>
-<div id="data-format-description-1" class="section level3" number="9.0.3">
+<div id="data-format-description" class="section level3" number="7.0.3">
 <h3>
-<span class="header-section-number">9.0.3</span> Data format description<a class="anchor" aria-label="anchor" href="#data-format-description-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.0.3</span> Data format description<a class="anchor" aria-label="anchor" href="#data-format-description"><i class="fas fa-link"></i></a>
 </h3>
 </div>
-<div id="processing-collected-data-3" class="section level3" number="9.0.4">
+<div id="processing-collected-data-2" class="section level3" number="7.0.4">
 <h3>
-<span class="header-section-number">9.0.4</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.0.4</span> Processing collected data<a class="anchor" aria-label="anchor" href="#processing-collected-data-2"><i class="fas fa-link"></i></a>
 </h3>
 </div>
-<div id="details-of-processing-script-3" class="section level3" number="9.0.5">
+<div id="details-of-processing-script-2" class="section level3" number="7.0.5">
 <h3>
-<span class="header-section-number">9.0.5</span> Details of processing script<a class="anchor" aria-label="anchor" href="#details-of-processing-script-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.0.5</span> Details of processing script<a class="anchor" aria-label="anchor" href="#details-of-processing-script-2"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Process the raw sequencing data and “demultiplex” the data</p></li>
@@ -280,7 +279,7 @@ a large number of detected genes may represent doublets. Thus, high-count depth
 thresholds are commonly used to filter out potential doublets. Three recent
 doublet detection tools offer more elegant and potentially better solutions
 (DoubletDecon: preprint: DePasquale et al, 2018; Scrublet: Wolock et al, 2019;
-Doublet Finder: McGinnis et al, 2018).” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+Doublet Finder: McGinnis et al, 2018).” <span class="citation">(<a href="references.html#ref-luecken2019current">Luecken and Theis 2019</a>)</span></p>
 </blockquote>
 <blockquote>
 <p>“In addition to checking the integrity of cells, QC steps must also be
@@ -294,7 +293,7 @@ cells may make it diffi- cult to detect cell clusters with fewer than 20 cells.
 For datasets with high dropout rates, this threshold may also complicate the
 detection of larger clusters. The choice of threshold should scale with the
 number of cells in the dataset and the intended downstream analysis.”
-<span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+<span class="citation">(<a href="references.html#ref-luecken2019current">Luecken and Theis 2019</a>)</span></p>
 </blockquote>
 <ol start="3" style="list-style-type: decimal">
 <li>Normalization</li>
@@ -306,7 +305,7 @@ depths for identical cells can differ due to the variability inherent in each of
 these steps. Thus, when gene expres- sion is compared between cells based on
 count data, any difference may have arisen solely due to sampling effects.
 Normalization addresses this issue by e.g. scaling count data to obtain correct
-rela- tive gene expression abundances between cells.” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+rela- tive gene expression abundances between cells.” <span class="citation">(<a href="references.html#ref-luecken2019current">Luecken and Theis 2019</a>)</span></p>
 </blockquote>
 <blockquote>
 <p>“In the same way that cellular count data can be normalized to make them
@@ -321,7 +320,7 @@ genes should be weighted equally for downstream analysis, or whether the
 magnitude of expression of a gene is an informative proxy for the importance of
 the gene. In order to retain as much biological information as possible from the
 data, we opt to refrain from scaling over genes in this tutorial.”
-<span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+<span class="citation">(<a href="references.html#ref-luecken2019current">Luecken and Theis 2019</a>)</span></p>
 </blockquote>
 <ol start="4" style="list-style-type: decimal">
 <li>Transformation</li>
@@ -343,23 +342,23 @@ Ritchie et al, 2015) or batch correction (Johnson et al, 2006; Buttner et al,
 that log transformation of normalized data can introduce spurious differential
 expression effects into the data (preprint: Lun, 2018). This effect is
 particularly pronounced when normalization size factor distributions differ
-strongly between tested groups.” <span class="citation">(<a href="references.html#ref-luecken2019current" role="doc-biblioref">Luecken and Theis 2019</a>)</span></p>
+strongly between tested groups.” <span class="citation">(<a href="references.html#ref-luecken2019current">Luecken and Theis 2019</a>)</span></p>
 </blockquote>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="proteomics.html"><span class="header-section-number">8</span> Proteomics</a></div>
+<div class="prev"><a href="pathology.html"><span class="header-section-number">6</span> Pathology</a></div>
 <div class="next"><a href="references.html">References</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav"><li>
-<a class="nav-link" href="#single-cell-rna-seq"><span class="header-section-number">9</span> Single-cell RNA-seq</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#downloads-3"><span class="header-section-number">9.0.1</span> Downloads</a></li>
-<li><a class="nav-link" href="#overview-3"><span class="header-section-number">9.0.2</span> Overview</a></li>
-<li><a class="nav-link" href="#data-format-description-1"><span class="header-section-number">9.0.3</span> Data format description</a></li>
-<li><a class="nav-link" href="#processing-collected-data-3"><span class="header-section-number">9.0.4</span> Processing collected data</a></li>
-<li><a class="nav-link" href="#details-of-processing-script-3"><span class="header-section-number">9.0.5</span> Details of processing script</a></li>
+<a class="nav-link" href="#single-cell-rna-seq"><span class="header-section-number">7</span> Single-cell RNA-seq</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#downloads-2"><span class="header-section-number">7.0.1</span> Downloads</a></li>
+<li><a class="nav-link" href="#overview-2"><span class="header-section-number">7.0.2</span> Overview</a></li>
+<li><a class="nav-link" href="#data-format-description"><span class="header-section-number">7.0.3</span> Data format description</a></li>
+<li><a class="nav-link" href="#processing-collected-data-2"><span class="header-section-number">7.0.4</span> Processing collected data</a></li>
+<li><a class="nav-link" href="#details-of-processing-script-2"><span class="header-section-number">7.0.5</span> Details of processing script</a></li>
 </ul>
 </li></ul>
 
@@ -377,7 +376,7 @@ strongly between tested groups.” <span class="citation">(<a href="references.h
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2024-06-21.</p>
+    <p>"<strong>ImpactTB/BAA: Standard Operating Procedures for Data Analysis</strong>" was written by Colorado State University Coding Team. It was last built on 2024-12-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

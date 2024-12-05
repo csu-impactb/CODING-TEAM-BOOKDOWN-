@@ -4,21 +4,20 @@
 %
 \documentclass[
 ]{book}
-\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
-\author{Colorado State University Coding Team}
-\date{2024-06-21}
-
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -37,14 +36,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={ImpactTB/BAA: Standard Operating Procedures for Data Analysis},
-  pdfauthor={Colorado State University Coding Team},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -56,13 +47,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -70,7 +61,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -79,7 +70,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -120,6 +111,16 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+
+\usepackage{color}
+\usepackage{framed}
+\setlength{\fboxsep}{.8em}
+
+\newenvironment{blackbox}{
+  \definecolor{shadecolor}{rgb}{0, 0, 0}  % black
+  \color{white}
+  \begin{shaded}}
+ {\end{shaded}}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -139,6 +140,18 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ImpactTB/BAA: Standard Operating Procedures for Data Analysis},
+  pdfauthor={Colorado State University Coding Team},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{ImpactTB/BAA: Standard Operating Procedures for Data Analysis}
+\author{Colorado State University Coding Team}
+\date{2024-12-05}
 
 \begin{document}
 \maketitle
@@ -147,78 +160,23 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{overview}{%
-\chapter{Overview}\label{overview}}
+\chapter{Overview}\label{overview}
 
-\hypertarget{about-the-project}{%
-\section{About the project}\label{about-the-project}}
+\section{About the project}\label{about-the-project}
 
-The objective of the Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) program is to get a thorough understanding of the immune responses necessary to avoid initial infection with \emph{Mycobacterium tuberculosis (Mtb)}, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against \emph{Mtb} in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates. The contract awards establish and give up to seven years of assistance for IMPAc-TB Centers to explain the immune responses required for \emph{Mtb} infection protection.
+The objective of the Immune Mechanisms of Protection against Mycobacterium tuberculosis (IMPAc-TB) program is to
+improve understanding of the immune responses necessary to avoid initial infection with \emph{Mycobacterium tuberculosis (Mtb)}, formation of latent infection, and progression to active TB illness. To achieve these goals, the National Institute of Allergy and Infectious Diseases awarded substantial funding and established multidisciplinary research teams that will analyze immune responses against \emph{Mtb} in animal models (mice, guinea pigs, and non-human primates) and humans, as well as immune responses elicited by promising vaccine candidates.
 
-The seven centers that are part of the study are (in alphabetical order):
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Colorado State University
-\item
-  Harvard T.H. Chan School of Public Health
-\item
-  Seattle Children Hospital
-\item
-  {[}more{]}
-\end{enumerate}
-
-Colorado State University Team and role of each member:
-
-\begin{itemize}
-\tightlist
-\item
-  Dr.~Marcela Henao-Tamayo: Principal Investigator
-\item
-  Dr.~Brendan Podell: Principal Investigator
-\item
-  Dr.~Andres Obregon-Henao: Research Scientist-III
-\item
-  Dr.~Taru S. Dutt: Research Scientist-I
-\item
-  {[}more{]}
-\end{itemize}
-
-\hypertarget{about-this-book}{%
-\section{About this book}\label{about-this-book}}
-
-The aim of this book is to provide data protocols and data collection templates
-for key types of data that are collected over the course of this project. By using
+This online book provides data collection templates and pre-processing protocols
+for data types collected at the CSU branch of the Phoenix IMPAc-TB program.
+By using
 standard templates to record data, as well as starting from defined pipelines to
 process and analyze the data, we aim to standardize the collection and processing
 of data across this project.
 
-Here, we have built a comprehensive guide to wet lab data collection, sample processing, and computational tool creation for robust and efficient data analysis and dissemination.
+\chapter{Animal initial conditions and weekly weights}\label{animal-initial-conditions-and-weekly-weights}
 
-\hypertarget{experimental-metadata}{%
-\chapter{Experimental metadata}\label{experimental-metadata}}
-
-Metadata for an experiment:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{species}
-\item
-  \texttt{start\_date}
-\item
-  \texttt{end\_date}
-\item
-  \texttt{experimental\_groups}
-\end{itemize}
-
-\hypertarget{animal-initial-conditions-and-weekly-weights}{%
-\chapter{Animal initial conditions and weekly weights}\label{animal-initial-conditions-and-weekly-weights}}
-
-\hypertarget{downloads}{%
-\subsection{Downloads}\label{downloads}}
+\subsection{Downloads}\label{downloads}
 
 The downloads for this chapter are:
 
@@ -232,8 +190,7 @@ The downloads for this chapter are:
   \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/animal_weights.docx}{Example output} from the report template
 \end{itemize}
 
-\hypertarget{overview-1}{%
-\subsection{Overview}\label{overview-1}}
+\subsection{Overview}\label{overview-1}
 
 We use the template in this section to record information about each animal
 used in the experiment. This includes the species, sex, and experimental group.
@@ -297,8 +254,7 @@ We will do this by testing the correlation between the percent change in
 weight between challenge and sacrifice with CFUs at sacrifice as well as
 expression of cytokines and other biological markers \citep{smith2022host}.
 
-\hypertarget{template-description}{%
-\subsection{Template description}\label{template-description}}
+\subsection{Template description}\label{template-description}
 
 Both the animals' initial conditions and their weekly measures (adverse events,
 cage changes, and weights) should be recorded in an excel worksheet. You can
@@ -379,8 +335,7 @@ For the second and later sheets, you will record:
   \texttt{notes}: Record information regarding clinical observations (e.g., ``back is balding'', ``barbering'', ``excessive grooming'', ``euthanized'').
 \end{itemize}
 
-\hypertarget{processing-collected-data}{%
-\subsection{Processing collected data}\label{processing-collected-data}}
+\subsection{Processing collected data}\label{processing-collected-data}
 
 Once data are collected, the file can be run through an R workflow. This workflow
 will convert the data into a format that is easier to work with for data analysis
@@ -447,8 +402,7 @@ all weights that are from a single animal). This output fill will be named
 ``mouse\_weights\_output.csv'' and, like the report file, will be saved in the same
 file directory as the data file and the report template.
 
-\hypertarget{details-of-processing-script}{%
-\subsection{Details of processing script}\label{details-of-processing-script}}
+\subsection{Details of processing script}\label{details-of-processing-script}
 
 This section goes through the code within the report template. It
 explains each part of the code in detail. You do not need to understand
@@ -977,11 +931,9 @@ experiments, and ultimately from there into project-wide storage.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{colony-forming-units-to-determine-bacterial-counts}{%
-\chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}}
+\chapter{Colony forming units to determine bacterial counts}\label{colony-forming-units-to-determine-bacterial-counts}
 
-\hypertarget{downloads-1}{%
-\subsection{Downloads}\label{downloads-1}}
+\subsection{Downloads}\label{downloads-1}
 
 The downloads for this chapter are:
 
@@ -996,8 +948,7 @@ The downloads for this chapter are:
   \href{https://github.com/csu-impactb/CODING-TEAM-BOOKDOWN-/raw/main/templates/report_templates/cfu_report.docx}{Example output} from the report template
 \end{itemize}
 
-\hypertarget{overview-test}{%
-\subsection{Overview TEST}\label{overview-test}}
+\subsection{Overview TEST}\label{overview-test}
 
 In the experiments, we will need to estimate the bacterial load of
 \emph{Mycobacterium tuberculosis} in organs---including lungs and spleens---of
@@ -1041,8 +992,7 @@ translate from diluted concentration to original concentration, you do a
 back-calculation, incorporating both the number of colonies counted at that
 dilution and how dilute the sample was \citep{ben2014estimation, goldman2015practical}.
 
-\hypertarget{template-description-1}{%
-\subsection{Template description}\label{template-description-1}}
+\subsection{Template description}\label{template-description-1}
 
 The data are collected in a spreadsheet with multiple sheets. The first sheet
 (named ``metadata'') is used to record some metadata for the experiment, while the
@@ -1127,8 +1077,7 @@ Use these to get an idea for how to record your own data. When you are ready
 to record your own data, delete these example values and replace them with
 data collected from your own experiment.
 
-\hypertarget{processing-collected-data-1}{%
-\subsection{Processing collected data}\label{processing-collected-data-1}}
+\subsection{Processing collected data}\label{processing-collected-data-1}
 
 Once data are collected, the file can be run through an R workflow. This workflow
 will convert the data into a format that is easier to work with for data analysis
@@ -1187,8 +1136,7 @@ a single animal). This output fill will be named ``cfu\_output.csv'' and, like
 the report file, will be saved in the same file directory as the
 data file and the report template.
 
-\hypertarget{details-of-processing-script-1}{%
-\subsection{Details of processing script}\label{details-of-processing-script-1}}
+\subsection{Details of processing script}\label{details-of-processing-script-1}
 
 This section goes through the code within the report template. It
 explains each part of the code in detail. You do not need to understand
@@ -1528,15 +1476,13 @@ data. This file will be an input into a script that will format the data to
 add to a database where we are collecting and integrating data from all the CSU
 experiments, and ultimately from there into project-wide storage.
 
-\hypertarget{enzyme-linked-immunosorbest-assay-elisa}{%
-\chapter{Enzyme-linked immunosorbest assay (ELISA)}\label{enzyme-linked-immunosorbest-assay-elisa}}
+\chapter{Enzyme-linked immunosorbest assay (ELISA)}\label{enzyme-linked-immunosorbest-assay-elisa}
 
 ELISA is a standard molecular biology assay for detecting and quantifying a
 variety of compounds, including peptides, proteins, and antibodies in a sample.
 The sample could be serum, plasma, or bronchoalveolar lavage fluid (BALF).
 
-\hypertarget{importance-of-elisa}{%
-\section{\texorpdfstring{\textbf{Importance of ELISA}}{Importance of ELISA}}\label{importance-of-elisa}}
+\section{\texorpdfstring{\textbf{Importance of ELISA}}{Importance of ELISA}}\label{importance-of-elisa}
 
 An antigen-specific reaction in the host results in the production of antibodies, which are proteins found in the blood. In the event of an infectious disease,
 it aids in the detection of antibodies in the body. ELISA is distinguishable from other antibody-assays in that it produces quantifiable findings and separates non-specific from specific interactions by serial binding to solid surfaces,
@@ -1546,8 +1492,7 @@ In IMPAc-TB project, it is crucial to evaluate the if the vaccine is eliciting h
 be used to determine the presence of Immunoglobulin (Ig) IgG, IgA, and IgM in
 the serum different time points post-vaccination.
 
-\hypertarget{principle-of-elisa}{%
-\subsection{\texorpdfstring{\textbf{Principle of ELISA}}{Principle of ELISA}}\label{principle-of-elisa}}
+\subsection{\texorpdfstring{\textbf{Principle of ELISA}}{Principle of ELISA}}\label{principle-of-elisa}
 
 ELISA is based on the principle of antigen-antibody interaction. An antigen must be immobilized on a solid surface and then complexed with an enzyme-linked antibody in an ELISA. The conjugated enzyme's activity is evaluated by incubating it with a substrate to yield a quantifiable result, which enables detection. There are four basic steps of ELISA:
 
@@ -1567,11 +1512,9 @@ ELISA is based on the principle of antigen-antibody interaction. An antigen must
 \includegraphics[width=1\linewidth]{DATA/elisa} \caption{A caption}\label{fig:pressure}
 \end{figure}
 
-\hypertarget{loading-libraries}{%
-\subsection{Loading libraries}\label{loading-libraries}}
+\subsection{Loading libraries}\label{loading-libraries}
 
-\hypertarget{elisa-data-analysis}{%
-\section{ELISA data analysis}\label{elisa-data-analysis}}
+\section{ELISA data analysis}\label{elisa-data-analysis}
 
 Analysis of ELISA data is the most important part of the ELISA experiment. ELISA data can be analyzed in different ways based on how the data is acquired. There are a a few examples of the type of ELISA data :
 
@@ -1595,8 +1538,7 @@ For this type of ELISA, quantification of the antibody titers is performed using
 
 Let's have a look at these methods, how we can apply these methods in our data, and R-based packages that we can utilize to perform this analysis.
 
-\hypertarget{curve-fitting-model}{%
-\section{\texorpdfstring{\textbf{1. Curve fitting model:}}{1. Curve fitting model:}}\label{curve-fitting-model}}
+\section{\texorpdfstring{\textbf{1. Curve fitting model:}}{1. Curve fitting model:}}\label{curve-fitting-model}
 
 The curve in ELISA data represents a plot of known concentrations versus their corresponding signal responses. The typical range of these calibration curves is one to two orders of magnitude on the response axis and two or more orders of magnitude on the concentration axis. The real curve of each assay could be easily identified if an infinite number of concentration dilutions with an infinite number of repetitions could be tested. The correct curve must be approximated from a relatively small number of noisy points, though, because there are a finite number of dilutions that may be performed. To estimate the dose-response relationship between standard dilutions, a method of interpolating between standards is required because there cannot be a standard at every concentration. This process is typically performed using a mathematical function or regression to approximate the true shape of the curve. A curve model is the name given to this approximating function, which commonly uses two or more parameters to describe a family of curves, and are then adjusted in order to find the curve from the family of curves that best fits the assay data.
 
@@ -1604,8 +1546,7 @@ Three qualities should be included in a good curve fitting model.
 1. The true curve's shape must be accurately approximated by the curve model. If the curve model does not accomplish this, there is no way to adjust for this component of the total error that results from a lack of fit.
 2. In order to get concentration estimates with minimal inaccuracy, a decent curve model must be able to average away as much of the random variation as is practical. 3. A successful curve model must be capable of accurately predicting concentration values for points between the anchor points of the standard dilutions.
 
-\hypertarget{how-do-we-perform-curve-fitting-model}{%
-\subsection{How do we perform curve fitting model}\label{how-do-we-perform-curve-fitting-model}}
+\subsection{How do we perform curve fitting model}\label{how-do-we-perform-curve-fitting-model}
 
 There are two major steps in performing curve fitting model for non-linear data like ELISA:
 1. Finding the initial starting estimates of the parameters
@@ -1613,16 +1554,13 @@ There are two major steps in performing curve fitting model for non-linear data 
 
 We have presented an example below where we have performed a 8-10 point serial dilution of our sample and fitted a 4 parameter curve model.
 
-\hypertarget{an-example-of-the-curve-fitting-model}{%
-\subsection{An example of the curve fitting model}\label{an-example-of-the-curve-fitting-model}}
+\subsection{An example of the curve fitting model}\label{an-example-of-the-curve-fitting-model}
 
-\hypertarget{read-in-the-data}{%
-\subsubsection{Read in the data}\label{read-in-the-data}}
+\subsubsection{Read in the data}\label{read-in-the-data}
 
 This information comes from the 2018 study conducted by Hartman et al.~Hartman et al.~analyzed the ELISA data in their study utilizing fitted sigmoid analysis, end point titer, and absorbance summation. We utilized this information to determine whether our formulas and calculations provide the same outcomes and values as theirs.
 
-\hypertarget{tidying-the-data}{%
-\subsubsection{Tidying the data}\label{tidying-the-data}}
+\subsubsection{Tidying the data}\label{tidying-the-data}
 
 We next performed tidying the data and make it in a format so that we can plot a sigmoid curve with that.
 
@@ -1638,8 +1576,7 @@ We next performed tidying the data and make it in a format so that we can plot a
 ## 6         1        7290       0.22 0.000137        -8.10
 \end{verbatim}
 
-\hypertarget{create-function-for-curve-fitting-model}{%
-\subsubsection{Create function for curve fitting model}\label{create-function-for-curve-fitting-model}}
+\subsubsection{Create function for curve fitting model}\label{create-function-for-curve-fitting-model}
 
 We next created the curve fitting model function by using nlsLM function from ``minpack.lm'' package.
 The purpose of nlslm is to minimize the sum square of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. In the early 1960s, the Levenberg-Marquardt algorithm was developed to address nonlinear least squares problems. Through a series of well-chosen updates to model parameter values, Levenberg-Marquardt algorithm lower the sum of the squares of the errors between the model function and the data points.
@@ -1675,21 +1612,17 @@ The purpose of nlslm is to minimize the sum square of the vector returned by the
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{apply-the-function-to-the-data}{%
-\subsubsection{Apply the function to the data}\label{apply-the-function-to-the-data}}
+\subsubsection{Apply the function to the data}\label{apply-the-function-to-the-data}
 
-\hypertarget{plot-the-sigmoid-curve-with-fitted-sigmoid-model}{%
-\subsubsection{Plot the sigmoid curve with fitted sigmoid model}\label{plot-the-sigmoid-curve-with-fitted-sigmoid-model}}
+\subsubsection{Plot the sigmoid curve with fitted sigmoid model}\label{plot-the-sigmoid-curve-with-fitted-sigmoid-model}
 
 \includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-44-1.pdf}
 
-\hypertarget{endpoint-titer-method}{%
-\section{2. Endpoint titer method}\label{endpoint-titer-method}}
+\section{2. Endpoint titer method}\label{endpoint-titer-method}
 
 The endpoint titer approach chooses an absorbance value just above the background noise (or the lower asymptotic level). \textbf{The highest dilution with an absorbance greater than this predetermined value is the endpoint titer.} This method is based on the assumption that a sample with a higher protein concentration will require a higher dilution factor to achieve an absorbance just above the level of background noise.
 
-\hypertarget{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}{%
-\subsection{Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.}\label{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}}
+\subsection{Create an endpoint titer function and apply it to the output of the fitted sigmoid model values.}\label{create-an-endpoint-titer-function-and-apply-it-to-the-output-of-the-fitted-sigmoid-model-values.}
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -1700,14 +1633,11 @@ The endpoint titer approach chooses an absorbance value just above the backgroun
 ## [1] -8.113285
 \end{verbatim}
 
-\hypertarget{other-methods-to-analyze-elisa-data}{%
-\subsection{Other methods to analyze ELISA data}\label{other-methods-to-analyze-elisa-data}}
+\subsection{Other methods to analyze ELISA data}\label{other-methods-to-analyze-elisa-data}
 
-\hypertarget{absorption-summation}{%
-\subsubsection{Absorption summation}\label{absorption-summation}}
+\subsubsection{Absorption summation}\label{absorption-summation}
 
-\hypertarget{area-under-the-curve}{%
-\subsubsection{Area under the curve}\label{area-under-the-curve}}
+\subsubsection{Area under the curve}\label{area-under-the-curve}
 
 In this model of data analysis, we sum all the absorbance values from each sample to obtain one value. This value is termed as absorption summation (AS). Using the above data, the AS will be calculated as below:
 
@@ -1715,16 +1645,13 @@ In this model of data analysis, we sum all the absorbance values from each sampl
 ## [1] 12.24
 \end{verbatim}
 
-\hypertarget{apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset}{%
-\section{Apply the fitting sigmoid model and endpoint titer function in our dataset}\label{apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset}}
+\section{Apply the fitting sigmoid model and endpoint titer function in our dataset}\label{apply-the-fitting-sigmoid-model-and-endpoint-titer-function-in-our-dataset}
 
 The presented data is from a mouse study. In this data, presence of IgG antibody has been evaluated against receptor binding domain (RBD) of SARS-CoV-2 virus in two different groups of mice. We need to elucidate which group has higher concentration of the antibodies.
 
-\hypertarget{read-in-the-data-1}{%
-\subsubsection{Read in the data}\label{read-in-the-data-1}}
+\subsubsection{Read in the data}\label{read-in-the-data-1}
 
-\hypertarget{tidy-the-data}{%
-\subsubsection{Tidy the data}\label{tidy-the-data}}
+\subsubsection{Tidy the data}\label{tidy-the-data}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -1748,8 +1675,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 ## 6 Group 1         1         100  Mouse_1        3.9     0.01    -6.643856
 \end{verbatim}
 
-\hypertarget{converting-data-into-dataframe}{%
-\paragraph{converting data into dataframe}\label{converting-data-into-dataframe}}
+\paragraph{converting data into dataframe}\label{converting-data-into-dataframe}
 
 \begin{verbatim}
 ## # A tibble: 6 x 3
@@ -1764,8 +1690,7 @@ The presented data is from a mouse study. In this data, presence of IgG antibody
 ## 6 Group 2 Mouse_1  <tibble [10 x 5]>
 \end{verbatim}
 
-\hypertarget{plot-the-curves-to-evaluate-the-a-d-c-and-b}{%
-\paragraph{plot the curves to evaluate the a, d, c, and b}\label{plot-the-curves-to-evaluate-the-a-d-c-and-b}}
+\paragraph{plot the curves to evaluate the a, d, c, and b}\label{plot-the-curves-to-evaluate-the-a-d-c-and-b}
 
 \begin{center}\includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
@@ -1776,11 +1701,9 @@ d = 0
 c = 2
 b = 1
 
-\hypertarget{creating-a-function-for-fitting-model}{%
-\subsection{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}}
+\subsection{Creating a function for fitting model}\label{creating-a-function-for-fitting-model}
 
-\hypertarget{fitting-the-model-into-the-dataset}{%
-\subsubsection{Fitting the model into the dataset}\label{fitting-the-model-into-the-dataset}}
+\subsubsection{Fitting the model into the dataset}\label{fitting-the-model-into-the-dataset}
 
 \begin{verbatim}
 ## Nonlinear regression model
@@ -1794,8 +1717,7 @@ b = 1
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{apply-the-fitted-model-function-to-the-whole-dataframe}{%
-\subsubsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}}
+\subsubsection{Apply the fitted model function to the whole dataframe}\label{apply-the-fitted-model-function-to-the-whole-dataframe}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -1810,8 +1732,7 @@ b = 1
 ## 6 Group 2 Mouse_1  <tibble [10 x 5]> <nls>
 \end{verbatim}
 
-\hypertarget{take-out-the-summary-of-the-data}{%
-\subsubsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}}
+\subsubsection{Take out the summary of the data}\label{take-out-the-summary-of-the-data}
 
 \begin{verbatim}
 ## Nonlinear regression model
@@ -1825,14 +1746,11 @@ b = 1
 ## Achieved convergence tolerance: 1.49e-08
 \end{verbatim}
 
-\hypertarget{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}{%
-\section{Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer}\label{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}}
+\section{Create function of Fitted model and endpoint titer, where the output of the fitted model data will be the input of the endpoint titer}\label{create-function-of-fitted-model-and-endpoint-titer-where-the-output-of-the-fitted-model-data-will-be-the-input-of-the-endpoint-titer}
 
-\hypertarget{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}{%
-\subsubsection{Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation}\label{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}}
+\subsubsection{Apply the fitted model fuction into the nested data and use the output of the fitted data as the input for endpoint titer value evaluation}\label{apply-the-fitted-model-fuction-into-the-nested-data-and-use-the-output-of-the-fitted-data-as-the-input-for-endpoint-titer-value-evaluation}
 
-\hypertarget{run-fitted-model-on-the-data}{%
-\paragraph{Run fitted model on the data}\label{run-fitted-model-on-the-data}}
+\paragraph{Run fitted model on the data}\label{run-fitted-model-on-the-data}
 
 \begin{verbatim}
 ## # A tibble: 6 x 4
@@ -1847,16 +1765,13 @@ b = 1
 ## 6 Group 2 Mouse_1  <tibble [10 x 5]> <nls>
 \end{verbatim}
 
-\hypertarget{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}{%
-\paragraph{Taking output of the fitted model function and into endpoint titer function}\label{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}}
+\paragraph{Taking output of the fitted model function and into endpoint titer function}\label{taking-output-of-the-fitted-model-function-and-into-endpoint-titer-function}
 
-\hypertarget{plot-the-endpoint-titer-data-for-the-two-groups}{%
-\subsubsection{Plot the endpoint titer data for the two groups}\label{plot-the-endpoint-titer-data-for-the-two-groups}}
+\subsubsection{Plot the endpoint titer data for the two groups}\label{plot-the-endpoint-titer-data-for-the-two-groups}
 
 \includegraphics{csu-impactb_files/figure-latex/unnamed-chunk-58-1.pdf}
 
-\hypertarget{perform-statistical-analysis-on-the-data}{%
-\subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}}
+\subsubsection{Perform statistical analysis on the data}\label{perform-statistical-analysis-on-the-data}
 
 \begin{verbatim}
 ## # A tibble: 1 x 10
@@ -1866,16 +1781,13 @@ b = 1
 ## # i 2 more variables: method <chr>, alternative <chr>
 \end{verbatim}
 
-\hypertarget{statistical-data-analysis-for-more-than-two-groups}{%
-\subsubsection{Statistical data analysis for more than two groups}\label{statistical-data-analysis-for-more-than-two-groups}}
+\subsubsection{Statistical data analysis for more than two groups}\label{statistical-data-analysis-for-more-than-two-groups}
 
-\hypertarget{elisa-data-processing}{%
-\section{ELISA data processing}\label{elisa-data-processing}}
+\section{ELISA data processing}\label{elisa-data-processing}
 
 We read ELISA plate in a 96 well plate using a plate reader. The plate reader generates the data in form of number in an excel sheet. We have created this pipeline/worksheet to bring out the information from the excl sheet to a tidy format in which the above created fitted model and endpoint titer functions can be applied.
 
-\hypertarget{read-in-the-first-dataset}{%
-\subsubsection{Read in the first dataset}\label{read-in-the-first-dataset}}
+\subsubsection{Read in the first dataset}\label{read-in-the-first-dataset}
 
 Below is the example ELISA data that has came straight out of the plate reader. This data is arranged in a 96-well plate format and contains Optical Density (OD) values.
 
@@ -1891,8 +1803,7 @@ Below is the example ELISA data that has came straight out of the plate reader. 
 ## 6 OVRFLW       3.69  1.43  OVRF~ 3.66  1.27  3.839 1.74  0.444 2.49~ 0.637 0.704
 \end{verbatim}
 
-\hypertarget{tidy-dataset-1}{%
-\subsubsection{Tidy dataset 1}\label{tidy-dataset-1}}
+\subsubsection{Tidy dataset 1}\label{tidy-dataset-1}
 
 It is important to clean the data and arrange it in a format on which we can apply formulas and functions.
 
@@ -1908,8 +1819,7 @@ It is important to clean the data and arrange it in a format on which we can app
 ## 6 A6         0.122
 \end{verbatim}
 
-\hypertarget{read-in-the-second-data-set}{%
-\subsubsection{Read in the second data set}\label{read-in-the-second-data-set}}
+\subsubsection{Read in the second data set}\label{read-in-the-second-data-set}
 
 The second dataset contains the information such as groups, mouse id, and dilutions for the respective wells of the 96 well plate for the dataset-1.
 
@@ -1925,8 +1835,7 @@ The second dataset contains the information such as groups, mouse id, and diluti
 ## 6 3B-1 (1/250 3B-1 ~ 3B-1~ 3B-2~ 3B-2~ 3B-2~ 3B-3~ 3B-3~ 3B-3~ 3B-4~ 3B-4~ 3B-4~
 \end{verbatim}
 
-\hypertarget{tidy-dataset-2}{%
-\subsubsection{Tidy dataset-2}\label{tidy-dataset-2}}
+\subsubsection{Tidy dataset-2}\label{tidy-dataset-2}
 
 \begin{verbatim}
 ## # A tibble: 6 x 2
@@ -1940,8 +1849,7 @@ The second dataset contains the information such as groups, mouse id, and diluti
 ## 6 A6      1A-1 (1/6250
 \end{verbatim}
 
-\hypertarget{merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information}{%
-\subsubsection{Merge dataset-1 (with OD information) with dataset-2 (with respective data information)}\label{merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information}}
+\subsubsection{Merge dataset-1 (with OD information) with dataset-2 (with respective data information)}\label{merge-dataset-1-with-od-information-with-dataset-2-with-respective-data-information}
 
 To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we merged the dataset-1 and dataset-2 together. We also cleaned the data set so that mouse-ID and dilution columns are separate and have their own columns.
 
@@ -1981,8 +1889,10 @@ To create a complete full dataset with Groups, mouse-id, dilutions, and OD, we m
 ## 6 A6      "1A-1 "         6250    0.122
 \end{verbatim}
 
-\hypertarget{flow-cytometry}{%
-\chapter{Flow cytometry}\label{flow-cytometry}}
+\chapter{Flow cytometry}\label{flow-cytometry}
+
+NOTICE.This chapter is
+in progress.
 
 Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a \texttt{.csv} file. This \texttt{.csv} file is the primary input for this R pipeline which aims to output box plots for each gated cell population.
 
@@ -2030,13 +1940,11 @@ based on whether the cell has the {[}surface protein? CD3?{]}, and helper T cell
 versus cytotoxic T cells can be distinguished from each other based on whether
 the cell has the {[}surface protein CD8? CD4?{]}.
 
-\hypertarget{loading-packages}{%
-\section{Loading packages}\label{loading-packages}}
+\section{Loading packages}\label{loading-packages}
 
 MULTI CSV SHEETS MALE FEMALE
 
-\hypertarget{loading-data}{%
-\section{Loading data}\label{loading-data}}
+\section{Loading data}\label{loading-data}
 
 \begin{verbatim}
 ## # A tibble: 64 x 30
@@ -2184,703 +2092,10 @@ Saving plots to PDF
 
 Looking at specific populations
 
-\hypertarget{pathology}{%
-\chapter{Pathology}\label{pathology}}
+\chapter{Pathology}\label{pathology}
 
-\hypertarget{proteomics}{%
-\chapter{Proteomics}\label{proteomics}}
-
-\hypertarget{downloads-2}{%
-\subsection{Downloads}\label{downloads-2}}
-
-The downloads for this chapter are:
-
-\begin{itemize}
-\tightlist
-\item
-  Data collection format (pre-defined by the assay equipment and software run
-  prior on {[}software{]} for most of the pre-processing)
-\item
-  Report template to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
-\item
-  Example output from the report template
-\end{itemize}
-
-\hypertarget{overview-2}{%
-\subsection{Overview}\label{overview-2}}
-
-Proteomics allows us to measure which proteins are in each sample, as well
-as how much of specific proteins are in each sample. This information is
-very important, as proteins play such a critical role in immunological
-processes. For example, \ldots{} {[}cytokines? receptors? enzymes? others?{]}.
-Proteins perform critical processes in the body, including catalzying
-reactions (enzymes), providing structure (\ldots), and sending signals across
-cells (\ldots). They have such a critical role in health and disease that
-most drug targets are proteins {[}ref{]}.
-
-\begin{quote}
-``Protein molecules, rather than DNA or RNA, carry out most cellular functions.
-The direct measurement of protein levels and activity within the cell is
-therefore the best determinant of overall cell function.''
-\citep{lakhani2001microarray}
-\end{quote}
-
-Other assays can also help in determining protein activity. For example,
-transcriptomics measure messenger RNA in a sample. Since these messenger
-RNA are key to building proteins, based on the expression of genes in the
-cell, these transcriptomics can be helpful in understanding which proteins
-are being created in certain cells or samples. However, transcriptomics
-does not provide a direct measure of protein content, and its results
-are not perfectly correlated with protein content. This is because \ldots{}
-Proteomics directly measures the proteins in the sample, and so provides
-a more direct picture of these ``machines'' in the sample.
-
-Proteomics is a bulk, rather than single-cell assay {[}always true?{]}. In other
-words, it will provide estimates of the protein composition of a sample, but for
-the sample as a whole. The final aim of proteomics will often be to compare
-the protein composition of different samples. For example, you might
-identify which proteins are present in samples from treated animals versus
-control animals, or you may compare whether the amount of a certain
-protein is higher in diseased versus healthy animals (in fact, this kind
-of analysis might be used to identify proteins that can serve as a
-biomarker of that disease).
-
-The analysis process for proteomics is quite complex, but it's helpful
-to understand when trying to interpret the data. In the assays that we
-use, the proteins are measured using a mass spectrometer, coupled with
-a liquid chromatography column \citep{steen2004abc}.
-
-Before the sample proteins are sent through this equipment, they are broken down
-into peptides, which are shorter chains of amino acids. A peptide can be
-measured in terms of its number of residues (another name for amino acids, in
-the context of their role as monomers in protein sequences), and typically you
-aim for peptides with about 20 residues for sending through the equipment
-\citep{steen2004abc}. {[}Why not send the whole protein through?{]} There are some
-proteins that could not be sent through the mass spectrometer, or if they were
-would not produce meaningful results, because of characteristics like stability
-or solubility of that particular protein and how it interacts with the
-equipment's set-up \citep{steen2004abc}.
-
-\begin{quote}
-``After protein purification, the first step is to convert proteins to a set of
-peptides using a sequence-specific protease. Even though mass spectrometers can
-measure the mass of intact proteins, there are a number of reasons why peptides,
-and not proteins, are analysed in proteomics. Proteins can be difficult to
-handle and might not all be soluble under the same conditions\ldots{} In addition,
-the sensitivity of the mass spectrometer for proteins is much lower than for
-peptides, and the protein may be processed and modified such that the
-combinatorial effect makes determining the masses of the numerous resulting
-isoforms impossible. \ldots{} Most importantly, if the purpose is to identify the
-protein, sequence information is needed and the mass spectrometer is most
-efficient at obtaining sequence information from peptides that are up to \textasciitilde20
-residues long, rather than whole proteins. Nevertheless, with very specialized
-equipment, it is becoming possible to derive partial sequence information from
-intact proteins, which can then be used for identification purposes or the
-analysis of protein modifications in an approach called `top-down' protein
-sequencing.'' \citep{steen2004abc}
-\end{quote}
-
-\begin{quote}
-``Digesting the protein into a set of peptides also means that the
-physico-chemical properties of the protein, such as solubility and `stickiness',
-become irrelevant. As long as the protein generates a sequence of peptides, at
-least some of them can be sequenced by the mass spectrometer, even if the
-protein itself would have been unstable or insoluble under the conditions used.''
-\citep{steen2004abc}
-\end{quote}
-
-To break the proteins down into peptides, we use proteases, which are enzymes
-that break down proteins at certain spots. {[}How does this work?{]}
-
-These peptides are then sent through the equipment. The first part of the
-process sends them through a liquid chromatography column. The purpose of
-this column is to separate the peptides, and in a meaningful way, before
-they are sent through the mass spectrometer. By separating them, you
-can get some added information to help determine their identity based on
-how long it takes them to get through the equipment (retention time).
-Often, the column will be designed to separate them by hydrophobicity,
-so that a peptide is retained longer or moves through the column more
-quickly based on its affinity for water. The information about how
-quickly the peptide moved through this column will be recorded as the
-``retention time'' in the LC/MS read-out data, and will provide a clue to
-help in identifying which peptide is represented by a certain part of the
-read-out data.
-
-Once the peptide has passed through the liquid chromatography column,
-it goes through the mass spectrometer. As it enters, it is ionized
-{[}definition{]}. The chamber {[}?{]} of the mass spectrometer employs
-differences in electrical charge to help identify the ion fragments
-of the peptide. {[}More on this{]} This equipment gives an output in terms
-of the intensity {[}?{]} recorded at specific mass-to-charge ratios.
-
-This process involves breaking down the original sample into small
-components (proteins are broken into peptides, and then those are
-broken into ion fragments). The data preprocessing for the resulting
-data, therefore, involves a lot of work in putting things back
-together---in other words, identifying the ion fragments and then
-trying to determine the original peptides and then proteins that
-they came from.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-In proteomics assays that leverage mass spectrometry, the proteins in the
-sample are broken down into smaller components (peptides), and it is these
-peptides rather than the original proteins that are measured in the
-mass spectrometer \citep{steen2004abc}. The proteins are broken down into
-peptides of about 20 residues (amino acids) each using protease, and this
-is done because the peptides can be measured more easily and efficiently
-than full proteins \citep{steen2004abc}. However, this also means that the
-information will need to be put back together at the end. Once the different
-peptides are identified and quantified, it's necessary to figure out which
-protein each originally came from in order to give a picture of the protein
-composition of the original sample.
-
-This step links the data output from the equipment with specific proteins, to
-use the read-out to characterize the protein make-up of the original sample.
-This protein make-up is the scientifically interesting result, as it can help
-the scientist answer questions about the biological processes at play under the
-conditions which the sample represents. However, translating the equipment
-read-out in this way requires several steps that incorporate scientific
-principles. For example, one piece of the read-out that can help in linking data
-to a protein is the retention time of each measure. The sample is sent through a
-liquid chromatography column before it is vaporized in the mass spectrometer.
-This LC column is designed to separate components of a sample based on their
-physical characteristics, often using hydrophobicity as the characteristics to
-separate on. The LC column is designed so that, for example, components that are
-extremely hydrophobic will pass through very quickly, while those that are
-extremely hydrophillic will be retained on the column longer, and so will have a
-longer retention time. Knowing the set-up of the column, as well as knowing the
-hydrophillic / hydrophobic characteristics of different peptides, means that the
-retention time can be used as a clue in helping to identify which peptide a
-given measure from the mass spectrometer represent. To leverage this at the
-scale of many peptides in several or many samples, it's necessary to have tools
-that can incorporate this in a way that's more efficient than using the clue
-by hand to try to identify peptides. Often, preprocessing software will
-incorporate many of the algorithms like this that are necessary to translate
-read-outs from a piece of laboratory equipment into something that is
-scientifically meaningful.
-
-\begin{quote}
-``The peptides that are generated by protein digestion are not introduced to the
-mass spectrometer all at once. Instead, they are injected onto a microscale
-capillary high-performance liquid chromatography (HPLC) column that is
-directly coupled to, or is `on-line' with, the mass spectrometer. The peptides are
-eluted from these columns using a solvent gradient of increasing organic content,
-so that the peptide species elute in order of their hydrophobicity.'' \citep{steen2004abc}
-\end{quote}
-
-\begin{quote}
-``At the beginning of the 1990s, researchers realized that the
-peptide-sequencing problem could be converted to a database-matching problem,
-which would be much simpler to solve. The reason database searching is easier
-than de novo sequencing is that only an infinitesimal fraction of the possible
-peptide amino-acid sequences actually occur in nature. A peptide-fragmentation
-spectrum might therefore not contain sufficient information to unambiguously
-derive the complete amino-acid sequence, but it might still have sufficient
-information to match it uniquely to a peptide sequence in the database on the
-basis of the observed and expected fragment ions. There are several different
-algorithms that are used to search sequence databases with tandem MS-spectra
-data, and they have names such as PeptideSearch, Sequest, Mascot, Sonar ms/ms,
-and ProteinProspector.'' \citep{steen2004abc}
-\end{quote}
-
-\hypertarget{data-format-description}{%
-\subsection{Data format description}\label{data-format-description}}
-
-For proteomics data, we will be getting data that have already been collected and
-pre-processed by another part of the team.
-
-{[}More about how these data were pre-processed. Software: Skyline{]}
-
-The following shows an example of the
-type of data we will get as an input:
-
-\begin{verbatim}
-## # A tibble: 3,393 x 18
-##    Peptide     Protein Replicate  `Precursor Mz` `Precursor Charge` `Product Mz`
-##    <chr>       <chr>   <chr>               <dbl>              <dbl>        <dbl>
-##  1 QELDEISTNIR Cfp10   091322_LT1           659.                  2        1061.
-##  2 QELDEISTNIR Cfp10   091322_LT2           659.                  2        1061.
-##  3 QELDEISTNIR Cfp10   091322_LT3           659.                  2        1061.
-##  4 QELDEISTNIR Cfp10   091322_LT4           659.                  2        1061.
-##  5 QELDEISTNIR Cfp10   091322_LT5           659.                  2        1061.
-##  6 QELDEISTNIR Cfp10   091322_LT6           659.                  2        1061.
-##  7 QELDEISTNIR Cfp10   091322_LT7           659.                  2        1061.
-##  8 QELDEISTNIR Cfp10   091322_LT8           659.                  2        1061.
-##  9 QELDEISTNIR Cfp10   091322_LT~           659.                  2        1061.
-## 10 QELDEISTNIR Cfp10   091322_LT~           659.                  2        1061.
-## # i 3,383 more rows
-## # i 12 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
-## #   `Retention Time` <dbl>, Area <dbl>, Background <dbl>, `Peak Rank` <dbl>,
-## #   `Ratio Dot Product` <chr>, `Total Area Normalized` <chr>,
-## #   `Total Area Ratio` <chr>, `Library Dot Product` <dbl>,
-## #   RatioLightToHeavy <dbl>, DotProductLightToHeavy <dbl>
-\end{verbatim}
-
-These data include the following columns:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{Peptide}: A short string of peptides that are being measured
-\item
-  \texttt{Protein}: The protein that those peptides come from
-\item
-  \texttt{Replicate}: An identifier for the sample that the measurement was taken on
-\item
-  \texttt{Precursor\ Mz}, \texttt{Precursor\ Charge}, \texttt{Product\ Mz}, \texttt{Product\ Charge},
-  \texttt{Fragment\ Ion}, \texttt{Retention\ Time}: Measurements that help in identifying the peptide
-  that is being measured (?)
-\item
-  \texttt{Area}:
-\item
-  \texttt{Background}:
-\item
-  \texttt{Peak\ Rank}:
-\item
-  \texttt{Ratio\ Dot\ Product}:
-\item
-  \texttt{Total\ Area\ Normalized}:
-\item
-  \texttt{Total\ Area\ Ratio}
-\item
-  \texttt{Library\ Dot\ Product}:
-\item
-  \texttt{RatioLightToHeavy}:
-\item
-  \texttt{DotProductLightToHeavy}:
-\end{itemize}
-
-Here are all the unique replicates in this file:
-
-\begin{verbatim}
-##  [1] "091322_LT1"  "091322_LT2"  "091322_LT3"  "091322_LT4"  "091322_LT5" 
-##  [6] "091322_LT6"  "091322_LT7"  "091322_LT8"  "091322_LT10" "091322_LT11"
-## [11] "091322_LT12" "091322_LT13" "091322_LT14" "091322_H1"   "091322_H2"  
-## [16] "091322_H3"   "091322_H4"   "091322_H5"   "091322_H6"   "091322_H7"  
-## [21] "091322_H8"   "091322_H9"   "091322_H10"  "091322_H11"  "091322_H12" 
-## [26] "091322_H13"  "091322_H14"  "091322_TB1"  "091322_TB2"  "091322_TB3" 
-## [31] "091322_TB4"  "091322_TB5"  "091322_TB6"  "091322_TB7"  "091322_TB8" 
-## [36] "091322_TB9"  "091322_TB10" "091322_TB11" "091322_TB12"
-\end{verbatim}
-
-The three groups in this data are labeled with ``LT'', ``H'', and ``TB'' somewhere in
-the identifier. We can create a new column in the dataset that pulls out this
-treatment group information:
-
-\begin{verbatim}
-## # A tibble: 3 x 2
-## # Groups:   treatment_group [3]
-##   treatment_group     n
-##   <chr>           <int>
-## 1 H                 140
-## 2 LT                130
-## 3 TB                120
-\end{verbatim}
-
-\begin{verbatim}
-## # A tibble: 10 x 19
-##    Peptide     Protein Replicate  `Precursor Mz` `Precursor Charge` `Product Mz`
-##    <chr>       <chr>   <chr>               <dbl>              <dbl>        <dbl>
-##  1 QELDEISTNIR Cfp10   091322_LT1           659.                  2        1061.
-##  2 QELDEISTNIR Cfp10   091322_LT1           659.                  2         832.
-##  3 QELDEISTNIR Cfp10   091322_LT1           659.                  2         703.
-##  4 QELDEISTNIR Cfp10   091322_LT1           659.                  2         590.
-##  5 QELDEISTNIR Cfp10   091322_LT1           659.                  2         503.
-##  6 QELDEISTNIR Cfp10   091322_LT1           664.                  2        1071.
-##  7 QELDEISTNIR Cfp10   091322_LT1           664.                  2         842.
-##  8 QELDEISTNIR Cfp10   091322_LT1           664.                  2         713.
-##  9 QELDEISTNIR Cfp10   091322_LT1           664.                  2         600.
-## 10 QELDEISTNIR Cfp10   091322_LT1           664.                  2         513.
-## # i 13 more variables: `Product Charge` <dbl>, `Fragment Ion` <chr>,
-## #   `Retention Time` <dbl>, Area <dbl>, Background <dbl>, `Peak Rank` <dbl>,
-## #   `Ratio Dot Product` <chr>, `Total Area Normalized` <chr>,
-## #   `Total Area Ratio` <chr>, `Library Dot Product` <dbl>,
-## #   RatioLightToHeavy <dbl>, DotProductLightToHeavy <dbl>,
-## #   treatment_group <chr>
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "Cfp10"                  "acpM"                   "Ag85A"                 
-## [4] "MtbH37Rv|Rv3841|BfrB"   "MtbH37Rv|Rv1837c|GlcB"  "MtbH37Rv|Rv3418c|GroES"
-## [7] "MtbH37Rv|Rv3248c|SahH"  "MtbH37Rv|Rv2031c|hspX"
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  Cfp10
-\item
-  acpM
-\item
-  Ag85A
-\item
-  MtbH37Rv\textbar Rv3841\textbar BfrB
-\item
-  MtbH37Rv\textbar Rv1837c\textbar GlcB
-\item
-  MtbH37Rv\textbar Rv3418c\textbar GroES
-\item
-  MtbH37Rv\textbar Rv3248c\textbar SahH
-\item
-  MtbH37Rv\textbar Rv2031c\textbar hspX
-\end{itemize}
-
-\hypertarget{processing-collected-data-2}{%
-\subsection{Processing collected data}\label{processing-collected-data-2}}
-
-Once data are collected, the file can be run through an R workflow. This workflow
-will convert the data into a format that is easier to work with for data analysis
-and visualization. It will also produce a report on the data in the spreadsheet, and
-ultimately it will also write relevant results in a format that can be used
-to populate a global database for all experiments in the project.
-
-The next section provides the details of the pipeline. It aims to explain the
-code that processes the data and generates visualizations. You do not need to
-run this code step-by-step, but instead can access a script with the full
-code {[}here{]}.
-
-To use this reporting template, you need to download it to your computer and
-save it in the file directory where you saved the data you collected with the
-data collection template. You can then open RStudio and navigate so that you are
-working within this directory. You should also make sure that you have installed
-a few required packages on R on the computer you are using to run the report.
-These packages are: \texttt{tidyverse}, \ldots{} .
-
-Within RStudio, open the report template file. There is one spot where you will
-need to change the code in the template file, so it will read in the data from
-the version of the template that you saved, which you may have renamed.
-In the YAML of the report template file, change the file path beside ``data:''
-so that it is the file name of your data file.
-
-Once you've made this change, you can use the ``Knit'' button in RStudio to
-create a report from the data file and the report template file.
-
-The report includes the following elements:
-
-\begin{itemize}
-\tightlist
-\item
-  {[}Element 1{]}
-\item
-  {[}Element 2{]}
-\item
-  \ldots{}
-\end{itemize}
-
-You can download an example of a report created using this template by
-clicking {[}here{]}.
-
-When you knit to create the report, it will create a Word file in the
-same file directory where you put your data file and report template.
-It will also create and output a version of the data that has been
-processed (in the case of the weights data, this mainly involves
-tracking mice as they change cages, to link all weights that are from
-a single animal). This output fill will be named ``\ldots{}'' and, like
-the report file, will be saved in the same file directory as the
-data file and the report template.
-
-\hypertarget{details-of-processing-script-2}{%
-\subsection{Details of processing script}\label{details-of-processing-script-2}}
-
-This section goes through the code within the report template. It
-explains each part of the code in detail. You do not need to understand
-these details to use the report template. However, if you have questions
-about how the data are being processed, or how the outputs are created,
-all those details are available in this section.
-
-\ldots{}
-
-\hypertarget{single-cell-rna-seq}{%
-\chapter{Single-cell RNA-seq}\label{single-cell-rna-seq}}
-
-\hypertarget{downloads-3}{%
-\subsection{Downloads}\label{downloads-3}}
-
-The downloads for this chapter are:
-
-\begin{itemize}
-\tightlist
-\item
-  Data collection format (pre-defined by the assay equipment)
-\item
-  Report template to process data collected with the data template (when you go to this link, go to the ``File'' bar in your browser's menu bar, chose ``Save As'', then save the file as ``animal\_weights.Rmd'')
-\item
-  Example output from the report template
-\end{itemize}
-
-\hypertarget{overview-3}{%
-\subsection{Overview}\label{overview-3}}
-
-Single-cell RNA-seq belongs to an area of assays called transcriptomics,
-which aim to measure the presence and level of messenger RNA from different
-genes in a sample. These types of assays help in understanding biological
-processes because they capture a snapshot of gene expression. Genes within
-a cell, when expressed, will create new protein products through a process
-of transcription and translation, with messenger RNA serving to transfer the
-genetic instructions for the protein product from the DNA to where it can
-be made into the associated protein. The level of mRNA from a gene isn't
-a perfect measure of how much of its associated protein is available in the
-cell, as proteins can degrade and be secreted at different rates, all of
-which contribute to the amount of protein present within the cell. However,
-it can help it identifying the proteins that the cell is in the process of
-making at the moment of sample collection, which is both correlated to
-some degree with protein composition in the cell and also is indicative of
-actions the cell might be taking in response to stimuli and environmental
-conditions.
-
-\begin{quote}
-``Single-cell transcriptomics relies on the reverse transcription of RNA to
-complementary DNA and subsequent amplification by PCR or in vitro transcription
-before deep sequencing---procedures prone to losses or biases. The biases are
-exaggerated by the need for very high amplification from the small amounts of
-RNA found in an individual cell. Although technical noise confounds precise
-measurements of low-abundance transcripts, modern protocols have progressed to
-the point that single-cell measurements are rich in biological information.''
-\citep{sandberg2014entering}
-\end{quote}
-
-Until recently, transcriptomics assays primarily were conducted at a
-bulk resolution, capturing the gene expression levels on average across the
-cells in the sample. Recently, methods have been developed to capture
-gene expression for each cell in the sample, an assay called single-cell
-RNA-sequencing (scRNA-seq). This assay provides an estimate of the expression
-of each of a set of genes (often a very large set) for each cell in the
-original sample. Thus, like flow cytometry, it provides insights at the
-level of each cell, and as a result, the data collected will include many
-of {[}thousands?{]} of observations, rather than a single observation per
-sample.
-
-\begin{quote}
-``Our notion of transcriptomes has been forged mainly by population-level
-observations that have been the mainstream in biology over the last two decades.
-We are used to thinking about differences in expression in terms of graded or
-subtle fold changes when comparing data across entire tissues or conditions. But
-the actual differences between cells may be far larger. Subsets of cells may
-experience dramatic changes that are averaged out or diluted by the presence of
-a large number of nonresponsive cells. In fact, it was shown over 60 years ago
-that inductive cues often result in all-or-none responses in single cells but
-these responses are observed as a gradual increase when quantified across the
-population1. It is clear that assessing gene expression in single cells is
-critical to better understand cellular behaviors and compositions in developing,
-adult and pathological tissues. To this end, a long-standing goal has been to
-enable genome-wide RNA profiling, or transcriptomics, in single cells2,3. Only
-recently has the technology matured so that biologically meaningful differences
-can be robustly detected with single-cell RNA-seq. \ldots{} Widespread adoption of
-these techniques will have a major impact on our understanding and appreciation
-of cellular states, the nature of transcription and gene regulation, and our
-ability to characterize pathological states in disease.'' \citep{sandberg2014entering}
-\end{quote}
-
-This information is helpful in identifying molecular processes at work in the
-cells in the sample. Further, it can be used to classify each cell in the
-sample by cell type. To understand how, it's helpful to think about how
-the different types of cells in a multicellular organism differ. Every cell
-in an organism has the same genetic code, outside the potential for a few
-random variations in DNA from mutations to that cell or its ancestors
-(e.g., mutation to a cell from exposure to radiation). What makes cells
-different types---some nerve cells, some muscle cells, some lung tissue
-cells, some immune cells, and so on---is not their genetics, but how the
-genes in that genetic code are expressed. Some genes will be regularly
-expressed in cells of one type but turned off in cells of another type,
-while other genes might express across multiple cell types, but at different
-levels. A few genes are expressed in common across all types of cells
-(for example, housekeeping genes, which help \ldots), but there is enough
-variation in gene expression across cell types that a profile of this
-gene expression can be used to group cells in a sample into different
-types of cells.
-
-\begin{quote}
-``For example, a recurrent theme in single-cell transcriptome studies is that
-cells reliably group by their cell type or state when subjected to unsupervised
-clustering7,8,9,10. Gene expression associated with cell identity or
-developmental stages thus has a stronger signal than technical noise or
-biological variability related to dynamic processes such as phase of the cell
-cycle. Moreover, the power to detect meaningful biological differences from
-single-cell data is demonstrated by the identification of hundreds to thousands
-of genes with differences in abundances between cell types7,9.''
-\citep{sandberg2014entering}
-\end{quote}
-
-\begin{quote}
-``The measurement of gene expression in single cells will revolutionize our
-understanding of gene regulation and resolve many longstanding debates in
-biology. Cells cluster by cell type or developmental state when grouped
-according to their expression profiles7,8,9,10. Thus, expression-based
-clustering allows for the unbiased reconstruction or `reverse engineering' of
-cell types in any population or tissue after sequencing enough individual cells
-(Fig. 1). If the sampling of cells is extensive and sufficiently free from
-biases, such clustering can reveal all cell types present, including new ones.
-All cells in a cluster can also be used to derive robust cell-type expression
-profiles, again in a data-driven manner and without previous knowledge of which
-marker genes define a tissue or cell type. Single-cell profiling of RNAs is
-therefore the first method that could lay a foundation for a quantitative,
-data-driven classification of cell types.'' \citep{sandberg2014entering}
-\end{quote}
-
-This is one key thing that can be done using scRNA-seq. There are other
-methods that can identify and count cells of different types, providing
-a profile of the composition of cells in a sample. For example, flow
-cytometry is often used to characterize immune cell composition in a
-sample. However, to do so, flow cytometry tags and measures certain
-proteins on each cell's surface or interior, and rather than measuring
-every protein, this is limited to a set of proteins specified in a
-predefined panel of proteins. This panel is limited in the number of
-proteins it can include, because only so many different fluourescent
-tags can be independently distinguished. With scRNA-seq, you can measure
-the expression levels of orders of magnitude {[}maybe one order?{]} more
-proteins. This means that you may be able to identify clusters of cells
-of the same type that are discovered \emph{de novo} in that experiment, in
-addition to cell populations that were anticipated in the sample.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-The gene expression within single cells is now studied through a process of
-single cell RNA-seq, which leverages biological process, like use of the enzyme?
-reverse transcriptase and PCR?, as well as complex computer algorithms to {[}put
-things back together?{]}.
-
-Single cell RNA-seq aims to characterize the messenger RNA levels within
-each cell of a sample, as this provides a measure of the expression of
-specific genes within the cell---when a gene is expressed, its
-information is copied into messenger RNA, which carries the information
-to {[}other parts of the cell{]} where it can be used to create the protein
-associated with that gene. Different types of cells will express different
-genes, and cells will express different genes under different conditions,
-so information about gene expression can be used both to classify cells
-by cell type and to characterize the activity of cells under different
-conditions. {[}Information on transcripts rather than genes?{]}
-
-To measure levels of messenger RNA within each cell of a sample, sc-RNA-seq
-leverages a fairly involved set of steps that leverage advanced biological and
-computational ideas. First, the cells in the sample are lysed (essentially,
-broken open) to access their contents. The content of messenger RNA in any
-specific cell is small \citep{brennecke2013accounting}, and so a process is conducted
-to amplify that content so it can be measured. This involves first transcribing
-the information in each messenger RNA to cDNA {[}complementary DNA?{]}, which can
-then be amplified using {[}PCR{]} \citep{haque2017practical}. The transcription uses the
-enzyme reverse transcriptase \citep{haque2017practical}, which {[}clever leveraging of
-an existing biological process\ldots{]}. In the course of this transcriptions, unique
-molecular identifiers (UMIs) can be added to the transcription primers to
-identify each initial mRNA molecule and the cell from which the mRNA came {[}?{]}
-\citep{haque2017practical}. PCR leverages \ldots{} {[}also using biological processes{]}. Once
-the cDNA are amplified, the information encoded in them can be extracted using
-next-generation sequencing \citep{haque2017practical} and analysis of the resulting
-raw sequencing data, which leverages {[}advanced algorithms?{]}.
-
-\hypertarget{data-format-description-1}{%
-\subsection{Data format description}\label{data-format-description-1}}
-
-\hypertarget{processing-collected-data-3}{%
-\subsection{Processing collected data}\label{processing-collected-data-3}}
-
-\hypertarget{details-of-processing-script-3}{%
-\subsection{Details of processing script}\label{details-of-processing-script-3}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Process the raw sequencing data and ``demultiplex'' the data
-\item
-  Quality control---identify and remove low quality cells and some transcripts
-\end{enumerate}
-
-\begin{quote}
-``Before analysing the single-cell gene expression data, we must ensure that
-all cellular barcode data correspond to viable cells. Cell QC is commonly
-performed based on three QC covariates: the number of counts per barcode (count
-depth), the number of genes per barcode, and the fraction of counts from
-mitochondrial genes per barcode (Ilicic et al, 2016; Griffiths et al, 2018). The
-distributions of these QC covariates are examined for outlier peaks that are
-filtered out by thresholding (Fig 2). These outlier barcodes can correspond to
-dying cells, cells whose membranes are broken, or doublets. For example,
-barcodes with a low count depth, few detected genes, and a high fraction of
-mitochondrial counts are indicative of cells whose cytoplasmic mRNA has leaked
-out through a broken membrane, and thus, only mRNA located in the mitochondria
-is still conserved (Fig 2). In contrast, cells with unexpectedly high counts and
-a large number of detected genes may represent doublets. Thus, high-count depth
-thresholds are commonly used to filter out potential doublets. Three recent
-doublet detection tools offer more elegant and potentially better solutions
-(DoubletDecon: preprint: DePasquale et al, 2018; Scrublet: Wolock et al, 2019;
-Doublet Finder: McGinnis et al, 2018).'' \citep{luecken2019current}
-\end{quote}
-
-\begin{quote}
-``In addition to checking the integrity of cells, QC steps must also be
-performed at the level of transcripts. Raw count matrices often include over
-20,000 genes. This number can be drastically reduced by filtering out genes that
-are not expressed in more than a few cells and are thus not informative of the
-cellular heterogeneity. A guideline to setting this threshold is to use the
-minimum cell cluster size that is of interest and leaving some leeway for
-dropout effects. For example, filtering out genes expressed in fewer than 20
-cells may make it diffi- cult to detect cell clusters with fewer than 20 cells.
-For datasets with high dropout rates, this threshold may also complicate the
-detection of larger clusters. The choice of threshold should scale with the
-number of cells in the dataset and the intended downstream analysis.''
-\citep{luecken2019current}
-\end{quote}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Normalization
-\end{enumerate}
-
-\begin{quote}
-``Each count in a count matrix represents the successful capture, reverse
-transcription and sequencing of a molecule of cellular mRNA (Box 1). Count
-depths for identical cells can differ due to the variability inherent in each of
-these steps. Thus, when gene expres- sion is compared between cells based on
-count data, any difference may have arisen solely due to sampling effects.
-Normalization addresses this issue by e.g.~scaling count data to obtain correct
-rela- tive gene expression abundances between cells.'' \citep{luecken2019current}
-\end{quote}
-
-\begin{quote}
-``In the same way that cellular count data can be normalized to make them
-comparable between cells, gene counts can be scaled to improve comparisons
-between genes. Gene normalization constitutes scaling gene counts to have zero
-mean and unit variance (z scores). \ldots{} There is currently no consensus on
-whether or not to perform normalization over genes. While the popular Seurat
-tutorials (Butler et al, 2018) generally apply gene scaling, the authors of the
-Slingshot method opt against scaling over genes in their tutorial (Street et al,
-2018). The preference between the two choices revolves around whether all
-genes should be weighted equally for downstream analysis, or whether the
-magnitude of expression of a gene is an informative proxy for the importance of
-the gene. In order to retain as much biological information as possible from the
-data, we opt to refrain from scaling over genes in this tutorial.''
-\citep{luecken2019current}
-\end{quote}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  Transformation
-\end{enumerate}
-
-\begin{quote}
-``After normalization, data matrices are typically log(x+1)-transformed. This
-transformation has three important effects. Firstly, distances between
-log-transformed expression values represent log fold changes, which are the
-canonical way to measure changes in expression. Secondly, log transformation
-mitigates (but does not remove) the mean--variance relationship in single-cell
-data (Bren- necke et al, 2013). Finally, log transformation reduces the skew-
-ness of the data to approximate the assumption of many downstream analysis tools
-that the data are normally distributed. While scRNA-seq data are not in fact
-log-normally distributed (Vieth et al, 2017), these three effects make the log
-transformation a crude, but useful tool. This usefulness is highlighted by down-
-stream applications for differential expression testing (Finak et al, 2015;
-Ritchie et al, 2015) or batch correction (Johnson et al, 2006; Buttner et al,
-2019) that use log transformation for these purposes. It should however be noted
-that log transformation of normalized data can introduce spurious differential
-expression effects into the data (preprint: Lun, 2018). This effect is
-particularly pronounced when normalization size factor distributions differ
-strongly between tested groups.'' \citep{luecken2019current}
-\end{quote}
+NOTICE.This chapter is
+in progress.
 
   \bibliography{book.bib,packages.bib}
 

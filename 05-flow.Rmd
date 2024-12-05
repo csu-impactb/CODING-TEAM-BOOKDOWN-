@@ -6,6 +6,10 @@ editor_options:
 
 # Flow cytometry
 
+<p style="border-width:3px; border-style:solid; border-color:#FF0000; padding: 1em;">NOTICE.<br>This chapter is
+in progress.</p>
+
+
 Flow cytometry data can be quantified in many different ways and with different techniques. For the purpose of these data analyses, manual gating has been achieved in FlowJo and cell frequencies and populations exported as a `.csv` file. This `.csv` file is the primary input for this R pipeline which aims to output box plots for each gated cell population. 
 
 This example data set is from an innate response study whcih investigated the immune response in the lungs during the first 28 days of infection.

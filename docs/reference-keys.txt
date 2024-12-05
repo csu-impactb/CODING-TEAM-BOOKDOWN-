@@ -6,8 +6,6 @@ tab:unnamed-chunk-34
 fig:pressure
 overview
 about-the-project
-about-this-book
-experimental-metadata
 animal-initial-conditions-and-weekly-weights
 downloads
 overview-1
@@ -64,15 +62,3 @@ flow-cytometry
 loading-packages
 loading-data
 pathology
-proteomics
-downloads-2
-overview-2
-data-format-description
-processing-collected-data-2
-details-of-processing-script-2
-single-cell-rna-seq
-downloads-3
-overview-3
-data-format-description-1
-processing-collected-data-3
-details-of-processing-script-3
